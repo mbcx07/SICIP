@@ -116,7 +116,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 180px;
+      min-height: 190px;
     }
 
     .project-card:hover {
@@ -134,10 +134,17 @@
     }
 
     .project-title {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 700;
       margin: .2rem 0;
       color: #0b2e13;
+    }
+
+    .project-subtitle {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1b7a5c;
+      margin-bottom: .2rem;
     }
 
     .project-description {
@@ -199,6 +206,7 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+      gap: .5rem;
     }
   </style>
 </head>
@@ -216,10 +224,15 @@
       <!-- Barra con búsqueda -->
       <div class="toolbar">
         <span class="toolbar-label">Buscar proyecto:</span>
-        <input id="searchInput" type="text" class="search-input"
-          placeholder="Escribe el nombre o palabra clave..." />
+        <input
+          id="searchInput"
+          type="text"
+          class="search-input"
+          placeholder="Escribe el nombre o palabra clave..."
+        />
       </div>
 
+      <!-- Grid de proyectos -->
       <section class="projects-grid" id="projectsGrid"></section>
     </div>
   </main>
@@ -232,37 +245,52 @@
   </footer>
 
   <script>
-    /* ====== Configuración de Proyectos ====== */
+    /* ====== Configuración de Proyectos (ya analizados) ====== */
     const projects = [
       {
-        name: "PDL",
-        tag: "Proyecto",
+        name: "Perfil de Dinámicas Laborales (PDL)",
+        shortName: "PDL",
+        tag: "Aplicación",
         url: "https://mbcx07.github.io/PDL/",
-        description: "Sistema PDL — Gestión administrativa y operativa (ajusta la descripción según corresponda)."
+        subtitle: "Test PDL y resultados en nube",
+        description:
+          "Herramienta para aplicar el Perfil de Dinámicas Laborales al personal: captura datos del trabajador, aplica el test por bloques, calcula el perfil y permite administrar unidades, categorías y resultados, con exportación a CSV y soporte Firestore."
       },
       {
-        name: "RME",
-        tag: "Proyecto",
+        name: "Reclutador de Médicos Especialistas (RME)",
+        shortName: "RME",
+        tag: "Aplicación",
         url: "https://mbcx07.github.io/RME/",
-        description: "RME — Registro, monitoreo y evaluación del personal."
+        subtitle: "Reclutamiento de Médicos Especialistas",
+        description:
+          "Sistema interno para localizar, seleccionar y dar seguimiento a Médicos Especialistas mediante búsquedas con Google Custom Search, selección de candidatos, exportación a CSV y generación de mensajes de invitación para contacto responsable."
       },
       {
-        name: "CAP",
-        tag: "Proyecto",
+        name: "Control de Ausencias por Pase (CAP)",
+        shortName: "CAP",
+        tag: "Aplicación",
         url: "https://mbcx07.github.io/CAP/",
-        description: "CAP — Control y seguimiento de procesos administrativos."
+        subtitle: "Pases, reportes y asiduidad",
+        description:
+          "Sistema CAP para que trabajadores, jefes de servicio y área de personal registren y revisen pases, generen folios y QR, consulten reportes por periodo, exporten a CSV y obtengan ranking de pasistas y puntos de asiduidad, con información en Firestore."
       },
       {
-        name: "CAM",
-        tag: "Proyecto",
+        name: "Gestión de Coberturas (CAM)",
+        shortName: "CAM",
+        tag: "Aplicación",
         url: "https://mbcx07.github.io/CAM/",
-        description: "CAM — Administración y movimientos del personal."
+        subtitle: "Coberturas ante ausencias",
+        description:
+          "Herramienta de gestión de coberturas para registrar asistencia y ausencias, analizar impacto, proponer coberturas con suplentes o tiempo extra y administrar catálogos de servicios, personal y ausencias programadas. Funciona 100% local en el navegador (localStorage)."
       },
       {
-        name: "Draft 2026",
-        tag: "Borrador",
+        name: "Plazas para Médicos Especialistas – BCS (Draft 2026)",
+        shortName: "Draft 2026",
+        tag: "Página informativa",
         url: "https://mbcx07.github.io/draft2026/",
-        description: "Proyecto preliminar para desarrollo 2026."
+        subtitle: "Difusión de plazas y beneficios",
+        description:
+          "Página informativa sobre plazas para Médicos Especialistas del IMSS en Baja California Sur: resumen de la oportunidad, beneficios económicos, percepciones mensuales y anuales, calidad de vida en el estado, localidades con vacantes y datos de contacto de Recursos Humanos."
       }
     ];
 
@@ -272,15 +300,21 @@
 
     function render(filter = "") {
       grid.innerHTML = "";
-      const f = filter.toLowerCase();
+      const f = filter.toLowerCase().trim();
 
       const filtered = projects.filter(p =>
+        !f ||
         p.name.toLowerCase().includes(f) ||
-        p.description.toLowerCase().includes(f)
+        p.shortName.toLowerCase().includes(f) ||
+        p.description.toLowerCase().includes(f) ||
+        p.tag.toLowerCase().includes(f)
       );
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<p style="grid-column:1/-1; color:#4a5f54;">No se encontraron proyectos.</p>`;
+        grid.innerHTML =
+          `<p style="grid-column:1/-1; color:#4a5f54; font-size:0.9rem;">
+            No se encontraron proyectos para el criterio de búsqueda.
+          </p>`;
         return;
       }
 
@@ -292,6 +326,7 @@
           <div>
             <div class="project-tag">${p.tag}</div>
             <h2 class="project-title">${p.name}</h2>
+            <div class="project-subtitle">${p.subtitle}</div>
             <p class="project-description">${p.description}</p>
           </div>
           <div class="project-footer">
@@ -306,7 +341,11 @@
       });
 
       document.querySelectorAll(".btn-link").forEach(btn => {
-        btn.onclick = e => window.open(e.target.closest("button").dataset.url, "_blank");
+        btn.onclick = (e) => {
+          const button = e.currentTarget;
+          const url = button.getAttribute("data-url");
+          if (url) window.open(url, "_blank", "noopener,noreferrer");
+        };
       });
     }
 
@@ -314,6 +353,5 @@
 
     search.addEventListener("input", e => render(e.target.value));
   </script>
-
 </body>
-</html>
+  </html>
