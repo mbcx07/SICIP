@@ -1,0 +1,89 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'ADMIN';
+    }
+    
+    function isAreaPersonal() {
+      return isAuthenticated() && (
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'AREA_PERSONAL' || 
+        isAdmin()
+      );
+    }
+    
+    function isJefeServicio() {
+      return isAuthenticated() && (
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'JEFE_SERVICIO' || 
+        isAreaPersonal()
+      );
+    }
+    
+    // Usuarios
+    match /usuarios/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Trabajadores
+    match /trabajadores/{matricula} {
+      allow read: if isAuthenticated();
+      allow write: if isAreaPersonal();
+    }
+    
+    // Trámites
+    match /tramites/{tramiteId} {
+      // TRABAJADOR solo ve los suyos
+      allow read: if isAuthenticated() && (
+        resource.data.solicitanteUid == request.auth.uid ||
+        isAreaPersonal() ||
+        isAdmin()
+      );
+      
+      allow create: if isAuthenticated();
+      allow update: if isAreaPersonal() || isAdmin() || resource.data.solicitanteUid == request.auth.uid;
+      allow delete: if isAdmin();
+    }
+    
+    // Historial estados
+    match /historial_estados/{histId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+    }
+    
+    // Tipos de trámite (catálogo normativo)
+    match /tipos_tramite/{tipoId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Unidades
+    match /unidades/{unidadId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Archivos
+    match /archivos/{archivoId} {
+      allow read: if isAuthenticated() && (
+        resource.data.usuarioUid == request.auth.uid ||
+        isAreaPersonal() ||
+        isAdmin()
+      );
+      allow create: if isAuthenticated();
+      allow delete: if isAreaPersonal() || isAdmin();
+    }
+    
+    // Configuración
+    match /configuracion/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+  }
+}
