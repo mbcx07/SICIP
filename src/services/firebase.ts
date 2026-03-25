@@ -46,14 +46,15 @@ import {
   TipoTramite
 } from '../types/sicip';
 
-// ─── Firebase Config (SICIP - usar proyecto propio) ───────
+// ─── Firebase Config (SICIP) ───────────────────────────────
 const firebaseConfig = {
-  apiKey: "AIzaSyDummyKeyForSICIPxxxxxxx",
-  authDomain: "sicip-imss.firebaseapp.com",
-  projectId: "sicip-imss",
-  storageBucket: "sicip-imss.firebasestorage.app",
-  messagingSenderId: "000000000000",
-  appId: "1:000000000000:web:0000000000000000"
+  apiKey: "AIzaSyBgLpcYJi8A00zMh3nb3fUNxLmDp7ZfCbQ",
+  authDomain: "sicip-1369d.firebaseapp.com",
+  databaseURL: "https://sicip-1369d.firebaseio.com",
+  projectId: "sicip-1369d",
+  storageBucket: "sicip-1369d.firebasestorage.app",
+  messagingSenderId: "809227567474",
+  appId: "1:809227567474:web:ddd7a02415843a08c91deb"
 };
 
 // Initialize Firebase
