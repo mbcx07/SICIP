@@ -48,13 +48,13 @@ import {
 
 // ─── Firebase Config (SICIP) ───────────────────────────────
 const firebaseConfig = {
-  apiKey: "AIzaSyBgLpcYJi8A00zMh3nb3fUNxLmDp7ZfCbQ",
-  authDomain: "sicip-1369d.firebaseapp.com",
-  databaseURL: "https://sicip-1369d.firebaseio.com",
-  projectId: "sicip-1369d",
-  storageBucket: "sicip-1369d.firebasestorage.app",
-  messagingSenderId: "809227567474",
-  appId: "1:809227567474:web:ddd7a02415843a08c91deb"
+  apiKey: "AIzaSyCBs_vl7IZ98Cr-Hs3VdVuDJyKPZetfOW8",
+  authDomain: "sicip-bcs.firebaseapp.com",
+  databaseURL: "https://sicip-bcs.firebaseapp.com",
+  projectId: "sicip-bcs",
+  storageBucket: "sicip-bcs.firebasestorage.app",
+  messagingSenderId: "928452495120",
+  appId: "1:928452495120:web:21f0320e23eb72bb6fc795"
 };
 
 // Initialize Firebase
