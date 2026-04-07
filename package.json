@@ -2,6 +2,7 @@
   "name": "sicip",
   "version": "1.0.0",
   "description": "Sistema Integral de Captura de Información de Personal - IMSS BCS",
+  "homepage": "https://mbcx07.github.io/SICIP",
   "type": "module",
   "scripts": {
     "dev": "vite",
