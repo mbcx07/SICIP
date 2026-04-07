@@ -81,17 +81,27 @@ const LoginScreen: React.FC<{ onLogin: (u: Usuario) => void }> = ({ onLogin }) =
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    try {
-      await loginWithEmail(email, password);
-    } catch (err: any) {
-      setError(err.message || 'Error al iniciar sesión');
-      setLoading(false);
-    }
-  };
+	const handleLogin = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setError(null);
+		setLoading(true);
+		try {
+			console.log("[LOGIN]Intentando login con:", email);
+			console.log("[LOGIN]Llamando loginWithEmail...");
+			const firebaseUser = await loginWithEmail(email, password);
+			const u = await getUsuario(firebaseUser.uid);
+			if (u && u.activo) {
+				onLogin(u);
+			} else {
+				setError('Usuario no encontrado o inactivo');
+			}
+		} catch (err: any) {
+			console.error('Login error:', err.code, err.message);
+			setError(err.code === 'auth/invalid-credential' ? 'Correo o contraseña incorrectos' : (err.message || 'Error al iniciar sesión'));
+		} finally {
+			setLoading(false);
+		}
+	};
 
   return (
     <div className="app-shell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh' }}>
@@ -770,6 +780,7 @@ export default function App() {
         } else {
           await logout();
           setUser(null);
+          console.error('Usuario no encontrado o inactivo');
         }
       } else {
         setUser(null);
@@ -777,6 +788,12 @@ export default function App() {
       setLoading(false);
     });
     return unsubscribe;
+  }, []);
+
+  // Fallback: si loading dura >10s, force-cerrar
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 10000);
+    return () => clearTimeout(t);
   }, []);
 
   // Load tramites when user changes
