@@ -1,6 +1,6 @@
 /* ============================================================
    SICIP — Estilos institucionales IMSS
-   Basado en SISTRA
+   Mobile-first responsive design
    ============================================================ */
 
 :root {
@@ -15,20 +15,20 @@
   --border-soft: #e2e8f0;
   --text-primary: #0f172a;
   --text-muted: #64748b;
-
+  --header-h: 56px;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-  --space-10: 2.5rem;
-
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 }
+
+* { box-sizing: border-box; }
 
 body {
   background: linear-gradient(180deg, #eef5f0 0%, #e8f2ec 50%, #f0f7f3 100%);
@@ -36,9 +36,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   margin: 0;
   -webkit-font-smoothing: antialiased;
+  font-size: 16px; /* prevents iOS auto-zoom on inputs */
 }
-
-* { box-sizing: border-box; }
 
 .app-shell {
   min-height: 100dvh;
@@ -52,12 +51,14 @@ body {
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-xl);
   box-shadow: 0 1px 3px rgb(15 23 42 / 0.06);
+  padding: var(--space-4);
 }
 
 .institutional-card-soft {
   background: var(--brand-050);
   border: 1px solid #d5e9e0;
   border-radius: var(--radius-xl);
+  padding: var(--space-4);
 }
 
 /* ─── Buttons ─────────────────────────────────────────── */
@@ -70,12 +71,15 @@ body {
   font-size: 0.8rem;
   border: none;
   border-radius: var(--radius-md);
-  padding: 0.6rem 1.25rem;
+  padding: 0.75rem 1.25rem;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.15s;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
+  min-height: 48px; /* touch target min */
+  width: 100%;      /* full-width on mobile */
 }
 
 .btn-institutional:hover {
@@ -83,12 +87,37 @@ body {
 }
 
 .btn-institutional:active {
-  transform: translateY(1px);
+  transform: scale(0.97);
 }
 
 .btn-institutional:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--brand-600);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  border: 2px solid var(--brand-600);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 48px;
+  width: 100%;
+}
+
+.btn-secondary:active {
+  background: var(--brand-050);
+  transform: scale(0.97);
 }
 
 /* ─── Status Chip ────────────────────────────────────── */
@@ -98,7 +127,7 @@ body {
   justify-content: center;
   min-height: 1.75rem;
   border-radius: 999px;
-  padding: 0.25rem 0.75rem;
+  padding: 0.3rem 0.85rem;
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -108,20 +137,21 @@ body {
 /* ─── Form Inputs ────────────────────────────────────── */
 .form-input {
   width: 100%;
-  padding: 0.6rem 0.875rem;
-  border: 1.5px solid var(--border-soft);
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-soft);
   border-radius: var(--radius-md);
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-primary);
   background: var(--surface);
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
   font-family: inherit;
+  min-height: 48px;
 }
 
 .form-input:focus {
   border-color: var(--brand-500);
-  box-shadow: 0 0 0 3px rgb(10 123 88 / 0.1);
+  box-shadow: 0 0 0 3px rgb(10 123 88 / 0.12);
 }
 
 .form-input::placeholder {
@@ -130,7 +160,7 @@ body {
 
 textarea.form-input {
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
 }
 
 select.form-input {
@@ -140,48 +170,26 @@ select.form-input {
 /* ─── Field Labels ──────────────────────────────────── */
 .field-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
 }
 
 /* ─── Header ─────────────────────────────────────────── */
 header {
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+  height: var(--header-h);
+  flex-shrink: 0;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-soft);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
-}
-
-/* ─── Mobile ─────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .institutional-card {
-    border-radius: 1rem !important;
-  }
-
-  main {
-    padding: 1rem !important;
-  }
-}
+/* ─── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-soft); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 /* ─── Utility ─────────────────────────────────────────── */
 .text-center { text-align: center; }
@@ -191,62 +199,17 @@ header {
 .mt-4 { margin-top: 1rem; }
 .gap-2 { gap: 0.5rem; }
 .gap-4 { gap: 1rem; }
-
-/* ─── Responsive tables ──────────────────────────────── */
-@media (max-width: 768px) {
-  table {
-    font-size: 0.8rem !important;
-  }
-  th, td {
-    padding: 0.5rem 0.6rem !important;
-  }
-  thead tr:first-child {
-    display: none;
-  }
-  tbody tr {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.25rem;
-    padding: 0.75rem !important;
-  }
-  tbody tr td:first-child { display: none; }
-  tbody tr td:last-child { display: none; }
-  tbody tr td::before {
-    content: attr(data-label) ": ";
-    font-weight: 700;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-  tbody tr td[data-label] {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-}
-
-/* ─── Better scroll ────────────────────────────────── */
-@media (max-width: 640px) {
-  main {
-    padding: 0.75rem !important;
-  }
-  h1, h2 { font-size: 1.1rem !important; }
-  .btn-institutional {
-    padding: 0.55rem 0.9rem !important;
-    font-size: 0.82rem !important;
-  }
-}
+.hidden-mobile { display: none; }
 
 /* ─── Loading spinner ────────────────────────────────── */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ─── Toast ─────────────────────────────────────────── */
 .toast-container {
   position: fixed;
   bottom: 1.5rem;
-  right: 1.5rem;
+  left: 1rem;
+  right: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -254,16 +217,15 @@ header {
   pointer-events: none;
 }
 .toast-item {
-  background: var(--text-primary, #1e293b);
+  background: #1e293b;
   color: white;
-  padding: 0.75rem 1.1rem;
+  padding: 0.85rem 1.1rem;
   border-radius: 0.65rem;
   font-size: 0.875rem;
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   pointer-events: auto;
   animation: slideUp 0.25s ease;
-  max-width: 320px;
 }
 .toast-item.success { background: #16a34a; }
 .toast-item.error { background: #dc2626; }
@@ -271,4 +233,192 @@ header {
 @keyframes slideUp {
   from { transform: translateY(1rem); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+/* ─── Tables ─────────────────────────────────────────── */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 600px;
+}
+
+th {
+  background: var(--brand-050);
+  color: var(--brand-700);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 2px solid var(--border-soft);
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid var(--border-soft);
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: var(--brand-050);
+}
+
+/* ─── ──────────────────────────────────────────────────
+   MOBILE (< 768px) — Card-based layouts
+   ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Tables → cards */
+  .table-wrapper {
+    overflow: visible;
+  }
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  thead { display: none; }
+  tbody tr {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    padding: 0.75rem;
+    margin-bottom: 0.6rem;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+  }
+  td {
+    border: none;
+    padding: 0.3rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 36px;
+  }
+  td:first-child {
+    padding-top: 0;
+  }
+  td:last-child {
+    padding-bottom: 0;
+  }
+  td::before {
+    content: attr(data-label);
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+  }
+  td[data-label=""]::before { display: none; }
+  td > * { flex: 1; text-align: right; }
+
+  /* Cards full-width mobile */
+  .institutional-card, .institutional-card-soft {
+    border-radius: var(--radius-lg) !important;
+    padding: 1rem;
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+  }
+
+  /* Inputs full width */
+  .form-input {
+    border-radius: var(--radius-md);
+  }
+
+  /* Main padding mobile */
+  main {
+    padding: 0.75rem !important;
+  }
+
+  /* Typography mobile */
+  h1 { font-size: 1.25rem !important; }
+  h2 { font-size: 1.1rem !important; }
+  h3 { font-size: 1rem !important; }
+
+  /* Stack buttons on mobile */
+  .btn-row-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Hide desktop-only elements */
+  .desktop-only { display: none !important; }
+  .hidden-mobile { display: block !important; }
+
+  /* Sidebar becomes drawer */
+  nav.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    width: 260px !important;
+    height: 100dvh !important;
+    z-index: 200 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.35) !important;
+  }
+  nav.sidebar.open {
+    transform: translateX(0) !important;
+  }
+
+  /* Overlay */
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+    backdrop-filter: blur(2px);
+  }
+
+  /* Header user info hidden on mobile */
+  .header-user-info { display: none !important; }
+  header { padding: 0 0.75rem !important; }
+}
+
+/* ─── ──────────────────────────────────────────────────
+   TABLET & DESKTOP (>= 768px)
+   ────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  /* Desktop sidebar always visible */
+  nav.sidebar {
+    transform: translateX(0) !important;
+    position: sticky !important;
+    height: calc(100dvh - var(--header-h)) !important;
+    flex-shrink: 0;
+  }
+  .sidebar-overlay { display: none !important; }
+
+  /* Sidebar hamburger only on mobile */
+  .hamburger-btn { display: none !important; }
+
+  /* Desktop buttons */
+  .btn-institutional, .btn-secondary {
+    width: auto;
+  }
+  .btn-row-mobile {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  /* Desktop user info */
+  .header-user-info { display: flex !important; }
+
+  /* Cards desktop */
+  .institutional-card {
+    border-radius: var(--radius-xl) !important;
+    padding: var(--space-6);
+  }
+
+  /* Max content width */
+  main {
+    max-width: 1200px;
+  }
 }
