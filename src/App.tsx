@@ -13,6 +13,7 @@ import RecepcionesScreen from './screens/RecepcionesScreen';
 import ReportesScreen from './screens/ReportesScreen';
 import PlantillaScreen from './screens/PlantillaScreen';
 import AltaTrabajadorScreen from './screens/AltaTrabajadorScreen';
+import ImportarPlantillaScreen from './screens/ImportarPlantillaScreen';
 import Layout from './components/Layout';
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="reportes" element={<ReportesScreen />} />
             <Route path="plantilla" element={<PlantillaScreen />} />
             <Route path="alta-trabajador" element={<AltaTrabajadorScreen />} />
+            <Route path="importar-plantilla" element={<ImportarPlantillaScreen />} />
             <Route path="admin/*" element={<AdminScreen />} />
           </Route>
         </Route>
