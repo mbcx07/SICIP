@@ -6,6 +6,7 @@ import type { Tramite, HistorialEstado } from '../types/sicip';
 import { Estatus, Rol } from '../types/sicip';
 import { ESTATUS_LABELS, COLOR_ESTATUS, TIPO_TRAMITE_LABELS } from '../constants/sicip';
 import { formatFecha, formatFechaTime, diasRestantes, colorPorDiasRestantes, estaVencido, hoy } from '../utils/sicip';
+import { tramiteToTEDatos, printTEPDF } from '../utils/generateTEPDF';
 import { onAuthChange, getUsuario } from '../services/firebase';
 import type { Usuario } from '../types/sicip';
 
@@ -117,7 +118,24 @@ export default function TramiteDetalleScreen() {
             <p style={{ margin: '0.15rem 0 0', fontFamily: 'monospace', fontSize: '0.82rem', color: 'var(--text-muted)' }}>{tramite.folio}</p>
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {(tramite.tipo === 'TIEMPO_EXTRAORDINARIO' || tramite.tipo === 'GUARDIA_FESTIVA') && (
+            <button
+              onClick={() => printTEPDF(tramiteToTEDatos(tramite), tramite.folio)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '0.35rem',
+                padding: '0.4rem 0.85rem',
+                background: 'var(--brand-600)', color: 'white',
+                border: 'none', borderRadius: '0.5rem',
+                fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer',
+                transition: 'background 0.15s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = 'var(--brand-700)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'var(--brand-600)')}
+            >
+              <Printer size={14} /> Imprimir Formato
+            </button>
+          )}
           <span style={{ fontSize: '0.75rem', fontWeight: 700, background: COLOR_ESTATUS[tramite.estatus] + '22', color: COLOR_ESTATUS[tramite.estatus], padding: '0.25rem 0.7rem', borderRadius: '999px' }}>
             {ESTATUS_LABELS[tramite.estatus]}
           </span>
