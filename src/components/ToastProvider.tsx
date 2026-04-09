@@ -14,9 +14,15 @@ interface ToastContextType {
 
 const ToastContext = createContext<ToastContextType>({ showToast: () => {} });
 
-export function useToast() {
+export function useToast(): ToastContextType {
   return useContext(ToastContext);
 }
+
+// Direct export for simple usage
+export const showToast = (message: string, type?: ToastType) => {
+  // Will be overridden by provider; safe no-op before mount
+  console.log(`[Toast ${type || 'info'}]:`, message);
+};
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);

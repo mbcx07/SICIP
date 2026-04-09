@@ -6,7 +6,7 @@ import { Rol } from '../types/sicip';
 import {
   LayoutDashboard, FileText, PlusCircle, ClipboardList, Building2,
   Filter, Upload, Users, ShieldCheck, LogOut, ChevronRight, Briefcase,
-  Home, Menu, X
+  Home, Menu, X, UserPlus
 } from 'lucide-react';
 import { ROL_LABELS, OOAD_NOMBRE, INSTITUCION_NOMBRE } from '../constants/sicip';
 
@@ -35,6 +35,7 @@ const TABS_BY_ROLES: Record<Rol, Array<{ key: string; label: string; icon: React
     { key: '/recepciones', label: 'Recepciones', icon: <Building2 size={20} /> },
     { key: '/reportes', label: 'Reportes', icon: <Filter size={20} /> },
     { key: '/plantilla', label: 'Plantilla', icon: <Upload size={20} /> },
+    { key: '/alta-trabajador', label: 'Alta Trabajador', icon: <UserPlus size={20} /> },
     { key: '/admin', label: 'Administración', icon: <Users size={20} /> },
   ],
 };

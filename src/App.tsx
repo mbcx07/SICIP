@@ -12,6 +12,7 @@ import BandejaScreen from './screens/BandejaScreen';
 import RecepcionesScreen from './screens/RecepcionesScreen';
 import ReportesScreen from './screens/ReportesScreen';
 import PlantillaScreen from './screens/PlantillaScreen';
+import AltaTrabajadorScreen from './screens/AltaTrabajadorScreen';
 import Layout from './components/Layout';
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="recepciones" element={<RecepcionesScreen />} />
             <Route path="reportes" element={<ReportesScreen />} />
             <Route path="plantilla" element={<PlantillaScreen />} />
+            <Route path="alta-trabajador" element={<AltaTrabajadorScreen />} />
             <Route path="admin/*" element={<AdminScreen />} />
           </Route>
         </Route>
