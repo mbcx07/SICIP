@@ -69,22 +69,21 @@ export default function LoginScreen() {
         position: 'relative', overflow: 'hidden',
       }}>
         {/* Top accent bar */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '5px', background: 'linear-gradient(90deg, #c0392b, #27ae60)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '5px', background: 'linear-gradient(90deg, #005235, #27ae60)' }} />
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem', marginTop: '0.5rem' }}>
-          {/* Old IMSS Institutional Logo */}
+          {/* IMSS Institutional Logo — Verde institucional */}
           <div style={{
             width: 72, height: 72,
-            background: '#c0392b',
+            background: '#005235',
             borderRadius: '50%',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 1rem',
-            boxShadow: '0 4px 16px rgba(192,57,43,0.35)',
-            position: 'relative', overflow: 'hidden',
+            boxShadow: '0 4px 16px rgba(0,82,53,0.35)',
           }}>
             <svg viewBox="0 0 72 72" width="72" height="72">
-              <circle cx="36" cy="36" r="36" fill="#c0392b" />
+              <circle cx="36" cy="36" r="36" fill="#005235" />
               <text x="36" y="29" textAnchor="middle" fill="white" fontSize="11" fontWeight="900" fontFamily="Arial" letterSpacing="1">IMSS</text>
               <line x1="14" y1="58" x2="58" y2="14" stroke="white" strokeWidth="3.5" strokeLinecap="round" />
               <text x="36" y="50" textAnchor="middle" fill="white" fontSize="7.5" fontWeight="700" fontFamily="Arial" letterSpacing="1.5">SEGURO SOCIAL</text>
@@ -186,7 +185,7 @@ export default function LoginScreen() {
             color: '#adb5bd', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.05em',
           }}>
             <svg viewBox="0 0 24 24" width="14" height="14">
-              <circle cx="12" cy="12" r="12" fill="#c0392b" />
+              <circle cx="12" cy="12" r="12" fill="#005235" />
               <text x="12" y="8.5" textAnchor="middle" fill="white" fontSize="4.5" fontWeight="900" fontFamily="Arial">IMSS</text>
               <line x1="5" y1="19" x2="19" y2="5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
