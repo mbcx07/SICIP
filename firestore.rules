@@ -1,62 +1,55 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // ─── Usuarios ───────────────────────────────────────
+    
+    function isAuthenticated() { return request.auth != null; }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'ADMIN';
+    }
+    
+    function isAreaPersonal() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'AREA_PERSONAL';
+    }
+    
+    function isOwner(uid) { return request.auth.uid == uid; }
+    
+    // Usuarios
     match /usuarios/{uid} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null; // Admin only in production
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || isOwner(uid);
     }
-
-    // ─── Trabajadores ───────────────────────────────────
+    
+    // Catálogos (solo lectura para todos)
+    match /unidades/{clave} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    match /tipos_tramite/{id} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
     match /trabajadores/{matricula} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || isAreaPersonal();
     }
-
-    // ─── Unidades ───────────────────────────────────────
-    match /unidades/{unidadId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-    }
-
-    // ─── Tipos de Trámite (catálogo normativo) ──────────
-    match /tipos_tramite/{tipoId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-    }
-
-    // ─── Trámites ────────────────────────────────────────
+    
+    // Trámites
     match /tramites/{tramiteId} {
-      // TRABAJADOR: solo ve sus propios trámites
-      allow read: if request.auth != null
-        && (get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'TRABAJADOR'
-            ? resource.data.solicitanteUid == request.auth.uid
-            : true);
-
-      allow create: if request.auth != null
-        && request.resource.data.solicitanteUid == request.auth.uid;
-
-      allow update: if request.auth != null
-        && (get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol in ['AREA_PERSONAL', 'ADMIN']
-            || resource.data.solicitanteUid == request.auth.uid);
-
-      allow delete: if request.auth != null
-        && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'ADMIN';
+      allow read: if isAuthenticated() && 
+        (isAdmin() || isAreaPersonal() || resource.data.solicitanteUid == request.auth.uid);
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin() || isAreaPersonal();
     }
-
-    // ─── Historial de Estados ───────────────────────────
-    match /historial_estados/{historialId} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null;
-      allow update, delete: if false; // Solo se agrega, no se modifica
-    }
-
-    // ─── Configuración ───────────────────────────────────
-    match /configuracion/{docId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+    
+    // Historial
+    match /historial_estados/{histId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
     }
   }
 }

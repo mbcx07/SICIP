@@ -31,7 +31,7 @@
 }
 
 body {
-  background: linear-gradient(180deg, #f8fbfa 0%, #f8fafc 100%);
+  background: linear-gradient(180deg, #eef5f0 0%, #e8f2ec 50%, #f0f7f3 100%);
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   margin: 0;
@@ -191,3 +191,84 @@ header {
 .mt-4 { margin-top: 1rem; }
 .gap-2 { gap: 0.5rem; }
 .gap-4 { gap: 1rem; }
+
+/* ─── Responsive tables ──────────────────────────────── */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.8rem !important;
+  }
+  th, td {
+    padding: 0.5rem 0.6rem !important;
+  }
+  thead tr:first-child {
+    display: none;
+  }
+  tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.25rem;
+    padding: 0.75rem !important;
+  }
+  tbody tr td:first-child { display: none; }
+  tbody tr td:last-child { display: none; }
+  tbody tr td::before {
+    content: attr(data-label) ": ";
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  tbody tr td[data-label] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+/* ─── Better scroll ────────────────────────────────── */
+@media (max-width: 640px) {
+  main {
+    padding: 0.75rem !important;
+  }
+  h1, h2 { font-size: 1.1rem !important; }
+  .btn-institutional {
+    padding: 0.55rem 0.9rem !important;
+    font-size: 0.82rem !important;
+  }
+}
+
+/* ─── Loading spinner ────────────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Toast ─────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+  pointer-events: none;
+}
+.toast-item {
+  background: var(--text-primary, #1e293b);
+  color: white;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  pointer-events: auto;
+  animation: slideUp 0.25s ease;
+  max-width: 320px;
+}
+.toast-item.success { background: #16a34a; }
+.toast-item.error { background: #dc2626; }
+.toast-item.warning { background: #d97706; }
+@keyframes slideUp {
+  from { transform: translateY(1rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

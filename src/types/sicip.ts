@@ -177,6 +177,7 @@ export interface Tramite {
   solicitanteUid: string;
   solicitanteNombre: string;
   solicitanteRol: Rol;
+  delegacion?: string;
 
   // fechas
   fechaCreacion: string;
