@@ -73,7 +73,7 @@ export default function LoginScreen() {
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem', marginTop: '0.5rem' }}>
-          {/* SICIP Logo — S con dos óvalos entrelazados en verde */}
+          {/* Escudo verde con palomita */}
           <div style={{
             width: 72, height: 72,
             background: 'transparent',
@@ -81,12 +81,12 @@ export default function LoginScreen() {
             margin: '0 auto 1rem',
           }}>
             <svg viewBox="0 0 72 72" width="72" height="72">
-              {/* Óvalo exterior — verde oscuro */}
-              <ellipse cx="36" cy="36" rx="30" ry="20" fill="none" stroke="#005235" strokeWidth="7" />
-              {/* Óvalo interior — verde medio */}
-              <ellipse cx="36" cy="36" rx="20" ry="30" fill="none" stroke="#27ae60" strokeWidth="7" />
-              {/* Centro oscuro para dar efecto entrelazado */}
-              <ellipse cx="36" cy="36" rx="8" ry="8" fill="#0d3b1e" />
+              {/* Escudo verde oscuro */}
+              <path d="M36 6 L62 16 L62 38 Q62 58 36 66 Q10 58 10 38 L10 16 Z" fill="#005235" />
+              {/* Borde claro */}
+              <path d="M36 9 L59 18 L59 38 Q59 55 36 63 Q13 55 13 38 L13 18 Z" fill="none" stroke="#27ae60" strokeWidth="2" />
+              {/* Palomita blanca */}
+              <path d="M28 34 L34 40 L48 26" fill="none" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
 
@@ -185,9 +185,8 @@ export default function LoginScreen() {
             color: '#adb5bd', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.05em',
           }}>
             <svg viewBox="0 0 72 72" width="18" height="18">
-              <ellipse cx="36" cy="36" rx="28" ry="18" fill="none" stroke="#005235" strokeWidth="6" />
-              <ellipse cx="36" cy="36" rx="18" ry="28" fill="none" stroke="#27ae60" strokeWidth="6" />
-              <ellipse cx="36" cy="36" rx="7" ry="7" fill="#0d3b1e" />
+              <path d="M36 6 L62 16 L62 38 Q62 58 36 66 Q10 58 10 38 L10 16 Z" fill="#005235" />
+              <path d="M28 34 L34 40 L48 26" fill="none" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             INSTITUTO MEXICANO DEL SEGURO SOCIAL
           </div>
