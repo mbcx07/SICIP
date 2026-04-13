@@ -15,6 +15,11 @@ import ReportesScreen from './screens/ReportesScreen';
 import PlantillaScreen from './screens/PlantillaScreen';
 import AltaTrabajadorScreen from './screens/AltaTrabajadorScreen';
 import ImportarPlantillaScreen from './screens/ImportarPlantillaScreen';
+import CuadrosScreen from './screens/CuadrosScreen';
+import CrearPlazaScreen from './screens/CrearPlazaScreen';
+import CuadroDetalleScreen from './screens/CuadroDetalleScreen';
+import ExplorarPlazasScreen from './screens/ExplorarPlazasScreen';
+import MisPostulacionesScreen from './screens/MisPostulacionesScreen';
 import Layout from './components/Layout';
 
 export default function App() {
@@ -37,6 +42,11 @@ export default function App() {
             <Route path="alta-trabajador" element={<AltaTrabajadorScreen />} />
             <Route path="importar-plantilla" element={<ImportarPlantillaScreen />} />
             <Route path="admin/*" element={<AdminScreen />} />
+            <Route path="cuadros" element={<CuadrosScreen />} />
+            <Route path="crear-plaza" element={<CrearPlazaScreen />} />
+            <Route path="cuadro/:plazaId" element={<CuadroDetalleScreen />} />
+            <Route path="explorar-plazas" element={<ExplorarPlazasScreen />} />
+            <Route path="mis-postulaciones" element={<MisPostulacionesScreen />} />
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
