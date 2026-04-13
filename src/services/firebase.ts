@@ -84,6 +84,53 @@ export async function resetPassword(email: string) {
   await sendPasswordResetEmail(auth, email);
 }
 
+// ─── Login por matrícula (nuevo sistema) ────────────────────
+import bcrypt from 'bcryptjs';
+
+export async function loginWithMatricula(matricula: string, password: string): Promise<Usuario> {
+  const q = query(collection(db, 'usuarios'), where('matricula', '==', String(matricula).trim()), limit(1));
+  const snap = await getDocs(q);
+  if (snap.empty) throw new Error('MATRICULA_NOT_FOUND');
+  const usuario = snap.docs[0].data() as Usuario;
+  if (!usuario.activo) throw new Error('USUARIO_INACTIVO');
+
+  if (usuario.primerAcceso) {
+    if (password !== String(matricula).trim()) throw new Error('CREDENCIALES_INVALIDAS');
+    await updateDoc(doc(db, 'usuarios', usuario.uid), { primerAcceso: false });
+    return { ...usuario, primerAcceso: false };
+  }
+
+  const storedHash = (usuario as any).passwordHash || '';
+  let valid = false;
+  try { valid = await bcrypt.compare(password, storedHash); } catch { valid = false; }
+  if (!valid) throw new Error('CREDENCIALES_INVALIDAS');
+
+  await updateDoc(doc(db, 'usuarios', usuario.uid), { ultimoAcceso: new Date().toISOString() });
+  return usuario;
+}
+
+export async function setUsuarioPassword(uid: string, newPassword: string): Promise<void> {
+  const hash = await bcrypt.hash(newPassword, 10);
+  await updateDoc(doc(db, 'usuarios', uid), { passwordHash: hash });
+}
+
+export async function resetPasswordByMatricula(matricula: string): Promise<void> {
+  const q = query(collection(db, 'usuarios'), where('matricula', '==', String(matricula).trim()), limit(1));
+  const snap = await getDocs(q);
+  if (snap.empty) throw new Error('MATRICULA_NOT_FOUND');
+  const usuario = snap.docs[0].data() as Usuario;
+  await updateDoc(doc(db, 'usuarios', usuario.uid), {
+    primerAcceso: true,
+    passwordHash: '',
+    email: '',
+  });
+}
+
+export async function getUsuarioByUID(uid: string): Promise<Usuario | null> {
+  const snap = await getDoc(doc(db, 'usuarios', uid));
+  return snap.exists() ? (snap.data() as Usuario) : null;
+}
+
 // ─── Usuarios ─────────────────────────────────────────────
 
 export async function getUsuario(uid: string): Promise<Usuario | null> {

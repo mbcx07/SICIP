@@ -82,13 +82,15 @@ export interface Trabajador {
 // ─── Usuario (Auth) ──────────────────────────────────────
 export interface Usuario {
   uid: string;
-  email: string;
+  email: string;                    // null hasta que personalice en primer acceso
   nombre: string;
   rol: Rol;
-  matricula?: string;           // FK a Trabajador (si es TRABAJADOR o JEFE_SERVICIO)
+  matricula: string;               // FK a Trabajador — login primario
   unidadClave?: string;
   unidadNombre?: string;
   activo: boolean;
+  permisos: string[];              // permisos granulares
+  primerAcceso: boolean;            // true = necesita personalizar email/contraseña
   fechaCreacion: string;
   ultimoAcceso?: string;
 }

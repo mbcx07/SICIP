@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginScreen from './screens/LoginScreen';
+import PrimerAccesoScreen from './screens/PrimerAccesoScreen';
 import MisTramitesScreen from './screens/MisTramitesScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import NuevoTramiteScreen from './screens/NuevoTramiteScreen';
@@ -21,10 +22,11 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/primer-acceso" element={<PrimerAccesoScreen />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
             <Route index element={<DashboardScreen />} />
-          <Route path="mis-tramites" element={<MisTramitesScreen />} />
+            <Route path="mis-tramites" element={<MisTramitesScreen />} />
             <Route path="nuevo-tramite" element={<NuevoTramiteScreen />} />
             <Route path="tramites" element={<TramitesScreen />} />
             <Route path="tramites/:id" element={<TramiteDetalleScreen />} />
