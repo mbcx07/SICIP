@@ -101,6 +101,11 @@ export default function CuadrosScreen() {
     setLoading(false);
   }, []);
 
+  // ── Load data after auth__
+  useEffect(() => {
+    if (usuario) loadData();
+  }, [usuario]);
+
   // ── Load data ───────────────────────────────────────────
   const loadData = useCallback(async () => {
     if (!usuario) return;
@@ -132,10 +137,6 @@ export default function CuadrosScreen() {
       setLoading(false);
     }
   }, [usuario]);
-
-  useEffect(() => {
-    if (usuario) loadData();
-  }, [usuario, loadData]);
 
   // ── Access gate ─────────────────────────────────────────
   const canAccess = usuario && (usuario.rol === Rol.JEFE_SERVICIO || usuario.rol === Rol.ADMIN);
