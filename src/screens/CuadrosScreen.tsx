@@ -82,6 +82,7 @@ export default function CuadrosScreen() {
   const [cuadros, setCuadros] = useState<Record<string, CuadroReemplazo | null>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [tipoFiltro, setTipoFiltro] = useState<'TODAS' | 'CONFIANZA' | 'BASE'>('CONFIANZA');
 
   // ── Auth check ──────────────────────────────────────────
   useEffect(() => {
@@ -329,6 +330,10 @@ export default function CuadrosScreen() {
                       <span style={{ fontSize: '0.8rem', color: '#374151', fontWeight: 500 }}>{plaza.jefeServicioNombre ?? '—'}</span>
                     </div>
                   )}
+                  <div>
+                    <span style={{ fontSize: '0.7rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase' }}>Tipo: </span>
+                    <span style={{ fontSize: '0.8rem', color: plaza.tipoPlaza === 'CONFIANZA' ? '#005235' : '#7c3aed', fontWeight: 700 }}>{plaza.tipoPlaza}</span>
+                  </div>
                   <div>
                     <span style={{ fontSize: '0.7rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase' }}>Motivo: </span>
                     <span style={{ fontSize: '0.8rem', color: '#374151', fontWeight: 500 }}>{MOTIVO_LABEL[plaza.motivo] ?? plaza.motivo}</span>
