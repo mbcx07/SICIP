@@ -31,6 +31,11 @@ function getMenuItems(usuario: Usuario | null) {
   if (p.includes('bandeja') || isAdmin) {
     items.push({ key: '/bandeja', label: 'Bandeja', icon: <ClipboardList size={20} /> });
   }
+  if (p.includes('cuadros') || isAdmin || usuario.rol === 'JEFE_SERVICIO') {
+    items.push({ key: '/cuadros', label: 'Cuadros Reemplazo', icon: <Users size={20} /> });
+    items.push({ key: '/crear-plaza', label: 'Crear Plaza', icon: <PlusCircle size={20} /> });
+    items.push({ key: '/explorar-plazas', label: 'Explorar Plazas', icon: <Briefcase size={20} /> });
+  }
   if (p.includes('recepciones') || isAdmin) {
     items.push({ key: '/recepciones', label: 'Recepciones', icon: <Building2 size={20} /> });
   }

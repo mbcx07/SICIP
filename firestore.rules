@@ -1,55 +1,47 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
+
     function isAuthenticated() { return request.auth != null; }
-    
-    function isAdmin() {
-      return isAuthenticated() && 
-        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'ADMIN';
-    }
-    
-    function isAreaPersonal() {
-      return isAuthenticated() && 
-        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'AREA_PERSONAL';
-    }
-    
-    function isOwner(uid) { return request.auth.uid == uid; }
-    
-    // Usuarios
+
+    // Usuarios: propio o admin
     match /usuarios/{uid} {
       allow read: if isAuthenticated();
-      allow write: if isAdmin() || isOwner(uid);
+      allow write: if false;
     }
-    
-    // Catálogos (solo lectura para todos)
+
+    // Catálogos y trámites: solo lectura para todos los autenticados
     match /unidades/{clave} {
       allow read: if isAuthenticated();
-      allow write: if isAdmin();
+      allow write: if false;
     }
-    
     match /tipos_tramite/{id} {
       allow read: if isAuthenticated();
-      allow write: if isAdmin();
+      allow write: if false;
     }
-    
     match /trabajadores/{matricula} {
       allow read: if isAuthenticated();
-      allow write: if isAdmin() || isAreaPersonal();
+      allow write: if false;
     }
-    
-    // Trámites
     match /tramites/{tramiteId} {
-      allow read: if isAuthenticated() && 
-        (isAdmin() || isAreaPersonal() || resource.data.solicitanteUid == request.auth.uid);
-      allow create: if isAuthenticated();
-      allow update, delete: if isAdmin() || isAreaPersonal();
+      allow read: if isAuthenticated();
+      allow write: if false;
     }
-    
-    // Historial
     match /historial_estados/{histId} {
       allow read: if isAuthenticated();
-      allow write: if isAuthenticated();
+      allow write: if false;
+    }
+    match /plazas_reemplazo/{id} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+    match /cuadros_reemplazo/{id} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+    match /postulaciones_reemplazo/{id} {
+      allow read: if isAuthenticated();
+      allow write: if false;
     }
   }
 }

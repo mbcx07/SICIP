@@ -40,9 +40,9 @@ export default function LoginScreen() {
       }
     } catch (err: any) {
       const msg = err.message || '';
-      if (msg === 'MATRICULA_NOT_FOUND') setError('Matrícula no encontrada');
+      if (msg === 'USUARIO_NOT_FOUND') setError('Usuario no encontrado');
       else if (msg === 'USUARIO_INACTIVO') setError('Usuario inactivo');
-      else if (msg === 'CREDENCIALES_INVALIDAS') setError('Matrícula o contraseña incorrectos');
+      else if (msg === 'MATRICULA_NOT_FOUND') setError('Correo o contraseña incorrectos');
       else setError('Error al iniciar sesión');
     } finally {
       setLoading(false);
@@ -114,8 +114,8 @@ export default function LoginScreen() {
               value={matricula}
               onChange={e => setMatricula(e.target.value.replace(/\D/g, ''))}
               placeholder="Ej. 4359"
-              maxLength={10}
               inputMode="numeric"
+              maxLength={10}
               required
               style={{
                 width: '100%', padding: '0.75rem 1rem',
@@ -137,7 +137,7 @@ export default function LoginScreen() {
                 type={showPw ? 'text' : 'password'}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder="Tu contraseña"
+                placeholder="Ej. 4359"
                 required
                 style={{
                   width: '100%', padding: '0.75rem 1rem', paddingRight: '3.5rem',
