@@ -45,6 +45,15 @@ export async function getPlazasAbiertas(): Promise<PlazaReemplazo[]> {
   return snap.docs.map(d => ({ id: d.id, ...d.data() } as PlazaReemplazo));
 }
 
+export async function getPlazasTodas(): Promise<PlazaReemplazo[]> {
+  const q = query(
+    collection(db, 'plazas_reemplazo'),
+    orderBy('fechaCreacion', 'desc')
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() } as PlazaReemplazo));
+}
+
 export async function getPlazasPorUnidad(unidadClave: string): Promise<PlazaReemplazo[]> {
   const q = query(
     collection(db, 'plazas_reemplazo'),

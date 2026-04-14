@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { PlazaReemplazo, CuadroReemplazo } from '../types/reemplazos';
 import type { Usuario } from '../types/sicip';
 import { Rol } from '../types/sicip';
-import { getPlazasPorJefe, getCuadroPorPlaza } from '../services/reemplazos';
+import { getPlazasPorJefe, getCuadroPorPlaza, getPlazasTodas } from '../services/reemplazos';
 
 const MOTIVO_LABEL: Record<string, string> = {
   LICENCIA: 'Licencia',
@@ -102,11 +102,14 @@ export default function CuadrosScreen() {
 
   // ── Load data ───────────────────────────────────────────
   const loadData = useCallback(async () => {
-    if (!usuario || usuario.rol !== Rol.JEFE_SERVICIO) return;
+    if (!usuario) return;
     setLoading(true);
     setError(null);
     try {
-      const plazasData = await getPlazasPorJefe(usuario.uid);
+      const plazasData =
+        (usuario.rol === Rol.ADMIN)
+          ? await getPlazasTodas()
+          : await getPlazasPorJefe(usuario.uid);
       setPlazas(plazasData);
 
       // Load associated cuadros in parallel
@@ -134,13 +137,14 @@ export default function CuadrosScreen() {
   }, [usuario, loadData]);
 
   // ── Access gate ─────────────────────────────────────────
-  if (!loading && (!usuario || usuario.rol !== Rol.JEFE_SERVICIO)) {
+  const canAccess = usuario && (usuario.rol === Rol.JEFE_SERVICIO || usuario.rol === Rol.ADMIN);
+  if (!loading && !canAccess) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 320, gap: 12 }}>
         <div style={{ fontSize: '3rem' }}>🔒</div>
         <h2 style={{ margin: 0, color: '#374151', fontSize: '1.1rem' }}>Acceso restringido</h2>
         <p style={{ margin: 0, color: '#6b7280', fontSize: '0.875rem', textAlign: 'center', maxWidth: 320 }}>
-          Esta sección está disponible únicamente para Jefes de Servicio.
+          Esta sección está disponible para Jefes de Servicio y Administradores.
         </p>
       </div>
     );
@@ -167,10 +171,12 @@ export default function CuadrosScreen() {
       }}>
         <div>
           <h2 style={{ margin: 0, color: '#fff', fontSize: '1.2rem', fontWeight: 800 }}>
-            Mis Cuadros de Reemplazo
+            {usuario.rol === Rol.ADMIN ? 'Todos los Cuadros de Reemplazo' : 'Mis Cuadros de Reemplazo'}
           </h2>
           <p style={{ margin: '3px 0 0', color: 'rgba(255,255,255,0.75)', fontSize: '0.78rem' }}>
-            {plazas.length} plaza{plazas.length !== 1 ? 's' : ''} asignada{plazas.length !== 1 ? 's' : ''} a tu cargo
+            {usuario.rol === Rol.ADMIN
+              ? `${plazas.length} plaza${plazas.length !== 1 ? 's' : ''} en el sistema`
+              : `${plazas.length} plaza${plazas.length !== 1 ? 's' : ''} asignada${plazas.length !== 1 ? 's' : ''} a tu cargo`}
           </p>
         </div>
         <button
@@ -317,6 +323,12 @@ export default function CuadrosScreen() {
                     <span style={{ fontSize: '0.7rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase' }}>Ausente: </span>
                     <span style={{ fontSize: '0.8rem', color: '#374151', fontWeight: 500 }}>{plaza.nombreAusente}</span>
                   </div>
+                  {usuario.rol === Rol.ADMIN && (
+                    <div>
+                      <span style={{ fontSize: '0.7rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase' }}>Jefe: </span>
+                      <span style={{ fontSize: '0.8rem', color: '#374151', fontWeight: 500 }}>{plaza.jefeServicioNombre ?? '—'}</span>
+                    </div>
+                  )}
                   <div>
                     <span style={{ fontSize: '0.7rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase' }}>Motivo: </span>
                     <span style={{ fontSize: '0.8rem', color: '#374151', fontWeight: 500 }}>{MOTIVO_LABEL[plaza.motivo] ?? plaza.motivo}</span>
