@@ -7,7 +7,8 @@ import {
 import { db } from './firebase';
 import type {
   PlazaReemplazo, CuadroReemplazo, PostulacionReemplazo,
-  CandidatoReemplazo, ConvocatoriaReemplazo
+  CandidatoReemplazo, ConvocatoriaReemplazo,
+  HistorialReemplazo, NotificacionSICIP, ResultadoValidacion
 } from '../types/reemplazos';
 
 // ─── Plazas de Reemplazo ──────────────────────────────────
@@ -286,4 +287,144 @@ export async function buscarTrabajadores(termino: string): Promise<{matricula: s
       area: t.area || '',
       tipoContrato: t.tipoContrato || '',
     }));
+}
+
+// ─── Historial ────────────────────────────────────────────
+export async function agregarHistorial(data: Omit<HistorialReemplazo, 'id'>): Promise<string> {
+  const ref = await addDoc(collection(db, 'historial_reemplazo'), data);
+  return ref.id;
+}
+
+export async function getHistorialPorPlaza(plazaId: string): Promise<HistorialReemplazo[]> {
+  const q = query(collection(db, 'historial_reemplazo'), where('plazaId', '==', plazaId), orderBy('fecha', 'asc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() } as HistorialReemplazo));
+}
+
+// ─── Notificaciones ──────────────────────────────────────
+export async function crearNotificacion(data: Omit<NotificacionSICIP, 'id'>): Promise<string> {
+  const ref = await addDoc(collection(db, 'notificaciones_sicip'), data);
+  return ref.id;
+}
+
+export async function getNotificacionesPorUsuario(uid: string): Promise<NotificacionSICIP[]> {
+  const q = query(collection(db, 'notificaciones_sicip'), where('destinatarioUid', '==', uid), orderBy('fecha', 'desc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() } as NotificacionSICIP));
+}
+
+export async function getNotificacionesNoLeidas(uid: string): Promise<NotificacionSICIP[]> {
+  const q = query(collection(db, 'notificaciones_sicip'), where('destinatarioUid', '==', uid), where('leida', '==', false), orderBy('fecha', 'desc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() } as NotificacionSICIP));
+}
+
+export async function marcarNotificacionLeida(id: string): Promise<void> {
+  await updateDoc(doc(db, 'notificaciones_sicip', id), { leida: true });
+}
+
+export async function marcarTodasLeidas(uid: string): Promise<void> {
+  const q = query(collection(db, 'notificaciones_sicip'), where('destinatarioUid', '==', uid), where('leida', '==', false));
+  const snap = await getDocs(q);
+  for (const d of snap.docs) {
+    await updateDoc(doc(db, 'notificaciones_sicip', d.id), { leida: true });
+  }
+}
+
+// ─── Approval Flow ───────────────────────────────────────
+export async function proponerTerna(plazaId: string, uid: string, nombre: string): Promise<void> {
+  await updateDoc(doc(db, 'plazas_reemplazo', plazaId), {
+    status: 'TERNA_PROPUESTA',
+    fechaActualizacion: new Date().toISOString(),
+  });
+  await agregarHistorial({ plazaId, accion: 'TERNA_PROPUESTA', usuarioUid: uid, usuarioNombre: nombre, usuarioRol: 'JEFE_SERVICIO', fecha: new Date().toISOString() });
+  // Notify AREA_PERSONAL users
+  const apUsers = await getDocs(query(collection(db, 'usuarios'), where('rol', '==', 'AREA_PERSONAL'), where('activo', '==', true)));
+  for (const u of apUsers.docs) {
+    await crearNotificacion({
+      destinatarioUid: u.id, destinatarioRol: 'AREA_PERSONAL', tipo: 'TERNA_LISTA', plazaId,
+      mensaje: `Terna lista para revisión en plaza ${plazaId}`, leida: false, fecha: new Date().toISOString(), accionUrl: `/cuadro/${plazaId}`,
+    });
+  }
+}
+
+export async function revisarTernaAP(plazaId: string, accion: 'VALIDAR' | 'DEVOLVER', uid: string, nombre: string, observaciones?: string): Promise<void> {
+  if (accion === 'VALIDAR') {
+    await updateDoc(doc(db, 'plazas_reemplazo', plazaId), {
+      status: 'VALIDADA_AP', validadaPorUid: uid, validadaPorNombre: nombre, validadaFecha: new Date().toISOString(), observacionesAP: observaciones || '',
+    });
+    await agregarHistorial({ plazaId, accion: 'VALIDADA_AP', usuarioUid: uid, usuarioNombre: nombre, usuarioRol: 'AREA_PERSONAL', fecha: new Date().toISOString(), observaciones });
+    // Notify ADMIN/DELEGACION
+    const adminUsers = await getDocs(query(collection(db, 'usuarios'), where('rol', '==', 'ADMIN'), where('activo', '==', true)));
+    for (const u of adminUsers.docs) {
+      await crearNotificacion({ destinatarioUid: u.id, destinatarioRol: 'ADMIN', tipo: 'TERNA_VALIDADA', plazaId, mensaje: `Terna validada, lista para enviar a Delegación`, leida: false, fecha: new Date().toISOString(), accionUrl: `/cuadro/${plazaId}` });
+    }
+  } else {
+    await updateDoc(doc(db, 'plazas_reemplazo', plazaId), {
+      status: 'DEVUELTA_AP', observacionesAP: observaciones || '',
+    });
+    await agregarHistorial({ plazaId, accion: 'DEVUELTA_AP', usuarioUid: uid, usuarioNombre: nombre, usuarioRol: 'AREA_PERSONAL', fecha: new Date().toISOString(), observaciones });
+    // Get plaza to find jefe
+    const plazaSnap = await getDoc(doc(db, 'plazas_reemplazo', plazaId));
+    if (plazaSnap.exists()) {
+      const plaza = plazaSnap.data() as PlazaReemplazo;
+      await crearNotificacion({ destinatarioUid: plaza.jefeServicioUid, destinatarioRol: 'JEFE_SERVICIO', tipo: 'TERNA_DEVUELTA', plazaId, mensaje: observaciones || 'Su terna fue devuelta con observaciones', leida: false, fecha: new Date().toISOString(), accionUrl: `/cuadro/${plazaId}` });
+    }
+  }
+}
+
+export async function enviarADelegacion(plazaId: string, uid: string, nombre: string): Promise<void> {
+  await updateDoc(doc(db, 'plazas_reemplazo', plazaId), {
+    status: 'ENVIADA_DELEGACION', enviadaDelegacionPorUid: uid, enviadaDelegacionPorNombre: nombre, enviadaDelegacionFecha: new Date().toISOString(),
+  });
+  await agregarHistorial({ plazaId, accion: 'ENVIADA_DELEGACION', usuarioUid: uid, usuarioNombre: nombre, usuarioRol: 'AREA_PERSONAL', fecha: new Date().toISOString() });
+}
+
+export async function resolverDelegacion(plazaId: string, aprobado: boolean, uid: string, nombre: string, observaciones?: string): Promise<void> {
+  if (aprobado) {
+    await updateDoc(doc(db, 'plazas_reemplazo', plazaId), {
+      status: 'CUBIERTA', resueltaPorUid: uid, resueltaPorNombre: nombre, resueltaFecha: new Date().toISOString(), ternaCerrada: true, fechaCierre: new Date().toISOString(), cerradoPorUid: uid, cerradoPorNombre: nombre,
+    });
+    await agregarHistorial({ plazaId, accion: 'DESIGNACION_APROBADA', usuarioUid: uid, usuarioNombre: nombre, usuarioRol: 'ADMIN', fecha: new Date().toISOString(), observaciones });
+  } else {
+    await updateDoc(doc(db, 'plazas_reemplazo', plazaId), {
+      status: 'DEVUELTA_AP', motivoRechazo: observaciones || '',
+    });
+    await agregarHistorial({ plazaId, accion: 'DESIGNACION_RECHAZADA', usuarioUid: uid, usuarioNombre: nombre, usuarioRol: 'ADMIN', fecha: new Date().toISOString(), observaciones });
+  }
+}
+
+// ─── Validaciones ──────────────────────────────────────────
+export async function validarCandidato(matricula: string, plazaId: string): Promise<ResultadoValidacion[]> {
+  const resultados: ResultadoValidacion[] = [];
+  // Check if already in another active terna
+  const ternasActivas = await getDocs(query(collection(db, 'cuadros_reemplazo'), where('status', 'in', ['BORRADOR', 'COMPLETO'])));
+  const enOtraTerna = ternasActivas.docs.some(d => {
+    const c = d.data() as CuadroReemplazo;
+    return c.candidatos?.some(ca => ca.matricula === matricula) && c.plazaId !== plazaId;
+  });
+  if (enOtraTerna) {
+    resultados.push({ tipo: 'BLOQUEANTE', campo: 'terna_activa', mensaje: 'Este trabajador ya está en otra terna activa', detalle: 'No puede estar en dos ternas simultáneamente' });
+  }
+  // Get plaza for requirements
+  const plazaSnap = await getDoc(doc(db, 'plazas_reemplazo', plazaId));
+  if (plazaSnap.exists()) {
+    const plaza = plazaSnap.data() as PlazaReemplazo;
+    // Check if contract ends before absence
+    const trabajadorSnap = await getDocs(query(collection(db, 'trabajadores'), where('matricula', '==', matricula), limit(1)));
+    if (!trabajadorSnap.empty) {
+      const trab = trabajadorSnap.docs[0].data();
+      if (trab.fechaVencimientoContrato && plaza.fechaFinAusencia && trab.fechaVencimientoContrato < plaza.fechaFinAusencia) {
+        resultados.push({ tipo: 'ADVERTENCIA', campo: 'contrato', mensaje: 'El contrato del trabajador vence antes del periodo de reemplazo', detalle: `Contrato vence: ${trab.fechaVencimientoContrato}` });
+      }
+      // Check escolaridad
+      if (plaza.escolaridadMinima && trab.escolaridad && !trab.escolaridad.includes(plaza.escolaridadMinima)) {
+        resultados.push({ tipo: 'ADVERTENCIA', campo: 'escolaridad', mensaje: 'No cumple con la escolaridad mínima requerida', detalle: `Requerida: ${plaza.escolaridadMinima}, Tiene: ${trab.escolaridad}` });
+      }
+    }
+  }
+  if (resultados.length === 0) {
+    resultados.push({ tipo: 'OK', campo: 'general', mensaje: 'Sin observaciones' });
+  }
+  return resultados;
 }

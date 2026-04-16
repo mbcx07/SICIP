@@ -5,7 +5,7 @@ import { Rol } from '../types/sicip';
 import {
   LayoutDashboard, FileText, PlusCircle, ClipboardList, Building2,
   Filter, Upload, Users, ShieldCheck, LogOut, ChevronRight, Briefcase,
-  Home, Menu, X, UserPlus
+  Home, Menu, X, UserPlus, Bell
 } from 'lucide-react';
 import { ROL_LABELS, OOAD_NOMBRE, INSTITUCION_NOMBRE } from '../constants/sicip';
 
@@ -35,6 +35,11 @@ function getMenuItems(usuario: Usuario | null) {
     items.push({ key: '/cuadros', label: 'Cuadros Reemplazo', icon: <Users size={20} /> });
     items.push({ key: '/crear-plaza', label: 'Crear Plaza', icon: <PlusCircle size={20} /> });
     items.push({ key: '/explorar-plazas', label: 'Explorar Plazas', icon: <Briefcase size={20} /> });
+  }
+  // Notificaciones y Aprobaciones
+  items.push({ key: '/notificaciones', label: 'Notificaciones', icon: <Bell size={20} /> });
+  if (p.includes('cuadros') || isAdmin || usuario.rol === 'AREA_PERSONAL') {
+    items.push({ key: '/aprobacion', label: 'Aprobaciones', icon: <ShieldCheck size={20} /> });
   }
   if (p.includes('recepciones') || isAdmin) {
     items.push({ key: '/recepciones', label: 'Recepciones', icon: <Building2 size={20} /> });
@@ -142,6 +147,9 @@ export default function Layout() {
           <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.9rem', flexShrink: 0 }}>
             {user.nombre?.charAt(0).toUpperCase()}
           </div>
+          <button onClick={() => navigate('/notificaciones')} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: '0.5rem', padding: '0.5rem', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center', position: 'relative' }}>
+            <Bell size={18} />
+          </button>
           <button onClick={handleLogout}
             style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: '0.5rem', padding: '0.5rem', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center' }}
             title="Cerrar sesión">

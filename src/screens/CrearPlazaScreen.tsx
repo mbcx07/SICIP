@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { crearPlazaReemplazo, crearCuadroReemplazo } from '../services/reemplazos';
+import { EstatusPlaza } from '../types/reemplazos';
 import type { PlazaReemplazo } from '../types/reemplazos';
 import type { Usuario } from '../types/sicip';
 
@@ -57,7 +58,7 @@ export default function CrearPlazaScreen() {
         matriculaAusente: form.matriculaAusente,
         fechaInicioAusencia: form.fechaInicioAusencia,
         fechaFinAusencia: form.fechaFinAusencia,
-        status: 'ABIERTA',
+        status: EstatusPlaza.ABIERTA,
         ternaCerrada: false,
       };
       const plazaId = await crearPlazaReemplazo(plazaData);

@@ -20,6 +20,8 @@ import CrearPlazaScreen from './screens/CrearPlazaScreen';
 import CuadroDetalleScreen from './screens/CuadroDetalleScreen';
 import ExplorarPlazasScreen from './screens/ExplorarPlazasScreen';
 import MisPostulacionesScreen from './screens/MisPostulacionesScreen';
+import NotificacionesScreen from './screens/NotificacionesScreen';
+import AprobacionScreen from './screens/AprobacionScreen';
 import Layout from './components/Layout';
 
 export default function App() {
@@ -47,6 +49,8 @@ export default function App() {
             <Route path="cuadro/:plazaId" element={<CuadroDetalleScreen />} />
             <Route path="explorar-plazas" element={<ExplorarPlazasScreen />} />
             <Route path="mis-postulaciones" element={<MisPostulacionesScreen />} />
+            <Route path="notificaciones" element={<NotificacionesScreen />} />
+            <Route path="aprobacion" element={<AprobacionScreen />} />
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
