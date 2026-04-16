@@ -36,3 +36,4 @@ seed-*.cjs
 test-*.cjs
 firebase-debug.log*
 firestore-debug.log*
+.env
