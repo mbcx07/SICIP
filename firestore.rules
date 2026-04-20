@@ -4,10 +4,10 @@ service cloud.firestore {
 
     function isAuthenticated() { return request.auth != null; }
 
-    // Usuarios: propio o admin
+    // Usuarios: lectura libre para login, escritura solo autenticada
     match /usuarios/{uid} {
-      allow read: if isAuthenticated();
-      allow write: if false;
+      allow read: if true;  // Necesario para login con matrícula (no hay Firebase Auth previo)
+      allow write: if isAuthenticated();
     }
 
     // Catálogos y trámites: solo lectura para todos los autenticados
