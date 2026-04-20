@@ -164,6 +164,14 @@ export async function getUsuarios(): Promise<Usuario[]> {
   return snap.docs.map(d => d.data() as Usuario);
 }
 
+export async function getUsuariosPaginated(searchTerm?: string, pageSize = 100): Promise<{usuarios: Usuario[], hasMore: boolean}> {
+  const q = query(collection(db, 'usuarios'), orderBy('matricula'), limit(pageSize + 1));
+  const snap = await getDocs(q);
+  const docs = snap.docs.map(d => d.data() as Usuario);
+  const hasMore = docs.length > pageSize;
+  return { usuarios: hasMore ? docs.slice(0, pageSize) : docs, hasMore };
+}
+
 export async function getUsuariosByRol(rol: Rol): Promise<Usuario[]> {
   const q = query(collection(db, 'usuarios'), where('rol', '==', rol), where('activo', '==', true));
   const snap = await getDocs(q);

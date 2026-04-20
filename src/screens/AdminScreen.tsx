@@ -5,7 +5,7 @@ import {
   PlayCircle, CheckCircle2, Save, Search, FileSpreadsheet, UserCog, Trash,
 } from 'lucide-react';
 import type { Usuario } from '../types/sicip';
-import { getUsuarios, crearUsuario, actualizarUsuario } from '../services/firebase';
+import { getUsuariosPaginated, crearUsuario, actualizarUsuario } from '../services/firebase';
 import { getUnidades, saveUnidad, getTrabajadores, saveTrabajador } from '../services/firebase';
 import { Rol } from '../types/sicip';
 import { db } from '../services/firebase';
@@ -55,20 +55,37 @@ export default function AdminScreen() {
 
   // Search
   const [searchTerm, setSearchTerm] = useState('');
+  const [usuariosPage, setUsuariosPage] = useState(1);
+  const [hasMoreUsuarios, setHasMoreUsuarios] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const PAGE_SIZE = 100;
 
   const loadAll = useCallback(async () => {
     setLoading(true);
     try {
-      const [u, un, tr] = await Promise.all([
-        getUsuarios(),
+      const [uResult, un, tr] = await Promise.all([
+        getUsuariosPaginated(undefined, PAGE_SIZE),
         getUnidades(),
         getTrabajadores(),
       ]);
-      setUsuarios(u);
+      setUsuarios(uResult.usuarios);
+      setHasMoreUsuarios(uResult.hasMore);
+      setUsuariosPage(1);
       setUnidades(un);
       setTrabajadores(tr);
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
+  }, []);
+
+  const loadMoreUsuarios = useCallback(async () => {
+    setLoadingMore(true);
+    try {
+      const result = await getUsuariosPaginated(undefined, PAGE_SIZE);
+      setUsuarios(prev => [...prev, ...result.usuarios]);
+      setHasMoreUsuarios(result.hasMore);
+      setUsuariosPage(prev => prev + 1);
+    } catch (e) { console.error(e); }
+    finally { setLoadingMore(false); }
   }, []);
 
   useEffect(() => { loadAll(); }, [loadAll]);
@@ -254,6 +271,17 @@ export default function AdminScreen() {
               </tbody>
             </table>
             {filteredUsuarios.length === 0 && <p style={{ padding: '2rem', textAlign: 'center', color: '#9ca3af' }}>No se encontraron usuarios</p>}
+            {hasMoreUsuarios && (
+              <div style={{ textAlign: 'center', padding: '0.75rem' }}>
+                <button
+                  onClick={loadMoreUsuarios}
+                  disabled={loadingMore}
+                  style={{ padding: '0.5rem 1.5rem', background: '#005235', color: 'white', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: '0.82rem', cursor: loadingMore ? 'wait' : 'pointer', opacity: loadingMore ? 0.7 : 1 }}
+                >
+                  {loadingMore ? 'Cargando...' : 'Cargar más'}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
