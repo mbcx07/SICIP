@@ -1,0 +1,100 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "plazas_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "jefeServicioUid", "order": "ASCENDING" },
+        { "fieldPath": "fechaCreacion", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "plazas_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "fechaCreacion", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "plazas_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "unidadClave", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "fechaCreacion", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "historial_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "plazaId", "order": "ASCENDING" },
+        { "fieldPath": "fecha", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "notificaciones_sicip",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "destinatarioUid", "order": "ASCENDING" },
+        { "fieldPath": "fecha", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "notificaciones_sicip",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "destinatarioUid", "order": "ASCENDING" },
+        { "fieldPath": "leida", "order": "ASCENDING" },
+        { "fieldPath": "fecha", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "trabajadores",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "unidadClave", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "postulaciones_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "plazaId", "order": "ASCENDING" },
+        { "fieldPath": "fechaPostulacion", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "postulaciones_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "trabajadorMatricula", "order": "ASCENDING" },
+        { "fieldPath": "fechaPostulacion", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "postulaciones_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "plazaId", "order": "ASCENDING" },
+        { "fieldPath": "matricula", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "cuadros_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "plazaId", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "plazas_reemplazo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "ternaCerrada", "order": "ASCENDING" }
+      ]
+    }
+  ]
+}

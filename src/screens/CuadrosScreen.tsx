@@ -53,29 +53,44 @@ export default function CuadrosScreen() {
   const [error, setError] = useState<string | null>(null);
   const [filtroStatus, setFiltroStatus] = useState<string>('TODAS');
 
-  useEffect(() => {
-    const stored = sessionStorage.getItem('sicip_usuario');
-    if (!stored) { setUsuario(null); setLoading(false); return; }
-    try { setUsuario(JSON.parse(stored) as Usuario); } catch { setUsuario(null); }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => { if (usuario) loadData(); }, [usuario]);
-
-  const loadData = useCallback(async () => {
-    if (!usuario) return;
+  const loadData = useCallback(async (u: Usuario) => {
     setLoading(true); setError(null);
     try {
-      const plazasData = usuario.rol === Rol.ADMIN ? await getPlazasTodas() : await getPlazasPorJefe(usuario.uid);
+      const plazasData = u.rol === Rol.ADMIN ? await getPlazasTodas() : await getPlazasPorJefe(u.uid);
       setPlazas(plazasData);
       const resultados: Record<string, CuadroReemplazo | null> = {};
       await Promise.all(plazasData.map(async (p) => {
         try { resultados[p.id] = await getCuadroPorPlaza(p.id); } catch { resultados[p.id] = null; }
       }));
       setCuadros(resultados);
-    } catch (e) { console.error(e); setError('No se pudieron cargar los cuadros de reemplazo.'); }
+    } catch (e: any) {
+      console.error(e);
+      const msg = e?.message || '';
+      if (msg.includes('index') || msg.includes('requires an index') || e?.code === 'FAILED_PRECONDITION') {
+        setError('Error de configuración: La base de datos requiere índices. Contacta al administrador para crearlos en la consola de Firebase.');
+      } else {
+        setError('No se pudieron cargar los cuadros de reemplazo: ' + (e?.message || 'Error desconocido'));
+      }
+    }
     finally { setLoading(false); }
-  }, [usuario]);
+  }, []);
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem('sicip_usuario');
+    if (!stored) {
+      setUsuario(null);
+      setLoading(false);
+      return;
+    }
+    try {
+      const u = JSON.parse(stored) as Usuario;
+      setUsuario(u);
+      loadData(u);
+    } catch {
+      setUsuario(null);
+      setLoading(false);
+    }
+  }, [loadData]);
 
   const canAccess = usuario && (usuario.rol === Rol.JEFE_SERVICIO || usuario.rol === Rol.ADMIN || usuario.rol === 'AREA_PERSONAL');
   if (!loading && !canAccess) {
