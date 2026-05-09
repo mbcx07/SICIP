@@ -101,21 +101,47 @@ export async function getCuadroPorPlaza(plazaId: string): Promise<CuadroReemplaz
   return snap.empty ? null : ({ id: snap.docs[0].id, ...snap.docs[0].data() } as CuadroReemplazo);
 }
 
+export async function getTodosCuadros(): Promise<CuadroReemplazo[]> {
+  // Batch query: obtiene todos los cuadros en 1-2 llamadas en vez de N+1
+  const q = query(
+    collection(db, 'cuadros_reemplazo'),
+    orderBy('fechaCreacion', 'desc')
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() } as CuadroReemplazo));
+}
+
 export async function getCuadro(id: string): Promise<CuadroReemplazo | null> {
   const snap = await getDoc(doc(db, 'cuadros_reemplazo', id));
   return snap.exists() ? (snap.data() as CuadroReemplazo) : null;
 }
 
 export async function getCuadrosPorJefe(jefeUid: string): Promise<CuadroReemplazo[]> {
-  // Busca cuadros cuyas plazas pertenezcan al jefe
-  const q = query(
-    collection(db, 'cuadros_reemplazo'),
-    orderBy('fechaCreacion', 'desc'),
-    limit(100)
-  );
-  const snap = await getDocs(q);
-  // Filtrar lado cliente por ahora (requiere join con plazas)
-  return snap.docs.map(d => ({ id: d.id, ...d.data() } as CuadroReemplazo));
+  // Obtener las plazas del jefe primero
+  const plazasSnap = await getDocs(query(
+    collection(db, 'plazas_reemplazo'),
+    where('jefeServicioUid', '==', jefeUid)
+  ));
+  const plazaIds = new Set(plazasSnap.docs.map(d => d.id));
+
+  if (plazaIds.size === 0) return [];
+
+  // Buscar cuadros cuyo plazaId esté en la lista de plazas del jefe
+  // Firestore 'in' admite hasta 30 valores, hacemos batches
+  const plazaIdArr = Array.from(plazaIds);
+  const cuadros: CuadroReemplazo[] = [];
+
+  for (let i = 0; i < plazaIdArr.length; i += 30) {
+    const batch = plazaIdArr.slice(i, i + 30);
+    const snap = await getDocs(query(
+      collection(db, 'cuadros_reemplazo'),
+      where('plazaId', 'in', batch),
+      orderBy('fechaCreacion', 'desc')
+    ));
+    cuadros.push(...snap.docs.map(d => ({ id: d.id, ...d.data() } as CuadroReemplazo)));
+  }
+
+  return cuadros;
 }
 
 export async function actualizarCuadroReemplazo(id: string, data: Partial<CuadroReemplazo>): Promise<void> {
@@ -133,8 +159,11 @@ export async function agregarCandidatoACuadro(
   if (!cuadro) return;
   const candidatos = [...(cuadro.candidatos || []), candidato].sort((a, b) => a.posicion - b.posicion);
   const completo = candidatos.length >= 1;
+  // Guardar candidatosMatriculas para búsquedas indexadas (array-contains)
+  const candidatosMatriculas = candidatos.map(c => c.matricula);
   await actualizarCuadroReemplazo(cuadroId, {
     candidatos,
+    candidatosMatriculas,
     status: completo ? 'COMPLETO' : 'BORRADOR',
     notificacionPendiente: !completo,
   });
@@ -144,8 +173,10 @@ export async function quitarCandidatoDeCuadro(cuadroId: string, posicion: 1 | 2 
   const cuadro = await getCuadro(cuadroId);
   if (!cuadro) return;
   const candidatos = cuadro.candidatos.filter(c => c.posicion !== posicion);
+  const candidatosMatriculas = candidatos.map(c => c.matricula);
   await actualizarCuadroReemplazo(cuadroId, {
     candidatos,
+    candidatosMatriculas,
     status: candidatos.length >= 1 ? 'COMPLETO' : 'BORRADOR',
     notificacionPendiente: candidatos.length < 1,
   });
@@ -268,26 +299,81 @@ export async function saveConvocatoria(data: Omit<ConvocatoriaReemplazo, 'id'>):
   return ref.id;
 }
 
-// ─── Búsqueda de trabajadores (para autocompletar) ─────────
-
+// ─── Búsqueda de trabajadores optimizada ────────────────────
 export async function buscarTrabajadores(termino: string): Promise<{matricula: string; nombre: string; area: string; tipoContrato: string}[]> {
-  // Búsqueda simple por matrícula o nombre
-  const snap = await getDocs(
-    query(collection(db, 'trabajadores'), limit(20))
-  );
-  return snap.docs
-    .map(d => d.data())
-    .filter(t =>
-      t.matricula?.includes(termino) ||
-      (`${t.nombre} ${t.apellidoPaterno} ${t.apellidoMaterno}`).toLowerCase().includes(termino.toLowerCase())
-    )
-    .map(t => ({
+  const term = termino.trim();
+  if (term.length < 2) return [];
+
+  // 1) Búsqueda por prefijo de matrícula (usa índice Firestore)
+  const byMatricula = await getDocs(query(
+    collection(db, 'trabajadores'),
+    where('matricula', '>=', term),
+    where('matricula', '<=', term + '\uf8ff'),
+    limit(20)
+  ));
+
+  const results = new Map<string, {matricula: string; nombre: string; area: string; tipoContrato: string}>();
+
+  for (const d of byMatricula.docs) {
+    const t = d.data();
+    results.set(t.matricula, {
       matricula: t.matricula,
       nombre: `${t.nombre} ${t.apellidoPaterno} ${t.apellidoMaterno}`,
       area: t.area || '',
       tipoContrato: t.tipoContrato || '',
-    }));
+    });
+  }
+
+  // 2) Búsqueda por nombre si hay pocos resultados (requiere campo nombreSearch)
+  if (results.size < 5) {
+    const parts = term.toLowerCase().split(/\s+/);
+    try {
+      const byNombre = await getDocs(query(
+        collection(db, 'trabajadores'),
+        where('nombreSearch', '>=', parts[0]),
+        where('nombreSearch', '<=', parts[0] + '\uf8ff'),
+        limit(20)
+      ));
+      for (const d of byNombre.docs) {
+        const t = d.data();
+        if (!results.has(t.matricula)) {
+          results.set(t.matricula, {
+            matricula: t.matricula,
+            nombre: `${t.nombre} ${t.apellidoPaterno} ${t.apellidoMaterno}`,
+            area: t.area || '',
+            tipoContrato: t.tipoContrato || '',
+          });
+        }
+      }
+    } catch { /* campo nombreSearch puede no existir aún */ }
+  }
+
+  // 3) Fallback: filtro en cliente si los índices no funcionan
+  if (results.size === 0) {
+    const fallback = await getDocs(query(collection(db, 'trabajadores'), limit(50)));
+    const lowerTerm = term.toLowerCase();
+    for (const d of fallback.docs) {
+      const t = d.data();
+      const nombreCompleto = `${t.nombre} ${t.apellidoPaterno} ${t.apellidoMaterno}`.toLowerCase();
+      if ((t.matricula && t.matricula.includes(term)) || nombreCompleto.includes(lowerTerm)) {
+        if (!results.has(t.matricula)) {
+          results.set(t.matricula, {
+            matricula: t.matricula,
+            nombre: `${t.nombre} ${t.apellidoPaterno} ${t.apellidoMaterno}`,
+            area: t.area || '',
+            tipoContrato: t.tipoContrato || '',
+          });
+        }
+      }
+      if (results.size >= 20) break;
+    }
+  }
+
+  return Array.from(results.values()).slice(0, 20);
 }
+
+// Alias para compatibilidad
+export const buscarTrabajadoresOptimizado = buscarTrabajadores;
 
 // ─── Historial ────────────────────────────────────────────
 export async function agregarHistorial(data: Omit<HistorialReemplazo, 'id'>): Promise<string> {
@@ -397,12 +483,28 @@ export async function resolverDelegacion(plazaId: string, aprobado: boolean, uid
 // ─── Validaciones ──────────────────────────────────────────
 export async function validarCandidato(matricula: string, plazaId: string): Promise<ResultadoValidacion[]> {
   const resultados: ResultadoValidacion[] = [];
-  // Check if already in another active terna
-  const ternasActivas = await getDocs(query(collection(db, 'cuadros_reemplazo'), where('status', 'in', ['BORRADOR', 'COMPLETO'])));
-  const enOtraTerna = ternasActivas.docs.some(d => {
-    const c = d.data() as CuadroReemplazo;
-    return c.candidatos?.some(ca => ca.matricula === matricula) && c.plazaId !== plazaId;
-  });
+  // Check if already in another active terna — búsqueda optimizada
+  let enOtraTerna = false;
+  try {
+    // Intenta usar campo candidatosMatriculas (array-contains es indexado)
+    const byMatricula = await getDocs(query(
+      collection(db, 'cuadros_reemplazo'),
+      where('candidatosMatriculas', 'array-contains', matricula),
+      where('status', 'in', ['BORRADOR', 'COMPLETO'])
+    ));
+    enOtraTerna = byMatricula.docs.some(d => d.data().plazaId !== plazaId);
+  } catch {
+    // Fallback si no existe el campo candidatosMatriculas
+    const ternasActivas = await getDocs(query(
+      collection(db, 'cuadros_reemplazo'),
+      where('status', 'in', ['BORRADOR', 'COMPLETO']),
+      limit(100)
+    ));
+    enOtraTerna = ternasActivas.docs.some(d => {
+      const c = d.data() as CuadroReemplazo;
+      return c.candidatos?.some(ca => ca.matricula === matricula) && c.plazaId !== plazaId;
+    });
+  }
   if (enOtraTerna) {
     resultados.push({ tipo: 'BLOQUEANTE', campo: 'terna_activa', mensaje: 'Este trabajador ya está en otra terna activa', detalle: 'No puede estar en dos ternas simultáneamente' });
   }

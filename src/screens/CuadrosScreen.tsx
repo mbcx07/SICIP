@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { PlazaReemplazo, CuadroReemplazo } from '../types/reemplazos';
 import { EstatusPlaza, ESTATUS_PLAZA_LABELS, ESTATUS_PLAZA_COLORS, ESTATUS_PLAZA_BG } from '../types/reemplazos';
 import type { Usuario } from '../types/sicip';
 import { Rol } from '../types/sicip';
-import { getPlazasPorJefe, getCuadroPorPlaza, getPlazasTodas } from '../services/reemplazos';
+import { getPlazasPorJefe, getCuadroPorPlaza, getPlazasTodas, getTodosCuadros } from '../services/reemplazos';
 
 const MOTIVO_LABEL: Record<string, string> = {
   LICENCIA: 'Licencia',
@@ -58,20 +58,22 @@ export default function CuadrosScreen() {
     try {
       const plazasData = u.rol === Rol.ADMIN ? await getPlazasTodas() : await getPlazasPorJefe(u.uid);
       setPlazas(plazasData);
+
+      // Batch query: 1 llamada en vez de N+1
+      const cuadrosMap = await getTodosCuadros();
       const resultados: Record<string, CuadroReemplazo | null> = {};
-      await Promise.all(plazasData.map(async (p) => {
-        try { resultados[p.id] = await getCuadroPorPlaza(p.id); } catch { resultados[p.id] = null; }
-      }));
-      setCuadros(resultados);
-    } catch (e: any) {
-      console.error(e);
-      const msg = e?.message || '';
-      if (msg.includes('index') || msg.includes('requires an index') || e?.code === 'FAILED_PRECONDITION') {
-        setError('Error de configuración: La base de datos requiere índices. Contacta al administrador para crearlos en la consola de Firebase.');
-      } else {
-        setError('No se pudieron cargar los cuadros de reemplazo: ' + (e?.message || 'Error desconocido'));
+      const plazaIds = new Set(plazasData.map(p => p.id));
+      for (const c of cuadrosMap) {
+        if (plazaIds.has(c.plazaId)) {
+          resultados[c.plazaId] = c;
+        }
       }
-    }
+      // Marcar plazas sin cuadro
+      for (const p of plazasData) {
+        if (!resultados[p.id]) resultados[p.id] = null;
+      }
+      setCuadros(resultados);
+    } catch (e) { console.error(e); setError('No se pudieron cargar los cuadros de reemplazo.'); }
     finally { setLoading(false); }
   }, []);
 
@@ -105,13 +107,16 @@ export default function CuadrosScreen() {
     );
   }
 
-  const plazasFiltradas = filtroStatus === 'TODAS'
-    ? plazas
-    : plazas.filter(p => p.status === filtroStatus);
+  const plazasFiltradas = useMemo(() =>
+    filtroStatus === 'TODAS' ? plazas : plazas.filter(p => p.status === filtroStatus),
+    [filtroStatus, plazas]
+  );
 
-  const plazasAbiertas = plazas.filter(p => p.status === EstatusPlaza.ABIERTA).length;
-  const enProceso = plazas.filter(p => p.status !== EstatusPlaza.CUBIERTA && p.status !== EstatusPlaza.CANCELADA).length;
-  const cubiertas = plazas.filter(p => p.status === EstatusPlaza.CUBIERTA).length;
+  const stats = useMemo(() => ({
+    abiertas: plazas.filter(p => p.status === EstatusPlaza.ABIERTA).length,
+    enProceso: plazas.filter(p => p.status !== EstatusPlaza.CUBIERTA && p.status !== EstatusPlaza.CANCELADA).length,
+    cubiertas: plazas.filter(p => p.status === EstatusPlaza.CUBIERTA).length,
+  }), [plazas]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -138,9 +143,9 @@ export default function CuadrosScreen() {
       {/* Stats */}
       {!loading && plazas.length > 0 && (
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <StatCard label="Abiertas" value={plazasAbiertas} color="#005235" />
-          <StatCard label="En Proceso" value={enProceso} color="#3b82f6" />
-          <StatCard label="Cubiertas" value={cubiertas} color="#6b7280" />
+          <StatCard label="Abiertas" value={stats.abiertas} color="#005235" />
+          <StatCard label="En Proceso" value={stats.enProceso} color="#3b82f6" />
+          <StatCard label="Cubiertas" value={stats.cubiertas} color="#6b7280" />
         </div>
       )}
 
