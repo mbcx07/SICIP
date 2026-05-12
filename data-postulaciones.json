@@ -1,0 +1,26 @@
+[
+  {
+    "cuadroId": "99032527",
+    "trabajadorMatricula": "99031373",
+    "trabajadorDepartamentoNombre": "",
+    "status": "PENDIENTE",
+    "trabajadorNombre": "GONZALEZ/COTA/BIBIANA FRANCISCA",
+    "fechaPostulacion": "2026-04-16T19:27:32.306Z",
+    "trabajadorDescripcion": "",
+    "trabajadorDepartamento": "",
+    "fechaActualizacion": "2026-04-16T19:27:32.307Z",
+    "id": "ZwymJJBvC1i1aC3Up2RW"
+  },
+  {
+    "fechaActualizacion": "2026-05-04T00:27:34.166Z",
+    "trabajadorDescripcion": "",
+    "trabajadorDepartamento": "",
+    "fechaPostulacion": "2026-05-04T00:27:34.166Z",
+    "status": "PENDIENTE",
+    "trabajadorNombre": "BELTRAN/CASTRO/MOISES",
+    "trabajadorDepartamentoNombre": "",
+    "cuadroId": "10418164",
+    "trabajadorMatricula": "99032103",
+    "id": "iwhEsQqwslG1Qx3FhT4L"
+  }
+]

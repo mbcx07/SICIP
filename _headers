@@ -1,0 +1,11 @@
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Content-Type: application/javascript; charset=utf-8
+/sw.js
+  Service-Worker-Allowed: /
+/assets/*.js
+  Cache-Control: public, max-age=3600
+/data-*.json
+  Cache-Control: public, max-age=86400
+/*.svg
+  Cache-Control: public, max-age=604800

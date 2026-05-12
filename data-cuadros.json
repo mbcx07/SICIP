@@ -1,0 +1,60 @@
+[
+  {
+    "status": "SIN_ASIGNAR",
+    "jefeMatricula": "10379231",
+    "id": "10379231",
+    "jefePuestoDescripcion": "N53 COORD CL TURNO UMH 80",
+    "jefeNombre": "NU&EZ/GONZALEZ/MOISES AARON",
+    "jefeDepartamentoNombre": "COORDINACION CLINICA DE TURNO",
+    "fechaActualizacion": "2026-04-23T02:02:18.419Z",
+    "jefeDepartamento": "03HE382A00",
+    "fechaCreacion": "2026-04-23T02:02:18.419Z",
+    "candidatos": []
+  },
+  {
+    "status": "PARCIAL",
+    "jefeMatricula": "10418164",
+    "id": "10418164",
+    "jefeNombre": "AGUILAR/SALAZAR/YERAZKA PENELOPE",
+    "jefePuestoDescripcion": "N47 JEFE OFNA OOAD 1 80",
+    "matriculaJefe": "10418164",
+    "fechaActualizacion": "2026-04-24T01:36:49.713Z",
+    "jefeDepartamento": "03DL037110",
+    "jefeDepartamentoNombre": "OFICINA DE CONTROL DE FUERZA DE TRABAJO",
+    "candidatos": [
+      {
+        "nombre": "CONTRERAS GARCIA MIGUEL ANGEL",
+        "posicion": "1",
+        "descripcion": "N41 RESP PROY OOAD 1 80",
+        "tipoContrato": "ADMINISTRATIVAS",
+        "matricula": "99030921",
+        "departamento": "OFICINA DE CONTROL DE FUERZA DE TRABAJO",
+        "agregadoPorNombre": "Admin",
+        "agregadoPorUid": "admin"
+      },
+      {
+        "posicion": "2",
+        "nombre": "DE LA VEGA NAVARRO JUAN MANUEL",
+        "descripcion": "N39 ANALISTA RESP B    80",
+        "tipoContrato": "ADMINISTRATIVAS",
+        "departamento": "OFICINA DE CONTROL DE FUERZA DE TRABAJO",
+        "agregadoPorNombre": "Admin",
+        "matricula": "99030961",
+        "agregadoPorUid": "admin"
+      }
+    ],
+    "fechaCreacion": "2026-04-22T22:37:09.645Z"
+  },
+  {
+    "id": "99032103",
+    "status": "SIN_ASIGNAR",
+    "jefeMatricula": "99032103",
+    "jefeNombre": "BELTRAN/CASTRO/MOISES",
+    "jefePuestoDescripcion": "JEFE DE DEPTO DE PERSONAL",
+    "jefeDepartamento": "03DL030000",
+    "fechaActualizacion": "2026-04-22T01:20:58.569Z",
+    "jefeDepartamentoNombre": "OOAD BAJA CALIFORNIA SUR",
+    "candidatos": [],
+    "fechaCreacion": "2026-04-22T01:20:58.569Z"
+  }
+]

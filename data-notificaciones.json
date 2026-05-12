@@ -1,0 +1,22 @@
+[
+  {
+    "tipo": "POSTULACION_NUEVA",
+    "destinatarioMatricula": "10418164",
+    "destinatarioUid": "10418164",
+    "leida": false,
+    "fecha": "2026-05-04T00:27:34.659Z",
+    "cuadroId": "10418164",
+    "mensaje": "BELTRAN/CASTRO/MOISES ha solicitado participar en su cuadro de reemplazo.",
+    "id": "1e0RVpJjT6GEjG8hx0Kq"
+  },
+  {
+    "mensaje": "GONZALEZ/COTA/BIBIANA FRANCISCA ha solicitado participar en su cuadro de reemplazo.",
+    "tipo": "POSTULACION_NUEVA",
+    "destinatarioUid": "99032527",
+    "destinatarioMatricula": "99032527",
+    "leida": false,
+    "fecha": "2026-04-16T19:27:32.836Z",
+    "cuadroId": "99032527",
+    "id": "SMpZmEyPGmR1VKFv1oxb"
+  }
+]
