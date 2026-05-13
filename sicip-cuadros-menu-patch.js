@@ -7,7 +7,7 @@
 (function() {
   'use strict';
   
-  var VERSION = '4.0.0';
+  var VERSION = "4.0.2";
   
   function log(msg) {
     console.log('[SICIP-Cuadros v' + VERSION + '] ' + msg);
