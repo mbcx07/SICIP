@@ -24,6 +24,13 @@ import NotificacionesScreen from './screens/NotificacionesScreen';
 import AprobacionScreen from './screens/AprobacionScreen';
 import Layout from './components/Layout';
 
+// Nuevos módulos
+import CorrespondenciaScreen from './modules/correspondencia/CorrespondenciaScreen';
+import CalendarioScreen from './modules/calendario/CalendarioScreen';
+import IndicadoresScreen from './modules/indicadores/IndicadoresScreen';
+import CatalogosScreen from './modules/catalogos/CatalogosScreen';
+import DirectorioScreen from './modules/directorio/DirectorioScreen';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -51,6 +58,13 @@ export default function App() {
             <Route path="mis-postulaciones" element={<MisPostulacionesScreen />} />
             <Route path="notificaciones" element={<NotificacionesScreen />} />
             <Route path="aprobacion" element={<AprobacionScreen />} />
+            
+            {/* Nuevos Módulos */}
+            <Route path="correspondencia" element={<CorrespondenciaScreen />} />
+            <Route path="calendario" element={<CalendarioScreen />} />
+            <Route path="indicadores" element={<IndicadoresScreen />} />
+            <Route path="catalogos" element={<CatalogosScreen />} />
+            <Route path="directorio" element={<DirectorioScreen />} />
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

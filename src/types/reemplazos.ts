@@ -90,6 +90,7 @@ export interface CuadroReemplazo {
 
   // Candidatos (1-3, siempre ordenados por prioridad)
   candidatos: CandidatoReemplazo[];
+  candidatosMatriculas?: string[];   // índices de búsqueda
 
   // Notifications
   notificacionPendiente: boolean;   // true = alertar al jefe que falta candidato

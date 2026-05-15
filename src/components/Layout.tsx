@@ -5,7 +5,7 @@ import { Rol } from '../types/sicip';
 import {
   LayoutDashboard, FileText, PlusCircle, ClipboardList, Building2,
   Filter, Upload, Users, ShieldCheck, LogOut, ChevronRight, Briefcase,
-  Home, Menu, X, UserPlus, Bell
+  Home, Menu, X, UserPlus, Bell, Mail, Calendar, BarChart3, Book, UserCheck
 } from 'lucide-react';
 import { ROL_LABELS, OOAD_NOMBRE, INSTITUCION_NOMBRE } from '../constants/sicip';
 
@@ -52,6 +52,13 @@ function getMenuItems(usuario: Usuario | null) {
     items.push({ key: '/importar-plantilla', label: 'Importar Plantilla', icon: <Upload size={20} /> });
     items.push({ key: '/alta-trabajador', label: 'Alta Trabajador', icon: <UserPlus size={20} /> });
   }
+  // Nuevos Módulos
+  items.push({ key: '/correspondencia', label: 'Correspondencia', icon: <Mail size={20} /> });
+  items.push({ key: '/calendario', label: 'Calendario', icon: <Calendar size={20} /> });
+  items.push({ key: '/indicadores', label: 'Indicadores RH', icon: <BarChart3 size={20} /> });
+  items.push({ key: '/catalogos', label: 'Catálogos', icon: <Book size={20} /> });
+  items.push({ key: '/directorio', label: 'Directorio', icon: <UserCheck size={20} /> });
+
   if (p.includes('admin') || isAdmin) {
     items.push({ key: '/admin', label: 'Administración', icon: <Users size={20} /> });
   }
