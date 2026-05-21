@@ -1,5 +1,5 @@
 (function() {
-  var VERSION = "4.0.0";
+  var VERSION = "4.0.1";
 
   // ==================== GLOBAL DATA STORE ====================
   window.__SICIP_DATA__ = window.__SICIP_DATA__ || {};
@@ -207,5 +207,5 @@
     }
   }, 1000);
 
-  console.log('[SICIP] v' + VERSION + ' — INSTANT modules, priority preload');
+  console.log('[SICIP] v' + VERSION + ' — PRIORITY jefesServicio+cuadros first, modules INSTANT');
 })();

@@ -1,13 +1,14 @@
-// SICIP Cuadros Menu Patch v5.2
+// SICIP Cuadros Menu Patch v5.3
+// ✅ INSTANT panels: muestra datos inmediatamente desde mem, actualiza cuando llegan datos
 // Acordeón "Cuadros de Reemplazo" con 3 submódulos:
-// 1. Resumen CR → panel inline con TODAS las plazas + buscador + filtro unidad
+// 1. Resumen CR → panel inline con TODAS las plazas + buscador + filtro
 // 2. Mi Cuadro de Reemplazo → panel inline con info del jefe
 // 3. Solicitar Puesto de Confianza → navega a /buscar-jefe (componente React)
 
 (function() {
   'use strict';
   
-  var VERSION = '5.2.0';
+  var VERSION = '5.3.0';
   
   function log(msg) { console.log('[SICIP-Cuadros v' + VERSION + '] ' + msg); }
   
@@ -135,16 +136,54 @@
     '</div>';
   }
   
+  // ========== AUTO-UPDATE: refresca panel cuando llegan datos ==========
+  var refreshTimers = {};
+  
+  function ensureDataAndRefresh(panelType, buildFn, usuario) {
+    var data = getSicipData();
+    var hasData = (data.jefesServicio && data.jefesServicio.length > 0);
+    
+    if (!hasData) {
+      log('Esperando datos para ' + panelType + '...');
+      // Mostrar panel inmediato con lo que haya
+      var html = buildFn(usuario);
+      showPanel(html);
+      
+      // Auto-refresh cada 500ms hasta que lleguen datos
+      if (refreshTimers[panelType]) clearInterval(refreshTimers[panelType]);
+      var attempts = 0;
+      refreshTimers[panelType] = setInterval(function() {
+        attempts++;
+        if (attempts > 30) { clearInterval(refreshTimers[panelType]); delete refreshTimers[panelType]; return; }
+        var d = getSicipData();
+        if (d.jefesServicio && d.jefesServicio.length > 0 && d.cuadros && d.cuadros.length > 0) {
+          clearInterval(refreshTimers[panelType]);
+          delete refreshTimers[panelType];
+          log('Datos listos, refrescando ' + panelType);
+          removePanel();
+          var updatedHtml = buildFn(usuario);
+          showPanel(updatedHtml);
+          attachResumenHandlers(usuario, d);
+        }
+      }, 500);
+    } else {
+      log('Datos disponibles, mostrando ' + panelType + ' INSTANT');
+      var html = buildFn(usuario);
+      showPanel(html);
+    }
+    
+    // Attach handlers
+    if (panelType === 'resumen-cr') attachResumenHandlers(usuario, data);
+  }
+  
   function showResumenCR(usuario) {
     log('📊 Mostrando Resumen CR...');
-    var html = buildResumenCRPanel(usuario);
-    showPanel(html);
-    
-    // Exponer funciones de filtrado
-    var allJefes = (getSicipData().jefesServicio || []);
-    var allCuadros = (getSicipData().cuadros || []);
-    var cuadroMap = {};
-    allCuadros.forEach(function(c) { cuadroMap[String(c.jefeMatricula || c.id)] = c; });
+    ensureDataAndRefresh('resumen-cr', buildResumenCRPanel, usuario);
+  }
+  
+  function attachResumenHandlers(usuario, data) {
+    var allJefes = (data.jefesServicio || []);
+    var allCuadros = (data.cuadros || []);
     
     window.__SICIP_FILTRAR__ = function() {
       var search = (document.getElementById('sicip-cr-search')?.value || '').toLowerCase();
@@ -171,23 +210,20 @@
       });
     };
     
-    // Exponer "Ver Jefe" (para futuro detalle)
+    // Exponer "Ver Jefe"
     window.__SICIP_VER_JEFE__ = function(matricula) {
       log('Ver detalle de jefe: ' + matricula);
-      // Por ahora no hacemos nada, en el futuro podría abrir un modal
     };
     
     // Exponer "Asignar Cuadro"
     window.__SICIP_ASIGNAR_CUADRO__ = function(matricula, nombre) {
       log('Asignar cuadro para: ' + nombre + ' (' + matricula + ')');
-      // Navegar a la ruta de asignación
       removePanel();
       showReactRoot();
       window.history.replaceState({}, '', '/cuadro/' + matricula);
       window.dispatchEvent(new Event('popstate'));
     };
     
-    // Exponer showReactRoot para el botón volver
     window.showReactRoot = showReactRoot;
   }
   
@@ -271,7 +307,7 @@
   
   function showMiCuadro(usuario) {
     log('Mostrando Mi Cuadro');
-    showPanel(buildMiCuadroPanel(usuario));
+    ensureDataAndRefresh('mi-cuadro', buildMiCuadroPanel, usuario);
   }
   
   // ========== 3. SOLICITAR PUESTO ==========
