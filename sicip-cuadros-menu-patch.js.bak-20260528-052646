@@ -1,4 +1,4 @@
-// SICIP Cuadros Menu Patch v5.3.2
+// SICIP Cuadros Menu Patch v5.3.1
 // ✅ Paneles DENTRO del layout — conserva sidebar + header
 // ✅ Sin duplicados en el menú lateral
 // Acordeón "Cuadros de Reemplazo" con 3 submódulos:
@@ -9,7 +9,7 @@
 (function() {
   'use strict';
   
-  var VERSION = '5.3.2';
+  var VERSION = '5.3.1';
   
   function log(msg) { console.log('[SICIP-Cuadros v' + VERSION + '] ' + msg); }
   
@@ -375,36 +375,6 @@
     
     container.appendChild(panel);
     
-    // === Delegación de eventos para clicks en resultados (evita problemas de escaping en onclick) ===
-    panel.addEventListener('click', function(e) {
-      var target = e.target.closest('.sicip-cand-result');
-      if (!target) return;
-      var slot = parseInt(target.getAttribute('data-sicip-slot'), 10);
-      var mat = target.getAttribute('data-sicip-mat');
-      var nom = target.getAttribute('data-sicip-nom');
-      var desc = target.getAttribute('data-sicip-desc');
-      var depto = target.getAttribute('data-sicip-depto');
-      var contrato = target.getAttribute('data-sicip-contrato');
-      if (slot && mat) {
-        window.__SICIP_SELECCIONAR_CANDIDATO__(slot, nom, mat, desc, depto, contrato);
-      }
-    });
-    
-    // === Soporte para Enter en los inputs de búsqueda ===
-    for (var si = 1; si <= 3; si++) {
-      (function(slotNum) {
-        var searchInput = document.getElementById('slot-search-' + slotNum);
-        if (searchInput) {
-          searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              window.__SICIP_BUSCAR_CANDIDATO__(slotNum);
-            }
-          });
-        }
-      })(si);
-    }
-    
     // === Estado interno ===
     window.__SICIP_ASIGNACION_ACTUAL = {
       jefeMatricula: matricula,
@@ -455,13 +425,16 @@
       
       var html = '';
       matches.forEach(function(m) {
+        var mNombre = (m.nombre || m.nombres || m.nom || '').replace(/'/g, "\\'");
         var mMat = String(m.matricula || m.id || '');
-        var mNombre = (m.nombre || m.nombres || m.nom || '');
         var mDesc = m.descripcion || m.puesto || m.puestoDescripcion || '';
         var mDepto = m.departamentoNombre || m.departamento || '';
         var mTipoContrato = m.tipoContrato || '';
-        // Usar data attributes y delegación de eventos en vez de onclick inline
-        html += '<div class="sicip-cand-result" data-sicip-slot="' + slot + '" data-sicip-mat="' + escapeHtml(mMat) + '" data-sicip-nom="' + escapeHtml(mNombre) + '" data-sicip-desc="' + escapeHtml(mDesc) + '" data-sicip-depto="' + escapeHtml(mDepto) + '" data-sicip-contrato="' + escapeHtml(mTipoContrato) + '" style="padding:0.6rem 0.75rem;border-bottom:1px solid #f3f4f6;cursor:pointer;transition:background 0.15s" onmouseenter="this.style.background=\'#f0fdf4\'" onmouseleave="this.style.background=\'\'">' +
+        // Escapar comillas simples para el onclick
+        var escNombre = (m.nombre || m.nombres || m.nom || '').replace(/'/g, "\\'");
+        var escDesc = (m.descripcion || m.puesto || '').replace(/'/g, "\\'");
+        var escDepto = (m.departamentoNombre || m.departamento || '').replace(/'/g, "\\'");
+        html += '<div style="padding:0.6rem 0.75rem;border-bottom:1px solid #f3f4f6;cursor:pointer;transition:background 0.15s" onclick="window.__SICIP_SELECCIONAR_CANDIDATO__(' + slot + ',\'" + escNombre + "\',\'" + mMat + "\',\'" + escDesc + "\',\'" + escDepto + "\',\'' + (mTipoContrato) + '\')" onmouseenter="this.style.background=\'#f0fdf4\'" onmouseleave="this.style.background=\'\'">' +
           '<div style="font-weight:700;font-size:0.85rem;color:#1a2932">' + escapeHtml(mNombre) + '</div>' +
           '<div style="font-size:0.72rem;color:#6b7280">Mat. ' + escapeHtml(mMat) + ' · ' + escapeHtml(mDesc) + ' · ' + escapeHtml(mDepto) + '</div>' +
         '</div>';
@@ -624,12 +597,12 @@
           '<div style="font-weight:700;font-size:0.9rem;color:#1a2932">' + escapeHtml(data.nombre || '') + '</div>' +
           '<div style="font-size:0.75rem;color:#6b7280">Mat. ' + escapeHtml(data.matricula || '') + (data.descripcion ? ' · ' + escapeHtml(data.descripcion) : '') + '</div>' +
         '</div>' +
-        '<button onclick="window.__SICIP_QUITAR_CANDIDATO_SLOT__(' + slot + ')" style="background:#fee2e2;color:#dc2626;border:none;padding:0.3rem 0.6rem;border-radius:6px;font-size:0.72rem;font-weight:600;cursor:pointer">✕ Quitar</button>' +
+        '<button onclick="quitarCandidato(' + slot + ')" style="background:#fee2e2;color:#dc2626;border:none;padding:0.3rem 0.6rem;border-radius:6px;font-size:0.72rem;font-weight:600;cursor:pointer">✕ Quitar</button>' +
       '</div>';
   }
   
   // Helper: quitar candidato de un slot
-  window.__SICIP_QUITAR_CANDIDATO_SLOT__ = function(slot) {
+  function quitarCandidato(slot) {
     var state = window.__SICIP_ASIGNACION_ACTUAL;
     if (!state) return;
     state.candidatos[slot - 1] = { posicion: slot, matricula: '', nombre: '', descripcion: '', departamento: '', tipoContrato: '' };

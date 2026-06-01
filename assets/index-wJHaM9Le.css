@@ -1,0 +1,30 @@
+/* SICIP - correcciones UX/accesibilidad post-auditoría 2026-06-01
+   Este archivo estaba referenciado en index.html pero no existía, causando 404.
+   Mantiene estilos seguros porque la app principal usa estilos inline. */
+:root {
+  --brand-50: #f0fdf4;
+  --brand-100: #dcfce7;
+  --brand-600: #005235;
+  --text-muted: #4b5563;
+  --border-soft: #e5e7eb;
+}
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; color: #111827; background: #f6f8f7; }
+button, input, select, textarea { font: inherit; }
+button { min-height: 36px; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+  outline: 3px solid rgba(39,174,96,.35) !important;
+  outline-offset: 2px !important;
+}
+input::placeholder { color: #6b7280 !important; opacity: 1; }
+[style*="color:#888"], [style*="color: #888"], [style*="color:#8a9aaa"], [style*="color: #8a9aaa"], [style*="color:#9ca3af"], [style*="color: #9ca3af"] {
+  color: #4b5563 !important;
+}
+.btn-institutional:hover, button[type="submit"]:hover { filter: brightness(1.03); }
+@media (max-width: 520px) {
+  body { overflow-x: hidden; }
+  input { font-size: 16px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
