@@ -127,11 +127,11 @@
 
   function setupDerivedData() {
     DATA.roles = [
-      { id: 'ADMIN', nombre: 'Administrador', modulos: ['solicitudes','contrato','cuadros','pases','licencias','recepciones','reportes','plantilla','admin','plazas','vacantes','usuarios','roles'] },
+      { id: 'ADMIN', nombre: 'Administrador', modulos: ['solicitudes','contrato','cuadros','pases','licencias','recepciones','reportes','plantilla','admin','plazas','vacantes','usuarios','roles','herramientas'] },
       { id: 'JEFE_SERVICIO', nombre: 'Jefe de Servicio', modulos: ['solicitudes','cuadros','recepciones','reportes'] },
       { id: 'AREA_PERSONAL', nombre: 'Área de Personal', modulos: ['solicitudes','contrato','cuadros','pases','licencias','recepciones','reportes','plantilla'] },
       { id: 'TRABAJADOR', nombre: 'Trabajador', modulos: ['solicitudes'] },
-      { id: 'FUERZA_TRABAJO', nombre: 'Fuerza de Trabajo', modulos: ['fuerza-trabajo'] }
+      { id: 'FUERZA_TRABAJO', nombre: 'Fuerza de Trabajo', modulos: ['fuerza-trabajo','herramientas'] }
     ];
     DATA.tipos_tramite = [
       { tipo: 'TIEMPO_EXTRAORDINARIO', nombre: 'Tiempo Extraordinario' },
