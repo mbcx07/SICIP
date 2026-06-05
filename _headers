@@ -1,3 +1,15 @@
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+/fuerza-trabajo/calculadora-nivelacion.html
+  Cache-Control: no-cache, no-store, must-revalidate
+/data-ft-nomina-2026009.json
+  Cache-Control: no-cache, no-store, must-revalidate
+/data-plazas-2026009.json
+  Cache-Control: no-cache, no-store, must-revalidate
+/data-ft-tabulador-2025-2026.json
+  Cache-Control: no-cache, no-store, must-revalidate
 /sw.js
   Cache-Control: no-cache, no-store, must-revalidate
   Content-Type: application/javascript; charset=utf-8

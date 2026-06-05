@@ -2,11 +2,11 @@
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 
-const VERSION = '4.1.0';
+const VERSION = '4.2.0';
 const PROJECT_ID = 'sicip-bcs';
 const FS_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
-const CACHE_NAME = 'sicip-data-v6';
-const STATIC_CACHE = 'sicip-static-v3';
+const CACHE_NAME = 'sicip-data-v7';
+const STATIC_CACHE = 'sicip-static-v4';
 
 // Collection map: Firestore collection -> data key
 const COLLECTION_MAP = {
@@ -31,6 +31,20 @@ const COLLECTION_MAP = {
 let DATA = {};
 let dataLoaded = false;
 let loadingPromise = null;
+
+
+self.addEventListener('install', (event) => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    const keep = new Set([CACHE_NAME, STATIC_CACHE]);
+    const names = await caches.keys();
+    await Promise.all(names.map(name => keep.has(name) ? null : caches.delete(name)));
+    await self.clients.claim();
+  })());
+});
 
 // ==================== DATA LOADING ====================
 async function loadAllData() {
