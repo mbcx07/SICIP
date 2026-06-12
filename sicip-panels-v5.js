@@ -1,5 +1,5 @@
 (function() {
-  var VERSION = "4.0.1";
+  var VERSION = "5.13.1";
 
   // ==================== GLOBAL DATA STORE ====================
   window.__SICIP_DATA__ = window.__SICIP_DATA__ || {};

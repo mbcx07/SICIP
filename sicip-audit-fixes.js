@@ -114,6 +114,13 @@
       });
     };
   }
+  function fixVersionBadge(){
+    var b=document.getElementById('sicip-version-badge');
+    if(b && /4\.0\.1|4\.01|v4/i.test(b.textContent||'')){
+      b.textContent='SICIP v5.13.1';
+      b.title='SICIP v5.13.1 · Click para forzar recarga';
+    }
+  }
   function addSecurityBanner(){
     if(document.querySelector('.sicip-security-banner')) return;
     if(!/\/admin|\/plantilla|\/pases|\/fuerza-trabajo/.test(location.pathname)) return;
@@ -124,7 +131,7 @@
     b.innerHTML='<strong>Modo reforzado SICIP:</strong> validaciones de accesibilidad, redacción de datos sensibles en cliente y mejoras responsive activas. Las operaciones críticas deben auditarse antes de cierre institucional.';
     host.insertBefore(b,host.firstChild);
   }
-  function run(){css(); labelButtons(); document.querySelectorAll('input,select,textarea').forEach(labelControl); fixScrollable(); hardenStorage(); addSecurityBanner();}
+  function run(){css(); fixVersionBadge(); labelButtons(); document.querySelectorAll('input,select,textarea').forEach(labelControl); fixScrollable(); hardenStorage(); addSecurityBanner();}
   patchFetchRedaction();
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
   var mo=new MutationObserver(function(){ clearTimeout(window.__sicipAuditFixTimer); window.__sicipAuditFixTimer=setTimeout(run,250); });
