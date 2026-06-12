@@ -96,9 +96,9 @@
   function patchFetchRedaction(){ /* v5.13.2: desactivado para no interferir login/Firestore */ }
   function fixVersionBadge(){
     var b=document.getElementById('sicip-version-badge');
-    if(b && /4\.0\.1|4\.01|v4/i.test(b.textContent||'')){
-      b.textContent='SICIP v5.13.1';
-      b.title='SICIP v5.13.1 · Click para forzar recarga';
+    if(b && /4\.0\.1|4\.01|v4|5\.13\.1|v5\.13/i.test(b.textContent||'')){
+      b.textContent='SICIP v5.15';
+      b.title='SICIP v5.15 · Click para forzar recarga';
     }
   }
   function addSecurityBanner(){
