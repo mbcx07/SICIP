@@ -2,11 +2,11 @@
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 
-const VERSION = '4.2.0';
+const VERSION = '5.13.2-loginfix';
 const PROJECT_ID = 'sicip-bcs';
 const FS_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
-const CACHE_NAME = 'sicip-data-v7';
-const STATIC_CACHE = 'sicip-static-v4';
+const CACHE_NAME = 'sicip-data-v8-loginfix';
+const STATIC_CACHE = 'sicip-static-v5-loginfix';
 
 // Collection map: Firestore collection -> data key
 const COLLECTION_MAP = {
@@ -181,9 +181,11 @@ function getCollectionData(collectionId) {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
-  // Intercept Firestore requests
+  // Intercept Firestore requests.
+  // LOGIN FIX v5.13.2: do NOT intercept usuarios reads; login must validate against Firestore live data.
   if (url.hostname.includes('firestore.googleapis.com')) {
     if (url.pathname.includes(':commit')) return; // let writes through
+    if (url.pathname.includes('/documents/usuarios')) return; // live network for authentication
     event.respondWith(handleFirestoreRequest(event.request, url));
     return;
   }

@@ -1,7 +1,7 @@
 /* SICIP v5.13 - Remediación post-auditoría: accesibilidad, seguridad cliente y UX institucional */
 (function(){
   'use strict';
-  var VERSION='5.13-auditfix-20260612';
+  var VERSION='5.13.2-loginfix-20260612';
   var STYLE_ID='sicip-auditfix-style';
   var SENSITIVE_KEYS=['password','passwordHash','token','secret','apiSecret','refreshToken','accessToken'];
 
@@ -93,27 +93,7 @@
     });
     try{ Object.keys(localStorage).forEach(function(k){ if(/password|token|secret/i.test(k)) localStorage.removeItem(k); }); }catch(e){}
   }
-  function patchFetchRedaction(){
-    if(window.__sicipFetchRedaction) return;
-    window.__sicipFetchRedaction=true;
-    var orig=window.fetch;
-    if(!orig) return;
-    window.fetch=function(){
-      return orig.apply(this,arguments).then(function(resp){
-        try{
-          var url=resp.url||'';
-          if(url.indexOf('firestore.googleapis.com')===-1 && url.indexOf('/data-usuarios')===-1) return resp;
-          var clone=resp.clone();
-          return clone.text().then(function(txt){
-            var red=txt.replace(/"password"\s*:\s*\{\s*"stringValue"\s*:\s*"[^"]*"\s*\}/gi,'"password":{"stringValue":"[REDACTADO]"}')
-                       .replace(/"passwordHash"\s*:\s*\{\s*"stringValue"\s*:\s*"[^"]*"\s*\}/gi,'"passwordHash":{"stringValue":"[REDACTADO]"}');
-            if(red===txt) return resp;
-            return new Response(red,{status:resp.status,statusText:resp.statusText,headers:resp.headers});
-          }).catch(function(){return resp;});
-        }catch(e){return resp;}
-      });
-    };
-  }
+  function patchFetchRedaction(){ /* v5.13.2: desactivado para no interferir login/Firestore */ }
   function fixVersionBadge(){
     var b=document.getElementById('sicip-version-badge');
     if(b && /4\.0\.1|4\.01|v4/i.test(b.textContent||'')){
