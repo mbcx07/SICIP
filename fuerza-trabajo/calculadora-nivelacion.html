@@ -31,9 +31,9 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
       <h2>🗄️ Bases de datos activas</h2>
       <p class="hint" style="margin-bottom:12px">La nivelación se calcula con la <b>nómina quincenal</b> seleccionada para trabajadores y el <b>tabulador anual</b> seleccionado para importes. Puedes usar las bases publicadas, el respaldo local o cargar una base para la sesión.</p>
       <div class="row">
-        <div class="field" style="min-width:280px"><label for="nominaSelect">Nómina quincenal activa</label><select id="nominaSelect" class="base-select" data-testid="nomina-select"><option>Cargando nóminas...</option></select></div>
-        <div class="field" style="min-width:280px"><label for="tabuladorSelect">Tabulador anual activo</label><select id="tabuladorSelect" class="base-select" data-testid="tabulador-select"><option>Cargando tabuladores...</option></select></div>
-        <div class="field" style="max-width:190px"><label>Quincena / referencia</label><input id="quincena" placeholder="Ej. 2025014"></div>
+        <div class="field" style="min-width:280px"><label for="nominaSelect">Nómina quincenal activa</label><select id="nominaSelect" aria-label="nominaSelect" class="base-select" data-testid="nomina-select"><option>Cargando nóminas...</option></select></div>
+        <div class="field" style="min-width:280px"><label for="tabuladorSelect">Tabulador anual activo</label><select id="tabuladorSelect" aria-label="tabuladorSelect" class="base-select" data-testid="tabulador-select"><option>Cargando tabuladores...</option></select></div>
+        <div class="field" style="max-width:190px"><label>Quincena / referencia</label><input id="quincena" aria-label="quincena" placeholder="Ej. 2025014"></div>
       </div>
       <div class="formula"><span id="nominaInfo">Nómina: pendiente de carga.</span><br><span id="tabuladorInfo">Tabulador: pendiente de carga.</span></div>
     </section>
@@ -42,8 +42,8 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
       <section class="card">
         <h2>🏛️ Titular / plaza a nivelar</h2>
         <div class="row">
-          <div class="field" style="max-width:190px"><label>Buscar por</label><select id="tipoTitular"><option value="todo">Trabajador o plaza</option><option value="trabajador">Trabajador</option><option value="plaza">Plaza</option></select></div>
-          <div class="field"><label>Titular, matrícula, plaza o puesto</label><div class="search"><input id="buscarTitular" autocomplete="off" placeholder="Ej. matrícula, nombre, clave de plaza o puesto"><div class="drop" id="dropTitular"></div></div></div>
+          <div class="field" style="max-width:190px"><label>Buscar por</label><select id="tipoTitular" aria-label="tipoTitular"><option value="todo">Trabajador o plaza</option><option value="trabajador">Trabajador</option><option value="plaza">Plaza</option></select></div>
+          <div class="field"><label>Titular, matrícula, plaza o puesto</label><div class="search"><input id="buscarTitular" aria-label="buscarTitular" autocomplete="off" placeholder="Ej. matrícula, nombre, clave de plaza o puesto"><div class="drop" id="dropTitular"></div></div></div>
         </div>
         <div class="selected empty" id="selTitular">Selecciona el titular o plaza que se va a nivelar.</div>
       </section>
@@ -51,8 +51,8 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
       <section class="card">
         <h2>👤 Sustituto</h2>
         <div class="row">
-          <div class="field" style="max-width:190px"><label>Buscar por</label><select id="tipoSustituto"><option value="todo">Trabajador o plaza</option><option value="trabajador">Trabajador</option><option value="plaza">Plaza</option></select></div>
-          <div class="field"><label>Sustituto, matrícula, plaza o puesto</label><div class="search"><input id="buscarSustituto" autocomplete="off" placeholder="Ej. matrícula, nombre, clave de plaza o puesto"><div class="drop" id="dropSustituto"></div></div></div>
+          <div class="field" style="max-width:190px"><label>Buscar por</label><select id="tipoSustituto" aria-label="tipoSustituto"><option value="todo">Trabajador o plaza</option><option value="trabajador">Trabajador</option><option value="plaza">Plaza</option></select></div>
+          <div class="field"><label>Sustituto, matrícula, plaza o puesto</label><div class="search"><input id="buscarSustituto" aria-label="buscarSustituto" autocomplete="off" placeholder="Ej. matrícula, nombre, clave de plaza o puesto"><div class="drop" id="dropSustituto"></div></div></div>
         </div>
         <div class="selected empty" id="selSustituto">Selecciona el trabajador o plaza sustituta.</div>
       </section>
@@ -61,9 +61,9 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
     <section class="card" style="margin-top:16px">
       <h2>📅 Días e importe</h2>
       <div class="row">
-        <div class="field" style="max-width:150px"><label>Días a pagar</label><input id="diasPago" type="number" min="0" step="0.5" value="1"></div>
-        <div class="field" style="max-width:150px"><label>Factor</label><input id="factorPago" type="number" min="0" step="0.01" value="1"></div>
-        <div class="field"><label>Observaciones</label><input id="observaciones" placeholder="Opcional: motivo, periodo, oficio, etc."></div>
+        <div class="field" style="max-width:150px"><label>Días a pagar</label><input id="diasPago" aria-label="diasPago" type="number" min="0" step="0.5" value="1"></div>
+        <div class="field" style="max-width:150px"><label>Factor</label><input id="factorPago" aria-label="factorPago" type="number" min="0" step="0.01" value="1"></div>
+        <div class="field"><label>Observaciones</label><input id="observaciones" aria-label="observaciones" placeholder="Opcional: motivo, periodo, oficio, etc."></div>
         <button class="btn primary" id="btnRecalcular">⚡ Calcular</button>
       </div>
       <div class="formula">Fórmula: <b>Importe = (Total titular/plaza a nivelar − Total sustituto) ÷ 15 × días × factor</b>. Si el resultado es negativo, no hay nivelación positiva a pagar.</div>
@@ -91,12 +91,12 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
       <h2>🔗 Relaciones generadas</h2>
       <p class="hint" style="margin-bottom:10px">Cada relación queda guardada en este navegador y puede exportarse en CSV. Si abres la página desde otro equipo, genera/exporta de nuevo.</p>
       <div class="filters no-print">
-        <div class="field"><label>Búsqueda global</label><input id="filtroTexto" placeholder="Matrícula, nombre, plaza, puesto, calculó, observaciones..."></div>
-        <div class="field"><label>Calculó</label><select id="filtroUsuario"><option value="">Todos</option></select></div>
-        <div class="field"><label>Quincena</label><select id="filtroQuincena"><option value="">Todas</option></select></div>
-        <div class="field"><label>Regla 35%</label><select id="filtroRegla35"><option value="">Todas</option><option value="topado">Topado</option><option value="autorizado">Autorizado</option><option value="no_aplica">No aplica</option></select></div>
-        <div class="field"><label>Desde</label><input id="filtroDesde" type="date"></div>
-        <div class="field"><label>Hasta</label><input id="filtroHasta" type="date"></div>
+        <div class="field"><label>Búsqueda global</label><input id="filtroTexto" aria-label="filtroTexto" placeholder="Matrícula, nombre, plaza, puesto, calculó, observaciones..."></div>
+        <div class="field"><label>Calculó</label><select id="filtroUsuario" aria-label="filtroUsuario"><option value="">Todos</option></select></div>
+        <div class="field"><label>Quincena</label><select id="filtroQuincena" aria-label="filtroQuincena"><option value="">Todas</option></select></div>
+        <div class="field"><label>Regla 35%</label><select id="filtroRegla35" aria-label="filtroRegla35"><option value="">Todas</option><option value="topado">Topado</option><option value="autorizado">Autorizado</option><option value="no_aplica">No aplica</option></select></div>
+        <div class="field"><label>Desde</label><input id="filtroDesde" aria-label="filtroDesde" type="date"></div>
+        <div class="field"><label>Hasta</label><input id="filtroHasta" aria-label="filtroHasta" type="date"></div>
       </div>
       <div class="actions no-print" style="margin-top:0;margin-bottom:10px"><button class="btn secondary" id="btnCSVRelaciones">📥 Exportar relaciones filtradas CSV</button><button class="btn secondary" id="btnLimpiarFiltros">🧽 Limpiar filtros</button><button class="btn secondary" id="btnBorrarRelaciones">🗑️ Borrar relaciones locales</button></div>
       <div class="hint" id="resumenFiltros" style="margin-bottom:8px"></div>
@@ -110,11 +110,11 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
         <div>
           <h2>📄 Nómina quincenal</h2>
           <div class="row">
-            <div class="field"><label>Nombre de la nómina</label><input id="adminNomNombre" placeholder="Ej. Nómina QNA 2026-11"></div>
-            <div class="field" style="max-width:170px"><label>Clave / quincena</label><input id="adminNomId" placeholder="2026-011"></div>
+            <div class="field"><label>Nombre de la nómina</label><input id="adminNomNombre" aria-label="adminNomNombre" placeholder="Ej. Nómina QNA 2026-11"></div>
+            <div class="field" style="max-width:170px"><label>Clave / quincena</label><input id="adminNomId" aria-label="adminNomId" placeholder="2026-011"></div>
           </div>
-          <div class="field"><label>Archivo JSON o CSV</label><input id="adminNomFile" type="file" accept=".json,.csv,text/csv,application/json"></div>
-          <div class="field"><label>Pegar JSON/CSV de nómina</label><textarea id="adminNomTexto" rows="7" placeholder="JSON arreglo/objeto o CSV con columnas: matricula, nombre, puesto, descripcion_puesto, departamento..."></textarea></div>
+          <div class="field"><label>Archivo JSON o CSV</label><input id="adminNomFile" aria-label="adminNomFile" type="file" accept=".json,.csv,text/csv,application/json"></div>
+          <div class="field"><label>Pegar JSON/CSV de nómina</label><textarea id="adminNomTexto" aria-label="adminNomTexto" rows="7" placeholder="JSON arreglo/objeto o CSV con columnas: matricula, nombre, puesto, descripcion_puesto, departamento..."></textarea></div>
           <div class="actions" style="margin-top:0"><button class="btn primary" id="btnPrevisualizarNom">👁️ Previsualizar</button><button class="btn success" id="btnPublicarNom">☁️ Publicar en BD principal</button><button class="btn secondary" id="btnUsarLocalNom">💾 Usar solo en esta sesión</button></div>
         </div>
         <div>
@@ -127,11 +127,11 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
       <div class="grid two">
         <div>
           <div class="row">
-            <div class="field"><label>Nombre del tabulador</label><input id="adminTabNombre" placeholder="Ej. Tabulador 2026 vigente"></div>
-            <div class="field" style="max-width:170px"><label>Clave / versión</label><input id="adminTabId" placeholder="2026-vigente"></div>
+            <div class="field"><label>Nombre del tabulador</label><input id="adminTabNombre" aria-label="adminTabNombre" placeholder="Ej. Tabulador 2026 vigente"></div>
+            <div class="field" style="max-width:170px"><label>Clave / versión</label><input id="adminTabId" aria-label="adminTabId" placeholder="2026-vigente"></div>
           </div>
-          <div class="field"><label>Archivo JSON o CSV</label><input id="adminTabFile" type="file" accept=".json,.csv,text/csv,application/json"></div>
-          <div class="field"><label>Pegar JSON/CSV del tabulador</label><textarea id="adminTabTexto" rows="8" placeholder="JSON arreglo/objeto o CSV con columnas: puesto, descripcion, sueldo_nuevo, c011, c013..."></textarea></div>
+          <div class="field"><label>Archivo JSON o CSV</label><input id="adminTabFile" aria-label="adminTabFile" type="file" accept=".json,.csv,text/csv,application/json"></div>
+          <div class="field"><label>Pegar JSON/CSV del tabulador</label><textarea id="adminTabTexto" aria-label="adminTabTexto" rows="8" placeholder="JSON arreglo/objeto o CSV con columnas: puesto, descripcion, sueldo_nuevo, c011, c013..."></textarea></div>
           <div class="actions" style="margin-top:0"><button class="btn primary" id="btnPrevisualizarTab">👁️ Previsualizar</button><button class="btn success" id="btnPublicarTab">☁️ Publicar en BD principal</button><button class="btn secondary" id="btnUsarLocalTab">💾 Usar solo en esta sesión</button></div>
         </div>
         <div>

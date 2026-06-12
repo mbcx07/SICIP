@@ -1,9 +1,21 @@
 /
   Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
 /index.html
   Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
 /fuerza-trabajo/calculadora-nivelacion.html
   Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+/pases/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
 /data-ft-nomina-2026009.json
   Cache-Control: no-cache, no-store, must-revalidate
 /data-plazas-2026009.json

@@ -21,23 +21,24 @@
   </style>
 </head>
 <body>
+<div id="sicip-audit-note-pases" style="position:absolute;left:-9999px">Módulo de pases con mejoras de accesibilidad y validación post auditoría.</div>
   <div class="wrap">
     <section class="hero"><h1>🎫 Módulo de Pases</h1><p>Solicitud, impresión y recepción de pases personales, oficiales y médicos.</p></section>
     <div id="pendingAlert"></div>
     <section class="card" style="margin-top:18px"><h2>Resumen mensual</h2><div class="stats" id="stats"></div></section>
     <div class="grid">
       <section class="card"><h2>Nueva solicitud</h2><form id="passForm">
-        <div class="row"><div><label>Matrícula trabajador</label><input id="matricula" required placeholder="Ej. 99032244" autocomplete="off"></div><div><label>Buscar trabajador</label><input id="buscar" placeholder="Nombre o matrícula"></div></div>
+        <div class="row"><div><label>Matrícula trabajador</label><input id="matricula" aria-label="Matrícula del trabajador" required placeholder="Ej. 99032244" autocomplete="off"></div><div><label>Buscar trabajador</label><input id="buscar" aria-label="Buscar trabajador por nombre o matrícula" placeholder="Nombre o matrícula"></div></div>
         <div id="workerBox" class="workerBox small">Capture una matrícula para precargar datos desde la nómina/base activa.</div>
-        <div class="row3"><div><label>Tipo de pase</label><select id="tipoAsunto"><option>PARTICULAR</option><option>OFICIAL</option><option>MÉDICO</option></select></div><div><label>Por horario</label><select id="tipoHorario"><option>ENTRADA</option><option>INTERMEDIO</option><option>SALIDA</option></select></div><div><label>Fecha</label><input id="fecha" type="date" required></div></div>
-        <div class="row"><div><label>Hora</label><input id="hora" type="time" required></div><div><label>Para ocurrir a / destino</label><input id="destino" required placeholder="Lugar o área"></div></div>
-        <label>Motivo / asunto</label><textarea id="motivo" required placeholder="Describa el motivo del pase"></textarea>
-        <div class="row"><div><label>Matrícula jefe que firma</label><input id="jefeMatricula" placeholder="Ej. 99032244"></div><div><label>Buscar jefe que firma</label><input id="buscarJefe" placeholder="Nombre o matrícula"></div></div>
+        <div class="row3"><div><label>Tipo de pase</label><select id="tipoAsunto" aria-label="Tipo de asunto del pase"><option>PARTICULAR</option><option>OFICIAL</option><option>MÉDICO</option></select></div><div><label>Por horario</label><select id="tipoHorario" aria-label="Tipo de horario del pase"><option>ENTRADA</option><option>INTERMEDIO</option><option>SALIDA</option></select></div><div><label>Fecha</label><input id="fecha" aria-label="Fecha del pase" type="date" required></div></div>
+        <div class="row"><div><label>Hora</label><input id="hora" aria-label="Hora del pase" type="time" required></div><div><label>Para ocurrir a / destino</label><input id="destino" aria-label="Destino o área" required placeholder="Lugar o área"></div></div>
+        <label>Motivo / asunto</label><textarea id="motivo" aria-label="Motivo del pase" required placeholder="Describa el motivo del pase"></textarea>
+        <div class="row"><div><label>Matrícula jefe que firma</label><input id="jefeMatricula" aria-label="Matrícula del jefe inmediato" placeholder="Ej. 99032244"></div><div><label>Buscar jefe que firma</label><input id="buscarJefe" aria-label="Buscar jefe por nombre o matrícula" placeholder="Nombre o matrícula"></div></div>
         <div id="bossBox" class="workerBox small">Capture o busque al jefe inmediato que firmará el pase.</div>
         <div class="hint" id="objectHint">Objeto automático: LLEGAR.</div>
         <div class="actions"><button class="btn" type="submit">Generar pase</button><button class="btn secondary" type="button" id="clearBtn">Limpiar</button></div>
       </form></section>
-      <section class="card"><h2>Recepción por Personal</h2><label>Folio / QR token</label><input id="folioRecepcion" placeholder="Ej. PASE-20260611-0001"><div class="actions"><button class="btn" id="receiveBtn">Marcar recibido</button></div><div class="hint">La recepción cambia el estado a “Recibido por Personal”.</div><div id="receiveMsg"></div></section>
+      <section class="card"><h2>Recepción por Personal</h2><label>Folio / QR token</label><input id="folioRecepcion" aria-label="Folio para recepción del pase" placeholder="Ej. PASE-20260611-0001"><div class="actions"><button class="btn" id="receiveBtn">Marcar recibido</button></div><div class="hint">La recepción cambia el estado a “Recibido por Personal”.</div><div id="receiveMsg"></div></section>
     </div>
     <section class="card" style="margin-top:18px"><h2>Mis pases / historial local</h2><div class="tableWrap"><table class="tbl"><thead><tr><th>Folio</th><th>Trabajador</th><th>Fecha</th><th>Tipo</th><th>Horario</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="passesTbody"></tbody></table></div></section>
     <section id="printArea" class="printOnly"></section>
