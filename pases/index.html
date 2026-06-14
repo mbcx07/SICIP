@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#005235" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="SICIP Pases" />
+  <link rel="manifest" href="/manifest.webmanifest?v=20260614040100" />
+  <link rel="apple-touch-icon" href="/icons/sicip-192.png" />
   <title>SICIP — Módulo de Pases</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <style>
@@ -193,5 +199,6 @@
   fetch('../data-ft-nomina-2026009.json').then(function(r){return r.json()}).then(function(d){NOMINA=d||[];$('workerBox').textContent='Base activa cargada: nómina quincenal 09 ('+NOMINA.length+' registros). Capture matrícula.'}).catch(function(){return fetch('../data-trabajadores.json').then(function(r){return r.json()}).then(function(d){NOMINA=d||[]})}).finally(function(){setMinDate();renderTable()});
 })();
 </script>
+  <script src="/sicip-pwa.js?v=20260614040100"></script>
 </body>
 </html>

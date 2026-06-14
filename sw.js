@@ -1,12 +1,12 @@
-// SICIP Service Worker v4.0.0
+// SICIP Service Worker v5.17.0 PWA
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 
-const VERSION = '5.13.2-loginfix';
+const VERSION = '5.17.0-pwa';
 const PROJECT_ID = 'sicip-bcs';
 const FS_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
-const CACHE_NAME = 'sicip-data-v8-loginfix';
-const STATIC_CACHE = 'sicip-static-v5-loginfix';
+const CACHE_NAME = 'sicip-data-v10-pwa';
+const STATIC_CACHE = 'sicip-static-v7-pwa';
 
 // Collection map: Firestore collection -> data key
 const COLLECTION_MAP = {
@@ -193,7 +193,7 @@ self.addEventListener('fetch', (event) => {
   // Network-first for static assets — ensures fresh content while offline fallback
   if (event.request.method === 'GET' && 
       !url.pathname.startsWith('/data-') &&
-      (url.pathname.endsWith('.js') || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('.css') || url.pathname.endsWith('.svg'))) {
+      (url.pathname.endsWith('.js') || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('.css') || url.pathname.endsWith('.svg') || url.pathname.endsWith('.png') || url.pathname.endsWith('.webmanifest'))) {
     event.respondWith(networkFirst(event.request));
     return;
   }
@@ -219,3 +219,50 @@ async function networkFirst(request) {
     throw e;
   }
 }
+
+// ==================== PWA NOTIFICATIONS ====================
+self.addEventListener('message', (event) => {
+  const data = event.data || {};
+  if (data.type === 'SICIP_SHOW_NOTIFICATION') {
+    const title = data.title || 'SICIP';
+    const options = {
+      body: data.body || '',
+      icon: '/icons/sicip-192.png',
+      badge: '/icons/sicip-192.png',
+      tag: data.tag || 'sicip-alerta',
+      renotify: true,
+      data: { url: data.url || '/' }
+    };
+    event.waitUntil(self.registration.showNotification(title, options));
+  }
+});
+
+self.addEventListener('push', (event) => {
+  let payload = {};
+  try { payload = event.data ? event.data.json() : {}; } catch(e) { payload = { body: event.data ? event.data.text() : '' }; }
+  const title = payload.title || 'Nueva notificación SICIP';
+  const options = {
+    body: payload.body || payload.mensaje || 'Tienes una nueva notificación pendiente.',
+    icon: '/icons/sicip-192.png',
+    badge: '/icons/sicip-192.png',
+    tag: payload.tag || 'sicip-push',
+    renotify: true,
+    data: { url: payload.url || '/#/notificaciones' }
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = (event.notification.data && event.notification.data.url) || '/';
+  event.waitUntil((async () => {
+    const allClients = await clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const client of allClients) {
+      if ('focus' in client) {
+        try { await client.navigate(url); } catch(e) {}
+        return client.focus();
+      }
+    }
+    return clients.openWindow(url);
+  })());
+});

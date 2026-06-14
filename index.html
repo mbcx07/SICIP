@@ -8,6 +8,13 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="description" content="IMSS - Sistema Integral de Captura de Información de Personal" />
+    <meta name="theme-color" content="#005235" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="SICIP" />
+    <link rel="manifest" href="/manifest.webmanifest?v=20260614040100" />
+    <link rel="apple-touch-icon" href="/icons/sicip-192.png" />
     <link rel="icon" type="image/svg+xml" href="./imss-logo.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,7 +31,7 @@
     <script>
       // Register Service Worker - intercepts ALL Firestore requests at network level
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js?v=20260612140300', { scope: '/' })
+        navigator.serviceWorker.register('/sw.js?v=20260614040100', { scope: '/' })
           .then(function(reg) {
             console.log('[SICIP] Service Worker registered:', reg.scope);
             if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
@@ -42,7 +49,7 @@
           });
       }
     </script>
-    <script src="./sicip-panels-v5.js?v=20260614021200"></script>
+    <script src="./sicip-panels-v5.js?v=20260614040100"></script>
     <script src="./sicip-cuadros-menu-patch.js?v=20260528071000"></script>
     <!-- v2 desactivada temporalmente para evitar conflicto con v5.3.2 -->
     <!-- <script src="./sicip-cuadros-v2.js?v=202605252057"></script> -->
@@ -50,6 +57,7 @@
     <script src="./sicip-pases-module.js?v=20260611161000"></script>
     <script src="./sicip-ux-fixes.js?v=20260601014500"></script>
     <script src="./sicip-pro-design.js?v=20260601072000"></script>
-    <script src="./sicip-audit-fixes.js?v=20260614021200"></script>
+    <script src="./sicip-audit-fixes.js?v=20260614040100"></script>
+    <script src="./sicip-pwa.js?v=20260614040100"></script>
   </body>
 </html>
