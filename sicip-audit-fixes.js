@@ -1,7 +1,7 @@
 /* SICIP v5.13 - Remediación post-auditoría: accesibilidad, seguridad cliente y UX institucional */
 (function(){
   'use strict';
-  var VERSION='5.16.6-pases-20260614';
+  var VERSION='5.16.7-pases-20260614';
   var STYLE_ID='sicip-auditfix-style';
   var SENSITIVE_KEYS=['password','passwordHash','token','secret','apiSecret','refreshToken','accessToken'];
 
@@ -96,9 +96,9 @@
   function patchFetchRedaction(){ /* v5.13.2: desactivado para no interferir login/Firestore */ }
   function fixVersionBadge(){
     var b=document.getElementById('sicip-version-badge');
-    if(b && /4\.0\.1|4\.01|v4|5\.13\.1|v5\.13|5\.15|5\.16\.[0-5]/i.test(b.textContent||'')){
-      b.textContent='SICIP v5.16.6';
-      b.title='SICIP v5.16.6 · Click para forzar recarga';
+    if(b && /4\.0\.1|4\.01|v4|5\.13\.1|v5\.13|5\.15|5\.16\.[0-6]/i.test(b.textContent||'')){
+      b.textContent='SICIP v5.16.7';
+      b.title='SICIP v5.16.7 · Click para forzar recarga';
     }
   }
   function addSecurityBanner(){

@@ -112,6 +112,20 @@
 
     /* v5.16.6: corrección real del centrado; día/mes/año son el div.p515Line, no hijos */
     .p515Date>div.p515Line:not(:first-of-type){display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;line-height:1!important;box-sizing:border-box!important}
+
+    /* v5.16.7: centrar hoja impresa y corregir centrado de textos en indicadores */
+    @media print{
+      @page{size:letter portrait;margin:0!important}
+      html,body{width:8.5in!important;height:11in!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#fff!important}
+      #printArea{display:flex!important;width:8.5in!important;height:11in!important;margin:0!important;padding:0!important;align-items:flex-start!important;justify-content:center!important;text-align:center!important;background:#fff!important}
+      .passSheetV515{width:8.10in!important;height:10.50in!important;min-height:10.50in!important;max-height:10.50in!important;margin:.25in auto 0 auto!important;display:block!important;left:auto!important;right:auto!important;transform:none!important;transform-origin:top center!important}
+    }
+    .p515Indicators{align-items:stretch!important}
+    .p515Ind{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:.07in .04in .035in!important;gap:.012in!important;line-height:1.08!important}
+    .p515IndIcon{float:none!important;display:block!important;width:auto!important;margin:0 auto .012in!important;text-align:center!important;line-height:1!important}
+    .p515Ind b{display:block!important;text-align:center!important;width:100%!important;margin:.015in 0!important}
+    .p515Footnote{text-align:center!important;width:100%!important;padding:0 .10in!important}
+
   </style>
 </head>
 <body>
