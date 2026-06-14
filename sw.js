@@ -1,12 +1,12 @@
-// SICIP Service Worker v5.17.0 PWA
+// SICIP Service Worker v5.17.1 PWA logo refresh
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 
-const VERSION = '5.17.0-pwa';
+const VERSION = '5.17.1-pwa-logo';
 const PROJECT_ID = 'sicip-bcs';
 const FS_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 const CACHE_NAME = 'sicip-data-v10-pwa';
-const STATIC_CACHE = 'sicip-static-v7-pwa';
+const STATIC_CACHE = 'sicip-static-v8-logo';
 
 // Collection map: Firestore collection -> data key
 const COLLECTION_MAP = {
@@ -227,8 +227,8 @@ self.addEventListener('message', (event) => {
     const title = data.title || 'SICIP';
     const options = {
       body: data.body || '',
-      icon: '/icons/sicip-192.png',
-      badge: '/icons/sicip-192.png',
+      icon: '/icons/sicip-192.png?v=20260614050500',
+      badge: '/icons/sicip-192.png?v=20260614050500',
       tag: data.tag || 'sicip-alerta',
       renotify: true,
       data: { url: data.url || '/' }
@@ -243,8 +243,8 @@ self.addEventListener('push', (event) => {
   const title = payload.title || 'Nueva notificación SICIP';
   const options = {
     body: payload.body || payload.mensaje || 'Tienes una nueva notificación pendiente.',
-    icon: '/icons/sicip-192.png',
-    badge: '/icons/sicip-192.png',
+    icon: '/icons/sicip-192.png?v=20260614050500',
+    badge: '/icons/sicip-192.png?v=20260614050500',
     tag: payload.tag || 'sicip-push',
     renotify: true,
     data: { url: payload.url || '/#/notificaciones' }
