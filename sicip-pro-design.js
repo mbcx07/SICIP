@@ -1,7 +1,7 @@
 // SICIP PRO DESIGN v5.0 — Limpio y directo
 (function(){
   'use strict';
-  var VERSION = '5.0.0';
+  var VERSION = '5.17.2-mobile-login';
 
   var css = '';
   
@@ -63,6 +63,9 @@
 
   // ====== MOBILE 480 ======
   css += '@media(max-width:480px){main,[role="main"],#root>div>div>div:last-child{padding:.75rem!important}h1{font-size:1.2rem!important}h2{font-size:1rem!important}div[style*="max-width: 440px"],div[style*="max-width: 460px"],div[style*="maxWidth: 440"],div[style*="maxWidth: 460"]{max-width:100%!important;margin-left:8px!important;margin-right:8px!important}div[style*="padding: 2.5rem"]{padding:1rem!important}div[style*="display: grid"]{gap:.5rem!important}div[style*="gridTemplateColumns"],div[style*="grid-template-columns"]{grid-template-columns:1fr!important}div[style*="flexWrap: wrap"]>*{flex:1 1 100%!important;min-width:100%!important}}';
+
+  // ====== LOGIN MÓVIL: EVITAR ENCABEZADO CORTADO ======
+  css += '@media(max-width:560px){div[style*="display: flex"][style*="min-height: 100dvh"][style*="justify-content: center"]{align-items:center!important;justify-content:flex-start!important;flex-direction:column!important;min-height:100svh!important;height:auto!important;padding:calc(env(safe-area-inset-top,0px) + 12px) 10px calc(118px + env(safe-area-inset-bottom,0px))!important;overflow-y:auto!important;overflow-x:hidden!important;background:linear-gradient(180deg,#00462e,#002b1c)!important}div[style*="position: fixed"][style*="top: 1.5rem"][style*="translateX(-50%)"]{position:static!important;top:auto!important;left:auto!important;transform:none!important;margin:0 auto 10px!important;max-width:calc(100vw - 24px)!important;width:fit-content!important;padding:.42rem .8rem!important;font-size:.68rem!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;z-index:1!important}div[style*="max-width: 440px"][style*="box-shadow: 0 20px 60px"]{margin:0 auto!important;padding:1.25rem 1.15rem!important;border-radius:1.25rem!important;max-height:none!important;overflow:visible!important}div[style*="max-width: 440px"] div[style*="margin-bottom: 2rem"]{margin-bottom:1.1rem!important;margin-top:.15rem!important}div[style*="max-width: 440px"] svg[width="72"]{width:58px!important;height:58px!important}div[style*="max-width: 440px"] h1{font-size:1.75rem!important;line-height:1.05!important}div[style*="max-width: 440px"] form{gap:.82rem!important}div[style*="max-width: 440px"] div[style*="margin-top: 2rem"]{margin-top:1.1rem!important;padding-top:.8rem!important}}';
 
   // ====== INYECTAR CSS ======
   if (!document.getElementById('sicip-pro-v5-css')) {
