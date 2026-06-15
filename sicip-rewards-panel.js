@@ -1,15 +1,19 @@
-// SICIP - Panel Home de Recompensas v5.19.2
+// SICIP - Panel Home de Recompensas v5.19.3
 // Centraliza puntos de entrega oportuna y asiduidad para futuras integraciones.
 (function(){
   'use strict';
-  var VERSION='5.19.2-aura-rewards';
+  var VERSION='5.19.3-rpg-annual-aura';
   var STORE='sicip_pases_rewards_v1';
   var PANEL_ID='sicip-rewards-home-panel';
+  var AURA_RANKS=['Iniciado','Aprendiz','Custodio','Centinela','Adeptus','Vanguardia','Maestro','Ascendente','Mítico','Legendario'];
+  var AURA_GRADES=['I','II','III','IV','V','VI','VII','VIII','IX','X'];
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function getUser(){try{return JSON.parse(sessionStorage.getItem('sicip_usuario')||'null')}catch(e){return null}}
   function loadRewards(){try{return JSON.parse(localStorage.getItem(STORE)||'{"totals":{},"events":[]}')}catch(e){return{totals:{},events:[]}}}
   function matriculaUser(u){return String((u&&(u.matricula||u.uid||u.id))||sessionStorage.getItem('sicip_matricula')||'').trim()}
+  function levelName(level){level=Math.max(1,Math.min(100,level));return AURA_RANKS[Math.floor((level-1)/10)]+' '+AURA_GRADES[(level-1)%10]}
+  function currentYear(){return String(new Date().getFullYear())}
   function main(){return document.querySelector('main')||document.querySelector('[role="main"]')||document.querySelector('#root main')}
   function isHome(){
     var path=location.pathname.replace(/\/$/,'')||'/';
@@ -27,14 +31,15 @@
     var m=main(),u=getUser();
     if(!m||!u||!isHome()){var old=$(PANEL_ID);if(old)old.remove();return}
     css();
-    var mat=matriculaUser(u),r=loadRewards(),total=mat?(r.totals&&r.totals[mat]||0):0;
-    var events=(r.events||[]).filter(function(e){return !mat||String(e.matricula)===String(mat)}).slice(0,3);
-    var level=Math.floor(total/100)+1, aura=total%100, next=100-aura;
-    var names=['Inicial','Constante','Confiable','Impecable','Elite','Leyenda'];
-    var label=names[Math.min(level-1,names.length-1)];
+    var mat=matriculaUser(u),r=loadRewards(),year=currentYear();
+    var allEvents=(r.events||[]).filter(function(e){return (!mat||String(e.matricula)===String(mat))&&String(e.fecha||'').slice(0,4)===year});
+    var total=allEvents.reduce(function(sum,e){return sum+Number(e.points||0)},0);
+    var events=allEvents.slice(0,3);
+    var level=Math.min(100,Math.floor(total/100)+1), aura=level>=100?100:(total%100), next=level>=100?0:(100-aura);
+    var label=levelName(level);
     var panel=$(PANEL_ID)||document.createElement('section');
     panel.id=PANEL_ID;panel.className='sicip-rewards-home';
-    panel.innerHTML='<div class="sicip-aura-head"><div class="sicip-aura-title"><div class="sicip-aura-orb"></div><div><h2>Aura laboral</h2><span>'+esc(label)+' · '+total+' pts</span></div></div><div class="sicip-aura-level">Nivel '+level+'</div></div><div class="sicip-aura-bar" aria-label="Progreso de aura"><div class="sicip-aura-fill" style="width:'+aura+'%"></div></div><div class="sicip-aura-meta"><span>'+aura+'/100 aura</span><span>'+next+' pts para subir</span></div><div class="sicip-aura-events">'+(events.length?events.map(function(e){return '<span class="sicip-aura-chip"><strong>+'+e.points+'</strong> '+esc(String(e.reason||'').replace(/^Cerró la quincena /,'Q ').replace('Entregó documento de pase manual dentro de los primeros 3 días de la incidencia.','Entrega oportuna'))+'</span>'}).join(''):'<span class="sicip-aura-chip">Sin movimientos aún</span>')+'</div>';
+    panel.innerHTML='<div class="sicip-aura-head"><div class="sicip-aura-title"><div class="sicip-aura-orb"></div><div><h2>Aura laboral</h2><span>'+esc(label)+' · temporada '+year+'</span></div></div><div class="sicip-aura-level">Nivel '+level+'</div></div><div class="sicip-aura-bar" aria-label="Progreso de aura"><div class="sicip-aura-fill" style="width:'+aura+'%"></div></div><div class="sicip-aura-meta"><span>'+aura+'/100 aura · '+total+' pts</span><span>'+(level>=100?'Nivel máximo':next+' pts para subir')+'</span></div><div class="sicip-aura-events">'+(events.length?events.map(function(e){return '<span class="sicip-aura-chip"><strong>+'+e.points+'</strong> '+esc(String(e.reason||'').replace(/^Cerró la quincena /,'Q ').replace('Entregó documento de pase manual dentro de los primeros 3 días de la incidencia.','Entrega oportuna'))+'</span>'}).join(''):'<span class="sicip-aura-chip">Sin movimientos aún</span>')+'</div>';
     if(!panel.parentNode)m.insertBefore(panel,m.firstChild);
   }
   var t=null;function schedule(){clearTimeout(t);t=setTimeout(render,180)}
