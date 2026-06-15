@@ -1,8 +1,8 @@
-// SICIP - Panel Home de Recompensas v5.19.3
-// Centraliza puntos de entrega oportuna y asiduidad para futuras integraciones.
+// SICIP - Panel Home de Recompensas v5.19.4
+// Centraliza Aura laboral anual, entrega oportuna y asiduidad para futuras integraciones.
 (function(){
   'use strict';
-  var VERSION='5.19.3-rpg-annual-aura';
+  var VERSION='5.19.4-aura-420-quincenal';
   var STORE='sicip_pases_rewards_v1';
   var PANEL_ID='sicip-rewards-home-panel';
   var AURA_RANKS=['Iniciado','Aprendiz','Custodio','Centinela','Adeptus','Vanguardia','Maestro','Ascendente','Mítico','Legendario'];
@@ -39,7 +39,7 @@
     var label=levelName(level);
     var panel=$(PANEL_ID)||document.createElement('section');
     panel.id=PANEL_ID;panel.className='sicip-rewards-home';
-    panel.innerHTML='<div class="sicip-aura-head"><div class="sicip-aura-title"><div class="sicip-aura-orb"></div><div><h2>Aura laboral</h2><span>'+esc(label)+' · temporada '+year+'</span></div></div><div class="sicip-aura-level">Nivel '+level+'</div></div><div class="sicip-aura-bar" aria-label="Progreso de aura"><div class="sicip-aura-fill" style="width:'+aura+'%"></div></div><div class="sicip-aura-meta"><span>'+aura+'/100 aura · '+total+' pts</span><span>'+(level>=100?'Nivel máximo':next+' pts para subir')+'</span></div><div class="sicip-aura-events">'+(events.length?events.map(function(e){return '<span class="sicip-aura-chip"><strong>+'+e.points+'</strong> '+esc(String(e.reason||'').replace(/^Cerró la quincena /,'Q ').replace('Entregó documento de pase manual dentro de los primeros 3 días de la incidencia.','Entrega oportuna'))+'</span>'}).join(''):'<span class="sicip-aura-chip">Sin movimientos aún</span>')+'</div>';
+    panel.innerHTML='<div class="sicip-aura-head"><div class="sicip-aura-title"><div class="sicip-aura-orb"></div><div><h2>Aura laboral</h2><span>'+esc(label)+' · temporada '+year+'</span></div></div><div class="sicip-aura-level">Nivel '+level+'</div></div><div class="sicip-aura-bar" aria-label="Progreso de aura"><div class="sicip-aura-fill" style="width:'+aura+'%"></div></div><div class="sicip-aura-meta"><span>'+aura+'/100 aura · '+total+' pts</span><span>'+(level>=100?'Nivel máximo':next+' pts para subir')+'</span></div><div class="sicip-aura-events">'+(events.length?events.map(function(e){return '<span class="sicip-aura-chip"><strong>+'+e.points+'</strong> '+esc(String(e.reason||'').replace(/^Cerró la quincena /,'Q ').replace(/^Aura quincenal /,'Q ').replace('Entregó documento de pase manual dentro de los primeros 3 días de la incidencia.','Entrega oportuna'))+'</span>'}).join(''):'<span class="sicip-aura-chip">Sin movimientos aún</span>')+'</div>';
     if(!panel.parentNode)m.insertBefore(panel,m.firstChild);
   }
   var t=null;function schedule(){clearTimeout(t);t=setTimeout(render,180)}
