@@ -1,8 +1,8 @@
-// SICIP - Panel Home de Recompensas v5.19.1
+// SICIP - Panel Home de Recompensas v5.19.2
 // Centraliza puntos de entrega oportuna y asiduidad para futuras integraciones.
 (function(){
   'use strict';
-  var VERSION='5.19.1-home-rewards';
+  var VERSION='5.19.2-aura-rewards';
   var STORE='sicip_pases_rewards_v1';
   var PANEL_ID='sicip-rewards-home-panel';
   function $(id){return document.getElementById(id)}
@@ -20,7 +20,7 @@
   function css(){
     if($('sicip-rewards-home-css'))return;
     var s=document.createElement('style');s.id='sicip-rewards-home-css';
-    s.textContent='.sicip-rewards-home{background:#fff;border:1px solid #dbe5df;border-radius:18px;padding:18px;margin:0 0 18px;box-shadow:0 8px 18px rgba(15,23,42,.06);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#1f2937}.sicip-rewards-home h2{margin:0;color:#005235;font-size:18px}.sicip-rewards-sub{margin:4px 0 14px;color:#6b7280;font-size:12px}.sicip-rewards-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.sicip-rewards-score{background:linear-gradient(135deg,#005235,#0b6b43);color:#fff;border-radius:16px;padding:16px}.sicip-rewards-score b{display:block;font-size:34px;line-height:1}.sicip-rewards-note{color:rgba(255,255,255,.86);font-size:12px;margin:8px 0 0;line-height:1.35}.sicip-rewards-list{display:grid;gap:8px;max-height:188px;overflow:auto}.sicip-rewards-item{background:#f8faf9;border:1px solid #dbe5df;border-radius:12px;padding:9px 10px;font-size:12px}.sicip-rewards-item strong{color:#005235}.sicip-rewards-small{font-size:12px;color:#6b7280;line-height:1.45}@media(max-width:760px){.sicip-rewards-grid{grid-template-columns:1fr}.sicip-rewards-home{margin:0 0 14px;padding:14px}}';
+    s.textContent='.sicip-rewards-home{background:rgba(255,255,255,.92);border:1px solid #dbe5df;border-radius:14px;padding:14px 16px;margin:0 0 14px;box-shadow:0 6px 16px rgba(15,23,42,.05);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#1f2937}.sicip-aura-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.sicip-aura-title{display:flex;align-items:center;gap:10px;min-width:0}.sicip-aura-orb{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d1fae5,#10b981 58%,#005235);box-shadow:0 0 0 4px #ecfdf5,0 0 18px rgba(16,185,129,.24);flex-shrink:0}.sicip-aura-title h2{margin:0;color:#005235;font-size:15px;line-height:1.1}.sicip-aura-title span{display:block;color:#6b7280;font-size:11px;margin-top:2px}.sicip-aura-level{border:1px solid #bbf7d0;background:#ecfdf5;color:#065f46;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900;white-space:nowrap}.sicip-aura-bar{height:10px;background:#edf5f0;border-radius:999px;overflow:hidden;border:1px solid #dbe5df}.sicip-aura-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#10b981,#5eead4);box-shadow:0 0 12px rgba(16,185,129,.45);transition:width .3s ease}.sicip-aura-meta{display:flex;justify-content:space-between;gap:10px;margin-top:7px;color:#6b7280;font-size:11px}.sicip-aura-events{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.sicip-aura-chip{background:#f8faf9;border:1px solid #dbe5df;border-radius:999px;padding:5px 8px;font-size:11px;color:#4b5563}.sicip-aura-chip strong{color:#005235}@media(max-width:640px){.sicip-aura-head{align-items:flex-start}.sicip-rewards-home{padding:12px}.sicip-aura-level{font-size:10px}}';
     document.head.appendChild(s);
   }
   function render(){
@@ -28,11 +28,13 @@
     if(!m||!u||!isHome()){var old=$(PANEL_ID);if(old)old.remove();return}
     css();
     var mat=matriculaUser(u),r=loadRewards(),total=mat?(r.totals&&r.totals[mat]||0):0;
-    var events=(r.events||[]).filter(function(e){return !mat||String(e.matricula)===String(mat)}).slice(0,5);
-    var leaders=Object.keys(r.totals||{}).sort(function(a,b){return(r.totals[b]||0)-(r.totals[a]||0)}).slice(0,5);
+    var events=(r.events||[]).filter(function(e){return !mat||String(e.matricula)===String(mat)}).slice(0,3);
+    var level=Math.floor(total/100)+1, aura=total%100, next=100-aura;
+    var names=['Inicial','Constante','Confiable','Impecable','Elite','Leyenda'];
+    var label=names[Math.min(level-1,names.length-1)];
     var panel=$(PANEL_ID)||document.createElement('section');
     panel.id=PANEL_ID;panel.className='sicip-rewards-home';
-    panel.innerHTML='<h2>Recompensas</h2><p class="sicip-rewards-sub">Entrega oportuna, asiduidad y próximos documentos integrados.</p><div class="sicip-rewards-grid"><div class="sicip-rewards-score"><span>'+(mat?'Matrícula '+esc(mat):'Usuario activo')+'</span><b>'+total+'</b><span>puntos acumulados</span><p class="sicip-rewards-note">+10 por entrega manual en 3 días. +25 por quincena cerrada sin pase particular. Oficiales y médicos no descuentan.</p></div><div><strong style="color:#005235">Últimas recompensas</strong><div class="sicip-rewards-list">'+(events.length?events.map(function(e){return '<div class="sicip-rewards-item"><strong>+'+e.points+' pts</strong> '+esc(e.reason)+'<br><span class="sicip-rewards-small">'+esc(String(e.fecha).slice(0,10))+'</span></div>'}).join(''):'<div class="sicip-rewards-item">Sin recompensas registradas todavía.</div>')+'</div><strong style="display:block;color:#005235;margin-top:10px">Top local</strong><div class="sicip-rewards-small">'+(leaders.length?leaders.map(function(x,i){return (i+1)+'. '+esc(x)+' - '+(r.totals[x]||0)+' pts'}).join('<br>'):'Sin puntaje aún')+'</div></div></div>';
+    panel.innerHTML='<div class="sicip-aura-head"><div class="sicip-aura-title"><div class="sicip-aura-orb"></div><div><h2>Aura laboral</h2><span>'+esc(label)+' · '+total+' pts</span></div></div><div class="sicip-aura-level">Nivel '+level+'</div></div><div class="sicip-aura-bar" aria-label="Progreso de aura"><div class="sicip-aura-fill" style="width:'+aura+'%"></div></div><div class="sicip-aura-meta"><span>'+aura+'/100 aura</span><span>'+next+' pts para subir</span></div><div class="sicip-aura-events">'+(events.length?events.map(function(e){return '<span class="sicip-aura-chip"><strong>+'+e.points+'</strong> '+esc(String(e.reason||'').replace(/^Cerró la quincena /,'Q ').replace('Entregó documento de pase manual dentro de los primeros 3 días de la incidencia.','Entrega oportuna'))+'</span>'}).join(''):'<span class="sicip-aura-chip">Sin movimientos aún</span>')+'</div>';
     if(!panel.parentNode)m.insertBefore(panel,m.firstChild);
   }
   var t=null;function schedule(){clearTimeout(t);t=setTimeout(render,180)}
