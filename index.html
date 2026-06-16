@@ -31,10 +31,10 @@
     <script>
       // Register Service Worker - intercepts ALL Firestore requests at network level
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js?v=20260614050500', { scope: '/' })
+        navigator.serviceWorker.register('/sw.js?v=20260616002500', { scope: '/' })
           .then(function(reg) {
             console.log('[SICIP] Service Worker registered:', reg.scope);
-            if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+            if (reg.waiting) reg.waiting.postMessage({ type: 'SICIP_SKIP_WAITING' });
             reg.addEventListener('updatefound', function() {
               var newWorker = reg.installing;
               newWorker.addEventListener('statechange', function() {
@@ -59,6 +59,6 @@
     <script src="./sicip-ux-fixes.js?v=20260601014500"></script>
     <script src="./sicip-pro-design.js?v=20260614195000"></script>
     <script src="./sicip-audit-fixes.js?v=20260614050500"></script>
-    <script src="./sicip-pwa.js?v=20260614195000"></script>
+    <script src="./sicip-pwa.js?v=20260616002500"></script>
   </body>
 </html>

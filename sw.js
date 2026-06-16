@@ -1,12 +1,12 @@
-// SICIP Service Worker v5.17.1 PWA logo refresh
+// SICIP Service Worker v5.19.5 PWA update prompt
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 
-const VERSION = '5.17.1-pwa-logo';
+const VERSION = '5.19.5-pwa-update';
 const PROJECT_ID = 'sicip-bcs';
 const FS_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 const CACHE_NAME = 'sicip-data-v10-pwa';
-const STATIC_CACHE = 'sicip-static-v8-logo';
+const STATIC_CACHE = 'sicip-static-v9-update';
 
 // Collection map: Firestore collection -> data key
 const COLLECTION_MAP = {
@@ -223,6 +223,10 @@ async function networkFirst(request) {
 // ==================== PWA NOTIFICATIONS ====================
 self.addEventListener('message', (event) => {
   const data = event.data || {};
+  if (data.type === 'SICIP_SKIP_WAITING') {
+    self.skipWaiting();
+    return;
+  }
   if (data.type === 'SICIP_SHOW_NOTIFICATION') {
     const title = data.title || 'SICIP';
     const options = {
