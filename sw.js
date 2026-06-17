@@ -2,11 +2,11 @@
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 
-const VERSION = '5.19.5-pwa-update';
+const VERSION = '5.19.6-auto-update';
 const PROJECT_ID = 'sicip-bcs';
 const FS_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
-const CACHE_NAME = 'sicip-data-v10-pwa';
-const STATIC_CACHE = 'sicip-static-v9-update';
+const CACHE_NAME = 'sicip-data-v11-auto';
+const STATIC_CACHE = 'sicip-static-v10-auto';
 
 // Collection map: Firestore collection -> data key
 const COLLECTION_MAP = {
@@ -43,6 +43,11 @@ self.addEventListener('activate', (event) => {
     const names = await caches.keys();
     await Promise.all(names.map(name => keep.has(name) ? null : caches.delete(name)));
     await self.clients.claim();
+    // Notify all clients that a new SW version is now active
+    const allClients = await self.clients.matchAll({ includeUncontrolled: true });
+    allClients.forEach(client => {
+      client.postMessage({ type: 'SICIP_SW_UPDATED', version: VERSION });
+    });
   })());
 });
 

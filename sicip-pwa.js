@@ -1,7 +1,7 @@
 /* SICIP v5.19.5 PWA instalable + alertas locales + actualización */
 (function(){
   'use strict';
-  var VERSION='5.19.5-pwa-update';
+  var VERSION='5.19.6-auto-update';
   var CHECK_MS=60000;
   var STORE_LAST='sicip_pwa_last_notification_seen';
   var STORE_INSTALL_HIDE='sicip_pwa_install_hide_until';
@@ -28,8 +28,24 @@
   function renderBell(count){css();var b=$('sicip-pwa-bell'); if(!count){if(b)b.remove();return} if(!b){b=document.createElement('button');b.id='sicip-pwa-bell';b.className='sicip-pwa-bell';b.title='Notificaciones SICIP';b.innerHTML='🔔<span class="sicip-pwa-badge" id="sicip-pwa-badge"></span>';document.body.appendChild(b);b.onclick=function(){location.hash='/notificaciones';toast('Notificaciones SICIP','Tienes '+(($('sicip-pwa-badge')||{}).textContent||count)+' notificación(es) sin leer.')}} var badge=$('sicip-pwa-badge'); if(badge)badge.textContent=String(count>99?'99+':count)}
   function updateCard(reg){css(); if($('sicip-pwa-update'))return; var c=document.createElement('div'); c.id='sicip-pwa-update'; c.className='sicip-pwa-card sicip-pwa-update'; c.innerHTML='<div style="font-size:25px">↻</div><div><b>Actualización disponible</b><p>Hay una versión nueva de SICIP lista para instalar.</p></div><div class="sicip-pwa-actions"><button class="sicip-pwa-primary" id="sicip-pwa-update-btn">Actualizar</button><button class="sicip-pwa-secondary" id="sicip-pwa-update-close">Luego</button></div>'; document.body.appendChild(c); $('sicip-pwa-update-close').onclick=function(){c.remove()}; $('sicip-pwa-update-btn').onclick=function(){var worker=reg&&(reg.waiting||reg.installing); if(worker)worker.postMessage({type:'SICIP_SKIP_WAITING'}); toast('Actualizando SICIP','La app se recargará con la versión nueva.'); setTimeout(function(){location.reload()},500)}}
   async function checkAppUpdate(){if(!('serviceWorker'in navigator))return; try{var reg=await navigator.serviceWorker.getRegistration('/'); if(!reg)return; if(reg.waiting){updateCard(reg);return} reg.addEventListener('updatefound',function(){var w=reg.installing;if(!w)return;w.addEventListener('statechange',function(){if(w.state==='installed'&&navigator.serviceWorker.controller)updateCard(reg)})}); await reg.update();}catch(e){console.warn('[SICIP PWA] update check',e)}}
-  var controllerChanged=false;
-  if('serviceWorker'in navigator){navigator.serviceWorker.addEventListener('controllerchange',function(){if(controllerChanged)return;controllerChanged=true;updateCard(null)})}
+  var swReloaded=false;
+  var hadSWController=!!navigator.serviceWorker.controller;
+  if('serviceWorker'in navigator){
+    navigator.serviceWorker.addEventListener('controllerchange',function(){
+      if(swReloaded||!hadSWController)return;
+      swReloaded=true;
+      toast('SICIP actualizado','Recargando con la versión más reciente...');
+      setTimeout(function(){location.reload()},800);
+    });
+    navigator.serviceWorker.addEventListener('message',function(event){
+      if(event.data&&event.data.type==='SICIP_SW_UPDATED'){
+        if(swReloaded||!hadSWController)return;
+        swReloaded=true;
+        toast('Nueva versión de SICIP','Recargando con la versión más reciente...');
+        setTimeout(function(){location.reload()},1200);
+      }
+    });
+  }
   async function check(){try{var rel=relevant(await loadNotifications()); renderBell(rel.length); if(!rel.length)return; var last=localStorage.getItem(STORE_LAST)||''; var newest=String(rel[0].id||rel[0].fecha||rel[0].mensaje||''); if(newest && newest!==last){localStorage.setItem(STORE_LAST,newest); await notify('Nueva notificación SICIP', rel[0].mensaje||('Tienes '+rel.length+' notificación(es) pendiente(s).'), '/#/notificaciones');}}catch(e){console.warn('[SICIP PWA] notif check',e)}}
   function init(){css(); setTimeout(installCard,2200); setTimeout(notificationCard,4200); setTimeout(checkAppUpdate,1800); setInterval(checkAppUpdate,300000); if('serviceWorker' in navigator){navigator.serviceWorker.ready.then(function(){check(); setInterval(check,CHECK_MS);});} else {check(); setInterval(check,CHECK_MS);} document.addEventListener('visibilitychange',function(){if(!document.hidden){check();checkAppUpdate()}}); window.SICIPPWA={version:VERSION,checkNotifications:check,checkUpdate:checkAppUpdate,enableNotifications:askNotifications,showInstall:installCard,showInstallHelp:function(){toast('Instalar SICIP',installHelp())},showTestNotification:function(){notify('SICIP listo','Las notificaciones están activas en este dispositivo.','/')}}; console.log('[SICIP PWA]',VERSION)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
