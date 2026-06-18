@@ -1,4 +1,4 @@
-// SICIP Service Worker v5.19.5 PWA update prompt
+// SICIP Service Worker v5.19.6 automatic update
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 

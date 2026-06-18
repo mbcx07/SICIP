@@ -1,4 +1,4 @@
-/* SICIP v5.19.5 PWA instalable + alertas locales + actualización */
+/* SICIP v5.19.6 PWA instalable + alertas locales + actualización automática */
 (function(){
   'use strict';
   var VERSION='5.19.6-auto-update';
