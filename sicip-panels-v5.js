@@ -1,5 +1,5 @@
 (function() {
-  var VERSION = "5.19.6";
+  var VERSION = "5.20.0";
 
   // ==================== GLOBAL DATA STORE ====================
   window.__SICIP_DATA__ = window.__SICIP_DATA__ || {};
@@ -56,7 +56,7 @@
   // ==================== DATA LOADING ====================
   // All datasets — load priority first, then bulk
   var priorityDatasets = [
-    'jefesServicio', 'cuadros', 'stats', 'vacantes', 'tramites'
+    'jefesServicio', 'cuadros', 'postulaciones', 'stats', 'vacantes', 'tramites'
   ];
   var bulkDatasets = [
     'trabajadores', 'plazas', 'plazas-full', 'usuarios', 'usuarios-full'

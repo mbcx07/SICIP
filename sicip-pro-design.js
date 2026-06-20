@@ -115,10 +115,16 @@
   function fixSidebar() {
     var btns = document.querySelectorAll('nav button, aside button, div[style*="linear-gradient(180deg"] button');
     var cp = window.location.pathname.replace(/\/$/, '') || '/';
+    var customActive = document.querySelector('[data-sicip-custom-nav][data-sicip-active="1"],[data-sicip-custom-nav] [data-sicip-active="1"]');
     for (var i = 0; i < btns.length; i++) {
       var btn = btns[i];
       var lb = (btn.textContent || '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      var act = false;
+      var act = customActive ? btn === customActive : false;
+      if (customActive) {
+        if (act) { btn.setAttribute('data-sicip-active', '1'); }
+        else { btn.removeAttribute('data-sicip-active'); }
+        continue;
+      }
       if (cp === '/' && (lb === 'inicio' || lb === 'dashboard' || lb === 'panel')) act = true;
       if (cp.indexOf('/solicitudes') >= 0 && lb === 'solicitudes') act = true;
       if (cp.indexOf('/contrato') >= 0 && lb === 'contrato') act = true;

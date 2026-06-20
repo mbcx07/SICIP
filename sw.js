@@ -1,12 +1,12 @@
-// SICIP Service Worker v5.19.6 automatic update
+// SICIP Service Worker v5.20.0 navigation and modules
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 
-const VERSION = '5.19.6-auto-update';
+const VERSION = '5.20.0-navigation-modules';
 const PROJECT_ID = 'sicip-bcs';
 const FS_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
-const CACHE_NAME = 'sicip-data-v11-auto';
-const STATIC_CACHE = 'sicip-static-v10-auto';
+const CACHE_NAME = 'sicip-data-v12-modules';
+const STATIC_CACHE = 'sicip-static-v11-modules';
 
 // Collection map: Firestore collection -> data key
 const COLLECTION_MAP = {
@@ -60,7 +60,7 @@ async function loadAllData() {
     const cache = await caches.open(CACHE_NAME);
     
     // Priority: small/critical datasets first
-    const prioritySets = ['jefesServicio', 'cuadros', 'stats', 'vacantes', 'tramites'];
+    const prioritySets = ['jefesServicio', 'cuadros', 'postulaciones', 'stats', 'vacantes', 'tramites'];
     const bulkSets = ['trabajadores', 'plazas', 'plazas-full', 'usuarios', 'usuarios-full'];
     const allSets = [...prioritySets, ...bulkSets];
     

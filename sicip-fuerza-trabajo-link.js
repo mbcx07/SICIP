@@ -2,7 +2,7 @@
 // Inserta el módulo "Herramientas" como lista desplegable y carga submódulos dentro del SICIP.
 (function() {
   'use strict';
-  var VERSION = '1.2.0';
+  var VERSION = '1.3.0-module-host';
 
   function getUsuario() {
     try { var s = sessionStorage.getItem('sicip_usuario'); return s ? JSON.parse(s) : null; } catch(e) { return null; }
@@ -41,6 +41,10 @@
   }
 
   function closeHerramientas() {
+    if (window.SICIPModuleHost) {
+      window.SICIPModuleHost.showReact();
+      return;
+    }
     var main = findMainContainer();
     var view = document.getElementById('sicip-herramientas-view');
     if (view) view.remove();
@@ -62,22 +66,14 @@
     var main = findMainContainer();
     if (!main) return;
 
-    closeHerramientas();
-
-    Array.prototype.forEach.call(main.children, function(child) {
-      if (child.id !== 'sicip-herramientas-view') {
-        child.dataset.sicipPrevDisplay = child.style.display || '';
-        child.style.display = 'none';
-      }
-    });
-
     var view = document.createElement('section');
     view.id = 'sicip-herramientas-view';
     view.style.cssText = 'padding:0;margin:0;width:100%;min-height:calc(100vh - 24px);background:#f5f7f6';
     view.innerHTML = '' +
       '<iframe title="Calculadora de Nivelación" src="./fuerza-trabajo/calculadora-nivelacion.html?embed=1&_=' + Date.now() + '" style="width:100%;height:calc(100vh - 24px);min-height:760px;border:0;border-radius:0;background:#f5f7f6;display:block"></iframe>';
 
-    main.appendChild(view);
+    if (window.SICIPModuleHost) window.SICIPModuleHost.mount(view, document.querySelector('[data-sicip-herramientas-sub]'));
+    else main.appendChild(view);
   }
 
   function patchSidebar() {
@@ -90,6 +86,7 @@
 
     var wrapper = document.createElement('div');
     wrapper.setAttribute('data-sicip-herramientas-root', '1');
+    wrapper.setAttribute('data-sicip-custom-nav', '1');
     wrapper.style.cssText = 'width:100%;margin-bottom:2px';
 
     var btn = document.createElement('button');

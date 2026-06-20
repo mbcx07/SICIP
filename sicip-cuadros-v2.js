@@ -7,7 +7,7 @@
 
 (function() {
   'use strict';
-  var VERSION = '2.0.0';
+  var VERSION = '2.1.1-v5.20.1';
   var FS_PROJECT = 'sicip-bcs';
   var FS_BASE = 'https://firestore.googleapis.com/v1/projects/' + FS_PROJECT + '/databases/(default)/documents';
 
@@ -86,17 +86,25 @@
   }
 
   function showContent(html) {
-    removePanel();
-    var container = getContentContainer();
-    if (!container) return;
-    hideReactContent(container);
     var panel = document.createElement('div');
     panel.setAttribute('data-sicip-cr-panel', 'layout');
     panel.innerHTML = html;
-    container.appendChild(panel);
+    if (window.SICIPModuleHost) {
+      window.SICIPModuleHost.mount(panel);
+    } else {
+      removePanel();
+      var container = getContentContainer();
+      if (!container) return;
+      hideReactContent(container);
+      container.appendChild(panel);
+    }
   }
 
   function showReactContent() {
+    if (window.SICIPModuleHost) {
+      window.SICIPModuleHost.showReact();
+      return;
+    }
     removePanel();
     var container = getContentContainer();
     if (!container) return;
@@ -105,6 +113,48 @@
     }
   }
   window.showReactContent = showReactContent;
+
+  function safeUrl(url) {
+    var value = String(url || '');
+    return /^https?:\/\//i.test(value) ? value : '';
+  }
+
+  function buildPostulacionesHTML(matricula) {
+    var data = getData();
+    var postulaciones = (data.postulaciones || []).filter(function (p) {
+      return String(p.cuadroId || p.jefeMatricula || '') === String(matricula);
+    });
+    if (!postulaciones.length) {
+      return '<div class="sicip-card" style="padding:1rem;margin-top:1rem">' +
+        '<h3 style="margin:0 0 0.35rem;font-size:0.9rem;color:#003324">📨 Trabajadores interesados</h3>' +
+        '<p style="margin:0;color:#9ca3af;font-size:0.78rem">Aún no hay solicitudes para este cuadro. Puedes elegir libremente a cualquier trabajador con el buscador.</p></div>';
+    }
+    var rows = postulaciones.map(function (p) {
+      var url = safeUrl(p.curriculumUrl || p.cvUrl || p.archivoUrl);
+      var nombre = p.trabajadorNombre || 'Trabajador';
+      var matriculaTrabajador = p.trabajadorMatricula || '';
+      var descripcion = p.trabajadorDescripcion || p.descripcion || '';
+      var departamento = p.trabajadorDepartamentoNombre || p.trabajadorDepartamento || '';
+      var tipoContrato = p.tipoContrato || '';
+      var jsNombre = esc(nombre.replace(/'/g, "\\'"));
+      return '<div style="display:flex;gap:0.65rem;align-items:flex-start;padding:0.75rem 0;border-top:1px solid #eef2f0">' +
+        '<div style="flex:1;min-width:0"><div style="font-weight:750;color:#111827;font-size:0.84rem">' + esc(nombre) + '</div>' +
+        '<div style="font-size:0.72rem;color:#6b7280">Mat. ' + esc(matriculaTrabajador) +
+        (descripcion ? ' · ' + esc(descripcion) : '') + (departamento ? ' · ' + esc(departamento) : '') + '</div>' +
+        '<div style="margin-top:0.35rem">' +
+        (url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" style="font-size:0.74rem;font-weight:700;color:#005235">📄 Ver currículum</a>' :
+          '<span style="font-size:0.72rem;color:#9ca3af">Currículum sin archivo consultable</span>') +
+        '</div></div><div style="display:flex;gap:0.2rem;flex-wrap:wrap;justify-content:flex-end">' +
+        '<button class="sicip-btn sicip-btn-primary sicip-btn-sm" onclick="window.__SICIP_ASIGNAR_A_SLOT__(\'' + esc(matriculaTrabajador) + '\',\'' + jsNombre + '\',\'' + esc(descripcion) + '\',\'' + esc(departamento) + '\',\'' + esc(tipoContrato) + '\',1)">+1</button>' +
+        '<button class="sicip-btn sicip-btn-primary sicip-btn-sm" onclick="window.__SICIP_ASIGNAR_A_SLOT__(\'' + esc(matriculaTrabajador) + '\',\'' + jsNombre + '\',\'' + esc(descripcion) + '\',\'' + esc(departamento) + '\',\'' + esc(tipoContrato) + '\',2)">+2</button>' +
+        '<button class="sicip-btn sicip-btn-primary sicip-btn-sm" onclick="window.__SICIP_ASIGNAR_A_SLOT__(\'' + esc(matriculaTrabajador) + '\',\'' + jsNombre + '\',\'' + esc(descripcion) + '\',\'' + esc(departamento) + '\',\'' + esc(tipoContrato) + '\',3)">+3</button>' +
+        '</div></div>';
+    }).join('');
+    return '<div class="sicip-card" style="padding:1rem;margin-top:1rem">' +
+      '<h3 style="margin:0 0 0.25rem;font-size:0.9rem;color:#003324">📨 Trabajadores interesados (' + postulaciones.length + ')</h3>' +
+      '<p style="margin:0 0 0.5rem;color:#6b7280;font-size:0.72rem">Solicitudes recibidas para consideración. La selección sigue siendo libre y opcional.</p>' +
+      rows + '</div>';
+  }
 
   // ════════════════ UTILITARIOS ════════════════
   function getCuadroMap() {
@@ -368,7 +418,7 @@
     _asigState = {
       matricula: matricula,
       nombreJefe: nombreJefe,
-      candidatos: candidatos.map(function(c,i){return {posicion:c.posicion||i+1,matricula:c.matricula,nombre:c.nombre,descripcion:c.descripcion,departamento:c.departamento,tipoContrato:c.tipoContrato};}),
+      candidatos: candidatos.map(function(c,i){return {posicion:Number(c.posicion)||i+1,matricula:c.matricula,nombre:c.nombre,descripcion:c.descripcion,departamento:c.departamento,tipoContrato:c.tipoContrato};}),
       status: cr ? (cr.status || 'SIN_ASIGNAR') : 'SIN_ASIGNAR',
       escolaridad: cr ? (cr.escolaridadRequerida || '') : '',
       experiencia: cr ? (cr.experienciaRequerida || '') : '',
@@ -431,7 +481,16 @@
     // Buscador de trabajadores (filtra de los datos ya cargados)
     var todosTrabajadores = data.trabajadores || [];
 
-    return ''+
+    // Aviso de regla de entrega
+  var avisoEntrega = ''+
+    '<div class="sicip-card" style="padding:0.7rem 1rem;margin-bottom:1rem;background:#fef3c7;border:1px solid #fcd34d;border-left:4px solid #f59e0b">'+
+      '<div style="display:flex;align-items:center;gap:0.5rem">'+
+        '<span style="font-size:1rem">⚠️</span>'+
+        '<span style="font-size:0.8rem;font-weight:600;color:#92400e">La entrega de cuadros tiene un máximo de 3 días hábiles, limitado por el cierre de quincena.</span>'+
+      '</div>'+
+    '</div>';
+
+  return ''+
       '<div style="padding:1rem 1.25rem;animation:sicipFadeIn 0.25s ease">'+
         // Header con volver
         '<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem">'+
@@ -444,6 +503,8 @@
             esc(s.nombreJefe) + ' · Mat. ' + esc(s.matricula) +
           '</p>'+
         '</div>'+
+        // Aviso de entrega
+        avisoEntrega +
 
         '<div style="display:grid;grid-template-columns:1fr 1.5fr;gap:1rem;align-items:start">'+
           // Columna izquierda: Slots
@@ -481,6 +542,7 @@
             '</div>'+
           '</div>'+
         '</div>'+
+        buildPostulacionesHTML(matricula)+
       '</div>';
   }
 
@@ -793,7 +855,7 @@
     _asigState = {
       matricula: matricula,
       nombreJefe: nombre,
-      candidatos: candidatos.map(function(c,i){return{posicion:c.posicion||i+1,matricula:c.matricula,nombre:c.nombre,descripcion:c.descripcion,departamento:c.departamento,tipoContrato:c.tipoContrato};}),
+      candidatos: candidatos.map(function(c,i){return{posicion:Number(c.posicion)||i+1,matricula:c.matricula,nombre:c.nombre,descripcion:c.descripcion,departamento:c.departamento,tipoContrato:c.tipoContrato};}),
       status: status,
       escolaridad: cr ? (cr.escolaridadRequerida || '') : '',
       experiencia: cr ? (cr.experienciaRequerida || '') : '',
@@ -849,7 +911,16 @@
       }
     }
 
-    return ''+
+    // Aviso de regla de entrega
+  var avisoEntrega = ''+
+    '<div class="sicip-card" style="padding:0.7rem 1rem;margin-bottom:1rem;background:#fef3c7;border:1px solid #fcd34d;border-left:4px solid #f59e0b">'+
+      '<div style="display:flex;align-items:center;gap:0.5rem">'+
+        '<span style="font-size:1rem">⚠️</span>'+
+        '<span style="font-size:0.8rem;font-weight:600;color:#92400e">La entrega de cuadros tiene un máximo de 3 días hábiles, limitado por el cierre de quincena.</span>'+
+      '</div>'+
+    '</div>';
+
+  return ''+
       '<div style="padding:1rem 1.25rem;animation:sicipFadeIn 0.25s ease">'+
         '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem">'+
           '<div>'+
@@ -863,6 +934,8 @@
             '<span style="font-weight:800;font-size:1.1rem;color:'+si.bar+'">'+numCand+'/3</span>'+
           '</div>'+
         '</div>'+
+        // Aviso de entrega
+        avisoEntrega +
 
         // Tarjeta de información del jefe
         '<div class="sicip-card" style="padding:0.9rem 1rem;margin-bottom:1rem">'+
@@ -891,13 +964,14 @@
             '<div class="sicip-card" style="padding:1rem">'+
               '<h3 style="margin:0 0 0.75rem;font-size:0.9rem;font-weight:700;color:#003324">🔎 Buscar Trabajador</h3>'+
               '<input type="text" id="sicip-buscar-input-mi" class="sicip-input" '+
-                'placeholder="Nombre, matrícula..." oninput="window.__SICIP_BUSCAR_MI_CUADRO__(this.value)" autocomplete="off">'+
+                'placeholder="Nombre, matrícula, plaza o adscripción..." oninput="window.__SICIP_BUSCAR_MI_CUADRO__(this.value)" autocomplete="off">'+
               '<div id="sicip-buscar-mi-resultados" style="max-height:350px;overflow-y:auto;margin-top:0.5rem">'+
                 '<div style="text-align:center;padding:1.5rem;color:#9ca3af;font-size:0.82rem">🔍 Busca para asignar a tus cuadros</div>'+
               '</div>'+
             '</div>'+
           '</div>'+
         '</div>'+
+        buildPostulacionesHTML(matricula)+
       '</div>';
   }
 
@@ -914,7 +988,9 @@
     var trabajadores = (data.trabajadores || []).filter(function(t) {
       var nombre = (t.nombre || '').toLowerCase();
       var mat = (t.matricula || '').toLowerCase();
-      return nombre.indexOf(q)>=0 || mat.indexOf(q)>=0;
+      var plaza = String(t.descripcion || t.puesto || t.categoria || '').toLowerCase();
+      var depto = String(t.departamento || t.departamentoNombre || t.adscripcion || '').toLowerCase();
+      return nombre.indexOf(q)>=0 || mat.indexOf(q)>=0 || plaza.indexOf(q)>=0 || depto.indexOf(q)>=0;
     }).slice(0, 30);
     
     if (trabajadores.length === 0) {
@@ -944,16 +1020,30 @@
     resultadosDiv.innerHTML = html;
   };
 
-  function showMiCuadro() {
+  function showMiCuadro(button) {
     log('👤 Mostrando Mi Cuadro v2');
     var html = buildMiCuadroPanel();
     showContent(html);
+    if (window.SICIPModuleHost && button) window.SICIPModuleHost.activate(button);
   }
+
+  function showResumenPublic(button) {
+    showResumenCR();
+    if (window.SICIPModuleHost && button) window.SICIPModuleHost.activate(button);
+  }
+
+  window.SICIPCuadros = {
+    version: VERSION,
+    showResumen: showResumenPublic,
+    showMiCuadro: showMiCuadro,
+    showReact: showReactContent
+  };
 
   // ════════════════ MENÚ ACORDEÓN SIDEBAR ════════════════
   function createSubItem(label, iconSvg, onClick) {
     var el = document.createElement('button');
     el.setAttribute('data-sicip-sub-v2', '1');
+    el.setAttribute('data-sicip-custom-nav', '1');
     el.style.cssText = 'width:100%;display:flex;align-items:center;gap:0.65rem;padding:0.6rem 1rem 0.6rem 2rem;border:none;cursor:pointer;font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.75);background:rgba(0,0,0,0.15);border-left:3px solid transparent;border-radius:0 0.5rem 0.5rem 0;margin-bottom:2px;transition:all 0.12s;text-align:left;font-family:Inter,sans-serif';
     el.innerHTML = '<span style="color:rgba(255,255,255,0.5);flex-shrink:0;width:16px;display:flex;align-items:center;justify-content:center">'+iconSvg+'</span><span style="flex:1;text-align:left">'+label+'</span>';
     el.addEventListener('click', function(e) { e.stopPropagation(); onClick(); });
@@ -970,6 +1060,7 @@
     
     var container = document.createElement('div');
     container.setAttribute('data-sicip-mod-v2', 'cuadros');
+    container.setAttribute('data-sicip-custom-nav', '1');
     
     var header = document.createElement('button');
     header.style.cssText = 'width:100%;display:flex;align-items:center;gap:0.75rem;padding:0.7rem 1rem;border:none;cursor:pointer;font-size:0.88rem;font-weight:600;color:rgba(255,255,255,0.85);background:transparent;border-left:4px solid transparent;border-radius:0 0.5rem 0.5rem 0;margin-bottom:2px;transition:all 0.12s;text-align:left;font-family:Inter,sans-serif';
@@ -984,23 +1075,18 @@
     var subitems = document.createElement('div');
     subitems.style.padding = '2px 0 4px 0';
     
-    if (isAP || isAdmin) {
-      subitems.appendChild(createSubItem('Resumen CR',
-        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 4-6"/></svg>',
-        function() { showResumenCR(); }
-      ));
-    }
-    
     if (isJS || isAdmin) {
-      subitems.appendChild(createSubItem('Mi Cuadro de Reemplazo',
+      var miCuadroItem = createSubItem('Mi Cuadro de Reemplazo',
         '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
-        function() { showMiCuadro(); }
-      ));
+        function() { showMiCuadro(miCuadroItem); }
+      );
+      miCuadroItem.setAttribute('data-sicip-custom-nav', '1');
+      subitems.appendChild(miCuadroItem);
     }
     
     subitems.appendChild(createSubItem('Solicitar Puesto de Confianza',
       '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
-      function() { showReactContent(); window.history.replaceState({},'','/buscar-jefe'); window.dispatchEvent(new Event('popstate')); }
+      function() { showReactContent(); window.history.pushState({},'','/buscar-jefe'); window.dispatchEvent(new PopStateEvent('popstate')); }
     ));
     
     submenu.appendChild(subitems);
@@ -1041,7 +1127,7 @@
       var btn = allButtons[i];
       if (btn.hasAttribute('data-sicip-sub') || btn.hasAttribute('data-sicip-sub-v2')) continue;
       var text = (btn.textContent || '').trim();
-      if (text === 'Cuadros Reemplazo' || text === 'Mi Cuadro de Reemplazo' || 
+      if (text === 'Cuadros Reemplazo' || text === 'Cuadros de Reemplazo' || text === 'Mi Cuadro de Reemplazo' ||
           text === 'Solicitar Puesto de Confianza' || text === 'Aprobaciones' || 
           text === 'Crear Plaza' || text === 'Explorar Plazas') {
         btn.style.display = 'none';
@@ -1108,6 +1194,7 @@
     } else {
       document.addEventListener('DOMContentLoaded', function() { setTimeout(safePatch, 100); });
     }
+    setInterval(tryPatch, 1500);
     
     log('✅ v' + VERSION + ' cargado');
   }
