@@ -1,7 +1,7 @@
-// SICIP - Módulos Pases / Departamento de Personal Sidebar v5.20.1
+// SICIP - Módulos Pases / Departamento de Personal Sidebar v5.21.0
 (function(){
   'use strict';
-  var VERSION='5.20.1';
+  var VERSION='5.21.0';
 
   function getUsuario(){try{var s=sessionStorage.getItem('sicip_usuario');return s?JSON.parse(s):null}catch(e){return null}}
   function rolNorm(u){return String((u&&(u.rol||u.perfil||u.role))||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\s-]+/g,'_')}
@@ -22,13 +22,14 @@
   function goReact(path,btn){if(host())host().showReact();window.history.pushState({},'',path);window.dispatchEvent(new PopStateEvent('popstate'));setTimeout(function(){setActive(btn)},40)}
   function makeDeptoPersonal(){var wrap=document.createElement('div');wrap.setAttribute('data-sicip-depto-personal-root','1');wrap.setAttribute('data-sicip-custom-nav','1');wrap.style.cssText='width:100%;margin-bottom:2px';var b=document.createElement('button');b.setAttribute('data-sicip-depto-btn','1');b.style.cssText=btnBase();b.innerHTML='<span style="color:#bfdbfe;flex-shrink:0">🏢</span><span style="flex:1;text-align:left">Departamento de Personal</span><span data-sicip-depto-arrow style="font-size:.72rem;opacity:.8">▾</span>';hover(b);var panel=document.createElement('div');panel.setAttribute('data-sicip-depto-panel','1');panel.style.cssText='display:none;width:100%;padding:1px 0 4px 0';panel.appendChild(makeSub('tramite-pases','🎫','Trámite de Pases',function(sub){mount({title:'Departamento de Personal — Trámite de Pases',src:'./pases/index.html?embed=1&scope=personal&origen=departamento-personal'},sub)}));panel.appendChild(makeSub('resumen-cr','📊','Resumen CR',function(sub){if(window.SICIPCuadros&&window.SICIPCuadros.showResumen)window.SICIPCuadros.showResumen(sub)}));panel.appendChild(makeSub('bandeja-tramites','📥','Bandeja de Trámites',function(sub){goReact('/bandeja',sub)}));
     panel.appendChild(makeSub('recepciones','📋','Recepciones',function(sub){goReact('/recepciones',sub)}));
-    panel.appendChild(makeSub('tporte','🚚','Tporte',function(sub){if(window.SICIPTporte)window.SICIPTporte.show(sub)}));b.onclick=function(e){e.preventDefault();e.stopPropagation();var open=panel.style.display!=='none';panel.style.display=open?'none':'block';var ar=b.querySelector('[data-sicip-depto-arrow]');if(ar)ar.textContent=open?'▾':'▴'};wrap.appendChild(b);wrap.appendChild(panel);return wrap}
+    b.onclick=function(e){e.preventDefault();e.stopPropagation();var open=panel.style.display!=='none';panel.style.display=open?'none':'block';var ar=b.querySelector('[data-sicip-depto-arrow]');if(ar)ar.textContent=open?'▾':'▴'};wrap.appendChild(b);wrap.appendChild(panel);return wrap}
   function hideOriginalBandeja(sidebar){var buttons=sidebar.querySelectorAll('button');Array.prototype.forEach.call(buttons,function(btn){var text=(btn.textContent||'').trim();if(text==='Bandeja de Trámites'||text==='Bandeja'||text==='Recepciones'){btn.style.display='none';btn.setAttribute('data-sicip-hidden','1')}})}
   function patch(){var u=getUsuario();var sidebar=document.querySelector('nav');if(!sidebar)return;var container=sidebar.querySelector('div')||sidebar;hideOriginalBandeja(sidebar);if(puedeVerDeptoPersonal(u)&&!sidebar.querySelector('[data-sicip-depto-personal-root]'))insertAfter(container,makeDeptoPersonal(),findInsertPoint(container));if(puedeVerPases(u)&&!sidebar.querySelector('[data-sicip-pases-root]'))insertAfter(container,makePasesButton(),findInsertPoint(container))}
   document.addEventListener('click',function(e){if(e.target.closest('[data-sicip-pases-root],[data-sicip-depto-personal-root]'))return;if(e.target.closest('nav button, nav a, aside button, aside a'))close()},true);
   window.addEventListener('popstate',close);window.addEventListener('hashchange',close);
   var tries=0;function tryPatch(){if(tries++>80)return;var sidebar=document.querySelector('nav');if(sidebar&&sidebar.querySelector('button')){patch();return}setTimeout(tryPatch,500)}
   if(document.readyState==='complete'||document.readyState==='interactive')setTimeout(tryPatch,400);else document.addEventListener('DOMContentLoaded',function(){setTimeout(tryPatch,400)});
-  setInterval(patch,1500);
+  // El intervalo solo parchea el sidebar, no re-monta módulos embebidos
+  setInterval(function(){var sidebar=document.querySelector('nav');if(sidebar&&sidebar.querySelector('button'))patch()},1500);
   console.log('[SICIP] Pases/Departamento Personal v'+VERSION+' cargado');
 })();

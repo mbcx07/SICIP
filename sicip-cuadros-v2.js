@@ -7,7 +7,7 @@
 
 (function() {
   'use strict';
-  var VERSION = '2.1.1-v5.20.1';
+  var VERSION = '2.1.1-v5.21.0';
   var FS_PROJECT = 'sicip-bcs';
   var FS_BASE = 'https://firestore.googleapis.com/v1/projects/' + FS_PROJECT + '/databases/(default)/documents';
 
@@ -486,7 +486,7 @@
     '<div class="sicip-card" style="padding:0.7rem 1rem;margin-bottom:1rem;background:#fef3c7;border:1px solid #fcd34d;border-left:4px solid #f59e0b">'+
       '<div style="display:flex;align-items:center;gap:0.5rem">'+
         '<span style="font-size:1rem">⚠️</span>'+
-        '<span style="font-size:0.8rem;font-weight:600;color:#92400e">La entrega de cuadros tiene un máximo de 3 días hábiles, limitado por el cierre de quincena.</span>'+
+        '<span style="font-size:0.8rem;font-weight:600;color:#92400e">⚠️ Regla de entrega: máximo 3 días naturales desde el inicio de la incidencia, siempre dentro de la quincena en curso. Si la quincena cierra antes de los 3 días, la entrega debe hacerse antes del cierre.</span>'+
       '</div>'+
     '</div>';
 
@@ -916,7 +916,7 @@
     '<div class="sicip-card" style="padding:0.7rem 1rem;margin-bottom:1rem;background:#fef3c7;border:1px solid #fcd34d;border-left:4px solid #f59e0b">'+
       '<div style="display:flex;align-items:center;gap:0.5rem">'+
         '<span style="font-size:1rem">⚠️</span>'+
-        '<span style="font-size:0.8rem;font-weight:600;color:#92400e">La entrega de cuadros tiene un máximo de 3 días hábiles, limitado por el cierre de quincena.</span>'+
+        '<span style="font-size:0.8rem;font-weight:600;color:#92400e">⚠️ Regla de entrega: máximo 3 días naturales desde el inicio de la incidencia, siempre dentro de la quincena en curso. Si la quincena cierra antes de los 3 días, la entrega debe hacerse antes del cierre.</span>'+
       '</div>'+
     '</div>';
 

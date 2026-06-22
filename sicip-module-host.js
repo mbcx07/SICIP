@@ -1,8 +1,8 @@
-// SICIP - Coordinador único de módulos embebidos v1.0.0
+// SICIP - Coordinador único de módulos embebidos v1.1.0
 (function () {
   'use strict';
 
-  var CUSTOM_SELECTOR = '#sicip-pases-view,#sicip-herramientas-view,[data-sicip-cr-panel]';
+  var CUSTOM_SELECTOR = '#sicip-pases-view,#sicip-herramientas-view,[data-sicip-cr-panel],[data-sicip-recepciones-panel]';
 
   function main() {
     return document.querySelector('main') ||
@@ -31,8 +31,15 @@
 
   function restore() {
     var container = main();
+    // Eliminar TODOS los módulos embebidos antes de montar uno nuevo
     document.querySelectorAll(CUSTOM_SELECTOR).forEach(function (node) {
       node.remove();
+    });
+    // También limpiar cualquier panel con data-sicip-host-hidden que pudiera haber quedado
+    document.querySelectorAll('[data-sicip-host-hidden="1"]').forEach(function (node) {
+      node.style.display = node.dataset.sicipHostDisplay || '';
+      delete node.dataset.sicipHostHidden;
+      delete node.dataset.sicipHostDisplay;
     });
     if (!container) return;
     Array.prototype.forEach.call(container.children, function (child) {
@@ -77,6 +84,7 @@
   }
 
   // Toda navegación normal de React cierra primero cualquier módulo embebido.
+  // Usar capture phase para interceptar antes de que React procese el clic.
   document.addEventListener('click', function (event) {
     var target = event.target.closest('nav button,nav a,aside button,aside a');
     if (!target || target.closest('[data-sicip-custom-nav]')) return;
@@ -86,8 +94,11 @@
   window.addEventListener('popstate', showReact);
   window.addEventListener('hashchange', showReact);
 
+  // Exponer restore globalmente para que otros módulos puedan llamarlo
+  window.__SICIP_RESTORE__ = restore;
+
   window.SICIPModuleHost = {
-    version: '1.0.0',
+    version: '1.1.0',
     main: main,
     mount: mount,
     restore: restore,
