@@ -1,7 +1,7 @@
-/* SICIP v5.21.0 PWA instalable + alertas locales + actualización automática */
+/* SICIP v5.21.1 PWA instalable + alertas locales + actualización automática */
 (function(){
   'use strict';
-  var VERSION='5.21.0';
+  var VERSION='5.21.1';
   var CHECK_MS=60000;
   var STORE_LAST='sicip_pwa_last_notification_seen';
   var STORE_INSTALL_HIDE='sicip_pwa_install_hide_until';

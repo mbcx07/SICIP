@@ -1,8 +1,8 @@
-// SICIP - Módulo de Recepciones v5.21.0
+// SICIP - Módulo de Recepciones v5.21.1
 // Recepción de documentos con cálculo de días naturales, tipos de documento, folio y TXT
 (function(){
   'use strict';
-  var VERSION = '5.21.0';
+  var VERSION = '5.21.1';
   var FS_PROJECT = 'sicip-bcs';
   var FS_BASE = 'https://firestore.googleapis.com/v1/projects/' + FS_PROJECT + '/databases/(default)/documents';
 
@@ -73,25 +73,68 @@
     return data.filter(function(d) { return d.document; }).map(function(d) { return fromFSDoc(d.document); });
   }
 
-  // ════════════════ TIPOS DE DOCUMENTO ════════════════
-  var TIPOS_DOCUMENTO = [
-    'Incapacidad por riesgo de trabajo',
-    'Incapacidad por enfermedad general',
-    'Incapacidad por maternidad',
-    'Licencia sin goce de sueldo',
-    'Fase de entrada a médico',
-    'Fase de salida a médico',
-    'Fase intermedia a médico',
-    'Pase de entrada a oficial',
-    'Pase de salida a oficial',
-    'Pase intermedio a oficial',
-    'Pase particular de entrada',
-    'Pase particular de salida',
-    'Pase particular intermedio',
-    'Constancia médica',
-    'TXT (Trabajador x Trabajador)',
-    'Otro documento'
+  // ════════════════ TIPOS DE DOCUMENTO (cascada) ════════════════
+  // Categoría principal → subtipos
+  var TIPOS_CATEGORIAS = [
+    {
+      label: 'Pase',
+      icon: '📄',
+      subtipos: [
+        'Pase de entrada a oficial',
+        'Pase de salida a oficial',
+        'Pase intermedio a oficial',
+        'Pase particular de entrada',
+        'Pase particular de salida',
+        'Pase particular intermedio',
+        'Pase de entrada a médico',
+        'Pase de salida a médico',
+        'Pase intermedio a médico'
+      ]
+    },
+    {
+      label: 'Incapacidad',
+      icon: '🏥',
+      subtipos: [
+        'Incapacidad por riesgo de trabajo',
+        'Incapacidad por enfermedad general',
+        'Incapacidad por maternidad'
+      ]
+    },
+    {
+      label: 'Licencia',
+      icon: '📋',
+      subtipos: [
+        'Licencia sin goce de sueldo',
+        'Licencia con goce de sueldo',
+        'Licencia por cuidados médicos',
+        'Licencia por lactancia',
+        'Licencia por paternidad',
+        'Licencia por gravidez'
+      ]
+    },
+    {
+      label: 'Constancia médica',
+      icon: '🩺',
+      subtipos: null
+    },
+    {
+      label: 'TXT (Trabajador x Trabajador)',
+      icon: '👥',
+      subtipos: null
+    },
+    {
+      label: 'Otro documento',
+      icon: '📎',
+      subtipos: null
+    }
   ];
+
+  function getCategoriaByLabel(label) {
+    for (var i = 0; i < TIPOS_CATEGORIAS.length; i++) {
+      if (TIPOS_CATEGORIAS[i].label === label) return TIPOS_CATEGORIAS[i];
+    }
+    return null;
+  }
 
   // ════════════════ LAYOUT HELPERS ════════════════
   function getContentContainer() {
@@ -286,6 +329,8 @@
   // ════════════════ GUARDAR RECEPCIÓN ════════════════
   window.__SICIP_RECEP_GUARDAR__ = function() {
     var tipo = document.getElementById('sicip-recep-tipo');
+    var subtipoEl = document.getElementById('sicip-recep-subtipo');
+    var subtipoWrap = document.getElementById('sicip-recep-subtipo-wrap');
     var fechaInicio = document.getElementById('sicip-recep-fecha-inicio');
     var diasNaturales = document.getElementById('sicip-recep-dias');
     var fechaTermino = document.getElementById('sicip-recep-fecha-termino');
@@ -294,13 +339,20 @@
     var btn = document.getElementById('sicip-recep-guardar-btn');
 
     if (!tipo || !tipo.value) { toast('⚠️ Selecciona un tipo de documento', 'warn'); return; }
+
+    // Determinar el tipo final: si hay subtipo, usar subtipo; si no, usar categoría
+    var tipoFinal = tipo.value;
+    if (subtipoWrap && subtipoWrap.style.display !== 'none' && subtipoEl && subtipoEl.value) {
+      tipoFinal = subtipoEl.value;
+    }
     if (!fechaInicio || !fechaInicio.value) { toast('⚠️ Selecciona la fecha de inicio', 'warn'); return; }
     if (!diasNaturales || !diasNaturales.value || parseInt(diasNaturales.value, 10) <= 0) { toast('⚠️ Ingresa los días naturales', 'warn'); return; }
     if (!_selectedTrab) { toast('⚠️ Selecciona un trabajador', 'warn'); return; }
 
     var usuario = getUsuario();
     var dataToSave = {
-      tipo: tipo.value,
+      tipo: tipoFinal,
+      categoria: tipo.value,
       fechaInicio: fechaInicio.value,
       diasNaturales: parseInt(diasNaturales.value, 10),
       fechaTermino: fechaTermino.value || addDays(fechaInicio.value, parseInt(diasNaturales.value, 10)),
@@ -415,10 +467,10 @@
     var usuario = getUsuario();
     if (!usuario) return '<div style="padding:2rem;text-align:center;color:#dc2626">⚠️ Sesión no encontrada</div>';
 
-    // Opciones de tipo de documento
-    var tipoOptions = '<option value="">— Selecciona tipo de documento —</option>';
-    TIPOS_DOCUMENTO.forEach(function(t) {
-      tipoOptions += '<option value="' + esc(t) + '">' + esc(t) + '</option>';
+    // Opciones de categoría principal
+    var catOptions = '<option value="">— Selecciona categoría —</option>';
+    TIPOS_CATEGORIAS.forEach(function(c) {
+      catOptions += '<option value="' + esc(c.label) + '">' + c.icon + ' ' + esc(c.label) + '</option>';
     });
 
     return '' +
@@ -440,10 +492,15 @@
             '<div class="sicip-recep-card" style="padding:1rem">' +
               '<h3 style="margin:0 0 0.75rem;font-size:0.9rem;font-weight:700;color:#003324">📝 Nuevo Documento Recibido</h3>' +
 
-              // Tipo de documento
+              // Categoría principal
               '<div style="margin-bottom:0.75rem">' +
                 '<label style="display:block;font-size:0.78rem;font-weight:600;color:#374151;margin-bottom:0.3rem">Tipo de documento</label>' +
-                '<select id="sicip-recep-tipo" class="sicip-recep-select" style="width:100%">' + tipoOptions + '</select>' +
+                '<select id="sicip-recep-tipo" class="sicip-recep-select" style="width:100%" onchange="window.__SICIP_RECEP_ON_CAT__(this.value)">' + catOptions + '</select>' +
+              '</div>' +
+              // Subtipo (oculto inicialmente)
+              '<div id="sicip-recep-subtipo-wrap" style="margin-bottom:0.75rem;display:none">' +
+                '<label style="display:block;font-size:0.78rem;font-weight:600;color:#374151;margin-bottom:0.3rem">Subtipo</label>' +
+                '<select id="sicip-recep-subtipo" class="sicip-recep-select" style="width:100%"></select>' +
               '</div>' +
 
               // Fechas y días
@@ -509,6 +566,35 @@
 
   window.__SICIP_RECEP_RECALC__ = recalcFechaTermino;
   window.__SICIP_RECEP_BUSCAR__ = buscarTrabajador;
+
+  // ════════════════ CASCADA: al seleccionar categoría, mostrar subtipos ════════════════
+  window.__SICIP_RECEP_ON_CAT__ = function(catLabel) {
+    var wrap = document.getElementById('sicip-recep-subtipo-wrap');
+    var subtipoSelect = document.getElementById('sicip-recep-subtipo');
+    if (!wrap || !subtipoSelect) return;
+
+    if (!catLabel) {
+      wrap.style.display = 'none';
+      subtipoSelect.innerHTML = '';
+      return;
+    }
+
+    var cat = getCategoriaByLabel(catLabel);
+    if (!cat || !cat.subtipos || cat.subtipos.length === 0) {
+      // Sin subtipos (Constancia médica, TXT, Otro) — ocultar subselector
+      wrap.style.display = 'none';
+      subtipoSelect.innerHTML = '';
+      return;
+    }
+
+    // Mostrar subtipos
+    wrap.style.display = 'block';
+    var html = '<option value="">— Selecciona subtipo —</option>';
+    cat.subtipos.forEach(function(s) {
+      html += '<option value="' + esc(s) + '">' + esc(s) + '</option>';
+    });
+    subtipoSelect.innerHTML = html;
+  };
   window.__SICIP_RECEP_VOLVER__ = function() {
     showReactContent();
     if (window.SICIPModuleHost) window.SICIPModuleHost.showReact();

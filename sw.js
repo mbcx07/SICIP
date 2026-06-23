@@ -1,12 +1,12 @@
-// SICIP Service Worker v5.21.0 navigation and modules
+// SICIP Service Worker v5.21.1 navigation and modules
 // Intercepts ALL Firestore reads — serves from preloaded JSON data
 // All modules should be INSTANT because data is in memory
 
-const VERSION = '5.21.0-navigation-modules';
+const VERSION = '5.21.1-navigation-modules';
 const PROJECT_ID = 'sicip-bcs';
 const FS_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
-const CACHE_NAME = 'sicip-data-v13-modules';
-const STATIC_CACHE = 'sicip-static-v12-modules';
+const CACHE_NAME = 'sicip-data-v14-modules';
+const STATIC_CACHE = 'sicip-static-v13-modules';
 
 // Collection map: Firestore collection -> data key
 const COLLECTION_MAP = {

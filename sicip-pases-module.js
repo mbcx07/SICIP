@@ -1,7 +1,7 @@
-// SICIP - Módulos Pases / Departamento de Personal Sidebar v5.21.0
+// SICIP - Módulos Pases / Departamento de Personal Sidebar v5.21.1
 (function(){
   'use strict';
-  var VERSION='5.21.0';
+  var VERSION='5.21.1';
 
   function getUsuario(){try{var s=sessionStorage.getItem('sicip_usuario');return s?JSON.parse(s):null}catch(e){return null}}
   function rolNorm(u){return String((u&&(u.rol||u.perfil||u.role))||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\s-]+/g,'_')}

@@ -7,7 +7,7 @@
 
 (function() {
   'use strict';
-  var VERSION = '2.1.1-v5.21.0';
+  var VERSION = '2.1.1-v5.21.1';
   var FS_PROJECT = 'sicip-bcs';
   var FS_BASE = 'https://firestore.googleapis.com/v1/projects/' + FS_PROJECT + '/databases/(default)/documents';
 
