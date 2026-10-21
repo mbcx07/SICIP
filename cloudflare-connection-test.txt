@@ -1,0 +1,5 @@
+Cloudflare Pages connection verification
+Repository: mbcx07/SICIP
+Branch: cloudflare-connection-test
+Created: 2026-10-21T10:15:00-07:00
+Purpose: preview deployment only; production main is unchanged.
