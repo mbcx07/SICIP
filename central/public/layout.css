@@ -26,3 +26,6 @@ body:has(main [data-sicip-module-panel]) #sicip-photo-prompt,body:has(#sicip-pas
 [data-central-embedded]>.central-header h1,[data-central-embedded]>.central-header p,[data-central-embedded]>.central-tabs{display:none!important}
 [data-central-embedded]{margin:0!important;padding:0!important;border:0!important;box-shadow:none!important}
 [data-central-embedded]>.central-header{padding:0 0 10px!important;min-height:0!important}
+
+/* Login brand and card share a normal-flow column, including short viewports. */
+.sicip-login>div{flex-shrink:0}.sicip-login>div:first-child{line-height:1.5;overflow-wrap:anywhere}@media(max-width:480px){.sicip-login>div:last-child{padding:1.5rem!important}}

@@ -13,9 +13,9 @@ if (ROOT/'public/examenes').exists():
 for name in ['client.mjs','domain.mjs','bootstrap.js','normalize-worker.js']:shutil.copy2(ROOT/'src'/name,public/name)
 subprocess.run(['node',str(ROOT/'scripts/patch-bundle.mjs'),str(a.out/'assets/index-C_U711P-.js')],check=True)
 for html in [a.out/'index.html',a.out/'pases/index.html',a.out/'fuerza-trabajo/calculadora-nivelacion.html']:
- s=html.read_text();tag='<script src="/sicip-central/bootstrap.js?v=20261023-contratosv6"></script><link rel="stylesheet" href="/sicip-central/central.css?v=20261023-contratosv6">'
+ s=html.read_text();tag='<script src="/sicip-central/bootstrap.js?v=20261023-login1"></script><link rel="stylesheet" href="/sicip-central/central.css?v=20261023-login1">'
  s=s.replace('<head>','<head>'+tag,1) if '<head>' in s else s.replace('<head\n','<head\n'+tag,1)
- s=re.sub(r'\?v=[A-Za-z0-9_-]+','?v=20261023-contratosv6',s);html.write_text(s)
+ s=re.sub(r'\?v=[A-Za-z0-9_-]+','?v=20261023-login1',s);html.write_text(s)
 # The calculator must not prefer a hardcoded 2026003 payroll over the active cut.
 p=a.out/'fuerza-trabajo/calculadora-nivelacion.html';s=p.read_text();start=s.index('async function cargarNominas(');end=s.index('\n',start)
 replacement="""async function cargarNominas(){const s=await window.SICIPCentral.load();const c=window.SICIPCentral.current;DATA.nominas=[{id:c.id,nombre:'Base central · '+c.quincena,origen:'Corte activo',data:normalizarTrabajadores(s.people),plazas:s.legacyPlazas}];DATA.activeNominaId=c.id;$('nominaSyncStatus').textContent='Base central · quincena '+c.quincena+' · antigüedad del mismo corte';$('quincena').value=c.quincena;renderNominaSelect()}"""
@@ -72,7 +72,7 @@ p.write_text(s)
 p=a.out/'sicip-module-host.js';s=p.read_text().replace("button.removeAttribute('data-sicip-active');","button.removeAttribute('data-sicip-active');\n      button.removeAttribute('aria-current');")
 s=s.replace("button.setAttribute('data-sicip-active', '1');","button.setAttribute('data-sicip-active', '1');\n    button.setAttribute('aria-current','page');")
 p.write_text(s)
-p=a.out/'sw.js';s=p.read_text();s=re.sub("const VERSION = '[^']+';","const VERSION = '20261023-contratosv6';",s,count=1);p.write_text(s)
+p=a.out/'sw.js';s=p.read_text();s=re.sub("const VERSION = '[^']+';","const VERSION = '20261023-login1';",s,count=1);p.write_text(s)
 # Personal source spreadsheets now live in D1, not in publicly downloadable JSON assets.
 private=re.compile(r'^data-(?:usuarios(?:-full)?|trabajadores|jefesServicio|plazas(?:-full)?(?:-\d{7})?|vacantes|ft-(?:trabajadores|nomina-(?:calculo-)?\d{7}|antiguedad|clasificacion))\.json$')
 for file in a.out.glob('data-*.json'):
