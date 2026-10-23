@@ -1,0 +1,141 @@
+{
+  "fuente": "1A74-003-033",
+  "corte": "2026015",
+  "advertencia": "Cobertura de definición documental, no clasificación de activo/jubilado, validación de ámbito ni actualización de datos en producción. No se muestran identificadores personales.",
+  "campos": {
+    "tipo_contratacion_codigo": {
+      "tabla": "personas",
+      "registros": 13037,
+      "registros_con_definicion": 10198,
+      "porcentaje": 78.22,
+      "claves_identificadas_en_corte": 8,
+      "claves_pendientes": {
+        "11": 2439,
+        "10": 97,
+        "50": 18,
+        "51": 285
+      },
+      "conteos_identificados": {
+        "03": 400,
+        "02": 5564,
+        "08": 1508,
+        "01": 492,
+        "00": 422,
+        "09": 351,
+        "05": 1354,
+        "07": 107
+      }
+    },
+    "baja_codigo": {
+      "tabla": "personas",
+      "registros": 13037,
+      "registros_con_definicion": 13008,
+      "porcentaje": 99.78,
+      "claves_identificadas_en_corte": 34,
+      "claves_pendientes": {
+        "61": 8,
+        "": 8,
+        "81": 11,
+        "82": 2
+      },
+      "conteos_identificados": {
+        "49": 26,
+        "35": 1265,
+        "00": 7971,
+        "80": 203,
+        "02": 202,
+        "20": 107,
+        "01": 393,
+        "24": 26,
+        "21": 264,
+        "09": 29,
+        "25": 37,
+        "18": 570,
+        "34": 3,
+        "03": 45,
+        "17": 15,
+        "75": 55,
+        "08": 27,
+        "43": 100,
+        "79": 3,
+        "45": 1282,
+        "71": 61,
+        "27": 38,
+        "12": 152,
+        "14": 33,
+        "42": 70,
+        "73": 1,
+        "30": 10,
+        "26": 6,
+        "77": 4,
+        "28": 5,
+        "07": 1,
+        "15": 1,
+        "05": 2,
+        "46": 1
+      }
+    },
+    "marca_ocupacion_codigo": {
+      "tabla": "plazas",
+      "registros": 5438,
+      "registros_con_definicion": 5379,
+      "porcentaje": 98.92,
+      "claves_identificadas_en_corte": 16,
+      "claves_pendientes": {
+        "62": 47,
+        "65": 7,
+        "82": 2,
+        "64": 2,
+        "63": 1
+      },
+      "conteos_identificados": {
+        "00": 4389,
+        "20": 148,
+        "21": 12,
+        "02": 83,
+        "90": 41,
+        "07": 177,
+        "01": 18,
+        "98": 43,
+        "75": 41,
+        "71": 52,
+        "11": 56,
+        "99": 187,
+        "61": 3,
+        "77": 4,
+        "05": 68,
+        "09": 57
+      }
+    },
+    "tipo_plaza_codigo": {
+      "tabla": "plazas",
+      "registros": 5438,
+      "registros_con_definicion": 189,
+      "porcentaje": 3.48,
+      "claves_identificadas_en_corte": 3,
+      "claves_pendientes": {
+        "61": 312,
+        "11": 3954,
+        "12": 9,
+        "50": 146,
+        "01": 86,
+        "51": 7,
+        "02": 6,
+        "62": 12,
+        "13": 375,
+        "14": 64,
+        "63": 14,
+        "07": 1,
+        "17": 43,
+        "16": 95,
+        "30": 68,
+        "40": 57
+      },
+      "conteos_identificados": {
+        "05": 10,
+        "15": 172,
+        "53": 7
+      }
+    }
+  }
+}

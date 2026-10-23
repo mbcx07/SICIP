@@ -1,0 +1,214 @@
+{
+  "fuente": {
+    "clave": "1A74-003-025",
+    "titulo": "Procedimiento para el trámite y otorgamiento de vacaciones",
+    "registro_portada": "2023-12-28",
+    "sha256": "a5034d281bf84d5334f2f7e9a6ad7e77496347a8a2905250f42ccaa4462ffdb7",
+    "estado": "TRANSCRITO_DEL_DOCUMENTO_APORTADO",
+    "publicado_en_sicip": false,
+    "vigencia_externa_verificada": false
+  },
+  "equivalencias": {
+    "dias_habiles": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "acumulada_diurna_8h_sab_dom": {
+      "numeral": "5.2.8",
+      "paginas": [
+        7,
+        8
+      ],
+      "jornadas": [
+        3,
+        3,
+        4,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8
+      ]
+    },
+    "acumulada_nocturna_8h_tres_veladas_alternas_descanso_fijo": {
+      "numeral": "5.2.10",
+      "paginas": [
+        8
+      ],
+      "veladas": [
+        4,
+        5,
+        5,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        10,
+        10,
+        11,
+        11,
+        12
+      ]
+    }
+  },
+  "pecv": {
+    "semestral": {
+      "numeral": "5.2.26",
+      "pagina": 11,
+      "maximo_diurno": 5,
+      "maximo_nocturno_veladas": 3,
+      "maximo_acumulado_fin_semana_jornadas": 2,
+      "forma": "FRACCIONADA"
+    },
+    "cuatrimestral_radiaciones": {
+      "numerales": [
+        "5.2.38",
+        "5.2.38.1",
+        "5.2.38.2"
+      ],
+      "pagina": 12,
+      "maximo_diurno": 3,
+      "maximo_nocturno_veladas": 2,
+      "maximo_acumulado_fin_semana_jornadas": 2,
+      "forma": "FRACCIONADA_O_CONTINUA",
+      "minimo_anio_antiguedad_efectiva_servicio": 1
+    },
+    "descuento": {
+      "numeral": "5.2.27",
+      "pagina": 11,
+      "ubicacion": "FINAL_DEL_PERIODO_PROGRAMADO",
+      "proporcion": "MISMA_PROPORCION"
+    },
+    "extra_20_anios": {
+      "numeral": "5.2.37",
+      "pagina": 12,
+      "dias_adicionales": 2,
+      "requiere": "PERIODO_PROGRAMADO_CON_MARCA_DE_DISFRUTE",
+      "conversion_turnos_adicionales": "NO_EXPLICITADA_NO_INFERIR"
+    }
+  },
+  "marcas_formato": {
+    "fuente": "Anexo 2, 1A74-009-064",
+    "pagina": 48,
+    "advertencia": "La descripción resumida debe interpretarse junto al régimen, modalidad, fase del ciclo y Anexo 1; no constituye una regla universal.",
+    "descripciones": {
+      "0": "DISF CONTINUO CON PAGO CPTO. 048",
+      "1": "DISF FRACCIONADO CON PAGO DE CPTO 048",
+      "2": "DISF PERIODO 1 SIN PAGO CPTO 048",
+      "3": "DISF PERIODO 2 SIN PAGO DE CPTO 048",
+      "4": "DISF HASTA 10 DIAS CON PAGO DE CPTO 048",
+      "5": "DISF PERIODO 2 Ó 3 SIN PAGO DE CPTO 048",
+      "6": "DISF 15 DIAS SIN PAGO DE CPTO 048",
+      "7": "PAGO DE CPTO 048 SIN DISFRUTE",
+      "8": "ACUMULACION DE ANTIG. PARA JUBILACIÓN",
+      "9": "DISF. HASTA 10 DIAS SIN PAGO DE CPTO 048"
+    }
+  },
+  "extra_20_anios": {
+    "fuente": "Anexo 1, 1A74-022-065",
+    "pagina": 45,
+    "requiere_antiguedad_efectiva_anios": 20,
+    "fraccionable": false,
+    "marcas": {
+      "0": {
+        "dias_disfrute": 10,
+        "dias_base_prima_029": 10,
+        "dias_base_048": 10,
+        "renuncia_dias_disfrute": 5
+      },
+      "6": {
+        "dias_disfrute": 15,
+        "dias_base_prima_029": 15,
+        "dias_base_048": 0
+      },
+      "7": {
+        "dias_disfrute": 0,
+        "dias_base_prima_029": 0,
+        "dias_base_048": 30,
+        "condicion": "Junto al inicio de periodo semestral o cuatrimestral; debe vencer en el año"
+      },
+      "8": {
+        "dias_disfrute": 0,
+        "dias_base_prima_029": 15,
+        "dias_base_048": 0,
+        "condicion": "Anticipa 30 días a jubilación; ver 5.2.54 para no anticipar acumulación al vencimiento"
+      }
+    },
+    "advertencia_importes": "Los días base no son pesos. Confirmar salario mensual integrado y condiciones; no duplicar prima general y concepto 029."
+  },
+  "prima_general": {
+    "numeral": "5.2.14",
+    "paginas": [
+      9,
+      10
+    ],
+    "tasa": 0.25,
+    "quincena": "ANTERIOR_AL_DISFRUTE",
+    "base": "Salario correspondiente a los días de vacaciones; requiere datos salariales aplicables"
+  },
+  "estatuto": {
+    "numeral": "5.2.13",
+    "pagina": 9,
+    "dias_anios_1_a_5": [
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "tramos": [
+      {
+        "desde": 6,
+        "hasta": 10,
+        "dias": 22
+      },
+      {
+        "desde": 11,
+        "hasta": 15,
+        "dias": 24
+      },
+      {
+        "desde": 16,
+        "hasta": 20,
+        "dias": 26
+      },
+      {
+        "desde": 21,
+        "hasta": 25,
+        "dias": 28
+      },
+      {
+        "desde": 26,
+        "hasta": 30,
+        "dias": 30
+      },
+      {
+        "desde": 31,
+        "hasta": 35,
+        "dias": 32
+      }
+    ],
+    "maximo_fracciones": 2,
+    "observacion": "El cuerpo indica periodo anual y días superiores a 20; Anexo 1 p46 titula Semestral Estatuto y tabula sólo 16 a 20. Conservar discrepancia sin limitar automáticamente a 20 ni duplicar el derecho anual."
+  }
+}

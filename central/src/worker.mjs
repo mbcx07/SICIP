@@ -1,3 +1,5 @@
+import {vacacionesAPI} from './vacaciones-api.mjs';
+import {normativasAPI} from './normativas-api.mjs';
 import {seguimientoAPI} from './seguimiento-api.mjs';
 import {coverageAPI} from './contratacion-api.mjs';
 import {validateRows, searchKey,displayName} from './domain.mjs';
@@ -37,6 +39,8 @@ async function validateCut(env,id){
 async function api(request,env){
  const url=new URL(request.url),path=url.pathname,method=request.method;
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
+ if(path.startsWith('/api/vacaciones'))return vacacionesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
+ if(path.startsWith('/api/normativas'))return normativasAPI(request,env,{session,run,json,assert});
  if(path==='/api/mis-tramites'||path.startsWith('/api/pases/registros')||path==='/api/seguimiento/recepcion')return seguimientoAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/contratacion'))return coverageAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path==='/api/login'&&method==='POST'){

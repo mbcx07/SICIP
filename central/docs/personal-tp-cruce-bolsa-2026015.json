@@ -1,0 +1,13 @@
+{
+  "quincena": "2026015",
+  "fuentes": [
+    "1A74-003-033",
+    "1A75-003-010"
+  ],
+  "campo": "tipo_plaza_codigo",
+  "total_plazas": 5438,
+  "con_definicion_sin_conflicto": 4143,
+  "con_conflicto_documental": 439,
+  "pendientes_sin_definicion": 856,
+  "nota": "Coincidencia documental en el corte histórico; no autoriza coberturas ni reclasifica registros. TP13/14 requieren resolver contradicción de pp144/199."
+}

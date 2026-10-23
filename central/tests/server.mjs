@@ -4,6 +4,16 @@ import worker from '../src/worker.mjs';import{database,seed,fixture,firestoreMoc
 const root=path.resolve(process.argv[2]||'/workspace/sicip-env/central-release'),DB=database();DB.db.exec(readFileSync(new URL('../schema.sql',import.meta.url),'utf8'));
 let snapshot=fixture();if(process.argv[3]){snapshot=JSON.parse(await fs.readFile(process.argv[3],'utf8'));const names=new Map(snapshot.personas.map((p,i)=>[p.matricula,'PERSONA DE PRUEBA '+String(i+1).padStart(5,'0')]));for(const p of snapshot.personas){p.nombre=names.get(p.matricula);delete p.privado;}for(const p of snapshot.plazas)p.nombre_titular_origen=names.get(p.titular_matricula)||'Sin dato';}
 await seed(DB,snapshot,'11111111-1111-4111-8111-111111111111',true);
+if(process.env.SICIP_TEST_LIBRARY){
+ const lib=process.env.SICIP_TEST_LIBRARY,manifest=JSON.parse(await fs.readFile(path.join(lib,'manifest.json'),'utf8'));
+ for(const d of manifest){
+  await DB.prepare('INSERT INTO normativa_documentos VALUES(?,?,?,?,?,?,?,?,?,?,?,?,1,?)').bind(d.id,d.clave,d.titulo,d.nombre,d.mime,d.bytes,d.sha256,d.paginas,d.ambito,d.version,d.privado,d.ocr,new Date().toISOString()).run();
+  const doc=JSON.parse(await fs.readFile(path.join(lib,d.id+'.json'),'utf8'));for(const p of doc.paginas)await DB.prepare('INSERT INTO normativa_indice(documento,pagina,texto) VALUES(?,?,?)').bind(d.id,p.pagina,p.texto).run();
+  const raw=await fs.readFile(d.path);for(let i=0;i<raw.length;i+=49152)await DB.prepare('INSERT INTO normativa_archivos VALUES(?,?,?,?)').bind(d.id,i/49152,raw.subarray(i,i+49152).toString('base64'),Math.min(49152,raw.length-i)).run();
+ }
+ const vac=fixture();vac.quincena='2026020';vac.personas[0].tipo_contratacion_codigo='0';vac.personas[1].tipo_contratacion_codigo='2';vac.personas[1].baja_codigo='0';vac.personas.push({matricula:'TESTJEFE',nombre:'CUBRE/PRUEBA/PERSONA',tipo_contratacion_codigo:'2',baja_codigo:'0'});vac.plazas[1]={...vac.plazas[1],ocupante_matricula:'TESTUSER',tipo_plaza_codigo:'11',tipo_contratacion_codigo:'2',turno_codigo:'1'};vac.plazas.push({plaza_id:'103',puesto:'CAT2',ocupante_matricula:'TESTJEFE',tipo_plaza_codigo:'14',tipo_contratacion_codigo:'2',turno_codigo:'1',departamento:'DEP1'});vac.counts.personas=3;vac.counts.plazas=3;await seed(DB,vac,'33333333-3333-4333-8333-333333333333');
+ console.log('Biblioteca sintética local cargada:',manifest.length,'documentos');
+}
 const prior=fixture();prior.quincena='2026009';await seed(DB,prior,'22222222-2222-4222-8222-222222222222');
 const mockedFetch=firestoreMock(globalThis.fetch);globalThis.fetch=async(url,options)=>String(url).endsWith('/documents:runQuery')?Response.json([]):mockedFetch(url,options);
 const mime={'.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.html':'text/html','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webmanifest':'application/manifest+json'};

@@ -1,3 +1,4 @@
+import './personal-modules-client.mjs';
 import './seguimiento-client.mjs';
 import {displayName} from './domain.mjs';
 import './contratacion-admin.mjs';

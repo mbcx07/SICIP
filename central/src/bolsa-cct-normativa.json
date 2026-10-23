@@ -1,0 +1,460 @@
+{
+  "estado": "REFERENCIA_DOCUMENTAL_NO_PUBLICADA",
+  "fuentes": [
+    {
+      "clave": "1A75-003-010",
+      "titulo": "Procedimiento para la operación de bolsa de trabajo",
+      "paginas": 264,
+      "sha256": "659358b99186b61aa2c1d9bfad741622cce3b0e558e697bd5c3f7d3f19441bce",
+      "registro_portada": "2024-06-07"
+    },
+    {
+      "clave": "CCT-2025-2027",
+      "titulo": "Contrato Colectivo de Trabajo 2025–2027",
+      "paginas": 589,
+      "sha256": "6a8763f8ed3499f8dd9dfbd39b2349343ed97ff4a9c679ba96f17f32b867616b",
+      "vigencia_desde": "2025-10-16",
+      "vigencia_hasta": null,
+      "referencia_vigencia": {
+        "clausula": "136",
+        "pagina": 72
+      },
+      "advertencia": "La cláusula indica vigencia indefinida y revisión; no se deduce caducidad el 15/10/2027 ni vigencia inmutable de cada importe."
+    }
+  ],
+  "tipos_plaza": [
+    {
+      "clave": "11",
+      "descripcion": "Plazas Operativas",
+      "fuente": "1A75-003-010",
+      "pagina": 199,
+      "numeral": "1.5.5 a, Anexo 3"
+    },
+    {
+      "clave": "13",
+      "descripcion": "Cubre Descansos",
+      "estado": "CONFLICTO_DOCUMENTAL",
+      "fuente": "1A75-003-010",
+      "pagina": 144,
+      "numeral": "1.3.2, Anexo 3"
+    },
+    {
+      "clave": "13",
+      "descripcion": "Cubre Vacaciones",
+      "estado": "CONFLICTO_DOCUMENTAL",
+      "fuente": "1A75-003-010",
+      "pagina": 199,
+      "numeral": "1.5.5 a, Anexo 3"
+    },
+    {
+      "clave": "14",
+      "descripcion": "Cubre Vacaciones",
+      "estado": "CONFLICTO_DOCUMENTAL",
+      "fuente": "1A75-003-010",
+      "pagina": 144,
+      "numeral": "1.3.2, Anexo 3"
+    },
+    {
+      "clave": "14",
+      "descripcion": "Cubre Descansos",
+      "estado": "CONFLICTO_DOCUMENTAL",
+      "fuente": "1A75-003-010",
+      "pagina": 199,
+      "numeral": "1.5.5 a, Anexo 3"
+    }
+  ],
+  "motivos_sustitucion": [
+    {
+      "clave": "1",
+      "descripcion": "Plaza vacante de base con presupuesto",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "2",
+      "descripcion": "Vacaciones, cuando no existan plazas cubre-vacaciones que cubran este ausentismo",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "3",
+      "descripcion": "Incapacidad por Riesgo de Trabajo",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "4",
+      "descripcion": "Incapacidad por Maternidad",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "5",
+      "descripcion": "Incapacidad por Enfermedad General",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "6",
+      "descripcion": "Licencia sin Sueldo",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "7",
+      "descripcion": "Licencia con Sueldo",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "8",
+      "descripcion": "Beca con Sueldo",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "9",
+      "descripcion": "Beca sin Sueldo",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "10",
+      "descripcion": "Falta injustificada",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "11",
+      "descripcion": "Suspensión Temporal",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "12",
+      "descripcion": "Nivelación a Plaza Superior",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "13",
+      "descripcion": "Personal docente área médica",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "14",
+      "descripcion": "Cláusula 7 del CCT",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "15",
+      "descripcion": "6º y 7º día",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "16",
+      "descripcion": "Contingencia",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "17",
+      "descripcion": "Jornadas Especiales Plaza Cero 0 (requiere autorización especial)",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "18",
+      "descripcion": "Comisiones Especiales (Programa IMSS-BIENESTAR)",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "19",
+      "descripcion": "Día de descanso obligatorio",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    },
+    {
+      "clave": "20",
+      "descripcion": "Comisiones Cláusula 42 CCT (únicamente incisos H, I, J)",
+      "fuente": "1A75-003-010",
+      "pagina": 20,
+      "numeral": "5.2.54"
+    }
+  ],
+  "conceptos": [
+    {
+      "clave": "008",
+      "descripcion": "Sueldo de Sustituto",
+      "regimen": "BOLSA_TRABAJO_CON_REQUISITOS",
+      "fuente": "1A75-003-010",
+      "pagina": 19,
+      "numeral": "5.2.54; lista en p.20"
+    }
+  ],
+  "status_contextuales": [
+    {
+      "clave": "2",
+      "descripcion": "Inactivo",
+      "contexto": "Maestro de Empleados afectado por baja de candidato de Bolsa con clave 17 o 18; distinto de eliminar sólo el registro BT",
+      "fuente": "1A75-003-010",
+      "pagina": 136,
+      "numeral": "1.2.2–1.2.3, Anexo 3"
+    }
+  ],
+  "cct": {
+    "ambito": "CCT; no trasladar automáticamente al régimen de Estatuto",
+    "vacaciones": {
+      "clausula": "47",
+      "paginas": [
+        37,
+        38,
+        39,
+        40
+      ],
+      "minimo_anual_texto": 16,
+      "aumento_anual_texto": 1,
+      "tope_texto": 20,
+      "maximo_fracciones": 2,
+      "advertencia": "Transcripción de la opción normal; no calcula todas las opciones ni resuelve por sí sola la transitoria 3a y la LFT. No sumar automáticamente ayuda y segundo periodo.",
+      "radiaciones_periodos": [
+        {
+          "antiguedad_anios": 0,
+          "periodos": [
+            7,
+            8,
+            7
+          ]
+        },
+        {
+          "antiguedad_anios": 1,
+          "periodos": [
+            8,
+            8,
+            8
+          ]
+        },
+        {
+          "antiguedad_anios": 2,
+          "periodos": [
+            8,
+            9,
+            8
+          ]
+        },
+        {
+          "antiguedad_anios": 3,
+          "periodos": [
+            9,
+            9,
+            9
+          ]
+        },
+        {
+          "antiguedad_anios": 4,
+          "periodos": [
+            9,
+            10,
+            9
+          ]
+        },
+        {
+          "antiguedad_anios": 5,
+          "periodos": [
+            10,
+            10,
+            10
+          ]
+        }
+      ],
+      "radiaciones_ultimo_tramo": "5 y más años",
+      "ayuda_normal": [
+        {
+          "antiguedad_anios": 1,
+          "dias_salario": 23
+        },
+        {
+          "antiguedad_anios": 2,
+          "dias_salario": 25
+        },
+        {
+          "antiguedad_anios": 3,
+          "dias_salario": 27
+        },
+        {
+          "antiguedad_anios": 4,
+          "dias_salario": 29
+        },
+        {
+          "antiguedad_anios": 5,
+          "dias_salario": 31
+        }
+      ],
+      "ayuda_normal_ultimo_tramo": "5 y más años",
+      "ayuda_cuatrimestral_texto": [
+        {
+          "tramo": "Hasta 1",
+          "dias_salario": 8
+        },
+        {
+          "tramo": "1 a 2",
+          "dias_salario": 9
+        },
+        {
+          "tramo": "2 a 3",
+          "dias_salario": 10
+        },
+        {
+          "tramo": "3 a 4",
+          "dias_salario": 11
+        },
+        {
+          "tramo": "4 a 5",
+          "dias_salario": 12
+        },
+        {
+          "tramo": "5 y más",
+          "dias_salario": 13
+        }
+      ],
+      "limites_tramos_cuatrimestrales": "Se conservan literalmente sin inferir inclusividad de extremos.",
+      "prima_tasa": 0.25,
+      "pagos_quincena": "PREVIA_AL_DISFRUTE",
+      "opciones_extra_20": [
+        {
+          "tipo": "DISFRUTE_CON_AYUDA",
+          "dias_disfrute": 10,
+          "dias_salario_ayuda": 10
+        },
+        {
+          "tipo": "TRABAJO_CON_AYUDA",
+          "dias_disfrute": 0,
+          "dias_salario_ayuda": 30
+        },
+        {
+          "tipo": "TRABAJO_REDUCCION_JUBILACION",
+          "dias_disfrute": 0,
+          "dias_reduccion_jubilacion": 30
+        },
+        {
+          "tipo": "DISFRUTE_SIN_AYUDA",
+          "dias_disfrute": 15,
+          "dias_salario_ayuda": 0
+        }
+      ],
+      "opcion_segundo_periodo": {
+        "maximo_dias": 15,
+        "condicion": "Optar por no recibir ayuda; primer periodo no fraccionable"
+      },
+      "temporales": {
+        "pagina": 40,
+        "dias_servicio_texto": 365,
+        "forma_textual": "en forma interrumpida",
+        "advertencia": "No convertir automáticamente a 365 consecutivos; conciliar contratos y antigüedad efectiva."
+      }
+    },
+    "descansos": {
+      "clausula": "46",
+      "paginas": [
+        36,
+        37
+      ],
+      "semanales": "Dos días consecutivos fijos; pueden ser distintos a sábado y domingo por acuerdo",
+      "prima_dominical": 0.25,
+      "obligatorios_texto": [
+        "1 enero",
+        "Primer lunes de febrero",
+        "Tercer lunes de marzo",
+        "1 mayo",
+        "10 mayo",
+        "15 septiembre",
+        "16 septiembre",
+        "Tercer lunes de noviembre",
+        "25 diciembre",
+        "Jueves, viernes y sábado de Semana Mayor o Primavera",
+        "Jornada electoral según leyes federales/locales",
+        "1 octubre cada seis años cuando corresponda transmisión del Poder Ejecutivo Federal"
+      ]
+    },
+    "nivelacion": {
+      "clausula": "27",
+      "paginas": [
+        27,
+        28
+      ],
+      "vacante_mas_30_dias": "Poner a disposición de Comisión/Subcomisión competente para dictamen",
+      "cobertura_provisional": "Base, inmediata inferior y mismo centro, preferentemente mayor antigüedad; exclusión indicada de quienes estén a dos años o menos de derechos de jubilación/pensión descritos",
+      "no_genera": "Derechos escalafonarios ni de nivelación sólo por desempeñar labores superiores"
+    },
+    "extra_y_guardias": {
+      "clausulas": [
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "45"
+      ],
+      "paginas": [
+        30,
+        31,
+        36
+      ],
+      "ordinario_extra_hasta_9_semanales_incremento": 1.0,
+      "ordinario_extra_excedente_9_semanales_incremento": 2.0,
+      "incrementos_fuente": "Cláusula 37, p.31: 100% más y 200% más, respectivamente; pago de exceso no equivale a autorización para exceder límites.",
+      "redondeo_texto": "Menos de 30 minutos se computa media hora; excedente de 30 y menor de 60 se computa una hora",
+      "descanso_semanal_salario_total": 3,
+      "descanso_obligatorio_salario_total": 3,
+      "coincidencia_descanso_obligatorio_y_semanal_salario_total": 4,
+      "advertencia": "Son salarios totales descritos, no factores para sumar ciegamente sobre nómina pagada. Distinguir ordinario/extraordinario, unidades, fracciones y supuesto."
+    },
+    "tabulador": {
+      "paginas": [
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "tipo": "Sueldos base y rama/escalafón; no salario integrado completo",
+      "politica": "Conservar fuente, categoría, jornada y vigencia. No sustituir automáticamente tabuladores publicados por quincena ni asumir que un único importe cubre todas las revisiones futuras."
+    },
+    "transitoria_3a": {
+      "pagina": 80,
+      "efecto_texto": "Disposiciones contractuales inferiores a la LFT se sustituyen por ésta",
+      "automatizacion": "No usar tope literal de tabla aislada como decisión jurídica universal."
+    }
+  }
+}

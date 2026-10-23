@@ -1,0 +1,16 @@
+{
+  "fecha": "2026-10-23",
+  "fuente": "ACLARACION_USUARIO",
+  "estado": "CONFIRMADO_POR_USUARIO",
+  "nota": "Resuelve la definición operativa de TP 13/14; no modifica el PDF ni acredita presupuesto o elegibilidad.",
+  "tipos_plaza": [
+    {
+      "clave": "13",
+      "descripcion": "Cubre Descansos"
+    },
+    {
+      "clave": "14",
+      "descripcion": "Cubre Vacaciones"
+    }
+  ]
+}

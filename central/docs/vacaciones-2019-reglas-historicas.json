@@ -1,0 +1,2597 @@
+{
+  "source": {
+    "file": "VACACIONES 2019.xlsm",
+    "sha256": "0b55d40365a1f0deef64921d1a7ed3f4203d03fa4163f1055dd779f32fb353a7",
+    "status": "HISTORICO_NO_VALIDADO",
+    "macros_executed": false,
+    "personal_records_exported": false
+  },
+  "sheets": [
+    {
+      "name": "SELECCION",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {}
+    },
+    {
+      "name": "CAPTURA ROL VACACIONAL",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {
+        "#REF!": 2,
+        "#VALUE!": 2
+      }
+    },
+    {
+      "name": "CAPTURA PECV",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {
+        "#REF!": 14,
+        "#N/A": 1,
+        "#VALUE!": 1
+      }
+    },
+    {
+      "name": "DIFERIMIENTO",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {
+        "#REF!": 4897,
+        "#N/A": 1,
+        "#VALUE!": 1
+      }
+    },
+    {
+      "name": "TIPO DE PROG VACACIONAL",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {}
+    },
+    {
+      "name": "DIF",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {
+        "#REF!": 2,
+        "#VALUE!": 1
+      }
+    },
+    {
+      "name": "INICIO",
+      "visibility": "visible",
+      "kind": "worksheet",
+      "cached_errors": {}
+    },
+    {
+      "name": "Gráfico1",
+      "visibility": "hidden",
+      "kind": "chart",
+      "cached_errors": {}
+    },
+    {
+      "name": "ROL VACACIONAL",
+      "visibility": "visible",
+      "kind": "worksheet",
+      "cached_errors": {
+        "#VALUE!": 2
+      }
+    },
+    {
+      "name": "BASE DE DATOS",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {}
+    },
+    {
+      "name": "CATEGORIAS",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {}
+    },
+    {
+      "name": "CALENDARIO",
+      "visibility": "visible",
+      "kind": "worksheet",
+      "cached_errors": {}
+    },
+    {
+      "name": "GRAFICAS",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {}
+    },
+    {
+      "name": "DIF X DESC",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {}
+    },
+    {
+      "name": "Hoja1",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {
+        "#N/A": 16,
+        "#VALUE!": 2
+      }
+    },
+    {
+      "name": "Hoja2",
+      "visibility": "hidden",
+      "kind": "worksheet",
+      "cached_errors": {}
+    }
+  ],
+  "marks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    9
+  ],
+  "rights_columns": {
+    "V": 0,
+    "W": 4,
+    "X": 9,
+    "Y": "1A",
+    "Z": "1B",
+    "AA": 2,
+    "AB": 3,
+    "AE": 0,
+    "AF": 6,
+    "AG": "0A",
+    "AH": "0B",
+    "AI": "0C",
+    "AJ": 2,
+    "AK": "5A",
+    "AL": "5B"
+  },
+  "rights": [
+    {
+      "source_row": 10,
+      "periodo": 1,
+      "values": {
+        "V": 15,
+        "W": 7,
+        "X": 7,
+        "Y": 7,
+        "Z": "IMPROCEDENTE",
+        "AA": 15,
+        "AB": "IMPROCEDENTE",
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 7,
+        "AH": "IMPROCEDENTE",
+        "AI": "IMPROCEDENTE",
+        "AJ": 15,
+        "AK": "IMPROCEDENTE",
+        "AL": "IMPROCEDENTE"
+      }
+    },
+    {
+      "source_row": 11,
+      "periodo": 2,
+      "values": {
+        "V": "IMPROCEDENTE",
+        "W": 8,
+        "X": 8,
+        "Y": "IMPROCEDENTE",
+        "Z": 8,
+        "AA": "IMPROCEDENTE",
+        "AB": 10,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": 8,
+        "AI": "IMPROCEDENTE",
+        "AJ": "IMPROCEDENTE",
+        "AK": 10,
+        "AL": 10
+      }
+    },
+    {
+      "source_row": 12,
+      "periodo": 3,
+      "values": {
+        "V": 16,
+        "W": 8,
+        "X": 8,
+        "Y": 8,
+        "Z": "IMPROCEDENTE",
+        "AA": 16,
+        "AB": "IMPROCEDENTE",
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": "IMPROCEDENTE",
+        "AI": 8,
+        "AJ": "IMPROCEDENTE",
+        "AK": 10,
+        "AL": 10
+      }
+    },
+    {
+      "source_row": 13,
+      "periodo": 4,
+      "values": {
+        "V": "IMPROCEDENTE",
+        "W": 8,
+        "X": 8,
+        "Y": "IMPROCEDENTE",
+        "Z": 8,
+        "AA": "IMPROCEDENTE",
+        "AB": 11,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 8,
+        "AH": "IMPROCEDENTE",
+        "AI": "IMPROCEDENTE",
+        "AJ": 16,
+        "AK": "IMPROCEDENTE",
+        "AL": "IMPROCEDENTE"
+      }
+    },
+    {
+      "source_row": 14,
+      "periodo": 5,
+      "values": {
+        "V": 17,
+        "W": 8,
+        "X": 8,
+        "Y": 8,
+        "Z": "IMPROCEDENTE",
+        "AA": 17,
+        "AB": "IMPROCEDENTE",
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": 8,
+        "AI": "IMPROCEDENTE",
+        "AJ": "IMPROCEDENTE",
+        "AK": 11,
+        "AL": 11
+      }
+    },
+    {
+      "source_row": 15,
+      "periodo": 6,
+      "values": {
+        "V": "IMPROCEDENTE",
+        "W": 9,
+        "X": 9,
+        "Y": "IMPROCEDENTE",
+        "Z": 9,
+        "AA": "IMPROCEDENTE",
+        "AB": 12,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": "IMPROCEDENTE",
+        "AI": 8,
+        "AJ": "IMPROCEDENTE",
+        "AK": 11,
+        "AL": 11
+      }
+    },
+    {
+      "source_row": 16,
+      "periodo": 7,
+      "values": {
+        "V": 18,
+        "W": 9,
+        "X": 9,
+        "Y": 9,
+        "Z": "IMPROCEDENTE",
+        "AA": 18,
+        "AB": "IMPROCEDENTE",
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 8,
+        "AH": "IMPROCEDENTE",
+        "AI": "IMPROCEDENTE",
+        "AJ": 17,
+        "AK": "IMPROCEDENTE",
+        "AL": "IMPROCEDENTE"
+      }
+    },
+    {
+      "source_row": 17,
+      "periodo": 8,
+      "values": {
+        "V": "IMPROCEDENTE",
+        "W": 9,
+        "X": 9,
+        "Y": "IMPROCEDENTE",
+        "Z": 9,
+        "AA": "IMPROCEDENTE",
+        "AB": 13,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": 9,
+        "AI": "IMPROCEDENTE",
+        "AJ": "IMPROCEDENTE",
+        "AK": 12,
+        "AL": 12
+      }
+    },
+    {
+      "source_row": 18,
+      "periodo": 9,
+      "values": {
+        "V": 19,
+        "W": 9,
+        "X": 9,
+        "Y": 9,
+        "Z": "IMPROCEDENTE",
+        "AA": 19,
+        "AB": "IMPROCEDENTE",
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": "IMPROCEDENTE",
+        "AI": 8,
+        "AJ": "IMPROCEDENTE",
+        "AK": 12,
+        "AL": 12
+      }
+    },
+    {
+      "source_row": 19,
+      "periodo": 10,
+      "values": {
+        "V": "IMPROCEDENTE",
+        "W": 10,
+        "X": 10,
+        "Y": "IMPROCEDENTE",
+        "Z": 10,
+        "AA": "IMPROCEDENTE",
+        "AB": 14,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 9,
+        "AH": "IMPROCEDENTE",
+        "AI": "IMPROCEDENTE",
+        "AJ": 18,
+        "AK": "IMPROCEDENTE",
+        "AL": "IMPROCEDENTE"
+      }
+    },
+    {
+      "source_row": 20,
+      "periodo": 11,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": 9,
+        "AI": "IMPROCEDENTE",
+        "AJ": "IMPROCEDENTE",
+        "AK": 13,
+        "AL": 13
+      }
+    },
+    {
+      "source_row": 21,
+      "periodo": 12,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": "IMPROCEDENTE",
+        "AI": 9,
+        "AJ": "IMPROCEDENTE",
+        "AK": 13,
+        "AL": 13
+      }
+    },
+    {
+      "source_row": 22,
+      "periodo": 13,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 9,
+        "AH": "IMPROCEDENTE",
+        "AI": "IMPROCEDENTE",
+        "AJ": 19,
+        "AK": "IMPROCEDENTE",
+        "AL": "IMPROCEDENTE"
+      }
+    },
+    {
+      "source_row": 23,
+      "periodo": 14,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": 10,
+        "AI": "IMPROCEDENTE",
+        "AJ": "IMPROCEDENTE",
+        "AK": 14,
+        "AL": 14
+      }
+    },
+    {
+      "source_row": 24,
+      "periodo": 15,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": "IMPROCEDENTE",
+        "AH": "IMPROCEDENTE",
+        "AI": 9,
+        "AJ": "IMPROCEDENTE",
+        "AK": 14,
+        "AL": 14
+      }
+    },
+    {
+      "source_row": 25,
+      "periodo": 16,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 26,
+      "periodo": 17,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 27,
+      "periodo": 18,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 28,
+      "periodo": 19,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": "IMPROCEDENTE",
+        "AF": "IMPROCEDENTE",
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 29,
+      "periodo": 20,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 30,
+      "periodo": 21,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 31,
+      "periodo": 22,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 32,
+      "periodo": 23,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 33,
+      "periodo": 24,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 34,
+      "periodo": 25,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 35,
+      "periodo": 26,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 36,
+      "periodo": 27,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 37,
+      "periodo": 28,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 38,
+      "periodo": 29,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 39,
+      "periodo": 30,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 40,
+      "periodo": 31,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 41,
+      "periodo": 32,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 42,
+      "periodo": 33,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 43,
+      "periodo": 34,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 44,
+      "periodo": 35,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 45,
+      "periodo": 36,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 46,
+      "periodo": 37,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 47,
+      "periodo": 38,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 48,
+      "periodo": 39,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 49,
+      "periodo": 40,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 50,
+      "periodo": 41,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 51,
+      "periodo": 42,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 52,
+      "periodo": 43,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 53,
+      "periodo": 44,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 54,
+      "periodo": 45,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 55,
+      "periodo": 46,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 56,
+      "periodo": 47,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 57,
+      "periodo": 48,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 58,
+      "periodo": 49,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 59,
+      "periodo": 50,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 60,
+      "periodo": 51,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 61,
+      "periodo": 52,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 62,
+      "periodo": 53,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 63,
+      "periodo": 54,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 64,
+      "periodo": 55,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 65,
+      "periodo": 56,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 66,
+      "periodo": 57,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 67,
+      "periodo": 58,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 68,
+      "periodo": 59,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 69,
+      "periodo": 60,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 70,
+      "periodo": 61,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 71,
+      "periodo": 62,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 72,
+      "periodo": 63,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 73,
+      "periodo": 64,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 74,
+      "periodo": 65,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 75,
+      "periodo": 66,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 76,
+      "periodo": 67,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 77,
+      "periodo": 68,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 78,
+      "periodo": 69,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 79,
+      "periodo": 70,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 80,
+      "periodo": 71,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 81,
+      "periodo": 72,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 82,
+      "periodo": 73,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 83,
+      "periodo": 74,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 84,
+      "periodo": 75,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 85,
+      "periodo": 76,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 86,
+      "periodo": 77,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 87,
+      "periodo": 78,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 88,
+      "periodo": 79,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 89,
+      "periodo": 80,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 90,
+      "periodo": 81,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 91,
+      "periodo": 82,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 92,
+      "periodo": 83,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 93,
+      "periodo": 84,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 94,
+      "periodo": 85,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 95,
+      "periodo": 86,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 96,
+      "periodo": 87,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 97,
+      "periodo": 88,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 98,
+      "periodo": 89,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 99,
+      "periodo": 90,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 100,
+      "periodo": 91,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 101,
+      "periodo": 92,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 102,
+      "periodo": 93,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 103,
+      "periodo": 94,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 104,
+      "periodo": 95,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 105,
+      "periodo": 96,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 106,
+      "periodo": 97,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 107,
+      "periodo": 98,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 108,
+      "periodo": 99,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    },
+    {
+      "source_row": 109,
+      "periodo": 100,
+      "values": {
+        "V": 20,
+        "W": 10,
+        "X": 10,
+        "Y": 10,
+        "Z": 10,
+        "AA": 20,
+        "AB": 15,
+        "AE": 10,
+        "AF": 15,
+        "AG": 10,
+        "AH": 10,
+        "AI": 10,
+        "AJ": 20,
+        "AK": 15,
+        "AL": 15
+      }
+    }
+  ],
+  "equivalences": [
+    {
+      "dias": 6,
+      "noches": 3,
+      "acumuladas": 2,
+      "source_row": 34,
+      "noches_formula": null
+    },
+    {
+      "dias": 7,
+      "noches": 4.375,
+      "acumuladas": 3,
+      "source_row": 35,
+      "noches_formula": "G35/1.6"
+    },
+    {
+      "dias": 8,
+      "noches": 5,
+      "acumuladas": 3,
+      "source_row": 36,
+      "noches_formula": null
+    },
+    {
+      "dias": 9,
+      "noches": 5,
+      "acumuladas": 4,
+      "source_row": 37,
+      "noches_formula": null
+    },
+    {
+      "dias": 10,
+      "noches": 6,
+      "acumuladas": 4,
+      "source_row": 38,
+      "noches_formula": null
+    },
+    {
+      "dias": 11,
+      "noches": 7,
+      "acumuladas": 4,
+      "source_row": 39,
+      "noches_formula": null
+    },
+    {
+      "dias": 12,
+      "noches": 7,
+      "acumuladas": 5,
+      "source_row": 40,
+      "noches_formula": null
+    },
+    {
+      "dias": 13,
+      "noches": 8,
+      "acumuladas": 5,
+      "source_row": 41,
+      "noches_formula": null
+    },
+    {
+      "dias": 14,
+      "noches": 8,
+      "acumuladas": 6,
+      "source_row": 42,
+      "noches_formula": null
+    },
+    {
+      "dias": 15,
+      "noches": 9,
+      "acumuladas": 6,
+      "source_row": 43,
+      "noches_formula": null
+    },
+    {
+      "dias": 16,
+      "noches": 10,
+      "acumuladas": 6,
+      "source_row": 44,
+      "noches_formula": null
+    },
+    {
+      "dias": 17,
+      "noches": 10,
+      "acumuladas": 7,
+      "source_row": 45,
+      "noches_formula": null
+    },
+    {
+      "dias": 18,
+      "noches": 11,
+      "acumuladas": 7,
+      "source_row": 46,
+      "noches_formula": null
+    },
+    {
+      "dias": 19,
+      "noches": 11,
+      "acumuladas": 8,
+      "source_row": 47,
+      "noches_formula": null
+    },
+    {
+      "dias": 20,
+      "noches": 12,
+      "acumuladas": 8,
+      "source_row": 48,
+      "noches_formula": null
+    }
+  ],
+  "rest_codes_historical": [
+    {
+      "label": "DOMINGO",
+      "excel_rest_codes": [
+        11,
+        13,
+        15,
+        17
+      ]
+    },
+    {
+      "label": "DOM-LUN",
+      "excel_rest_codes": [
+        11,
+        12
+      ]
+    },
+    {
+      "label": "JUEVES",
+      "excel_rest_codes": [
+        15,
+        17,
+        12,
+        14
+      ]
+    },
+    {
+      "label": "JUE-VIE",
+      "excel_rest_codes": [
+        15,
+        16
+      ]
+    },
+    {
+      "label": "L,J,V",
+      "excel_rest_codes": [
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "L,M,J,V",
+      "excel_rest_codes": [
+        12,
+        13,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "L,M,MI,J",
+      "excel_rest_codes": [
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "label": "L,M,MI,V",
+      "excel_rest_codes": [
+        12,
+        13,
+        14,
+        16
+      ]
+    },
+    {
+      "label": "L,M,V",
+      "excel_rest_codes": [
+        12,
+        13,
+        16
+      ]
+    },
+    {
+      "label": "L,MI,V",
+      "excel_rest_codes": [
+        12,
+        14,
+        16
+      ]
+    },
+    {
+      "label": "L,MI,J,V",
+      "excel_rest_codes": [
+        12,
+        14,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "LUN A JUE",
+      "excel_rest_codes": [
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "label": "LUN A MIE",
+      "excel_rest_codes": [
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "label": "LUN A VIE",
+      "excel_rest_codes": [
+        12,
+        13,
+        14,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "LUNES",
+      "excel_rest_codes": [
+        12
+      ]
+    },
+    {
+      "label": "LUN-MAR",
+      "excel_rest_codes": [
+        12,
+        13
+      ]
+    },
+    {
+      "label": "MAR A VIER",
+      "excel_rest_codes": [
+        13,
+        14,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "MAR-JUE",
+      "excel_rest_codes": [
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "label": "MAR-MIE",
+      "excel_rest_codes": [
+        13,
+        14
+      ]
+    },
+    {
+      "label": "MARTES",
+      "excel_rest_codes": [
+        13
+      ]
+    },
+    {
+      "label": "MIE-JUE",
+      "excel_rest_codes": [
+        14,
+        15
+      ]
+    },
+    {
+      "label": "MIERCOLES",
+      "excel_rest_codes": [
+        14
+      ]
+    },
+    {
+      "label": "SABADO",
+      "excel_rest_codes": [
+        17
+      ]
+    },
+    {
+      "label": "SAB-DOM",
+      "excel_rest_codes": [
+        17,
+        11
+      ]
+    },
+    {
+      "label": "S-D",
+      "excel_rest_codes": [
+        17,
+        11
+      ]
+    },
+    {
+      "label": "VIERNES",
+      "excel_rest_codes": [
+        16
+      ]
+    },
+    {
+      "label": "VIE-SAB",
+      "excel_rest_codes": [
+        16,
+        17
+      ]
+    }
+  ],
+  "critical_formulas": {
+    "CAPTURA ROL VACACIONAL": {
+      "U5": "IF(OR(F3=F11),W6,IF(OR(F3=F12),W7,IF(OR(F3=F13),W8,\"\")))",
+      "U6": "INDEX(U10:AD109,MATCH(E3,U10:U109,0),V4)",
+      "U7": "INDEX(U10:AP109,MATCH(E3,U10:U109,0),V5)",
+      "U8": "INDEX(U10:AP109,MATCH(E3,U10:U109,0),V6)",
+      "W6": "IF(OR(F5=0),U6,IF(OR(F5=4),U6,IF(OR(F5=9),U6,IF(OR(F5=1),U6,IF(OR(F5=2),U6,IF(OR(F5=3),U6,\"IMPROCEDENTE\"))))))",
+      "W7": "IF(OR(F5=0),U7,IF(OR(F5=6),U7,\"IMPROCEDENTE\"))",
+      "W8": "IF(OR(F5=0),U8,IF(OR(F5=2),U8,IF(OR(F5=5),U8,\"IMPROCEDENTE\")))",
+      "J36": "WORKDAY(D6,D7,C15:C37)",
+      "J37": "WORKDAY(J36,K36,C15:C37)",
+      "J38": "IF(J36=I38,\" \",J37)",
+      "H7": "INDEX('BASE DE DATOS'!A:D,MATCH(D5,'BASE DE DATOS'!A:A,0),5)"
+    },
+    "DIF X DESC": {
+      "D3": "WORKDAY.INTL(B2-1,1,OC2,H3:OP3)",
+      "E3": "WORKDAY.INTL(B2-1,E1,OC2,H3:OP3)",
+      "E2": "INDEX(CATEGORIAS!I3:J6,MATCH('DIF X DESC'!G2,CATEGORIAS!I3:I6,0),2)",
+      "F2": "E1*E2",
+      "H35": "G35/1.6"
+    },
+    "CAPTURA PECV": {
+      "M7": "INDEX('BASE DE DATOS'!A:D,MATCH(E5,'BASE DE DATOS'!A:A,0),5)"
+    }
+  }
+}

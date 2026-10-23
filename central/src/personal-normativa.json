@@ -1,0 +1,2893 @@
+{
+  "horarios_exclusivos_por_categoria": [
+    {
+      "categorias": [
+        "20360280"
+      ],
+      "contexto": "MEDICO_FAMILIAR_GENERAL",
+      "horarios": [
+        "0301",
+        "0302",
+        "0313",
+        "0314",
+        "0323",
+        "0324",
+        "0329"
+      ],
+      "pagina": 22,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-010"
+    },
+    {
+      "categorias": [
+        "20360180",
+        "20360280",
+        "20730180",
+        "20730080",
+        "20100080"
+      ],
+      "contexto": "Para 20360280 sólo Atención Continua; Análisis y Evaluación Salud en el Trabajo",
+      "horarios": [
+        "0303",
+        "0304",
+        "0305",
+        "0306",
+        "0307",
+        "0308",
+        "0312",
+        "0326",
+        "0327",
+        "0328",
+        "D735",
+        "D736",
+        "D737",
+        "E703",
+        "F711",
+        "F714"
+      ],
+      "pagina": 22,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-010"
+    },
+    {
+      "categorias": [
+        "20220080"
+      ],
+      "contexto": "ESTOMATOLOGO",
+      "horarios": [
+        "0309",
+        "0310",
+        "0311",
+        "0321"
+      ],
+      "pagina": 22,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-010"
+    },
+    {
+      "categorias": [
+        "22560080",
+        "21560080"
+      ],
+      "contexto": "QUIMICO_CLINICO_Y_JEFE_SECCION",
+      "horarios": [
+        "0315",
+        "0316",
+        "0317",
+        "0318",
+        "0319",
+        "0322",
+        "D740",
+        "D741",
+        "F717"
+      ],
+      "pagina": 22,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-010"
+    },
+    {
+      "categorias": [
+        "20360480"
+      ],
+      "contexto": "UMF hasta 10 consultorios, consulta externa",
+      "horarios": [
+        "0123",
+        "0160"
+      ],
+      "pagina": 23,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-010"
+    },
+    {
+      "categorias": [
+        "20360480"
+      ],
+      "contexto": "UMF atención médica continua",
+      "horarios": [
+        "0123",
+        "0459",
+        "0160",
+        "0225",
+        "F702"
+      ],
+      "pagina": 23,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-010"
+    },
+    {
+      "categorias": [],
+      "contexto": "Orientador de iniciación cultural: la tabla no indica clave de categoría",
+      "horarios": [
+        "0804"
+      ],
+      "pagina": 23,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-010"
+    },
+    {
+      "categorias": [],
+      "contexto": "Orientador de actividades artísticas música: la tabla no indica clave de categoría",
+      "horarios": [
+        "B814"
+      ],
+      "pagina": 23,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-010"
+    }
+  ],
+  "estado": "REFERENCIA_DOCUMENTAL_NO_PUBLICADA",
+  "fuentes": [
+    {
+      "clave": "1A74-003-023",
+      "titulo": "Procedimiento para la autorización de guardias",
+      "registro_portada": "2024-01-10",
+      "paginas": 38,
+      "sha256": "e705e8ea878091e485b88fb5a9b6f2007fd67977577c6a78dbca26839eaf8e50"
+    },
+    {
+      "clave": "1A74-003-037",
+      "titulo": "Procedimiento para la autorización de nivelación a plaza superior",
+      "registro_portada": "2023-12-15",
+      "paginas": 18,
+      "sha256": "a91f568b7bb6aab77ecfc49ed5043843f7b3560a31d0bd0b29191c69e94fb35e"
+    },
+    {
+      "clave": "1A74-003-034",
+      "titulo": "Procedimiento para el control de asistencia, puntualidad y sustituciones",
+      "registro_portada": "2023-10-27",
+      "paginas": 337,
+      "sha256": "27c85569bed4d6ae4341890fc97d9a726c771c76bcacb7bac26735565b799129"
+    },
+    {
+      "clave": "1A74-003-032",
+      "titulo": "Procedimiento para la modificación de horarios institucionales",
+      "registro_portada": "2024-04-05",
+      "paginas": 37,
+      "sha256": "9f806cbb0efaaae749994e6d720cd8924d747552af471a60ab30390907855147"
+    },
+    {
+      "clave": "1A74-003-031",
+      "titulo": "Procedimiento para la autorización de tiempo extraordinario",
+      "registro_portada": "2023-10-24",
+      "paginas": 21,
+      "sha256": "6fa98197953f094d895e00d6f280ee6d13ee4e251ccc7f4775e7962ecb37a26e"
+    },
+    {
+      "clave": "1A74-003-033",
+      "titulo": "Procedimiento para el trámite y operación de bajas, altas y cambios de las trabajadoras o los trabajadores en nómina ordinaria",
+      "registro_portada": "2023-11-22",
+      "paginas": 262,
+      "sha256": "d1fd3cdfbfd320fb9f7f0f3d1696ed5742a8bee733f4bd0feeacf26fcd24b299"
+    }
+  ],
+  "tipos_contratacion": [
+    {
+      "clave": "00",
+      "descripcion": "Estatuto de Confianza A",
+      "fuente": "1A74-003-031",
+      "pagina": 5,
+      "numeral": "4.15, nota",
+      "apoyo": [
+        {
+          "fuente": "1A74-003-023",
+          "pagina": 9,
+          "numeral": "5.2.6–5.2.7"
+        },
+        {
+          "fuente": "1A74-003-032",
+          "pagina": 6,
+          "numeral": "5.2.3"
+        },
+        {
+          "fuente": "1A74-003-033",
+          "pagina": 262,
+          "catalogo": "1A74-008-012"
+        }
+      ]
+    },
+    {
+      "clave": "01",
+      "descripcion": "Confianza",
+      "fuente": "1A74-003-031",
+      "pagina": 5,
+      "numeral": "4.15, nota",
+      "apoyo": [
+        {
+          "fuente": "1A74-003-023",
+          "pagina": 9,
+          "numeral": "5.2.6–5.2.7"
+        },
+        {
+          "fuente": "1A74-003-032",
+          "pagina": 6,
+          "numeral": "5.2.3"
+        },
+        {
+          "fuente": "1A74-003-033",
+          "pagina": 262,
+          "catalogo": "1A74-008-012"
+        }
+      ]
+    },
+    {
+      "clave": "02",
+      "descripcion": "Base",
+      "fuente": "1A74-003-031",
+      "pagina": 5,
+      "numeral": "4.15, nota",
+      "apoyo": [
+        {
+          "fuente": "1A74-003-023",
+          "pagina": 9,
+          "numeral": "5.2.6–5.2.7"
+        },
+        {
+          "fuente": "1A74-003-032",
+          "pagina": 6,
+          "numeral": "5.2.3"
+        },
+        {
+          "fuente": "1A74-003-033",
+          "pagina": 262,
+          "catalogo": "1A74-008-012"
+        }
+      ]
+    },
+    {
+      "clave": "03",
+      "descripcion": "Temporal",
+      "fuente": "1A74-003-031",
+      "pagina": 5,
+      "numeral": "4.15, nota",
+      "apoyo": [
+        {
+          "fuente": "1A74-003-023",
+          "pagina": 9,
+          "numeral": "5.2.6–5.2.7"
+        },
+        {
+          "fuente": "1A74-003-032",
+          "pagina": 6,
+          "numeral": "5.2.3"
+        },
+        {
+          "fuente": "1A74-003-033",
+          "pagina": 262,
+          "catalogo": "1A74-008-012"
+        }
+      ]
+    },
+    {
+      "clave": "08",
+      "descripcion": "Sustituto",
+      "fuente": "1A74-003-031",
+      "pagina": 5,
+      "numeral": "4.15, nota",
+      "apoyo": [
+        {
+          "fuente": "1A74-003-023",
+          "pagina": 9,
+          "numeral": "5.2.6–5.2.7"
+        },
+        {
+          "fuente": "1A74-003-032",
+          "pagina": 6,
+          "numeral": "5.2.3"
+        },
+        {
+          "fuente": "1A74-003-033",
+          "pagina": 262,
+          "catalogo": "1A74-008-012"
+        }
+      ]
+    },
+    {
+      "clave": "05",
+      "descripcion": "Becarios",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "07",
+      "descripcion": "Becados",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "09",
+      "descripcion": "Médicos Residentes",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    }
+  ],
+  "conceptos": [
+    {
+      "clave": "35",
+      "descripcion": "Guardia festiva",
+      "regimen": "TC_01_02_03_08",
+      "fuente": "1A74-003-023",
+      "pagina": 9,
+      "numeral": "5.2.6"
+    },
+    {
+      "clave": "735",
+      "descripcion": "Guardia festiva",
+      "regimen": "TC_00",
+      "fuente": "1A74-003-023",
+      "pagina": 9,
+      "numeral": "5.2.7"
+    },
+    {
+      "clave": "37",
+      "descripcion": "Tiempo extraordinario",
+      "regimen": "TC_01_02_03_08",
+      "fuente": "1A74-003-031",
+      "pagina": 4,
+      "numeral": "4.5"
+    },
+    {
+      "clave": "737",
+      "descripcion": "Tiempo extraordinario",
+      "regimen": "TC_00",
+      "fuente": "1A74-003-031",
+      "pagina": 4,
+      "numeral": "4.6"
+    },
+    {
+      "clave": "10",
+      "descripcion": "Nivelación a plaza superior",
+      "regimen": "PERSONAL_BASE_CON_REQUISITOS",
+      "fuente": "1A74-003-037",
+      "pagina": 7,
+      "numeral": "5.2.5–5.2.10"
+    },
+    {
+      "clave": "08B",
+      "descripcion": "Sustitución en día festivo",
+      "regimen": "SUSTITUTO_CON_AUTORIZACION",
+      "fuente": "1A74-003-023",
+      "pagina": 13,
+      "numeral": "5.2.31–5.2.33"
+    }
+  ],
+  "incidencias_aps": [
+    {
+      "clave": "08",
+      "descripcion": "SUSTITUCIÓN",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "08A",
+      "descripcion": "SUSTITUCIÓN 6o. Y 7o. DÍAS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "08B",
+      "descripcion": "SUSTITUCIÓN DÍA FESTIVO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "10",
+      "descripcion": "NIVELACIÓN A PLAZA SUPERIOR",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "35",
+      "descripcion": "GUARDIAS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "35A",
+      "descripcion": "GUARDIAS EN 6º. Y 7o. DÍAS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "37",
+      "descripcion": "TIEMPO EXTRAORDINARIO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "37A",
+      "descripcion": "TIEMPO EXTRAORDINARIO DESCANSOS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "39",
+      "descripcion": "LICENCIA SIN SUELDO MAYOR A 3 DÍAS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "60",
+      "descripcion": "PENSIÓN EN TRÁMITE IEG",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "61",
+      "descripcion": "SUSPENSIÓN LABORAL",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "62",
+      "descripcion": "LICENCIA C/SDO DE 6 SEMANAS POR ADOPCIÓN",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "63",
+      "descripcion": "VACACIONES",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "64",
+      "descripcion": "LICENCIA CON SUELDO FALLECIMIENTO FAMILIAR DIRECTO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "65",
+      "descripcion": "LICENCIA CON SUELDO DE 1 A 3 DÍAS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "66",
+      "descripcion": "LICENCIA C/SDO DE 5 DÍAS POR NAC. HIJO Y/O ADOPCIÓN",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "67",
+      "descripcion": "INCAPACIDAD ENFERMEDAD GENERAL",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "67A",
+      "descripcion": "INCAPACIDAD POR ENFERMEDAD GENERAL C/ INCIDENCIA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "68",
+      "descripcion": "INCAPACIDAD POR MATERNIDAD",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "68A",
+      "descripcion": "INCAPACIDAD POR MATERNIDAD C/ INCIDENCIA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "69",
+      "descripcion": "INCAPACIDAD POR RIESGO DE TRABAJO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "69A",
+      "descripcion": "INCAPACIDAD POR RIESGO DE TRABAJO C/ INCIDENCIA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "69B",
+      "descripcion": "INCAPACIDAD RIESGO DE TRABAJO NO OCURRIDA EN TRAYECTO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "70",
+      "descripcion": "PENSIÓN EN TRÁMITE",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "71",
+      "descripcion": "LICENCIA SIN SUELDO MENOR A 4 DÍAS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "72",
+      "descripcion": "FALTA INJUSTIFICADA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "721",
+      "descripcion": "FALTA INJUSTIFICADA ENTRADA DESPUÉS DE LA TOLERANCIA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "722",
+      "descripcion": "FALTA INJUSTIFICADA REGISTRO ANTES DE LA TOLERANCIA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "723",
+      "descripcion": "FALTA INJUSTIFICADA SIN ENTRADA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "75",
+      "descripcion": "BECA SIN SUELDO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "83",
+      "descripcion": "COMISIÓN",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "84",
+      "descripcion": "COMISIÓN PARA CAPACITACIÓN",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "87",
+      "descripcion": "BECA CON SUELDO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "93",
+      "descripcion": "MARCA ALTERADA A LA ENTRADA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "931",
+      "descripcion": "MARCA ALTERADA EN 2º. TURNO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "95",
+      "descripcion": "JUSTIFICACIÓN ENTRADA SIN ESTÍMULOS DE PUNTUALIDAD",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "951",
+      "descripcion": "JUSTIFICACIÓN DE ENTRADA CON ESTÍMULOS DE PUNTUALIDAD",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "953",
+      "descripcion": "JUSTIFICACIÓN DE ENTRADA CON ESTÍMULOS DE PUNTUALIDAD",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "954",
+      "descripcion": "JUSTIFICACIÓN DE ENTRADA SIN ESTÍMULOS DE PUNTUALIDAD",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "97",
+      "descripcion": "JUSTIFICACIÓN DE DÍA COMPLETO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "971",
+      "descripcion": "JUSTIFICACIÓN JORNADA 2o. TURNO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "98",
+      "descripcion": "SUSPENSIÓN DISCIPLINA SINDICAL",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B11",
+      "descripcion": "TRABAJADOR COMISIONADO EN S.N.T.S.S.",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B12",
+      "descripcion": "COMISIÓN FUERA DE CONTRATO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B15",
+      "descripcion": "COMISIONADO SIMBÓLICO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B16",
+      "descripcion": "COMISIONADO FUERA DEL IMSS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B17",
+      "descripcion": "COMISIÓN EN CURSOS MONOGRÁFICOS",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B21",
+      "descripcion": "RENUNCIA DEL TRABAJADOR",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B24",
+      "descripcion": "TÉRMINO CONTRATO (LIQUIDACIÓN)",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B25",
+      "descripcion": "RESCISIÓN DE CONTRATO NO IMPUGNADA",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B26",
+      "descripcion": "EL TRABAJADOR NO TOMÓ POSESIÓN",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B27",
+      "descripcion": "FALLECIMIENTO DEL TRABAJADOR",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B30",
+      "descripcion": "TÉRMINO DE SUSTITUCIÓN",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B31",
+      "descripcion": "TRABAJADOR PASÓ A PENSIONADO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B33",
+      "descripcion": "TRABAJADOR PASÓ A JUBILADO",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B34",
+      "descripcion": "TRABAJADOR PASÓ A NÓMINA CONFIDENCIAL",
+      "pagina": 144,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B35",
+      "descripcion": "CAMBIO DE RESIDENCIA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B7",
+      "descripcion": "TRABAJADOR PASÓ A BECADO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B71",
+      "descripcion": "BAJA POR LICENCIA SIN SUELDO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B73",
+      "descripcion": "SUSPENSIÓN TEMPORAL RELACIÓN CONTRACTUAL",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B75",
+      "descripcion": "RESCISIÓN DE CONTRATO IMPUGNADA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B78",
+      "descripcion": "78 SEMANAS DE INCAPACIDAD",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "B81",
+      "descripcion": "TRABAJADOR NO LABORA EN ESTA DEPENDENCIA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "EM2",
+      "descripcion": "CONSTANCIA DE PASE DE ENTRADA MÉDICO 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "EO2",
+      "descripcion": "CONSTANCIA DE PASE DE ENTRADA OFICIAL 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "EP2",
+      "descripcion": "CONSTANCIA DE PASE DE ENTRADA PARTICULAR 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "F2",
+      "descripcion": "FALTA INJUSTIFICADA 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "F21",
+      "descripcion": "FALTA INJUSTIFICADA ENTRADA DESPUÉS DE LA TOLERANCIA 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "F22",
+      "descripcion": "FALTA INJUSTIFICADA REGISTRADA ANTES DE LA TOLERACIA. 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "F23",
+      "descripcion": "FALTA INJUSTIFICADA SIN ENTRADA 2º. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "F3",
+      "descripcion": "FALTA HORARIO DISCRECIONAL",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "IM2",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO DE MEDICO 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "IO2",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO OFICIAL 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "IP2",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO PARTICULAR 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "JD",
+      "descripcion": "JORNADA DOMINICAL",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "JE",
+      "descripcion": "JUSTIFICACIÓN DE ENTRADA EN 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "JE1",
+      "descripcion": "JUSTIFICACIÓN DE ENTRADA ANTES DE LA TOLERANCIA EN 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "JS",
+      "descripcion": "JUSTIFICACIÓN DE SALIDA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "JS1",
+      "descripcion": "JUSTIFICACIÓN DE SALIDA DESPUÉS DE LA TOLERANCIA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "JS2",
+      "descripcion": "JUSTIFICACIÓN DE SALIDA 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "JS3",
+      "descripcion": "JUSTIFICACIÓN DE SALIDA DESPUÉS DE LA TOLERANCIA 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "MA",
+      "descripcion": "MARCA ALTERADA A LA SALIDA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "MA2",
+      "descripcion": "MARCA ALTERADA A LA SALIDA 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PEM",
+      "descripcion": "CONSTANCIA DE PASE DE ENTRADA MÉDICO 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PEO",
+      "descripcion": "CONSTANCIA DE PASE DE ENTRADA OFICIAL 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PEP",
+      "descripcion": "CONSTANCIA DE PASE DE ENTRADA PARTICULAR 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PIM",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO MÉDICO 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PIO",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO OFICIAL 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PIP",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO PARTICULAR 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PR",
+      "descripcion": "PRESENCIA EN LUGAR DE TRABAJO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PSM",
+      "descripcion": "CONSTANCIA DE PASE DE SALIDA MÉDICO 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PSO",
+      "descripcion": "CONSTANCIA DE PASE DE SALIDA OFICIAL 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PSP",
+      "descripcion": "CONSTANCIA DE PASE DE SALIDA PARTICULAR 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "R2",
+      "descripcion": "RETARDO 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "RE",
+      "descripcion": "RETARDO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SA",
+      "descripcion": "SALIDA ANTES",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "PSP",
+      "descripcion": "CONSTANCIA DE PASE DE SALIDA PARTICULAR 1er. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "R2",
+      "descripcion": "RETARDO 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "RE",
+      "descripcion": "RETARDO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SA",
+      "descripcion": "SALIDA ANTES",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SA2",
+      "descripcion": "SALIDA ANTES EN 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SG",
+      "descripcion": "NO LABORA GUARDIA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SM2",
+      "descripcion": "CONSTANCIA DE PASE DE SALIDA MÉDICO EN 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SO2",
+      "descripcion": "CONSTANCIA DE PASE DE SALIDA OFICIAL EN 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SP",
+      "descripcion": "CONSTANCIA DE PASE DE SALIDA PARTICULAR 1er TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SP2",
+      "descripcion": "CONSTANCIA DE PASE DE SALIDA PARTICULAR 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SS",
+      "descripcion": "SIN SALIDA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SS1",
+      "descripcion": "SIN SALIDA REGISTRO DESPUÉS DE LA TOLERANCIA",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SS2",
+      "descripcion": "SIN SALIDA EN 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "SS3",
+      "descripcion": "SIN SALIDA REGISTRO DESPUÉS TOLERANCIA 2o. TURNO",
+      "pagina": 145,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "GENERAL_CCT"
+    },
+    {
+      "clave": "E32",
+      "descripcion": "SUSPENSIÓN",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E35",
+      "descripcion": "GUARDIAS",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E37",
+      "descripcion": "TIEMPO EXTRAORDINARIO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E41",
+      "descripcion": "LICENCIA SIN SUELDO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E42",
+      "descripcion": "LICENCIA CON SUELDO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E51",
+      "descripcion": "COMISIÓN LABORAL",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E52",
+      "descripcion": "COMISIÓN PARA CAPACITACIÓN",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E61",
+      "descripcion": "INCAPACIDAD POR ENFERMEDAD GENERAL",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E62",
+      "descripcion": "INCAPACIDAD POR MATERNIDAD",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E63",
+      "descripcion": "INCAPACIDAD POR RIESGO DE TRABAJO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E64",
+      "descripcion": "TRABAJADOR TRÁMITE PENSIÓN E.G.",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E65",
+      "descripcion": "TRABAJADOR TRÁMITE PENSIÓN R.T.",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E71",
+      "descripcion": "FALTA INJUSTIF ENT DESP DE 30 MIN RET",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E72",
+      "descripcion": "FALTA INJUSTIFICADA SIN REGISTROS",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E73",
+      "descripcion": "FALTA INJUSTIFICADA ENT ANTES DE 60 MIN",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E74",
+      "descripcion": "FALTA INJUSTIFICADA SIN ENT",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E75",
+      "descripcion": "FALTA INJUSTIFICADA SAL ANTES",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E81",
+      "descripcion": "JUSTIFICACIÓN ENT SIN REGISTRO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E82",
+      "descripcion": "JUSTIF DIA COMPLETO SIN ENT/EXC 120 MIN SAL",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E83",
+      "descripcion": "CLAVE SIN APLICACIÓN",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E84",
+      "descripcion": "JUSTIFICACIÓN DIA COMPLETO SIN REGISTROS",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "E86",
+      "descripcion": "CLAVE SIN APLICACIÓN",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "EIM",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO MED 1er. TURNO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "EIO",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO OFIC 1er TURNO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "EIP",
+      "descripcion": "CONSTANCIA DE PASE INTERMEDIO PART 1er TURNO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "EJ1",
+      "descripcion": "JUSTIF SALIDA REG DESP 120 MIN",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "EJE",
+      "descripcion": "JUSTIF ENTRADA ANTES DE 60 MIN",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "EJS",
+      "descripcion": "JUSTIF DE SALIDA SIN REG",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "EPR",
+      "descripcion": "PRESENCIA",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "ERE",
+      "descripcion": "RETARDO",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "ES1",
+      "descripcion": "SIN SALIDA REG DESP 120 MIN",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    },
+    {
+      "clave": "ES2",
+      "descripcion": "SIN SALIDA SIN REG",
+      "pagina": 146,
+      "fuente": "1A74-003-034",
+      "catalogo": "1A74-008-144",
+      "ambito_tabla": "ESTATUTO"
+    }
+  ],
+  "horarios_estatuto": [
+    {
+      "clave": "001E",
+      "descripcion": "5.00 a 12.30 Jornada Mixta",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "002E",
+      "descripcion": "5.30 a 13.00 Jornada Mixta",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "003E",
+      "descripcion": "6.00 a 14.00",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "004E",
+      "descripcion": "6.30 a 14.30",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "005E",
+      "descripcion": "7.00 a 15.00",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "006E",
+      "descripcion": "7.30 a 15.30",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "007E",
+      "descripcion": "8.00 a 16.00",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "008E",
+      "descripcion": "8.30 a 16.30",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "009E",
+      "descripcion": "9.00 a 17.00",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "010E",
+      "descripcion": "9.30 a 17.30",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "011E",
+      "descripcion": "10.00 a 18.00",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "012E",
+      "descripcion": "10.30 a 18.30",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "013E",
+      "descripcion": "11.00 a 19.00",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "014E",
+      "descripcion": "11.30 a 19.30",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "015E",
+      "descripcion": "03:00 a 10:30 Jornada Mixta",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "016E",
+      "descripcion": "04:00 a 11:30 Jornada Mixta",
+      "turno": "1",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "017E",
+      "descripcion": "12.00 a 20.00",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "018E",
+      "descripcion": "12.30 a 20.30",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "019E",
+      "descripcion": "13.30 a 21.00 Jornada Mixta",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "020E",
+      "descripcion": "14.00 a 21.30 Jornada Mixta",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "021E",
+      "descripcion": "14.30 a 22.00 Jornada Mixta",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "022E",
+      "descripcion": "15.00 a 22.30 Jornada Mixta",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "023E",
+      "descripcion": "15.30 a 23.00 Jornada Mixta",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "024E",
+      "descripcion": "16.00 a 23.00 Jornada Nocturna",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "025E",
+      "descripcion": "13.00 a 20.30 Jornada Mixta",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "026E",
+      "descripcion": "13.00 a 20.30 4 Veces por Semana y 8 Hrs Sáb o Dom",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "027E",
+      "descripcion": "14.00 a 21.30 4 Veces por Sem y 8 Hrs Sáb o Dom",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "028E",
+      "descripcion": "14.00 a 21.30 3 Veces por Semana y 8 Hrs. Sáb o Do",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "029E",
+      "descripcion": "13.00 a 20.30 4 Veces por Sem y 8 Hrs Sáb o Dom",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "030E",
+      "descripcion": "12.00 a 20.00 4 Veces por Semana y 8 Hrs Sáb o Dom",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "031E",
+      "descripcion": "13.30 a 21.00 Hrs 4 Veces por Sem y 8 Hrs Sáb o Do",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "032E",
+      "descripcion": "14.30 a 22.00 4 Veces por Semana y 8 Hrs Sáb o Dom",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "033E",
+      "descripcion": "13.30 a 21.00 3 Veces por Semana y 8 Hrs Sáb y Dom",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "034E",
+      "descripcion": "14.30 a 22.00 3 Veces por Semana y 8 Hrs Sáb y Dom",
+      "turno": "2",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "035E",
+      "descripcion": "17.00 a 24.00 Jornada Nocturna",
+      "turno": "3",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "036E",
+      "descripcion": "23.00 a 06.00 Jornada Nocturna",
+      "turno": "3",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "048E",
+      "descripcion": "Horario Móvil",
+      "turno": "4",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "049E",
+      "descripcion": "Horario Móvil Continuo Matutino",
+      "turno": "4",
+      "pagina": 36,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "050E",
+      "descripcion": "Horario Móvil Continuo Vespertino",
+      "turno": "4",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "051E",
+      "descripcion": "Horario Móvil Continuo Mat y Vesp",
+      "turno": "4",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "052E",
+      "descripcion": "Horario Móvil 8.0 Hrs",
+      "turno": "4",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "062E",
+      "descripcion": "8:00 a 16:00 Acumulado 10 Días Descansa 4",
+      "turno": "1",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "063E",
+      "descripcion": "9.00 a 17.00 Acumulado 10 Días Descansa 4",
+      "turno": "1",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "064E",
+      "descripcion": "8.00 a 16.00 Acumulado 6 Días Seguidos, Descansa 1",
+      "turno": "1",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "065E",
+      "descripcion": "9.00 a 17.00 Acumulado 6 Días Seguidos, Descansa 1",
+      "turno": "1",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "C37E",
+      "descripcion": "20:00 a 6:00 Cada Tercer Día",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "C38E",
+      "descripcion": "21.00 a 07.00 Cada Tercer Día",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "C39E",
+      "descripcion": "21.00 a 07.00 3 Veces Por Semana y 10 Hrs D Alt",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "C40E",
+      "descripcion": "21.30 a 07.30 3 Veces Por Semana y 10 Hrs D Alt",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "C41E",
+      "descripcion": "22.00 a 08.00 Cada Tercer Día",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "C42E",
+      "descripcion": "21.30 a 07.30 Cada Tercer Día",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "D43E",
+      "descripcion": "19.20 a 07.00 3 Veces Por Semana",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "D44E",
+      "descripcion": "21.00 a 08.40 3 Veces Por Semana",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "D45E",
+      "descripcion": "20.30 a 08.10 3 Veces Por Semana",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "D46E",
+      "descripcion": "20.00 a 07.40 3 Veces Por Semana",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "D47E",
+      "descripcion": "19.50 a 07.30 3 Veces Por Semana",
+      "turno": "3",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "D53E",
+      "descripcion": "Horario Móvil Jorn Acum Noct",
+      "turno": "4",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "D54E",
+      "descripcion": "Horario Móvil Jorn. Acum. 8.0 Hrs.",
+      "turno": "4",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "F55E",
+      "descripcion": "7.40 a 21.00 Sábados y Domingos, 20.30 a 07.50 Mi",
+      "turno": "5",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "F56E",
+      "descripcion": "7.45 a 20.45 Sábado y De 08.00 a 06.00 Dom a Lunes",
+      "turno": "5",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "F57E",
+      "descripcion": "7.30 a 07.30 24 Hrs Mas 12 Hrs Noct 1 Vez por Sem",
+      "turno": "5",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "F58E",
+      "descripcion": "7.30 a 22.00 Sábado y De 8.00 a 8.00 Dom a Lunes",
+      "turno": "5",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "F59E",
+      "descripcion": "8.00 a 08.00 y 12 Hrs Noct 1 Vez por Semana",
+      "turno": "5",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "F60E",
+      "descripcion": "6.00 a 21.30 Sábado y 06.00 a 22.00 D",
+      "turno": "5",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "F61E",
+      "descripcion": "24 Hrs. S o D y 11.5 Hrs. L,M,M,J,V.",
+      "turno": "5",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "F66E",
+      "descripcion": "7.30 A 22.00 Sábado y De 8.00 A 8.00 Dom a Lunes",
+      "turno": "1",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    },
+    {
+      "clave": "X66E",
+      "descripcion": "08:00 A 07:59",
+      "turno": "1",
+      "pagina": 37,
+      "fuente": "1A74-003-032",
+      "catalogo": "1A74-008-011",
+      "regimen": "ESTATUTO"
+    }
+  ],
+  "prefijos_horarios": [
+    {
+      "prefijo": "B",
+      "registros_semanales": 4,
+      "descripcion": "Cuatro veces a la semana",
+      "fuente": "1A74-003-032",
+      "pagina": 25,
+      "catalogo": "1A74-008-009"
+    },
+    {
+      "prefijo": "C",
+      "registros_semanales": 3.5,
+      "descripcion": "Cada tercer día o tres días y domingos alternos",
+      "fuente": "1A74-003-032",
+      "pagina": 25,
+      "catalogo": "1A74-008-009"
+    },
+    {
+      "prefijo": "D",
+      "registros_semanales": 3,
+      "descripcion": "Tres días a la semana",
+      "fuente": "1A74-003-032",
+      "pagina": 25,
+      "catalogo": "1A74-008-009"
+    },
+    {
+      "prefijo": "E",
+      "registros_semanales": 2.5,
+      "descripcion": "Dos días por semana y domingos alternos",
+      "fuente": "1A74-003-032",
+      "pagina": 25,
+      "catalogo": "1A74-008-009"
+    },
+    {
+      "prefijo": "F",
+      "registros_semanales": 2,
+      "descripcion": "Dos días a la semana",
+      "fuente": "1A74-003-032",
+      "pagina": 25,
+      "catalogo": "1A74-008-009"
+    },
+    {
+      "prefijo": "0",
+      "registros_semanales": 5,
+      "descripcion": "Cinco días a la semana",
+      "fuente": "1A74-003-032",
+      "pagina": 25,
+      "catalogo": "1A74-008-009"
+    }
+  ],
+  "pendientes_no_inferir": [
+    "status_codigo (catálogo general)",
+    "tipo_plaza_codigo no identificado",
+    "marca_ocupacion_codigo no identificado",
+    "baja_codigo no identificado",
+    "tipos_contratacion 10, 11, 50, 51"
+  ],
+  "advertencias": [
+    "Los códigos pertenecen a campos distintos: TC, concepto, incidencia APS, horario, TP, MO, Status y Cve Baja no son intercambiables.",
+    "Incidencias B31/B33 no prueban una equivalencia con Cve Baja numérica 31/33.",
+    "Frecuencia de registro no determina descansos concretos ni calendario de ciclos.",
+    "Los horarios exclusivos de Estatuto se resuelven por catálogo completo antes de interpretar un prefijo.",
+    "Se conservan las filas repetidas del catálogo APS como apariciones documentales; no se asigna significado distinto por duplicación.",
+    "No se afirma vigencia externa actual ni se importa un catálogo en producción con esta extracción.",
+    "033 aporta tablas numéricas de baja independientes de APS: se usan directamente con su ámbito, sin quitar prefijos a incidencias APS. La tabla de Status encontrada es contextual de cambio de residencia, no un catálogo general."
+  ],
+  "marcas_baja": [
+    {
+      "clave": "00",
+      "descripcion": "Vigente",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "11",
+      "descripcion": "Cambio de Residencia por Comisión Sindical",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "17",
+      "descripcion": "Baja Solicitada por Jurídico",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "18",
+      "descripcion": "Baja de Candidato de Bolsa de Trabajo",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "20",
+      "descripcion": "Eliminación de Registro",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "21",
+      "descripcion": "Renuncia",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "24",
+      "descripcion": "Termino de Contrato (Liquidación)",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "25",
+      "descripcion": "Rescisión de Contrato no Impugnada",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "26",
+      "descripcion": "No Tomar Posesión",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "27",
+      "descripcion": "Fallecimiento",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "30",
+      "descripcion": "Termino de Sustitución",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "34",
+      "descripcion": "Pasar a Nomina de Funcionarios",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "35",
+      "descripcion": "Cambio de Residencia",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "41",
+      "descripcion": "Licencia sin Sueldo por Cargo de Funcionario Público",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "43",
+      "descripcion": "Termino de Temporalidad",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "45",
+      "descripcion": "Termino de Becaria",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "47",
+      "descripcion": "Termino de Beca con Sueldo",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "49",
+      "descripcion": "Termino de Residencia",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "50",
+      "descripcion": "Destitución del puesto",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "70",
+      "descripcion": "Termino de Contrato de Unidad Médica de Campo",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "71",
+      "descripcion": "Licencia sin Sueldo",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "72",
+      "descripcion": "Pensión Provisional Derivada de Riesgo de Trabajo",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "73",
+      "descripcion": "Suspensión Temporal de la Relación Laboral",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "74",
+      "descripcion": "Pensión Temporal Derivada de Enfermedad General",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "75",
+      "descripcion": "Rescisión de Contrato Impugnada",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "76",
+      "descripcion": "Pensión Ley Seguro Social Confianza “A” A/P 21/12/01",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "77",
+      "descripcion": "Beca sin Sueldo",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "78",
+      "descripcion": "Rescindido en plaza de confianza",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "79",
+      "descripcion": "Suspensión temporal por Privación de la Libertad",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "80",
+      "descripcion": "Trabajadores Sustitutos",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "88",
+      "descripcion": "Solicitud de Cambio de Residencia en Bolsa de Trabajo",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "89",
+      "descripcion": "Registros en Espera de Alta en Nomina",
+      "fuente": "1A74-003-033",
+      "pagina": 260,
+      "catalogo": "1A74-008-012",
+      "ambito": "GENERAL"
+    },
+    {
+      "clave": "10",
+      "descripcion": "Suspensión Temporal de la Relación Laboral E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "12",
+      "descripcion": "Termino de Contrato E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "13",
+      "descripcion": "Rescisión de Contrato no Impugnada E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "14",
+      "descripcion": "Renuncia E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "15",
+      "descripcion": "Fallecimiento E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "19",
+      "descripcion": "Licencia sin Sueldo Cargo Funcionario Público E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "22",
+      "descripcion": "Beca E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "23",
+      "descripcion": "Licencia sin Sueldo E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "28",
+      "descripcion": "Rescisión de Contrato Impugnada E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "29",
+      "descripcion": "Suspensión Temporal Por Privación de la Libertad E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "35",
+      "descripcion": "Cambio de Residencia",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "38",
+      "descripcion": "Definitivo Estatuto A",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "40",
+      "descripcion": "No definitiva Estatuto A",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "42",
+      "descripcion": "Término o Cancelación de Temporalidad E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "46",
+      "descripcion": "No Tomar Posesión E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "51",
+      "descripcion": "Destitución del Puesto E",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "ESTATUTO"
+    },
+    {
+      "clave": "01",
+      "descripcion": "Fallecimiento del Pensionado",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "02",
+      "descripcion": "Cambio de Residencia del Jubilado o Pensionado",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "03",
+      "descripcion": "Suspensión de La Pensión",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "04",
+      "descripcion": "Pasar a Empleado (Recontratación)",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "05",
+      "descripcion": "Liquidación de Pensión",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "06",
+      "descripcion": "Espera de Pago Concepto de Riesgo de Trabajo",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "07",
+      "descripcion": "Espera de Pago de la persona beneficiaria",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "08",
+      "descripcion": "Cumplir 25 Años la persona beneficiaria",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "09",
+      "descripcion": "Fallecimiento de la persona beneficiaria",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "27",
+      "descripcion": "Fallecimiento",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "31",
+      "descripcion": "Pasar a Pensionado por Enfermedad General",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "32",
+      "descripcion": "Pasar a Pensionado por Riesgo de Trabajo",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "33",
+      "descripcion": "Pasar a Jubilado por Años de Servicio",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "36",
+      "descripcion": "Pasar A Pensionado por Edad Avanzada",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    },
+    {
+      "clave": "37",
+      "descripcion": "Pasar A Pensionado por Vejez",
+      "fuente": "1A74-003-033",
+      "pagina": 261,
+      "catalogo": "1A74-008-012",
+      "ambito": "JUBILADOS_PENSIONADOS"
+    }
+  ],
+  "marcas_ocupacion": [
+    {
+      "clave": "00",
+      "descripcion": "Definitiva",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "01",
+      "descripcion": "Pasó a Confianza no Definitiva",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "02",
+      "descripcion": "Pasó a Base Interina",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "03",
+      "descripcion": "Pasó a Temporal",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "05",
+      "descripcion": "Pasó a Becario",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "07",
+      "descripcion": "Pasó a Becado",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "09",
+      "descripcion": "Pasó a Médico Residente",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "11",
+      "descripcion": "Pasó a Comisionado al C.E.N. del SNTSS",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "20",
+      "descripcion": "Definitiva Estatuto A",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "21",
+      "descripcion": "No Definitiva Estatuto A",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "70",
+      "descripcion": "Titular reportado con más de tres Faltas E",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "60",
+      "descripcion": "Titular reportado con más de tres Faltas E",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "61",
+      "descripcion": "Titular reportado con más de tres Faltas",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "71",
+      "descripcion": "Pasó a Licencia sin Sueldo",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "72",
+      "descripcion": "Titular reportado con más de tres Faltas",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "73",
+      "descripcion": "Pasó a Suspensión Temporal de la Relación Contractual",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "75",
+      "descripcion": "Pasó a Rescisión de Contrato Impugnada",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "76",
+      "descripcion": "Pensión Ley del Seguro Social Confianza “A” A/P 21/12/01",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "77",
+      "descripcion": "Pasó a Beca sin Sueldo",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "90",
+      "descripcion": "Dictamen de Promoción Escalafonaria Interina",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "98",
+      "descripcion": "Pasó a Ocupación no definitiva en tanto Dictamina Escalafón",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    },
+    {
+      "clave": "99",
+      "descripcion": "Pasó a Ocupación no definitiva sin Titular",
+      "fuente": "1A74-003-033",
+      "pagina": 262,
+      "catalogo": "1A74-008-012"
+    }
+  ],
+  "tipos_plaza": [
+    {
+      "clave": "53",
+      "descripcion": "Temporal Confianza Estatuto “A”",
+      "fuente": "1A74-003-033",
+      "pagina": 14,
+      "numeral": "5.2.13.11"
+    },
+    {
+      "clave": "05",
+      "descripcion": "Programas Especiales de Confianza",
+      "fuente": "1A74-003-033",
+      "pagina": 14,
+      "numeral": "5.2.13.11"
+    },
+    {
+      "clave": "15",
+      "descripcion": "Programas Especiales de Base",
+      "fuente": "1A74-003-033",
+      "pagina": 14,
+      "numeral": "5.2.13.11"
+    }
+  ],
+  "status_contextuales": [
+    {
+      "clave": "2",
+      "contexto": "Bajas de cambio de residencia aún no enviadas; proceso sin transmitir",
+      "fuente": "1A74-003-033",
+      "pagina": 244,
+      "numeral": "6.6.2, Anexo 18"
+    },
+    {
+      "clave": "100",
+      "contexto": "Bajas de cambio de residencia ya enviadas; proceso terminada descarga",
+      "fuente": "1A74-003-033",
+      "pagina": 244,
+      "numeral": "6.6.2, Anexo 18"
+    },
+    {
+      "clave": "2",
+      "contexto": "Recepción de cambio de residencia con marca de baja 89 y proceso carga completa",
+      "fuente": "1A74-003-033",
+      "pagina": 244,
+      "numeral": "6.6.3, Anexo 18"
+    }
+  ]
+}
