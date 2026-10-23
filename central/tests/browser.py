@@ -13,9 +13,10 @@ async def main():
   await page.locator('input[type=text]').first.fill('TESTADMIN')
   await page.locator('input[type=password]').fill('PruebaSegura123!')
   await page.get_by_role('button',name='Iniciar Sesión',exact=True).click()
-  try:await page.locator('[data-central-nav]').wait_for(timeout=45000)
+  try:await page.locator('[data-central-nav]').wait_for(state='attached',timeout=45000)
   except Exception:
    print('AUTH FAILURE',await page.locator('body').inner_text(),errors);raise
+  if not await page.locator('[data-central-nav]').is_visible():await page.locator('[data-admin-toggle]').click()
   await page.locator('[data-central-nav]').click()
   panel=page.locator('[data-sicip-central-panel]')
   await panel.get_by_text('13,037',exact=True).wait_for(timeout=45000)
@@ -41,6 +42,7 @@ async def main():
   await page.wait_for_timeout(300)
   active=await page.locator('nav [data-sicip-active="1"]').count()
   assert active<=1,active
+  if not await page.locator('[data-central-nav]').is_visible():await page.locator('[data-admin-toggle]').click()
   await page.locator('[data-central-nav]').click()
   await panel.get_by_text('13,037',exact=True).wait_for()
   await page.set_viewport_size({'width':390,'height':844})
@@ -57,7 +59,7 @@ async def main():
   page.once('dialog',lambda d:d.accept())
   async with page.expect_navigation(wait_until='domcontentloaded'):
    await panel.get_by_role('button',name='Activar este corte',exact=True).click()
-  await page.locator('[data-central-nav]').wait_for(timeout=30000)
+  await page.locator('[data-central-nav]').wait_for(state='attached',timeout=30000)
   current=await page.evaluate('fetch("/api/base/current").then(r=>r.json())')
   assert current['quincena']=='2026015' and current['id']!='11111111-1111-4111-8111-111111111111',current
   print('Carga real del Excel: lectura en segundo plano, lotes, validación y activación completas en base local de prueba.',flush=True)

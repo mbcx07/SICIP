@@ -1,11 +1,11 @@
-# SICIP 5.23 · Base central por quincena
+# SICIP 5.23.1 · Base central por quincena
 
 La base de personas y plazas se guarda en Cloudflare D1 (`sicip-central`, binding `DB`). Los módulos leen un corte completo e inmutable mediante la misma sesión. Las cargas se guardan como borrador, se validan y después se activan; activar otro corte no borra usuarios, pases, trámites ni resultados anteriores.
 
 ## Uso en la aplicación
 
 1. Iniciar sesión con la matrícula y contraseña existentes. La primera vez tras actualizar se requiere volver a iniciar sesión; no borrar los datos del navegador.
-2. Abrir **Consulta de personal y plazas** en el menú.
+2. Abrir **Administración → Control de personal y plazas** en el menú.
 3. Usar **Consulta** para buscar por matrícula, nombre o plaza. Se distinguen personas sin plaza, ocupante y titular; no se interpreta «sin plaza» como baja o jubilación.
 4. Un administrador puede abrir **Cargar quincena**, elegir el Excel completo y revisar la vista previa y observaciones.
 5. **Guardar y validar corte** sube lotes recuperables. No cambia el corte activo.
@@ -75,3 +75,17 @@ Probar primero la versión de prueba. Para producción usar `--branch main`. La 
 La activación guarda una sola referencia, con control de la versión esperada, y deja una entrada de auditoría. Un corte incompleto no puede activarse. Los lotes repetidos con el mismo contenido son idempotentes; claves duplicadas o contenido diferente se rechazan sin pisar datos.
 
 Para volver al corte anterior usar Historial. Para una falla del código, Cloudflare conserva el despliegue anterior `1bea7cfb-acd9-4721-91ec-7b97ae1e662e`. La base D1 y el respaldo previo no se borran al volver a desplegar. El corte 2026009 de respaldo fue reconstruido desde los JSON de la aplicación anterior, no desde un Excel original de esa quincena.
+
+## Correcciones de interfaz y flujos 5.23.1
+
+El encabezado queda por encima del menú. Menú y contenido tienen desplazamientos independientes, con una sola opción activa y sin colores fluorescentes fijos. Los avisos de instalación y foto se muestran dentro de Inicio. Se respeta el espacio de las lupas de búsqueda. Pases ajusta la altura del iframe al documento completo y Recepciones deja de remontarse encima de otro módulo.
+
+Cuadros conserva los cambios pendientes y la búsqueda tanto en asignación administrativa como en Mi Cuadro. Solicitudes y Jefe de Servicio vuelven a enlazar contratación y los demás formularios. El administrador recibe todos los permisos efectivos sin cambiar el perfil de otras cuentas. Plantilla en Administración dirige a la misma base central y se retira la carga Seed BD de esa pantalla.
+
+La postulación de confianza exige un PDF de hasta 1 MB. Se conserva el archivo real, por lotes, en D1; la descarga requiere sesión y permiso de propietario, jefe destinatario, administrador o Personal. La solicitud y su aviso se guardan en Firestore. Un fallo devuelve un mensaje y habilita reintentar; el identificador del envío es estable para el mismo adjunto y destino. Las solicitudes recibidas se consultan al abrir el cuadro, sin depender del JSON estático anterior. No se migran automáticamente las referencias antiguas que nunca contenían un archivo.
+
+Para recepción QR, `_headers` permite cámara sólo al propio sitio. El lector jsQR 1.4.0 (Apache-2.0) se sirve localmente, sin depender del CDN. Se manejan denegación de permiso, cancelación durante apertura y lectura de QR invertidos. El permiso del navegador y una cámara disponible siguen siendo necesarios.
+
+Las lecturas de un corte inmutable usan páginas de 1,000 y solicitudes en paralelo; se verifican conteos y claves. Se eliminan las esperas artificiales de seis segundos y la consulta serial por cada jefe. La primera carga y los movimientos remotos siguen dependiendo de la red.
+
+La regresión de interfaz se ejecuta con `npm run test:ux` contra el harness local; requiere Chromium, Playwright para Python y ffmpeg. Incluye un QR sintético en `tests/fixtures/`, genera una cámara simulada y verifica lectura, selección inmediata en ambos cuadros, currículum obligatorio, recuperación de errores y desplazamientos.

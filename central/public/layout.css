@@ -1,0 +1,25 @@
+/* Layout bounded by the viewport; each pane owns its scroll. */
+html:has(nav.sidebar),body:has(nav.sidebar){height:100%;overflow:hidden!important}
+#root:has(nav.sidebar){height:100dvh;overflow:hidden}
+#root>div:has(>header):has(nav.sidebar){height:100dvh!important;min-height:0!important;overflow:hidden!important}
+#root>div>header:has(~div nav.sidebar){position:relative!important;z-index:400!important;flex-shrink:0}
+#root>div>div:has(>nav.sidebar){min-height:0!important;overflow:hidden!important;isolation:isolate;flex:1!important}
+nav.sidebar{height:100%!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;z-index:200!important}
+nav.sidebar>div:first-child{flex:0 0 auto!important}
+nav.sidebar~main{height:100%!important;min-height:0!important;min-width:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;position:relative;scrollbar-gutter:stable}
+nav.sidebar button,nav.sidebar a{color:#dce9e2!important;border-left-color:transparent!important;background:transparent!important;box-shadow:none!important}
+nav.sidebar button span,nav.sidebar button svg{color:inherit!important}
+nav.sidebar button:hover,nav.sidebar a:hover{background:#ffffff12!important}
+nav.sidebar [data-sicip-active="1"]{color:#fff!important;background:#ffffff20!important;border-left-color:#7dd3a5!important;font-weight:700!important}
+nav.sidebar [data-sicip-active="1"]>span:first-child{color:#7dd3a5!important}
+nav.sidebar button:disabled{opacity:.55}
+#root main input[data-search-icon]{padding-left:2.5rem!important}
+#sicip-pases-view{min-height:0!important}
+#sicip-pases-view iframe{height:auto;min-height:0!important;display:block}
+[data-sicip-asignacion]{overflow-y:auto;overscroll-behavior:contain}
+@media(max-width:767px){nav.sidebar{max-width:85vw;top:0!important;bottom:0!important}nav.sidebar~main{scrollbar-gutter:auto}}
+@media print{html,body,#root,#root>div,nav.sidebar~main{height:auto!important;overflow:visible!important}nav.sidebar{display:none!important}}
+
+#root main #sicip-photo-prompt,#root main #sicip-pwa-install,#root main #sicip-pwa-notif{position:relative!important;inset:auto!important;width:100%!important;max-width:none!important;margin:12px 0!important;z-index:auto!important;box-shadow:none!important}
+body:not([data-sicip-route="/"]) #sicip-photo-prompt,body:not([data-sicip-route="/"]) #sicip-pwa-install,body:not([data-sicip-route="/"]) #sicip-pwa-notif{display:none!important}
+body:has(main [data-sicip-module-panel]) #sicip-photo-prompt,body:has(#sicip-pases-view) #sicip-photo-prompt,body:has(main [data-sicip-module-panel]) #sicip-pwa-install,body:has(#sicip-pases-view) #sicip-pwa-install{display:none!important}
