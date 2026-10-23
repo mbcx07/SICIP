@@ -1,0 +1,12 @@
+// Local-only harness: synthetic accounts and an in-memory D1 adapter. Never deployed.
+import http from 'node:http';import fs from 'node:fs/promises';import path from 'node:path';import {readFileSync} from 'node:fs';
+import worker from '../src/worker.mjs';import{database,seed,fixture,firestoreMock}from './d1-adapter.mjs';
+const root=path.resolve(process.argv[2]||'/workspace/sicip-env/central-release'),DB=database();DB.db.exec(readFileSync(new URL('../schema.sql',import.meta.url),'utf8'));
+let snapshot=fixture();if(process.argv[3]){snapshot=JSON.parse(await fs.readFile(process.argv[3],'utf8'));const names=new Map(snapshot.personas.map((p,i)=>[p.matricula,'PERSONA DE PRUEBA '+String(i+1).padStart(5,'0')]));for(const p of snapshot.personas){p.nombre=names.get(p.matricula);delete p.privado;}for(const p of snapshot.plazas)p.nombre_titular_origen=names.get(p.titular_matricula)||'Sin dato';}
+await seed(DB,snapshot,'11111111-1111-4111-8111-111111111111',true);
+const prior=fixture();prior.quincena='2026009';await seed(DB,prior,'22222222-2222-4222-8222-222222222222');
+globalThis.fetch=firestoreMock(globalThis.fetch);
+const mime={'.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.html':'text/html','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webmanifest':'application/manifest+json'};
+const ASSETS={async fetch(request){let name=decodeURIComponent(new URL(request.url).pathname);if(name.endsWith('/'))name+='index.html';let file=path.resolve(root,'.'+name);if(!file.startsWith(root+path.sep))return new Response('',{status:403});try{const s=await fs.stat(file);if(!s.isFile())throw Error();}catch{if(!path.extname(name))file=path.join(root,'index.html');else return new Response('Missing',{status:404});}return new Response(await fs.readFile(file),{headers:{'Content-Type':(mime[path.extname(file)]||'application/octet-stream')+'; charset=utf-8'}});}};
+const server=http.createServer(async(req,res)=>{try{const chunks=[];for await(const b of req)chunks.push(b);const body=Buffer.concat(chunks);const request=new Request('http://127.0.0.1:8010'+req.url,{method:req.method,headers:req.headers,...(body.length?{body}:{})});const result=await worker.fetch(request,{DB,ASSETS},{});res.writeHead(result.status,Object.fromEntries(result.headers));res.end(Buffer.from(await result.arrayBuffer()));}catch(e){console.error(e.name,e.message);res.writeHead(500);res.end('test harness failure');}});
+server.listen(8010,'127.0.0.1',()=>console.log('Harness local disponible, cuentas sintéticas; filas:',snapshot.personas.length));

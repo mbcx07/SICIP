@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><script src="/sicip-central/bootstrap.js?v=20261023-central-1"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SICIP · Plataforma de Exámenes - Normativa IMSS</title>
+<link rel="stylesheet" href="/examenes/tailwind.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--imss-verde:#0d6e3d;--imss-verde-claro:#1a9d5a;--imss-azul:#003f7f;--imss-dorado:#c89b2e}
+*{font-family:'Inter',sans-serif}
+body{background:#f3f4f6}
+.bg-imss{background:linear-gradient(135deg,#0d6e3d 0%,#003f7f 100%)}
+.btn-primary{background:var(--imss-verde);color:#fff;transition:.2s}
+.btn-primary:hover{background:var(--imss-verde-claro);transform:translateY(-1px);box-shadow:0 8px 16px rgba(0,0,0,.15)}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:.2s}
+.card:hover{box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.tema-card{cursor:pointer;border-left:4px solid var(--imss-verde)}
+.tema-card:hover{border-left-color:var(--imss-verde-claro);background:#f9fafb}
+.opcion{border:2px solid #e5e7eb;border-radius:8px;padding:12px 16px;cursor:pointer;transition:.15s;background:#fff}
+.opcion:hover{border-color:var(--imss-verde);background:#f0fdf4}
+.opcion.selected{border-color:var(--imss-verde);background:#dcfce7}
+.opcion.correcta{border-color:#10b981;background:#d1fae5}
+.opcion.incorrecta{border-color:#ef4444;background:#fee2e2}
+.timer{font-variant-numeric:tabular-nums;font-feature-settings:'tnum'}
+.progress-bar{transition:width .3s ease}
+.correct-flash{animation:correctFlash .6s ease}
+.incorrect-flash{animation:incorrectFlash .6s ease}
+@keyframes correctFlash{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes incorrectFlash{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+.badge-verde{background:#d1fae5;color:#065f46}
+.badge-rojo{background:#fee2e2;color:#991b1b}
+.badge-azul{background:#dbeafe;color:#1e40af}
+.fade-in{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body class="min-h-screen">
+<p style="margin:0;padding:10px 18px;background:#fff8df;font:13px system-ui;color:#6e5011">Los resultados de la versión anterior se conservan. <a href="https://sicip-examenes.pages.dev" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">Consultar versión anterior</a></p>
+<!-- HEADER -->
+<header class="bg-imss text-white shadow-lg">
+<div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl font-black text-imss-verde">IMSS</div>
+<div>
+<h1 class="text-xl md:text-2xl font-black">SICIP · Exámenes Normativa</h1>
+<p class="text-xs md:text-sm text-green-100">Plataforma de capacitación - Departamento de Personal OOAD BCS</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<a href="/" target="_blank" class="text-xs bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg">SICIP →</a>
+</div>
+</div>
+</header>
+
+<main id="app" class="max-w-6xl mx-auto px-4 py-6"></main>
+
+<footer class="bg-gray-800 text-gray-300 mt-12">
+<div class="max-w-6xl mx-auto px-4 py-6 text-center text-sm">
+<p class="font-semibold text-white">SICIP — Sistema Integral de Captura de Información de Personal</p>
+<p>OOAD Baja California Sur · IMSS · 2026</p>
+<p class="text-xs mt-2 text-gray-400">Plataforma de capacitación y evaluación normativa</p>
+</div>
+</footer>
+
+<!-- LIBRERIAS -->
+<script src="data/banco-preguntas.js"></script>
+<script src="data/banco-parte2.js"></script>
+<script src="data/banco-parte3.js"></script>
+<script src="data/banco-parte4.js"></script>
+
+<script>
+// ============ INICIALIZACION ============
+const TODAS = [].concat(
+  window.BANCO_PREGUNTAS||[],
+  window.BANCO_PREGUNTAS_PARTE2||[],
+  window.BANCO_PREGUNTAS_PARTE3||[],
+  window.BANCO_PREGUNTAS_PARTE4||[]
+).filter(p=>p && p.pregunta && p.opciones && p.opciones.length===4);
+
+const STORAGE_KEY='sicip-examenes-v1';
+let state={
+  pantalla:'inicio',  // inicio | temas | config | examen | resultado | ranking
+  usuario:'',
+  matricula:'',
+  temaSeleccionado:'',
+  modo:'',            // practica | examen
+  numPreguntas:10,
+  tiempoMin:20,
+  preguntas:[],
+  indice:0,
+  respuestas:{},      // {idPregunta: opcionIndex}
+  tiempoInicio:0,
+  tiempoRestante:0,
+  timer:null,
+  resultados:[]       // historial en localStorage
+};
+
+// ============ PERSISTENCIA ============
+function cargarHistorial(){
+  try{state.resultados=JSON.parse(localStorage.getItem(STORAGE_KEY))||[]}catch(e){state.resultados=[]}
+}
+function guardarHistorial(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state.resultados))}
+
+// ============ HELPERS ============
+function $(id){return document.getElementById(id)}
+function fmtTiempo(s){const m=Math.floor(s/60),r=s%60;return `${m}:${r.toString().padStart(2,'0')}`}
+function mezclar(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function getTemas(){return[...new Set(TODAS.map(p=>p.tema))].sort()}
+function getByTema(t){return TODAS.filter(p=>p.tema===t)}
+
+// ============ RENDERING ============
+function render(){
+  const app=$('app');
+  if(state.pantalla==='inicio') app.innerHTML=viewInicio();
+  else if(state.pantalla==='temas') app.innerHTML=viewTemas();
+  else if(state.pantalla==='config') app.innerHTML=viewConfig();
+  else if(state.pantalla==='examen') app.innerHTML=viewExamen();
+  else if(state.pantalla==='resultado') app.innerHTML=viewResultado();
+  else if(state.pantalla==='ranking') app.innerHTML=viewRanking();
+  bind();
+}
+
+// ----- PANTALLA INICIO -----
+function viewInicio(){
+  cargarHistorial();
+  const total=TODAS.length;
+  const temas=getTemas().length;
+  const exams=state.resultados.length;
+  const mejor=state.resultados.reduce((a,r)=>r.calificacion>(a?.calificacion||0)?r:a,null);
+  return `
+  <div class="fade-in">
+    <div class="card p-8 md:p-12 text-center mb-6 bg-gradient-to-br from-white to-green-50">
+      <div class="text-6xl mb-4">📚</div>
+      <h2 class="text-3xl md:text-4xl font-black text-gray-800 mb-3">Bienvenido a la Plataforma de Exámenes</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto mb-6">Evalúa tus conocimientos sobre la <strong>normativa del IMSS</strong> del Departamento de Personal. ${temas} temas disponibles, ${total} preguntas.</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto mb-6">
+        <div class="card p-4"><div class="text-2xl font-black text-imss-verde">${temas}</div><div class="text-xs text-gray-500">Temas</div></div>
+        <div class="card p-4"><div class="text-2xl font-black text-imss-verde">${total}</div><div class="text-xs text-gray-500">Preguntas</div></div>
+        <div class="card p-4"><div class="text-2xl font-black text-imss-azul">${exams}</div><div class="text-xs text-gray-500">Exámenes</div></div>
+        <div class="card p-4"><div class="text-2xl font-black text-imss-azul">${mejor?mejor.calificacion.toFixed(0)+'%':'—'}</div><div class="text-xs text-gray-500">Mejor</div></div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-3 max-w-xl mx-auto">
+        <button id="btn-temas" class="btn-primary px-6 py-4 rounded-xl font-bold text-lg">📝 Iniciar Examen</button>
+        <button id="btn-ranking" class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-4 rounded-xl font-bold text-lg transition">📊 Mi Historial</button>
+      </div>
+    </div>
+
+    <div class="card p-6">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">📖 Temas disponibles</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+        ${getTemas().map(t=>`<div class="tema-card card p-3"><div class="font-semibold text-gray-800">${t}</div><div class="text-xs text-gray-500">${getByTema(t).length} preguntas</div></div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ----- PANTALLA TEMAS -----
+function viewTemas(){
+  return `
+  <div class="fade-in">
+    <button id="btn-volver" class="text-imss-verde font-semibold mb-4 hover:underline">← Volver</button>
+    <div class="card p-6 mb-4">
+      <h2 class="text-2xl font-black text-gray-800 mb-2">Selecciona un tema</h2>
+      <p class="text-gray-600 text-sm mb-4">Elige el tema que deseas evaluar. Cada tema tiene 10 preguntas.</p>
+      <input id="filtro-tema" placeholder="🔍 Buscar tema..." class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-imss-verde focus:outline-none mb-4"/>
+      <div id="lista-temas" class="grid md:grid-cols-2 gap-3">
+        ${getTemas().map(t=>`<div class="tema-card card p-4" data-tema="${t}"><div class="font-bold text-gray-800">${t}</div><div class="text-xs text-gray-500 mt-1">${getByTema(t).length} preguntas disponibles</div></div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ----- PANTALLA CONFIG -----
+function centralEscape(v){return String(v).replace(/[&<>"\']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "\'":"&#39;"}[c]));}
+function viewConfig(){
+  const tema=state.temaSeleccionado;
+  const total=state.temaSeleccionado==='Todos'?TODAS.length:getByTema(tema).length;
+  return `
+  <div class="fade-in">
+    <button id="btn-volver" class="text-imss-verde font-semibold mb-4 hover:underline">← Volver</button>
+    <div class="card p-6 max-w-xl mx-auto">
+      <h2 class="text-2xl font-black text-gray-800 mb-1">Configuración del Examen</h2>
+      <p class="text-sm text-gray-500 mb-4">Tema: <strong>${tema}</strong></p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Tu nombre</label>
+          <input id="cfg-usuario" value="${centralEscape(state.usuario||'')}" placeholder="Nombre completo" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-imss-verde focus:outline-none"/>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Matrícula / RFC (opcional)</label>
+          <input id="cfg-matricula" value="${centralEscape(state.matricula||'')}" placeholder="Identificador" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-imss-verde focus:outline-none"/>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Modo</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button data-modo="practica" class="opcion-modo py-3 px-4 rounded-lg font-semibold border-2 ${state.modo==='practica'?'border-imss-verde bg-green-50':'border-gray-200'}">📖 Práctica</button>
+            <button data-modo="examen" class="opcion-modo py-3 px-4 rounded-lg font-semibold border-2 ${state.modo==='examen'?'border-imss-verde bg-green-50':'border-gray-200'}">⏱️ Examen</button>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">${state.modo==='practica'?'Muestra respuesta correcta y explicación inmediata':'Sin pistas, con timer y calificación final'}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Número de preguntas (máx ${total})</label>
+          <input id="cfg-num" type="number" min="1" max="${total}" value="${state.numPreguntas}" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-imss-verde focus:outline-none"/>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Tiempo (minutos)</label>
+          <input id="cfg-tiempo" type="number" min="1" max="180" value="${state.tiempoMin}" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-imss-verde focus:outline-none"/>
+        </div>
+        <button id="btn-iniciar" class="btn-primary w-full py-4 rounded-xl font-bold text-lg">🚀 Iniciar Examen</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ----- PANTALLA EXAMEN -----
+function viewExamen(){
+  if(state.indice>=state.preguntas.length){finalizar();return ''}
+  const p=state.preguntas[state.indice];
+  const seleccion=state.respuestas[p.id];
+  const total=state.preguntas.length;
+  const pct=((state.indice)/total)*100;
+  const esPractica=state.modo==='practica';
+  const respondida=seleccion!==undefined;
+  return `
+  <div class="fade-in">
+    <div class="card p-4 mb-4 flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-3">
+        <span class="badge badge-azul">${state.modo==='practica'?'PRÁCTICA':'EXAMEN'}</span>
+        <span class="font-bold text-gray-700">${state.temaSeleccionado}</span>
+      </div>
+      <div class="flex items-center gap-4">
+        ${state.modo==='examen'?`<div class="timer text-xl font-black ${state.tiempoRestante<60?'text-red-600':'text-imss-verde'}">⏱️ ${fmtTiempo(state.tiempoRestante)}</div>`:''}
+        <div class="text-sm font-semibold text-gray-600">Pregunta ${state.indice+1}/${total}</div>
+      </div>
+    </div>
+    <div class="bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
+      <div class="progress-bar bg-imss-verde h-full" style="width:${pct}%"></div>
+    </div>
+    <div class="card p-6 md:p-8">
+      <div class="text-xs font-bold text-imss-verde mb-2">${p.articulo||''}</div>
+      <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-6">${p.pregunta}</h3>
+      <div class="space-y-3">
+        ${p.opciones.map((op,i)=>{
+          let cls='opcion';
+          if(esPractica && respondida){
+            if(i===p.correcta) cls+=' correcta';
+            else if(i===seleccion) cls+=' incorrecta';
+          } else if(i===seleccion){
+            cls+=' selected';
+          }
+          return `<div class="${cls}" data-opcion="${i}"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold text-sm">${String.fromCharCode(65+i)}</div><div>${op}</div></div></div>`;
+        }).join('')}
+      </div>
+      ${esPractica && respondida?`
+        <div class="mt-5 p-4 rounded-lg ${seleccion===p.correcta?'bg-green-50 border-l-4 border-green-500':'bg-red-50 border-l-4 border-red-500'}">
+          <div class="font-bold mb-1 ${seleccion===p.correcta?'text-green-700':'text-red-700'}">${seleccion===p.correcta?'✓ ¡Correcto!':'✗ Incorrecto'}</div>
+          <div class="text-sm text-gray-700">${p.explicacion||''}</div>
+        </div>
+      `:''}
+      <div class="flex justify-between mt-6 gap-3">
+        <button id="btn-salir" class="px-4 py-2 text-gray-500 hover:text-gray-700 font-semibold">Salir</button>
+        <div class="flex gap-2">
+          ${state.indice>0?'<button id="btn-anterior" class="px-5 py-3 bg-gray-200 hover:bg-gray-300 rounded-lg font-semibold">← Anterior</button>':''}
+          <button id="btn-siguiente" class="btn-primary px-5 py-3 rounded-lg font-semibold ${!respondida?'opacity-50 cursor-not-allowed':''}" ${!respondida?'disabled':''}>
+            ${state.indice===total-1?'🏁 Finalizar':'Siguiente →'}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ----- PANTALLA RESULTADO -----
+function viewResultado(){
+  const total=state.preguntas.length;
+  const contestadas=Object.keys(state.respuestas).length;
+  let correctas=0;
+  state.preguntas.forEach(p=>{if(state.respuestas[p.id]===p.correcta)correctas++});
+  const calif=(correctas/total)*100;
+  const tiempoUsado=Math.round((state.tiempoMin*60)-(state.tiempoRestante));
+  const aprobado=calif>=80;
+  return `
+  <div class="fade-in">
+    <div class="card p-8 text-center mb-6 bg-gradient-to-br ${aprobado?'from-green-50 to-emerald-100':'from-red-50 to-rose-100'}">
+      <div class="text-7xl mb-3">${aprobado?'🏆':'📚'}</div>
+      <h2 class="text-4xl font-black ${aprobado?'text-green-700':'text-red-700'} mb-2">${calif.toFixed(0)}%</h2>
+      <p class="text-lg font-bold ${aprobado?'text-green-700':'text-red-700'}">${aprobado?'¡APROBADO!':'Necesitas repasar'}</p>
+      <p class="text-gray-600 mt-2">${state.usuario||'Anónimo'} · ${state.temaSeleccionado}</p>
+      <div class="grid grid-cols-3 gap-3 max-w-md mx-auto mt-6">
+        <div class="bg-white/70 p-3 rounded-lg"><div class="text-2xl font-black text-imss-verde">${correctas}</div><div class="text-xs">Correctas</div></div>
+        <div class="bg-white/70 p-3 rounded-lg"><div class="text-2xl font-black text-red-600">${total-correctas}</div><div class="text-xs">Incorrectas</div></div>
+        <div class="bg-white/70 p-3 rounded-lg"><div class="text-2xl font-black text-gray-700">${fmtTiempo(tiempoUsado)}</div><div class="text-xs">Tiempo</div></div>
+      </div>
+      <div class="flex justify-center gap-3 mt-6 flex-wrap">
+        <button id="btn-revisar" class="bg-imss-azul text-white px-5 py-3 rounded-lg font-bold hover:bg-blue-800">🔍 Revisar respuestas</button>
+        <button id="btn-repetir" class="btn-primary px-5 py-3 rounded-lg font-bold">🔄 Repetir examen</button>
+        <button id="btn-inicio" class="bg-gray-700 text-white px-5 py-3 rounded-lg font-bold hover:bg-gray-800">🏠 Inicio</button>
+      </div>
+    </div>
+
+    ${state.revisar?`
+      <div class="card p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Revisión de respuestas</h3>
+        ${state.preguntas.map((p,i)=>{
+          const sel=state.respuestas[p.id];
+          const ok=sel===p.correcta;
+          return `<div class="border-l-4 ${ok?'border-green-500 bg-green-50':'border-red-500 bg-red-50'} p-4 mb-3 rounded-r-lg">
+            <div class="text-xs font-bold text-gray-500 mb-1">Pregunta ${i+1} · ${p.articulo||''}</div>
+            <div class="font-bold text-gray-800 mb-2">${p.pregunta}</div>
+            <div class="text-sm space-y-1">
+              <div class="${ok?'text-green-700':'text-red-700'}">Tu respuesta: <strong>${sel!==undefined?p.opciones[sel]:'(sin respuesta)'}</strong> ${ok?'✓':'✗'}</div>
+              ${!ok?`<div class="text-green-700">Correcta: <strong>${p.opciones[p.correcta]}</strong></div>`:''}
+              ${p.explicacion?`<div class="text-gray-600 italic mt-1">${p.explicacion}</div>`:''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    `:''}
+  </div>`;
+}
+
+// ----- PANTALLA RANKING -----
+function viewRanking(){
+  cargarHistorial();
+  const ordenados=[...state.resultados].sort((a,b)=>b.calificacion-a.calificacion);
+  return `
+  <div class="fade-in">
+    <button id="btn-volver" class="text-imss-verde font-semibold mb-4 hover:underline">← Volver</button>
+    <div class="card p-6">
+      <h2 class="text-2xl font-black text-gray-800 mb-4">📊 Mi Historial de Exámenes</h2>
+      ${ordenados.length===0?'<p class="text-gray-500 text-center py-8">Aún no has realizado exámenes. ¡Comienza ahora!</p>':
+        `<div class="space-y-2">${ordenados.map((r,i)=>`<div class="card p-4 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full ${r.calificacion>=80?'bg-green-500':'bg-red-500'} text-white flex items-center justify-center font-black">${i+1}</div>
+            <div>
+              <div class="font-bold text-gray-800">${r.usuario||'Anónimo'}</div>
+              <div class="text-xs text-gray-500">${r.tema} · ${new Date(r.fecha).toLocaleString('es-MX')}</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl font-black ${r.calificacion>=80?'text-green-600':'text-red-600'}">${r.calificacion.toFixed(0)}%</div>
+            <div class="text-xs text-gray-500">${r.correctas}/${r.total}</div>
+          </div>
+        </div>`).join('')}</div>
+        <button id="btn-limpiar" class="mt-4 text-sm text-red-600 hover:underline">🗑️ Limpiar historial</button>`
+      }
+    </div>
+  </div>`;
+}
+
+// ============ EVENTOS ============
+function bind(){
+  if(window.SICIPCentral?.user){const u=window.SICIPCentralParticipant||window.SICIPCentral.user;state.usuario=u.nombre;state.matricula=u.matricula;}
+  const $=id=>document.getElementById(id);
+
+  // Inicio
+  if($('btn-temas'))$('btn-temas').onclick=()=>{state.pantalla='temas';render()};
+  if($('btn-ranking'))$('btn-ranking').onclick=()=>{state.pantalla='ranking';render()};
+
+  // Temas
+  if($('btn-volver')&&state.pantalla==='temas')$('btn-volver').onclick=()=>{state.pantalla='inicio';render()};
+  if($('btn-volver')&&state.pantalla==='config')$('btn-volver').onclick=()=>{state.pantalla='temas';render()};
+  if($('btn-volver')&&state.pantalla==='ranking')$('btn-volver').onclick=()=>{state.pantalla='inicio';render()};
+  document.querySelectorAll('.tema-card').forEach(el=>{
+    el.onclick=()=>{
+      state.temaSeleccionado=el.dataset.tema;
+      state.modo='examen';
+      state.numPreguntas=Math.min(10,getByTema(el.dataset.tema).length);
+      state.tiempoMin=20;
+      state.pantalla='config';
+      render();
+    };
+  });
+  const filtro=$('filtro-tema');
+  if(filtro) filtro.oninput=()=>{
+    const q=filtro.value.toLowerCase();
+    document.querySelectorAll('.tema-card').forEach(el=>{
+      el.style.display=el.dataset.tema.toLowerCase().includes(q)?'block':'none';
+    });
+  };
+
+  // Config
+  document.querySelectorAll('.opcion-modo').forEach(b=>{
+    b.onclick=()=>{state.modo=b.dataset.modo;render()};
+  });
+  if($('btn-iniciar'))$('btn-iniciar').onclick=()=>{
+    state.usuario=window.SICIPCentral?.user?.nombre||$('cfg-usuario').value.trim()||'Anónimo';
+    state.matricula=window.SICIPCentral?.user?.matricula||$('cfg-matricula').value.trim();
+    state.numPreguntas=Math.max(1,Math.min(parseInt($('cfg-num').value)||10,getByTema(state.temaSeleccionado).length));
+    state.tiempoMin=Math.max(1,parseInt($('cfg-tiempo').value)||20);
+    state.preguntas=mezclar(getByTema(state.temaSeleccionado)).slice(0,state.numPreguntas);
+    state.indice=0;
+    state.respuestas={};
+    state.tiempoInicio=Date.now();
+    state.tiempoRestante=state.tiempoMin*60;
+    state.pantalla='examen';
+    if(state.modo==='examen') iniciarTimer();
+    render();
+  };
+
+  // Examen
+  document.querySelectorAll('.opcion').forEach(el=>{
+    el.onclick=()=>{
+      const idx=parseInt(el.dataset.opcion);
+      const p=state.preguntas[state.indice];
+      state.respuestas[p.id]=idx;
+      render();
+    };
+  });
+  if($('btn-siguiente'))$('btn-siguiente').onclick=()=>{
+    if(state.respuestas[state.preguntas[state.indice].id]===undefined)return;
+    state.indice++;
+    state.revisar=false;
+    render();
+  };
+  if($('btn-anterior'))$('btn-anterior').onclick=()=>{state.indice=Math.max(0,state.indice-1);state.revisar=false;render()};
+  if($('btn-salir'))$('btn-salir').onclick=()=>{if(confirm('¿Salir? Se perderá el progreso.')){detenerTimer();state.pantalla='inicio';render()}};
+
+  // Resultado
+  if($('btn-revisar'))$('btn-revisar').onclick=()=>{state.revisar=true;render()};
+  if($('btn-repetir'))$('btn-repetir').onclick=()=>{state.pantalla='config';render()};
+  if($('btn-inicio'))$('btn-inicio').onclick=()=>{detenerTimer();state.pantalla='inicio';render()};
+
+  // Ranking
+  if($('btn-limpiar'))$('btn-limpiar').onclick=()=>{if(confirm('¿Borrar todo el historial?')){state.resultados=[];guardarHistorial();render()}};
+}
+
+function iniciarTimer(){
+  detenerTimer();
+  state.timer=setInterval(()=>{
+    state.tiempoRestante--;
+    if(state.tiempoRestante<=0){detenerTimer();finalizar()}
+    else if(state.pantalla==='examen'){
+      const t=document.querySelector('.timer');
+      if(t){
+        t.textContent='⏱️ '+fmtTiempo(state.tiempoRestante);
+        t.classList.toggle('text-red-600',state.tiempoRestante<60);
+      }
+    }
+  },1000);
+}
+function detenerTimer(){if(state.timer){clearInterval(state.timer);state.timer=null}}
+
+function finalizar(){
+  detenerTimer();
+  const total=state.preguntas.length;
+  let correctas=0;
+  state.preguntas.forEach(p=>{if(state.respuestas[p.id]===p.correcta)correctas++});
+  const calif=(correctas/total)*100;
+  const resultado={
+    fecha:Date.now(),
+    usuario:state.usuario,
+    matricula:state.matricula,
+    tema:state.temaSeleccionado,
+    modo:state.modo,
+    total,
+    correctas,
+    calificacion:calif,
+    tiempoMin:state.tiempoMin
+  };
+  cargarHistorial();
+  state.resultados.push(resultado);
+  guardarHistorial();
+  state.pantalla='resultado';
+  state.revisar=false;
+  render();
+}
+
+// Inicializar
+cargarHistorial();
+render();
+</script>
+<script>
+window.SICIPCentralBoot.then(async function(){
+ const user=window.SICIPCentral.user;if(!user)return;
+ const people=await window.SICIPCentral.collection('trabajadores');const person=people.find(p=>p.matricula===user.matricula);
+ window.SICIPCentralParticipant=person||user;state.usuario=person?.nombre||user.nombre;state.matricula=user.matricula;render();
+ const observer=new MutationObserver(function(){for(const [id,value]of [['cfg-usuario',state.usuario],['cfg-matricula',state.matricula]]){const input=document.getElementById(id);if(input){input.value=value;input.readOnly=true;}}});
+ observer.observe(document.getElementById('app'),{childList:true,subtree:true});
+}).catch(function(){location.replace('/login');});
+</script></body>
+</html>

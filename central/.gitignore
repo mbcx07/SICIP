@@ -1,0 +1,11 @@
+node_modules/
+.wrangler/
+__pycache__/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.env*
+!.env.example
+dist/
+coverage/
+*.log

@@ -1,0 +1,13 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE IF NOT EXISTS cortes(id TEXT PRIMARY KEY, quincena TEXT NOT NULL, created_at TEXT NOT NULL, created_by TEXT NOT NULL, source_hash TEXT NOT NULL, source_name TEXT NOT NULL, expected TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'BORRADOR', validation TEXT);
+CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS personas(corte TEXT NOT NULL REFERENCES cortes(id), matricula TEXT NOT NULL, nombre_search TEXT NOT NULL, tc TEXT NOT NULL, status TEXT NOT NULL, json TEXT NOT NULL CHECK(json_valid(json)), PRIMARY KEY(corte,matricula));
+CREATE INDEX IF NOT EXISTS personas_search ON personas(corte,nombre_search);
+CREATE TABLE IF NOT EXISTS plazas(corte TEXT NOT NULL REFERENCES cortes(id), plaza TEXT NOT NULL, ocupante TEXT, titular TEXT, puesto TEXT, departamento TEXT, json TEXT NOT NULL CHECK(json_valid(json)), PRIMARY KEY(corte,plaza));
+CREATE INDEX IF NOT EXISTS plazas_ocupante ON plazas(corte,ocupante);
+CREATE TABLE IF NOT EXISTS antiguedad(corte TEXT NOT NULL REFERENCES cortes(id), matricula TEXT NOT NULL, json TEXT NOT NULL CHECK(json_valid(json)), PRIMARY KEY(corte,matricula));
+CREATE TABLE IF NOT EXISTS catalogos(corte TEXT NOT NULL REFERENCES cortes(id), clave TEXT NOT NULL, json TEXT NOT NULL CHECK(json_valid(json)), PRIMARY KEY(corte,clave));
+CREATE TABLE IF NOT EXISTS chunks(corte TEXT NOT NULL REFERENCES cortes(id), dataset TEXT NOT NULL, numero INTEGER NOT NULL, hash TEXT NOT NULL, PRIMARY KEY(corte,dataset,numero));
+CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY, usuario TEXT NOT NULL, expires INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS auth_limits(key TEXT PRIMARY KEY, intentos INTEGER NOT NULL, expires INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS audit(id TEXT PRIMARY KEY, corte TEXT, accion TEXT NOT NULL, usuario TEXT NOT NULL, fecha TEXT NOT NULL);

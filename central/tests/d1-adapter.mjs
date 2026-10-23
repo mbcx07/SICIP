@@ -1,0 +1,18 @@
+import {DatabaseSync} from 'node:sqlite';
+export function database(path=':memory:'){
+ const db=new DatabaseSync(path);
+ const wrapper={db,prepare(sql){return {sql,params:[],bind(...params){this.params=params;return this;},async run(){const result=db.prepare(this.sql).run(...this.params);return {success:true,results:[],meta:{changes:Number(result.changes)}};},async first(){return db.prepare(this.sql).get(...this.params)||null;},async all(){return {results:db.prepare(this.sql).all(...this.params),success:true,meta:{changes:0}};}};},async batch(statements){db.exec('BEGIN');try{const out=[];for(const s of statements)out.push(await s.run());db.exec('COMMIT');return out;}catch(e){db.exec('ROLLBACK');throw e;}}};return wrapper;
+}
+export async function seed(db,snapshot,id,active=false){
+ await db.prepare('INSERT INTO cortes(id,quincena,created_at,created_by,source_hash,source_name,expected,status,validation) VALUES(?,?,?,?,?,?,?,?,?)').bind(id,snapshot.quincena,new Date().toISOString(),'TESTADMIN',snapshot.source_hash||'a'.repeat(64),snapshot.source_name||'test.xlsx',JSON.stringify({counts:snapshot.counts,warnings:[]}), 'VALIDADO',JSON.stringify({counts:snapshot.counts,warnings:[]})).run();
+ for(const p of snapshot.personas)await db.prepare('INSERT INTO personas VALUES(?,?,?,?,?,?)').bind(id,p.matricula,(p.nombre+' '+p.matricula).toLowerCase(),p.tipo_contratacion_clave||'',p.status_codigo||'',JSON.stringify(p)).run();
+ for(const p of snapshot.plazas)await db.prepare('INSERT INTO plazas VALUES(?,?,?,?,?,?,?)').bind(id,p.plaza_id,p.ocupante_matricula||null,p.titular_matricula||null,p.puesto||'',p.departamento||'',JSON.stringify(p)).run();
+ for(const p of snapshot.antiguedad)await db.prepare('INSERT INTO antiguedad VALUES(?,?,?)').bind(id,p.matricula,JSON.stringify(p)).run();
+ for(const p of snapshot.catalogos)await db.prepare('INSERT INTO catalogos VALUES(?,?,?)').bind(id,p.clave,JSON.stringify(p)).run();
+ if(active)await db.prepare("INSERT INTO settings VALUES('active',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(id).run();
+}
+export function fixture(){return {quincena:'2026015',source_hash:'a'.repeat(64),personas:[{matricula:'TESTADMIN',nombre:'Administración de prueba',status_codigo:'1',tipo_contratacion_clave:'01',tipo_contratacion_codigo:'1',privado:{curp:'PRIVADO'}},{matricula:'TESTUSER',nombre:'Trabajador de prueba',status_codigo:'2',tipo_contratacion_clave:'08',tipo_contratacion_codigo:'8'}],plazas:[{plaza_id:'101',ocupante_matricula:'TESTADMIN',titular_matricula:'TESTADMIN',puesto:'CAT1',departamento:'DEP1'},{plaza_id:'102',ocupante_matricula:null,titular_matricula:'TESTUSER',puesto:'CAT2',departamento:'DEP1'}],antiguedad:[],catalogos:[],counts:{personas:2,plazas:2,antiguedad:0,catalogos:0,ocupadas:1,sin_ocupante:1}};}
+export function firestoreMock(original=globalThis.fetch){return async function(url,options){if(String(url).startsWith('https://firestore.googleapis.com/v1/projects/sicip-bcs/databases/(default)/documents/usuarios/')){
+ const user=decodeURIComponent(String(url).split('/usuarios/')[1].split('?')[0]);if(!['TESTADMIN','TESTUSER'].includes(user))return Response.json({error:{message:'not found'}},{status:404});if(options?.method==='PATCH')return Response.json({name:'test'});
+ return Response.json({fields:{nombre:{stringValue:user==='TESTADMIN'?'Administración de prueba':'Trabajador de prueba'},rol:{stringValue:user==='TESTADMIN'?'ADMIN':'TRABAJADOR'},password:{stringValue:'PruebaSegura123!'},activo:{booleanValue:true},primerAcceso:{booleanValue:false}}});
+ }return original(url,options);};}

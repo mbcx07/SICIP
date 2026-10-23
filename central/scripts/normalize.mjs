@@ -1,0 +1,11 @@
+import {createRequire} from 'node:module';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import path from 'node:path';
+import {parseWorkbook} from '../src/domain.mjs';
+const require=createRequire(import.meta.url),XLSX=require('../public/vendor/xlsx.full.min.js');
+const [source,out,period='2026015']=process.argv.slice(2);if(!source||!out)throw Error('Uso: normalize.mjs archivo.xlsx salida.json quincena');
+const bytes=await readFile(source),book=XLSX.read(bytes,{type:'buffer',cellDates:true});
+const snapshot=parseWorkbook(book,XLSX,period);snapshot.source_hash=createHash('sha256').update(bytes).digest('hex');snapshot.source_name=path.basename(source);
+await mkdir(path.dirname(out),{recursive:true});await writeFile(out,JSON.stringify(snapshot));
+console.log(JSON.stringify({quincena:period,counts:snapshot.counts,warnings:snapshot.warnings.length}));

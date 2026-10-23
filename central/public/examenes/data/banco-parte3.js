@@ -1,0 +1,122 @@
+/* SICIP-Examenes · Banco de Preguntas (parte 3: temas 21-30) */
+window.BANCO_PREGUNTAS_PARTE3 = [
+  // ============ 21. FONDO DE RETIRO ============
+  { id:2101, tema:"Operación del Fondo de Retiro Conceptos 053 056 196 253 y 256", pregunta:"¿Qué conceptos integran el Fondo de Retiro?", opciones:["053 y 056","196, 253 y 256","Todas","Ninguna"], correcta:2, explicacion:"053, 056, 196, 253 y 256.", articulo:"Cláusula 73 CCT" },
+  { id:2102, tema:"Operación del Fondo de Retiro", pregunta:"¿Quién aporta al Fondo de Retiro?", opciones:["Trabajador","IMSS","Ambos","SNTSS"], correcta:2, explicacion:"Aportación bipartita.", articulo:"Cláusula 73 CCT" },
+  { id:2103, tema:"Operación del Fondo de Retiro", pregunta:"¿A qué edad se puede disponer?", opciones:["55","60","65","Jubilación"], correcta:3, explicacion:"Al jubilarse.", articulo:"Cláusula 73 CCT" },
+  { id:2104, tema:"Operación del Fondo de Retiro", pregunta:"¿El fondo es gravable?", opciones:["Sí","No","Exento","50%"], correcta:0, explicacion:"Sí, gravable.", articulo:"LISR" },
+  { id:2105, tema:"Operación del Fondo de Retiro", pregunta:"¿Se entrega en una exhibición?", opciones:["Sí","No","A plazos","Según saldo"], correcta:0, explicacion:"En una sola exhibición.", articulo:"Cláusula 73 CCT" },
+  { id:2106, tema:"Operación del Fondo de Retiro", pregunta:"¿Qué pasa si fallece el titular?", opciones:["Se pierde","Va a beneficiarios","Se reinvierte","Donación"], correcta:1, explicacion:"A los beneficiarios designados.", articulo:"Cláusula 73 CCT" },
+  { id:2107, tema:"Operación del Fondo de Retiro", pregunta:"¿Quién designa beneficiarios?", opciones:["IMSS","El trabajador","SNTSS","Jefe de Personal"], correcta:1, explicacion:"El trabajador.", articulo:"Procedimiento de Pensiones" },
+  { id:2108, tema:"Operación del Fondo de Retiro", pregunta:"¿Se puede retirar antes?", opciones:["Sí","No","Solo enfermedad","Solo invalidez"], correcta:1, explicacion:"Solo al jubilarse.", articulo:"Cláusula 73 CCT" },
+  { id:2109, tema:"Operación del Fondo de Retiro", pregunta:"¿Cuánto aporta el IMSS?", opciones:["2%","5%","Variable","Igual al trabajador"], correcta:2, explicacion:"Variable según CCT.", articulo:"Cláusula 73 CCT" },
+  { id:2110, tema:"Operación del Fondo de Retiro", pregunta:"¿Cómo se entrega?", opciones:["Cheque","Transferencia","Cuenta del trabajador","Todas"], correcta:3, explicacion:"Cualquier método.", articulo:"Procedimiento de Tesorería" },
+
+  // ============ 22. PAGO EXTEMPORANEO ============
+  { id:2201, tema:"Pago Extemporáneo o Cancelación de Jubilación o Pensión", pregunta:"¿Qué es pago extemporáneo?", opciones:["Pago fuera de tiempo","Pago doble","Pago incompleto","Adelanto"], correcta:0, explicacion:"Pago realizado fuera del plazo.", articulo:"Procedimiento de Pensiones" },
+  { id:2202, tema:"Pago Extemporáneo", pregunta:"¿Cuántos días tiene para reclamarse?", opciones:["30","60","90","180"], correcta:2, explicacion:"90 días naturales.", articulo:"Procedimiento de Pensiones" },
+  { id:2203, tema:"Pago Extemporáneo", pregunta:"¿Quién solicita el pago extemporáneo?", opciones:["Jubilado","Familiares","Cualquiera","SNTSS"], correcta:0, explicacion:"El jubilado o pensionado.", articulo:"Procedimiento de Pensiones" },
+  { id:2204, tema:"Pago Extemporáneo", pregunta:"¿Causa actualización?", opciones:["No","Sí","Solo intereses","Solo recargos"], correcta:1, explicacion:"Sí, actualización e intereses.", articulo:"Código Fiscal" },
+  { id:2205, tema:"Pago Extemporáneo", pregunta:"¿Qué tasa se aplica?", opciones:["CETES","TIIE","Inflación","La mayor"], correcta:3, explicacion:"La mayor entre las opciones.", articulo:"Código Fiscal" },
+  { id:2206, tema:"Pago Extemporáneo", pregunta:"¿Dónde se solicita?", opciones:["Recursos Humanos","Pensiones","Jurídico","Mesa"], correcta:1, explicacion:"Área de pensiones.", articulo:"Procedimiento de Pensiones" },
+  { id:2207, tema:"Pago Extemporáneo", pregunta:"¿Se requiere documentación?", opciones:["No","Sí","Solo identificación","Solo oficio"], correcta:1, explicacion:"Sí, completa.", articulo:"Procedimiento de Pensiones" },
+  { id:2208, tema:"Pago Extemporáneo", pregunta:"¿Cuánto tarda en procesarse?", opciones:["5 días","10 días","30 días","Quincena"], correcta:2, explicacion:"Hasta 30 días.", articulo:"Procedimiento de Pensiones" },
+  { id:2209, tema:"Pago Extemporáneo", pregunta:"¿Cancelación requiere?", opciones:["Acta defunción","Resolución","Ambas","Ninguna"], correcta:2, explicacion:"Acta y resolución.", articulo:"Ley del IMSS" },
+  { id:2210, tema:"Pago Extemporáneo", pregunta:"¿Se paga a beneficiarios?", opciones:["No","Sí","50%","Variable"], correcta:1, explicacion:"Sí, a los designados.", articulo:"Ley de Pensiones" },
+
+  // ============ 23. PAGO SUPLETORIO GUARDERIA ============
+  { id:2301, tema:"Pago Supletorio de Guardería Concepto 025", pregunta:"¿Qué es el pago supletorio de guardería?", opciones:["Pago por guardería","Subsidio","Reembolso","Todas"], correcta:3, explicacion:"Diversos apoyos.", articulo:"Concepto 025 CCT" },
+  { id:2302, tema:"Pago Supletorio de Guardería", pregunta:"¿Aplica para hijos de trabajadores?", opciones:["Sí","No","Solo IMSS","Solo confianza"], correcta:0, explicacion:"Para hijos de trabajadores IMSS.", articulo:"Concepto 025 CCT" },
+  { id:2303, tema:"Pago Supletorio de Guardería", pregunta:"¿Edad máxima de los hijos?", opciones:["3 años","4 años","6 años","Kinder"], correcta:1, explicacion:"Hasta 4 años.", articulo:"Concepto 025 CCT" },
+  { id:2304, tema:"Pago Supletorio de Guardería", pregunta:"¿Qué porcentaje subsidia el IMSS?", opciones:["50%","75%","100%","Variable"], correcta:2, explicacion:"100% según CCT.", articulo:"Concepto 025 CCT" },
+  { id:2305, tema:"Pago Supletorio de Guardería", pregunta:"¿Se requiere constancia?", opciones:["No","Sí","Solo CURP","Solo INE"], correcta:1, explicacion:"Sí, constancia de la guardería.", articulo:"Concepto 025 CCT" },
+  { id:2306, tema:"Pago Supletorio de Guardería", pregunta:"¿Quién tramita?", opciones:["Trabajador","Jefe de Personal","Recursos Humanos","Cualquiera"], correcta:0, explicacion:"El trabajador.", articulo:"Concepto 025 CCT" },
+  { id:2307, tema:"Pago Supletorio de Guardería", pregunta:"¿Se paga directo a la guardería?", opciones:["Sí","No","Al trabajador","A y C"], correcta:3, explicacion:"A guardería o al trabajador.", articulo:"Concepto 025 CCT" },
+  { id:2308, tema:"Pago Supletorio de Guardería", pregunta:"¿Cuántas guarderías son válidas?", opciones:["1","2","3","Todas"], correcta:0, explicacion:"Una por hijo.", articulo:"Concepto 025 CCT" },
+  { id:2309, tema:"Pago Supletorio de Guardería", pregunta:"¿Es gravable?", opciones:["Sí","No","Exento","50%"], correcta:1, explicacion:"Exento.", articulo:"LISR" },
+  { id:2310, tema:"Pago Supletorio de Guardería", pregunta:"¿Aplica para hijos de pensionados?", opciones:["Sí","No","Solo IMSS","Solo confianza"], correcta:1, explicacion:"Solo trabajadores activos.", articulo:"Concepto 025 CCT" },
+
+  // ============ 24. PAGO POR ACREDITAMIENTO ============
+  { id:2401, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Cómo se paga la nómina actualmente?", opciones:["Cheque","Efectivo","Cuenta bancaria","Todas"], correcta:2, explicacion:"Acreditamiento en cuenta.", articulo:"Procedimiento de Nómina" },
+  { id:2402, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Quién define el banco?", opciones:["IMSS","Trabajador","SNTSS","Cualquiera"], correcta:0, explicacion:"El IMSS designa la institución.", articulo:"Procedimiento de Nómina" },
+  { id:2403, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Cada cuándo se dispersa?", opciones:["Diario","Quincenal","Mensual","Trimestral"], correcta:1, explicacion:"Quincenal.", articulo:"Procedimiento de Nómina" },
+  { id:2404, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Cuántos días tarda en verse reflejada?", opciones:["Inmediato","1 día","Hasta 3 días","Una semana"], correcta:1, explicacion:"1 día hábil.", articulo:"Procedimiento Bancario" },
+  { id:2405, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Se cobra comisión al trabajador?", opciones:["Sí","No","Variable","Solo en ventanilla"], correcta:1, explicacion:"No, es gratuito.", articulo:"Procedimiento de Nómina" },
+  { id:2406, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Cambio de cuenta requiere?", opciones:["INE","Cuenta nueva","Carta","Todas"], correcta:3, explicacion:"Toda la documentación.", articulo:"Procedimiento de Nómina" },
+  { id:2407, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Qué pasa si no llega el pago?", opciones:["Se duplica","Se reembolsa","Reclamación","Ninguna"], correcta:2, explicacion:"Se tramita reclamación.", articulo:"Procedimiento de Nómina" },
+  { id:2408, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Quién dispersa la nómina?", opciones:["IMSS","Banco","Tesorería","SNTSS"], correcta:1, explicacion:"El banco autorizado.", articulo:"Procedimiento de Nómina" },
+  { id:2409, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Se puede usar cuenta de tercero?", opciones:["Sí","No","Con poder","Solo cónyuge"], correcta:1, explicacion:"No, solo propia.", articulo:"Procedimiento de Nómina" },
+  { id:2410, tema:"Pago de Nómina mediante Acreditamiento en Cuenta Bancaria", pregunta:"¿Cuál es el banco principal del IMSS?", opciones:["Banorte","BBVA","HSBC","Variable por unidad"], correcta:3, explicacion:"Variable según unidad.", articulo:"Convenio IMSS-Bancos" },
+
+  // ============ 25. PENSION IPP ============
+  { id:2501, tema:"Pago de Pensión por Incapacidad Permanente Parcial", pregunta:"¿Qué es IPP?", opciones:["Incapacidad Parcial Permanente","Incapacidad Provisional","Incapacidad Programada","Ninguna"], correcta:0, explicacion:"Incapacidad Permanente Parcial.", articulo:"Ley del IMSS" },
+  { id:2502, tema:"Pago de Pensión IPP", pregunta:"¿Quién la otorga?", opciones:["IMSS","ISSSTE","STyPS","Cualquiera"], correcta:0, explicacion:"El IMSS.", articulo:"Ley del IMSS" },
+  { id:2503, tema:"Pago de Pensión IPP", pregunta:"¿Qué porcentaje se asigna?", opciones:["50%","70%","Variable según tabla","100%"], correcta:2, explicacion:"Según tabla de incapacidades.", articulo:"Ley del IMSS" },
+  { id:2504, tema:"Pago de Pensión IPP", pregunta:"¿La IPP es vitalicia?", opciones:["Sí","No","Solo riesgos trabajo","Solo enfermedad"], correcta:1, explicacion:"Por tiempo determinado.", articulo:"Ley del IMSS" },
+  { id:2505, tema:"Pago de Pensión IPP", pregunta:"¿Quién dictamina?", opciones:["Médico tratante","Comisión","Jefe","Cualquiera"], correcta:1, explicacion:"Comisión evaluadora.", articulo:"Ley del IMSS" },
+  { id:2506, tema:"Pago de Pensión IPP", pregunta:"¿Se requiere riesgos de trabajo?", opciones:["Sí","No","A veces","Solo enfermedad"], correcta:0, explicacion:"Es por riesgo de trabajo.", articulo:"Ley del IMSS" },
+  { id:2507, tema:"Pago de Pensión IPP", pregunta:"¿Cuánto dura el pago?", opciones:["1 año","2 años","Variable","Vitalicio"], correcta:2, explicacion:"Variable según dictamen.", articulo:"Ley del IMSS" },
+  { id:2508, tema:"Pago de Pensión IPP", pregunta:"¿Es gravable?", opciones:["No","Sí","Exento","50%"], correcta:1, explicacion:"Sí, gravable.", articulo:"LISR" },
+  { id:2509, tema:"Pago de Pensión IPP", pregunta:"¿Permite trabajar?", opciones:["Sí","No","Limitado","Solo confianza"], correcta:1, explicacion:"No, es incompatible.", articulo:"Ley del IMSS" },
+  { id:2510, tema:"Pago de Pensión IPP", pregunta:"¿Quién tramita el dictamen?", opciones:["Trabajador","Jefe de Personal","Recursos Humanos","SNTSS"], correcta:1, explicacion:"Jefe de Personal.", articulo:"Procedimiento" },
+
+  // ============ 26. CONCEPTO 031 ============
+  { id:2601, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Qué es el concepto 031?", opciones:["Jubilación","Pensión","Complemento","Todas"], correcta:3, explicacion:"Diversos pagos de pensión.", articulo:"Cláusula 99 CCT" },
+  { id:2602, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Es gravable?", opciones:["No","Sí","Exento","50%"], correcta:1, explicacion:"Sí, gravable.", articulo:"LISR" },
+  { id:2603, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Se paga quincenalmente?", opciones:["Sí","No","Mensual","Trimestral"], correcta:0, explicacion:"Quincenal.", articulo:"Cláusula 99 CCT" },
+  { id:2604, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Aplica para confianza?", opciones:["No","Sí","Solo base","Solo eventual"], correcta:1, explicacion:"Para confianza.", articulo:"Cláusula 99 CCT" },
+  { id:2605, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Qué antigüedad se requiere?", opciones:["20 años","25 años","28 años","30 años"], correcta:2, explicacion:"28 años.", articulo:"Cláusula 99 CCT" },
+  { id:2606, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Cómo se calcula?", opciones:["Diferencia","Sueldo base","Sueldo integrado","Variable"], correcta:0, explicacion:"Diferencia entre pensión IMSS y sueldo.", articulo:"Cláusula 99 CCT" },
+  { id:2607, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Requiere resolución?", opciones:["No","Sí","Opcional","Solo IMSS"], correcta:1, explicacion:"Sí, de pensión.", articulo:"Procedimiento de Pensiones" },
+  { id:2608, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Quién tramita?", opciones:["Trabajador","Jefe de Personal","Pensiones","Jurídico"], correcta:1, explicacion:"Jefe de Personal.", articulo:"Procedimiento de Pensiones" },
+  { id:2609, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Beneficiarios en caso de muerte?", opciones:["No","Sí","50%","Variable"], correcta:1, explicacion:"Sí, lo reciben.", articulo:"Ley de Pensiones" },
+  { id:2610, tema:"Pago del Concepto 031 Cláusula 99", pregunta:"¿Se paga por:", opciones:["Día","Quincena","Mes","Año"], correcta:1, explicacion:"Por quincena.", articulo:"Procedimiento de Nómina" },
+
+  // ============ 27. PRORROGA DE PENSIONES ============
+  { id:2701, tema:"Prórroga de Pensiones de Orfandad y Asignaciones Familiares", pregunta:"¿Qué es la pensión de orfandad?", opciones:["Para hijos","Para viuda","Para padres","Para todos"], correcta:0, explicacion:"Para hijos menores.", articulo:"Ley del IMSS" },
+  { id:2702, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿Hasta qué edad se otorga?", opciones:["16","18","21","25"], correcta:3, explicacion:"Hasta 25 años si estudia.", articulo:"Ley del IMSS" },
+  { id:2703, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿La prórroga requiere?", opciones:["Comprobante de estudios","CURP","INE","Todas"], correcta:0, explicacion:"Comprobante de estudios.", articulo:"Ley del IMSS" },
+  { id:2704, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿Se paga a partir de cuándo?", opciones:["Fecha de defunción","Fecha solicitud","Quincena siguiente","Mes siguiente"], correcta:0, explicacion:"Desde el deceso del trabajador.", articulo:"Ley del IMSS" },
+  { id:2705, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿Cuántos hijos pueden recibirla?", opciones:["1","2","3","Sin límite"], correcta:3, explicacion:"Todos los que cumplan.", articulo:"Ley del IMSS" },
+  { id:2706, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿Se requiere supervivencia?", opciones:["No","Sí","Cada año","Cada 6 meses"], correcta:1, explicacion:"Sí, semestral.", articulo:"Ley del IMSS" },
+  { id:2707, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿Quién la tramita?", opciones:["Madre","Padre","Tutor","Cualquiera"], correcta:2, explicacion:"Tutor o representante legal.", articulo:"Ley del IMSS" },
+  { id:2708, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿La asignación familiar es para?", opciones:["Esposa","Padres","Hijos","Cónyuge"], correcta:3, explicacion:"Para el cónyuge.", articulo:"Ley del IMSS" },
+  { id:2709, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿Cuánto dura la asignación?", opciones:["1 año","2 años","Vitalicia","Hasta 25"], correcta:2, explicacion:"Vitalicia para cónyuge.", articulo:"Ley del IMSS" },
+  { id:2710, tema:"Prórroga de Pensiones de Orfandad", pregunta:"¿Se suspende por matrimonio?", opciones:["No","Sí","Solo orfandad","Solo asignación"], correcta:1, explicacion:"Sí, se suspende.", articulo:"Ley del IMSS" },
+
+  // ============ 28. VALE A CREDITO ============
+  { id:2801, tema:"Recuperación de Vale a Crédito en Tiendas IMSS-SNTSS", pregunta:"¿Qué son los vales a crédito?", opciones:["Vales para tiendas","Efectivo","Bonos","Descuentos"], correcta:0, explicacion:"Vales para compras en tiendas.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2802, tema:"Recuperación de Vale a Crédito", pregunta:"¿Quién los otorga?", opciones:["IMSS","SNTSS","Ambos","Tiendas"], correcta:1, explicacion:"El SNTSS.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2803, tema:"Recuperación de Vale a Crédito", pregunta:"¿Cómo se descuentan?", opciones:["Quincena","Mes","Trimestre","Año"], correcta:0, explicacion:"Quincenalmente.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2804, tema:"Recuperación de Vale a Crédito", pregunta:"¿Tienen interés?", opciones:["No","Sí","Variable","Solo mora"], correcta:1, explicacion:"Sí, causan interés.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2805, tema:"Recuperación de Vale a Crédito", pregunta:"¿Quién los recupera?", opciones:["IMSS","Tiendas","SNTSS","Trabajador"], correcta:2, explicacion:"SNTSS.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2806, tema:"Recuperación de Vale a Crédito", pregunta:"¿Hay límite de vale?", opciones:["Sí","No","Por sueldo","Por antigüedad"], correcta:0, explicacion:"Según sueldo.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2807, tema:"Recuperación de Vale a Crédito", pregunta:"¿Si no paga qué pasa?", opciones:["Multa","Descuento","Cobro jurídico","Suspensión"], correcta:2, explicacion:"Cobro jurídico.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2808, tema:"Recuperación de Vale a Crédito", pregunta:"¿Las tiendas pertenecen a?", opciones:["IMSS","SNTSS","Ambos","Privadas"], correcta:2, explicacion:"Cooperación IMSS-SNTSS.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2809, tema:"Recuperación de Vale a Crédito", pregunta:"¿Se permite renovar?", opciones:["Sí","No","Solo una vez","Solo liquide"], correcta:0, explicacion:"Sí, al liquidar.", articulo:"Convenio IMSS-SNTSS" },
+  { id:2810, tema:"Recuperación de Vale a Crédito", pregunta:"¿Quién autoriza?", opciones:["Jefe de Personal","SNTSS","Trabajador","Tienda"], correcta:1, explicacion:"El SNTSS.", articulo:"Convenio IMSS-SNTSS" },
+
+  // ============ 29. CREDITO FONACOT ============
+  { id:2901, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Qué es FONACOT?", opciones:["Fondo de ahorro","Fondo de vivienda","Crédito personal","Fondo Nacional"], correcta:2, explicacion:"Crédito al consumo.", articulo:"FONACOT" },
+  { id:2902, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Quién otorga el crédito?", opciones:["IMSS","FONACOT","SNTSS","Banco"], correcta:1, explicacion:"FONACOT.", articulo:"FONACOT" },
+  { id:2903, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Cómo se descuenta?", opciones:["Quincena","Mes","Trimestre","Año"], correcta:0, explicacion:"Quincenal.", articulo:"FONACOT" },
+  { id:2904, tema:"Recuperación del Crédito FONACOT", pregunta:"¿El IMSS descuenta y entera?", opciones:["No","Sí","Solo notifica","Solo inicio"], correcta:1, explicacion:"Sí, descuenta y entera a FONACOT.", articulo:"Convenio IMSS-FONACOT" },
+  { id:2905, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Cuántos descuentos puede tener?", opciones:["1","2","3","Ilimitados"], correcta:2, explicacion:"Hasta 3 descuentos.", articulo:"Convenio IMSS-FONACOT" },
+  { id:2906, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Quién tramita el crédito?", opciones:["Trabajador","IMSS","SNTSS","Banco"], correcta:0, explicacion:"El trabajador.", articulo:"Convenio IMSS-FONACOT" },
+  { id:2907, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Si no paga?", opciones:["Multa","Cobro jurídico","Suspensión","Baja"], correcta:1, explicacion:"Cobro jurídico.", articulo:"Convenio IMSS-FONACOT" },
+  { id:2908, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Cuál es el monto máximo?", opciones:["50,000","100,000","Variable","200,000"], correcta:2, explicacion:"Variable según capacidad.", articulo:"FONACOT" },
+  { id:2909, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Aplica para base?", opciones:["No","Sí","Solo confianza","Solo eventual"], correcta:1, explicacion:"Para base.", articulo:"Convenio IMSS-FONACOT" },
+  { id:2910, tema:"Recuperación del Crédito FONACOT", pregunta:"¿Se notifica al IMSS?", opciones:["No","Sí","Solo inicio","Solo liquidación"], correcta:1, explicacion:"Sí, siempre.", articulo:"Convenio IMSS-FONACOT" },
+
+  // ============ 30. CUENTAS COLECTIVAS ============
+  { id:3001, tema:"Registro y Conciliación de Cuentas Colectivas por Adeudos", pregunta:"¿Qué son cuentas colectivas?", opciones:["Adeudos grupales","Cuentas bancarias","Cuentas sindicato","Ninguna"], correcta:0, explicacion:"Adeudos por grupos.", articulo:"Procedimiento de Nómina" },
+  { id:3002, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Quién las registra?", opciones:["Trabajador","Jefe de Personal","Contabilidad","SNTSS"], correcta:1, explicacion:"Jefe de Personal.", articulo:"Procedimiento de Nómina" },
+  { id:3003, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Cada cuándo se concilian?", opciones:["Diario","Quincenal","Mensual","Trimestral"], correcta:2, explicacion:"Mensualmente.", articulo:"Procedimiento de Nómina" },
+  { id:3004, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Quién las concilia?", opciones:["Jefe","Contabilidad","Personal","SNTSS"], correcta:2, explicacion:"Personal.", articulo:"Procedimiento de Nómina" },
+  { id:3005, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Qué incluye?", opciones:["Préstamos","Descuentos","Sindicato","Todas"], correcta:3, explicacion:"Todo tipo de adeudos.", articulo:"Procedimiento de Nómina" },
+  { id:3006, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Se reporta a contabilidad?", opciones:["No","Sí","Solo anual","Solo mensual"], correcta:1, explicacion:"Mensualmente.", articulo:"Procedimiento de Nómina" },
+  { id:3007, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Hay límite de adeudos?", opciones:["Sí","No","Por sueldo","Variable"], correcta:0, explicacion:"Porcentaje del sueldo.", articulo:"LFT" },
+  { id:3008, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Quién firma conciliación?", opciones:["Jefe","Contador","Trabajador","Todos"], correcta:3, explicacion:"Todos los involucrados.", articulo:"Procedimiento de Nómina" },
+  { id:3009, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Se archiva en expediente?", opciones:["No","Sí","Solo digital","Solo físico"], correcta:1, explicacion:"Sí, completo.", articulo:"Procedimiento de Personal" },
+  { id:3010, tema:"Registro y Conciliación de Cuentas Colectivas", pregunta:"¿Se reporta al Delegado?", opciones:["No","Sí","Solo anual","Solo eventual"], correcta:1, explicacion:"Sí, periódicamente.", articulo:"Procedimiento de Nómina" }
+];

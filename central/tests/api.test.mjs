@@ -1,0 +1,30 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
+import worker from '../src/worker.mjs';import {database,seed,fixture,firestoreMock} from './d1-adapter.mjs';
+const originalFetch=globalThis.fetch;globalThis.fetch=firestoreMock(originalFetch);
+const DB=database();DB.db.exec(readFileSync(new URL('../schema.sql',import.meta.url),'utf8'));const a='11111111-1111-4111-8111-111111111111',b='22222222-2222-4222-8222-222222222222';await seed(DB,fixture(),a,true);const second=fixture();second.quincena='2026016';await seed(DB,second,b);
+const env={DB,ASSETS:{fetch:()=>Response.json({asset:true})}};let cookie='';
+async function call(path,method='GET',body,session=cookie,origin='https://sicip.test'){const headers={Origin:origin,...(session?{Cookie:session}:{}),...(body?{'Content-Type':'application/json'}:{})};return worker.fetch(new Request('https://sicip.test'+path,{method,headers,...(body?{body:JSON.stringify(body)}:{})}),env,{});}
+test('consulta requiere sesión y rechaza cookies inventadas',async()=>{assert.equal((await call('/api/base/current','GET',null,'')).status,401);assert.equal((await call('/api/base/current','GET',null,'__Host-SICIP_SESSION='+'a'.repeat(64))).status,401);});
+test('login no expone contraseña y usa cookie HttpOnly',async()=>{const r=await call('/api/login','POST',{matricula:'TESTADMIN',password:'PruebaSegura123!'},'');assert.equal(r.status,200);cookie=r.headers.get('set-cookie').split(';')[0];assert.match(r.headers.get('set-cookie'),/HttpOnly/);const d=await r.json();assert.equal(d.usuario.rol,'ADMIN');assert.ok(!('password'in d.usuario));});
+test('datos consultados no exponen campos privados y fijan versión',async()=>{const r=await call('/api/base/datasets/personas?version='+a);assert.equal(r.status,200);const d=await r.json();assert.equal(d.length,2);assert.ok(!d[0].privado);assert.equal(r.headers.get('X-SICIP-Corte'),a);});
+test('no se puede activar desde otro origen',async()=>{assert.equal((await call('/api/base/cortes/'+b+'/activate','POST',{expected_current_id:a},cookie,'https://malicioso.test')).status,403);});
+test('activación atómica, control de versión y retorno al corte anterior',async()=>{let r=await call('/api/base/cortes/'+b+'/activate','POST',{expected_current_id:a});assert.equal(r.status,200);assert.equal((await(await call('/api/base/current')).json()).id,b);r=await call('/api/base/cortes/'+a+'/activate','POST',{expected_current_id:a});assert.equal(r.status,409);r=await call('/api/base/cortes/'+a+'/activate','POST',{expected_current_id:b});assert.equal(r.status,200);assert.equal((await(await call('/api/base/current')).json()).id,a);assert.equal(DB.db.prepare('SELECT COUNT(*) n FROM personas').get().n,4);});
+test('carga por lotes: duplicados no se pisan, reintentos idénticos son idempotentes y cuentas no se importan',async()=>{
+ let r=await call('/api/base/imports','POST',{quincena:'2026017',source_hash:'b'.repeat(64),source_name:'prueba.xlsx',counts:{personas:1,plazas:1,antiguedad:0,catalogos:0}});assert.equal(r.status,201);const id=(await r.json()).id;
+ const p={matricula:'NEW1',nombre:'Persona nueva',tipo_contratacion_clave:'02',status_codigo:'1'};
+ r=await call(`/api/base/imports/${id}/personas?chunk=0`,'PUT',[{...p,rol:'ADMIN'}]);assert.equal(r.status,400);
+ r=await call(`/api/base/imports/${id}/personas?chunk=0`,'PUT',[p]);assert.equal(r.status,200);
+ r=await call(`/api/base/imports/${id}/personas?chunk=0`,'PUT',[p]);assert.equal((await r.json()).repeated,true);
+ r=await call(`/api/base/imports/${id}/personas?chunk=1`,'PUT',[p]);assert.equal(r.status,409);
+ r=await call(`/api/base/imports/${id}/validate`,'POST',{});assert.equal(r.status,409);
+ r=await call(`/api/base/imports/${id}/plazas?chunk=0`,'PUT',[{plaza_id:'1',ocupante_matricula:'MISSING',titular_matricula:null}]);assert.equal(r.status,200);
+ r=await call(`/api/base/imports/${id}/validate`,'POST',{});assert.equal(r.status,409);
+});
+test('un trabajador solo recibe su registro y sus plazas y no administra cortes',async()=>{const login=await call('/api/login','POST',{matricula:'TESTUSER',password:'PruebaSegura123!'},'');const ownCookie=login.headers.get('set-cookie').split(';')[0];const r=await call('/api/base/datasets/personas?version='+a,'GET',null,ownCookie);const rows=await r.json();assert.equal(rows.length,1);assert.equal(rows[0].matricula,'TESTUSER');assert.equal((await call('/api/base/history','GET',null,ownCookie)).status,403);});
+test('datos JSON legados no se sirven sin control de acceso',async()=>{assert.equal((await call('/data-usuarios-full.json')).status,401);assert.equal((await call('/data-ft-trabajadores.json')).status,401);});
+test('paginación conserva todos los registros sin repetición y la identificación solo se entrega si se solicita',async()=>{
+ const id='33333333-3333-4333-8333-333333333333',large=fixture();large.quincena='2026018';large.personas=Array.from({length:1101},(_,i)=>({matricula:'P'+String(i).padStart(5,'0'),nombre:'Persona de prueba',status_codigo:'1',tipo_contratacion_clave:'02'}));large.plazas=[];large.counts={personas:1101,plazas:0,antiguedad:0,catalogos:0,ocupadas:0,sin_ocupante:0};await seed(DB,large,id);
+ const ids=[];let after='';for(let page=0;page<10;page++){const r=await call('/api/base/datasets/personas?version='+id+'&after='+after);assert.equal(r.status,200);const rows=await r.json();assert.ok(rows.length<=256);ids.push(...rows.map(p=>p.matricula));if(rows.length<256)break;after=rows.at(-1).matricula;}assert.equal(ids.length,1101);assert.equal(new Set(ids).size,1101);
+ const r=await call('/api/base/datasets/personas?version='+a+'&full=1');assert.equal(r.status,200);assert.equal((await r.json())[0].privado.curp,'PRIVADO');
+});
+test('logout invalida realmente la sesión',async()=>{assert.equal((await call('/api/logout','POST',{})).status,200);assert.equal((await call('/api/base/current')).status,401);});
