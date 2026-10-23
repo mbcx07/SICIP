@@ -1,3 +1,4 @@
+import {coverageAPI} from './contratacion-api.mjs';
 import {validateRows, searchKey} from './domain.mjs';
 const STAFF=new Set(['ADMIN','ADMINISTRADOR','AREA_PERSONAL','FUERZA_TRABAJO','JEFE_SERVICIO']);
 const ADMIN=new Set(['ADMIN','ADMINISTRADOR']);
@@ -34,6 +35,7 @@ async function validateCut(env,id){
 async function api(request,env){
  const url=new URL(request.url),path=url.pathname,method=request.method;
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
+ if(path.startsWith('/api/contratacion'))return coverageAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path==='/api/login'&&method==='POST'){
   const d=await body(request,2048);assert(typeof d.matricula==='string'&&/^[A-Za-z0-9._-]{1,80}$/.test(d.matricula)&&typeof d.password==='string'&&d.password.length>0&&d.password.length<=256,400,'Matrícula o contraseña inválida.');
   const key=await hash((request.headers.get('CF-Connecting-IP')||'local')+':'+d.matricula),ipkey=await hash('ip:'+(request.headers.get('CF-Connecting-IP')||'local'));

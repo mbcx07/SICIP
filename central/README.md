@@ -1,4 +1,4 @@
-# SICIP 5.23.2 · Base central por quincena
+# SICIP 5.24.0 · Base central por quincena
 
 La base de personas y plazas se guarda en Cloudflare D1 (`sicip-central`, binding `DB`). Los módulos leen un corte completo e inmutable mediante la misma sesión. Las cargas se guardan como borrador, se validan y después se activan; activar otro corte no borra usuarios, pases, trámites ni resultados anteriores.
 
@@ -98,4 +98,4 @@ Las solicitudes de pase comienzan con asunto y horario vacíos y obligatorios. L
 
 La impresión usa clases y geometría propias para evitar las reglas de tamaños fijos acumuladas de la plantilla antigua. Conserva constancia, estadísticas y gráficos, con texto adaptable, folio separado y QR generado en el navegador mediante qrcode-generator 1.4.4 (MIT), sin enviar los datos al servicio QR externo. Se verifican PDFs carta de una página, tanto con folios nuevos como históricos largos y nombres extensos.
 
-No se localizó en el historial Git ni en los respaldos revisados el formulario nuevo de contratación con titular, motivo, suplente, periodo y descansos. Recuperarlo requiere el Excel original ofrecido por el usuario; no se inventan sus cálculos ni se sustituye por el formulario genérico.
+El módulo Contratación y coberturas se recuperó del programa Excel original. Véase [CONTRATACION.md](CONTRATACION.md) para su alcance, reglas y validación.

@@ -1,0 +1,1667 @@
+{
+  "source": "PROGRAMA DE CONTRATACION HGZ+MF No1.xlsm",
+  "sha256": "09554737a09432becb470177f5152df462f2b20c4bf8a0f19ab833acabd5482d",
+  "motivos": [
+    {
+      "id": "6TO_Y_7MO",
+      "nombre": "6TO Y 7MO"
+    },
+    {
+      "id": "BECA",
+      "nombre": "BECA"
+    },
+    {
+      "id": "COMISION",
+      "nombre": "COMISION"
+    },
+    {
+      "id": "COMISION_A_CURSO",
+      "nombre": "COMISION A CURSO"
+    },
+    {
+      "id": "FALTA_INJUSTIFICADA",
+      "nombre": "FALTA INJUSTIFICADA"
+    },
+    {
+      "id": "GUARDIA_FESTIVA",
+      "nombre": "GUARDIA FESTIVA"
+    },
+    {
+      "id": "INCAPACIDAD_POR_EG",
+      "nombre": "INCAPACIDAD POR EG"
+    },
+    {
+      "id": "INCAPACIDAD_POR_MA",
+      "nombre": "INCAPACIDAD POR MA"
+    },
+    {
+      "id": "INCAPACIDAD_POR_RT",
+      "nombre": "INCAPACIDAD POR RT"
+    },
+    {
+      "id": "JORNADA_AUTORIZADA",
+      "nombre": "JORNADA AUTORIZADA"
+    },
+    {
+      "id": "LICENCIA_CON_GOCE",
+      "nombre": "LICENCIA CON GOCE"
+    },
+    {
+      "id": "LICENCIA_SIN_GOCE_MENOR",
+      "nombre": "LICENCIA SIN GOCE MENOR"
+    },
+    {
+      "id": "LICENCIA_SIN_GOCE_MAYOR",
+      "nombre": "LICENCIA SIN GOCE MAYOR"
+    },
+    {
+      "id": "TRASLADO",
+      "nombre": "TRASLADO"
+    },
+    {
+      "id": "VACACIONES",
+      "nombre": "VACACIONES"
+    },
+    {
+      "id": "NIVELACION",
+      "nombre": "NIVELACION"
+    },
+    {
+      "id": "PLAZA_VACANTE",
+      "nombre": "PLAZA VACANTE"
+    }
+  ],
+  "horarios": [
+    {
+      "codigo": "0",
+      "descripcion": "7.30  A 14.00 1.5 HRS ACT INV Y CAP",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "101",
+      "descripcion": "5.00  A 12.30 JORNADA MIXTA",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "102",
+      "descripcion": "5.30  A 13.00 JORNADA MIXTA",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "103",
+      "descripcion": "6.00  A 12.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "104",
+      "descripcion": "6.00  A 14.00",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "106",
+      "descripcion": "6.30  A 13.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "107",
+      "descripcion": "6.30  A 14.30",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "109",
+      "descripcion": "7.00  A 13.00",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "110",
+      "descripcion": "7.00  A 13.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "112",
+      "descripcion": "7.00  A 15.00",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "113",
+      "descripcion": "7.30  A 13.30",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "114",
+      "descripcion": "7.30  A 14.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "115",
+      "descripcion": "7.30  A 15.30",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "118",
+      "descripcion": "8.00  A 12.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "120",
+      "descripcion": "8.00  A 14.00",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "121",
+      "descripcion": "8.00  A 14.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "123",
+      "descripcion": "8.00  A 16.00",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "126",
+      "descripcion": "8.30  A 15.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "127",
+      "descripcion": "8.30  A 16.30",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "130",
+      "descripcion": "9.00  A 13.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "131",
+      "descripcion": "9.00  A 13.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "132",
+      "descripcion": "9.00  A 15.00",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "133",
+      "descripcion": "9.00  A 15.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "134",
+      "descripcion": "9.00  A 17.00",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "135",
+      "descripcion": "9.30  A 11.00",
+      "minutos": 90,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "136",
+      "descripcion": "9.30  A 13.30",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "138",
+      "descripcion": "9.30  A 16.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "139",
+      "descripcion": "9.30  A 17.30",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "140",
+      "descripcion": "10.00 A 12.00",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "143",
+      "descripcion": "10.00 A 14.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "146",
+      "descripcion": "10.00 A 16.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "147",
+      "descripcion": "10.00 A 18.00",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "148",
+      "descripcion": "10.30 A 17.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "149",
+      "descripcion": "10.30 A 18.30",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "153",
+      "descripcion": "11.00 A 17.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "154",
+      "descripcion": "11.00 A 19.00",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "155",
+      "descripcion": "11.30 A 18.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "156",
+      "descripcion": "11.30 A 19.30",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "158",
+      "descripcion": "12.00 A 18.00",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "159",
+      "descripcion": "12.00 A 18.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "160",
+      "descripcion": "12.00 A 20.00",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "161",
+      "descripcion": "12.30 A 19.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "162",
+      "descripcion": "12.30 A 20.30",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "164",
+      "descripcion": "13.30 A 20.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "165",
+      "descripcion": "13.30 A 21.00 JORNADA MIXTA",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "168",
+      "descripcion": "14.00 A 18.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "169",
+      "descripcion": "14.00 A 18.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "171",
+      "descripcion": "14.00 A 20.00",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "172",
+      "descripcion": "14.00 A 20.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "173",
+      "descripcion": "14.00 A 21.30 JORNADA MIXTA",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "174",
+      "descripcion": "14.30 A 20.30",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "175",
+      "descripcion": "14.30 A 21.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "177",
+      "descripcion": "14.30 A 22.00 JORNADA MIXTA",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "179",
+      "descripcion": "15.00 A 19.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "180",
+      "descripcion": "15.00 A 19.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "182",
+      "descripcion": "15.00 A 21.00",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "183",
+      "descripcion": "15.00 A 21.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "185",
+      "descripcion": "15.00 A 22.30 JORNADA MIXTA",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "188",
+      "descripcion": "15.30 A 21.30",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "189",
+      "descripcion": "15.30 A 22.00",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "190",
+      "descripcion": "15.30 A 23.00 JORNADA MIXTA",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "193",
+      "descripcion": "16.00 A 20.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "195",
+      "descripcion": "16.00 A 20.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "197",
+      "descripcion": "16.00 A 22.00",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "198",
+      "descripcion": "16.00 A 22.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "199",
+      "descripcion": "16.00 A 23.00 JORNADA NOCTURNA",
+      "minutos": 420,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "200",
+      "descripcion": "16.30 A 18.00",
+      "minutos": 90,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "201",
+      "descripcion": "HORARIO MOVIL  6:00 HRS",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "206",
+      "descripcion": "17.00 A 18.30",
+      "minutos": 90,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "210",
+      "descripcion": "17.00 A 21.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "212",
+      "descripcion": "17.00 A 24.00 JORNADA NOCTURNA",
+      "minutos": 420,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "225",
+      "descripcion": "23.00 A 06.00 JORNADA NOCTURNA",
+      "minutos": 420,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "228",
+      "descripcion": "0.00  A 07.00 JORNADA NOCTURNA",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "229",
+      "descripcion": "HORARIO MOVIL",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "230",
+      "descripcion": "HORARIO MOVIL CONTINUO MATUTINO",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "231",
+      "descripcion": "HORARIO MOVIL CONTINUO VESPERTINO",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "232",
+      "descripcion": "HORARIO MOVIL CONTINUO MAT Y VESP",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "242",
+      "descripcion": "13.00 A 17.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "243",
+      "descripcion": "13.00 A 19.00",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "244",
+      "descripcion": "13.00 A 19.30",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "245",
+      "descripcion": "13.00 A 20.30 JORNADA MIXTA",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "251",
+      "descripcion": "16.00 A 18.00",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "256",
+      "descripcion": "13.00 A 20.30 4 VECES POR SEMANA Y 8 HRS SAB o DOM",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "257",
+      "descripcion": "14.00 A21.30 4 VECES POR SEM Y 8 HRS SAB o DOM",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "258",
+      "descripcion": "14.00 A 21.30 3 VECES POR SEMANA Y 8 HRS. SAB o DO",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "261",
+      "descripcion": "13.00 A 20.30 4 VECES POR SEM Y 8 HRS SAB o DOM",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "262",
+      "descripcion": "12.00 A 20.00 4 VECES POR SEMANA Y 8 HRS SAB o DOM",
+      "minutos": 480,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "264",
+      "descripcion": "13.30 A 21.00 HRS 4 VECES POR SEM Y 8 HRS SAB o DO",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "265",
+      "descripcion": "14.30 A 22.00 4 VECES POR SEMANA Y 8 HRS SAB o DOM",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "268",
+      "descripcion": "13.30 A 21.00 3 VECES POR SEMANA Y 8 HRS SAB Y DOM",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "269",
+      "descripcion": "14.30 A 22.00 3 VECES POR SEMANA Y 8 HRS SAB Y DOM",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "270",
+      "descripcion": "13.00 A 20.30 3 VECES POR SEMANA Y 8 HRS SAB Y DOM",
+      "minutos": 450,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "278",
+      "descripcion": "15.00 A 21.00 HRS 4 VECES POR SEM Y 6 HRS SAB o DO",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "291",
+      "descripcion": "17.00 A 21.00 3 VECES POR SEM Y 4 HRS SAB Y DOM",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "292",
+      "descripcion": "6.00  A 10.00",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "296",
+      "descripcion": "HORARIO MOVIL 6.5 HRS",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "297",
+      "descripcion": "HORARIO MOVIL VESPERTINO 6.5 HRS",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "298",
+      "descripcion": "HORARIO MOVIL",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "299",
+      "descripcion": "HORARIO MOVIL CONTINUO 6.5 HRS",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "300",
+      "descripcion": "HORARIO MOVIL CONTINUO MAT Y VESP",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "301",
+      "descripcion": "8.00  A 14.00 CE Y 2 HRS. VISITAS  Y CAP. INVES.",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "302",
+      "descripcion": "14.00 A 20.00 CE  Y 1.5 HRS. VISITAS CAP. INVES.",
+      "minutos": 360,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "303",
+      "descripcion": "7.30  A 14.00 Y 1.5 HRS. PREP. ACT. DOC. E INVES.",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "304",
+      "descripcion": "14.00 A 20.30 Y 1.0 HRS. PREP. ACT. DOC. INVEST.",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "305",
+      "descripcion": "7.00  A 13.30 Y 1.5 HRS PREP ACT DOC INVES",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "306",
+      "descripcion": "8.00  A 14.30 Y 1.5 HRS PREP ACT DOC E NVES",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "307",
+      "descripcion": "13.30 A 20.00 Y 1.0 HRS PREP ACT DOC E INV",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "308",
+      "descripcion": "14.30 A 21.00 Y 1 HRS PREP ACT DOC E INV",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "309",
+      "descripcion": "7.30  A 14.00 HRS EXCLUSIVO ESTOMATOLOGOS",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "310",
+      "descripcion": "13.30 A 20.00 EXCLUSIVO ESTOMATOLOGOS",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "311",
+      "descripcion": "14.30 A 21.00 EXCLUSIVO ESTOMATOLOGOS",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "312",
+      "descripcion": "HORARIO MOVIL URGENCIAS 8 HRS",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "313",
+      "descripcion": "8.00  A 14.30  6 HRS C E 0.5 F S Y 1.5 CAP E INVES",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "314",
+      "descripcion": "14.00 A 20.30 6 HRS CE 0.5 FS Y 1.0 CAP E INV",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "315",
+      "descripcion": "7.00  A 13.30 Y 1.5 HRS ACT CAP E INVES",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "316",
+      "descripcion": "8.00  A 14.30 Y 1.5 HRS PARA ACT INV Y CAP",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "317",
+      "descripcion": "13.30 A 20.00 Y 1 HR PARA ACT INV Y CAP",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "318",
+      "descripcion": "14.30 A 21.00 Y 1 HR PARA ACT INV Y CAP",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "319",
+      "descripcion": "HORARIO MOVIL 8 HRS.",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "321",
+      "descripcion": "14.00 A 20.30 EXCLUSIVO ESTOMATOLOGOS",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "322",
+      "descripcion": "7.30  A 14.00 Y 1.5 HRS ACT INV Y CAP",
+      "minutos": 390,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "323",
+      "descripcion": "HORARIO MOVIL CONT MAT Y ACT CAT MED FAM",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "324",
+      "descripcion": "HOR MOV CONT VESP Y ACT CAT MED FAM",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "326",
+      "descripcion": "HOR MOV CONT MAT Y ACT CAT MED NO FAM",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "327",
+      "descripcion": "HOR MOV CONT VESP Y ACT CAT MED NO FAM",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "328",
+      "descripcion": "HOR MOV CONT MAT O VESP Y ACT CAT MED NO FAM",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "407",
+      "descripcion": "7.00  A 11.00 Y 13.00 A 17.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "408",
+      "descripcion": "7.00  A 11.00 Y 14.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "410",
+      "descripcion": "7.00  A 11.00 Y 16.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "411",
+      "descripcion": "7.00  A 12.00 Y 13.00 A 16.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "413",
+      "descripcion": "7.00  A 12.00 Y 14.00 A 17.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "414",
+      "descripcion": "7.00  A 12.00 Y 15.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "416",
+      "descripcion": "7.00  A 13.00 Y 14.00 A 16.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "417",
+      "descripcion": "7.00  A 13.00 Y 15.00 A 17.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "418",
+      "descripcion": "7.00  A 13.00 Y 16.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "419",
+      "descripcion": "7.30  A 11.30 Y 13.30 A 17.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "421",
+      "descripcion": "7.30  A 11.30 Y 14.30 A 18.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "422",
+      "descripcion": "7.30  A 12.00 Y 13.00 A 16.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "423",
+      "descripcion": "7.30  A 12.00 Y 14.30 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "425",
+      "descripcion": "7.30  A 12.30 Y 14.30 A 17.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "429",
+      "descripcion": "7.30  A 13.00 Y 14.00 A 16.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "431",
+      "descripcion": "7.30  A 13.00 Y 15.00 A 17.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "433",
+      "descripcion": "7.30  A 13.30 Y 14.30 A 16.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "434",
+      "descripcion": "7.30  A 13.30 Y 15.00 A 17.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "435",
+      "descripcion": "7.30  A 13.30 Y 15.30 A 17.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "436",
+      "descripcion": "7.30  A 13.30 Y 16.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "441",
+      "descripcion": "8.00  A 11.00 Y 14.00 A 17.00 CE Y 2 HORAS VISITA",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "443",
+      "descripcion": "8:00  A 11:00 Y 15:00 A 18:00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "444",
+      "descripcion": "8.00  A 11.00 Y 15.00 A 18.00 CE Y 2 HORAS VISITA",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "450",
+      "descripcion": "8.00  A 12.00 Y 13.00 A 17.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "453",
+      "descripcion": "8.00  A 12.00 Y 14.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "457",
+      "descripcion": "8.00  A 12.00 Y 15.00 A 19.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "459",
+      "descripcion": "8.00  A 12.00 Y 16.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "462",
+      "descripcion": "8.00  A 13.00 Y 14.00 A 17.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "463",
+      "descripcion": "8.00  A 13.00 Y 15.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "464",
+      "descripcion": "8.00  A 13.00 Y 16.00 A 19.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "465",
+      "descripcion": "8.00  A 13.00 Y 17.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "466",
+      "descripcion": "8:00 A 13:00 Y 18:00 A 21:00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "471",
+      "descripcion": "8.00  A 14.00 Y 15.00 A 17.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "472",
+      "descripcion": "8.00  A 14.00 Y 16.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "474",
+      "descripcion": "8.00  A 14.00 Y 17.00 A 19.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "476",
+      "descripcion": "8.00  A 14.00 Y 18.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "488",
+      "descripcion": "8.30  A 13.30 Y 15.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "493",
+      "descripcion": "8.30  A 14.30 Y 16.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "494",
+      "descripcion": "8.30  A 14.30 Y 16.30 A 18.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "502",
+      "descripcion": "9.00  A 13.00 Y 14.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "503",
+      "descripcion": "9.00  A 13.00 Y 15.00 A 18.00 CE Y 1 HORA VIS.",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "504",
+      "descripcion": "9.00  A 13.00 Y 15.00 A 19.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "506",
+      "descripcion": "9.00  A 13.00 Y 16.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "510",
+      "descripcion": "9.00  A 14.00 Y 15.00 A 18.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "511",
+      "descripcion": "9.00  A 14.00 Y 16.00 A 19.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "512",
+      "descripcion": "9.00  A 14.00 Y 17.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "513",
+      "descripcion": "9.00  A 14.00 Y 18.00 A 21.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "517",
+      "descripcion": "9.00  A 15.00 Y 17.00 A 19.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "518",
+      "descripcion": "9.00  A 15.00 Y 18.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "527",
+      "descripcion": "10.00 A 14.00 Y 16.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "528",
+      "descripcion": "10.00 A 14.00 Y 17.00 A 21.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "529",
+      "descripcion": "10.00 A 15.00 Y 17.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "539",
+      "descripcion": "11.00 A 14.00 Y 17.00 A 20.00 C EY 2 HORAS VISITAS",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "542",
+      "descripcion": "11.00 A 14.00 Y 18.00 A 21.00 CE Y 2 HORAS VISITAS",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "544",
+      "descripcion": "11.00 A 15.00 Y 17.00 A 21.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "548",
+      "descripcion": "HORARIO MOVIL 8.0 HRS",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "552",
+      "descripcion": "7.00  A 13.00 Y 17.00 A 19.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "553",
+      "descripcion": "7.00  A 13.00 Y 18.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "568",
+      "descripcion": "8.00  A 14.00 Y 15.30 A 17.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "579",
+      "descripcion": "9.00  A 12.00 Y 15.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "582",
+      "descripcion": "9.00  A 13.00 Y 15.30 A 19.30",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "589",
+      "descripcion": "10.00 A 12.00 Y 14.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "593",
+      "descripcion": "10.00 A 16.00 Y 18.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "594",
+      "descripcion": "10.30 A 14.30 Y 16.00 A 20.00",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "801",
+      "descripcion": "18.00 A 20.00 Y 10 HORAS DISCRECIONALES",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "802",
+      "descripcion": "15.30 A 20.30 Y 7.5 HORAS DISCRECIONALES",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "803",
+      "descripcion": "14.00 A 20.00 Y 10 HORAS DISCRECIONALES",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B704",
+      "descripcion": "8.00  A 22.00 2 VECES POR SEMANA Y 16 A 21 2 VECES",
+      "minutos": 840,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B802",
+      "descripcion": "16.00 A 18.00 L  A  J Y 12 HORAS DISCRECIONALES",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B803",
+      "descripcion": "16.00 A 18.00 4 VECES POR SEMANA Y 12 HRS. DISCREC",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B805",
+      "descripcion": "16.00 A 19.00 4 VECES POR SEMANA Y 8 HRS DISCRECIO",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B806",
+      "descripcion": "16.00 A 20.00 4 VECES POR SEMANA Y 4 HRS DISCRECIO",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B807",
+      "descripcion": "17.00 A 19.00 4 VECES POR SEMANA Y 4 HRS DISCRECIO",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B808",
+      "descripcion": "17.00 A 19.30 4 VECES  POR SEMANA  Y 10 HRS DISCRE",
+      "minutos": 150,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B810",
+      "descripcion": "18.00 A 20.00 4 VECES POR SEMANA Y 12 HRS DISCRECI",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B811",
+      "descripcion": "18.00 A 20.30 4 VECES POR SEMANA Y 10 HRS DISCRECI",
+      "minutos": 150,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "B813",
+      "descripcion": "19.30 A 21.30 4 VECES POR SEMANA Y 12 HRS DISCRECI",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "C706",
+      "descripcion": "20:00 6:00 CADA TERCER DIA",
+      "minutos": 600,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "C708",
+      "descripcion": "20.00 A 07.00 CADA TERCER DIA",
+      "minutos": 660,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "C710",
+      "descripcion": "20.30 A 06.30 3 VECES POR SEMANA Y 10 HRS D ALT.",
+      "minutos": 600,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "C711",
+      "descripcion": "21.00 A 07.00 CADA TERCER DIA",
+      "minutos": 600,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "C712",
+      "descripcion": "21.00 A 07.00 3 VECES POR SEMANA Y 10 HRS D ALT",
+      "minutos": 600,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "C714",
+      "descripcion": "21.30 A 07.30 3 VECES POR SEMANA Y 10 HRS D ALT",
+      "minutos": 600,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "C716",
+      "descripcion": "22.00 A 08.00 CADA TERCER DIA",
+      "minutos": 600,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "C720",
+      "descripcion": "21.30 A 07.30 CADA TERCER DIA",
+      "minutos": 600,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D710",
+      "descripcion": "19.20 A 07.00 3 VECES POR SEMANA",
+      "minutos": 700,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D712",
+      "descripcion": "19.30 A 07.10 3 VECES POR SEMANA",
+      "minutos": 700,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D715",
+      "descripcion": "20.00 A 07.40 3 VECES POR SEMANA",
+      "minutos": 700,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D721",
+      "descripcion": "21.00 A 08.40 3 VECES POR SEMANA",
+      "minutos": 700,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D731",
+      "descripcion": "20.30 A 08.10 3 VECES POR SEMANA",
+      "minutos": 700,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D733",
+      "descripcion": "20.00 A 07.40 3 VECES POR SEMANA",
+      "minutos": 700,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D734",
+      "descripcion": "19.50 A 07.30 3 VECES POR SEMANA",
+      "minutos": 700,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D735",
+      "descripcion": "20.30 A 07.20 DIAS ALT CONT DESC F Y PREP ACTV DOC",
+      "minutos": 650,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D736",
+      "descripcion": "20.00 A 06.50 DIAS ALT DESC  FIJO Y PREP ACT DOC E",
+      "minutos": 650,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D737",
+      "descripcion": "21.00 A 07.50 DIAS ALT DESC FIJO  Y PREP ACT DOC E",
+      "minutos": 650,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D739",
+      "descripcion": "7.40  A 21.00 SABADOS Y DOMINGOS, 20.30 A 07.50 MI",
+      "minutos": 800,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "D740",
+      "descripcion": "20.00 A 06.50 Y 50 MIN. PARA ACTV INVEST Y CAP",
+      "minutos": 650,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D741",
+      "descripcion": "21.00 A 07.50 Y 50 MIN PARA ACTY INVEST Y CAP",
+      "minutos": 650,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "D745",
+      "descripcion": "HORARIO MOVIL JORN ACUM NOCT",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "D803",
+      "descripcion": "9.00  A 11.00 3 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "D808",
+      "descripcion": "15.00 A 17.00 3 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "D811",
+      "descripcion": "16.00 A 18.00 3 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "D825",
+      "descripcion": "17.00 A 19.00 3 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "D834",
+      "descripcion": "18.00 A 20.00 3 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "D840",
+      "descripcion": "19.00 A 21.00 3 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "D844",
+      "descripcion": "10.00 A 12.00 3 VECES POR SEMANA Y 20.00  HRS DISC",
+      "minutos": 120,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "E701",
+      "descripcion": "15.30 A 07.30 2 VECES POR SEMANA Y DOM ALTERNOS",
+      "minutos": 960,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "E703",
+      "descripcion": "19.00 A 08.00 2 GUARD POR SEM Y 1 AD C/15 D C /PRE",
+      "minutos": 780,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "F700",
+      "descripcion": "7.45  A 20.45 SABADO Y DE 08.00 A 06.00 DOM A LUNE",
+      "minutos": 780,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F701",
+      "descripcion": "7.30  A 07.30 24 HRS MAS 12 HRS NOCT 1 VEZ POR SEM",
+      "minutos": 1440,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F702",
+      "descripcion": "7.30  A 22.00 SABADO Y DE 8.00 A 8.00 DOM A LUNES",
+      "minutos": 870,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F704",
+      "descripcion": "8.00  A 08.00 Y 12 HRS NOCT 1 VEZ POR SEMANA",
+      "minutos": 1440,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "F707",
+      "descripcion": "6.00  A 21.30 SABADO Y 06.00 A 22.00   D",
+      "minutos": 930,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F708",
+      "descripcion": "7.00  A 21.30 2 VECES POR SEMANA",
+      "minutos": 870,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F710",
+      "descripcion": "7.30  A 22.00 2 VECES POR SEMANA",
+      "minutos": 870,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F711",
+      "descripcion": "8.00  A 08.00 S  o D  Y 8.5 HRS M o J C/ PREP ACT",
+      "minutos": 1440,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "F712",
+      "descripcion": "24 Hrs. S o D y 11.5 Hrs. L,M,M,J,V.",
+      "minutos": 0,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "F714",
+      "descripcion": "6.45  A 23.00 SAB Y DOM C/ PREP ACT DOC E INV",
+      "minutos": 975,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F716",
+      "descripcion": "HORARIO MOVIL JORN. ACUM. 8.0 HRS.",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F717",
+      "descripcion": "6.45  A 23.00 SAB Y DOM CON TIEMPO ACT INV Y CAP",
+      "minutos": 975,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F802",
+      "descripcion": "8.00  A 11.00 2 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F805",
+      "descripcion": "9.00  A 12.00 2 VECES POR SEMANA Y 14.5 HRS DISCRE",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F815",
+      "descripcion": "15.00 A 18.00 2 VECES POR SEMANA Y 14 HRS  DISCREC",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F819",
+      "descripcion": "15.00 A 19.00 2 VECES POR SEMANA Y 12 HRS DISCRECI",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F822",
+      "descripcion": "16.00 A 19.00 2 VECES POR SEMANA Y 10.5 HRS  DISCR",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F823",
+      "descripcion": "16.00 A 19.00 2 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F825",
+      "descripcion": "16.00 A 20.00 2 VECES POR SEMANA Y 12 HRS DISCRECI",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F827",
+      "descripcion": "16.30 A 19.30 2 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F829",
+      "descripcion": "17.00 A 20.00 2 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F832",
+      "descripcion": "17.00 A 21.00 2 VECES POR SEMANA Y 12 HRS DISCRECI",
+      "minutos": 240,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "F835",
+      "descripcion": "18.00 A 21.00 2 VECES POR SEMANA Y 14 HRS DISCRECI",
+      "minutos": 180,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "Según requerimiento",
+      "descripcion": "Según requerimiento",
+      "minutos": 0,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "X700",
+      "descripcion": "8:00 A 6:00",
+      "minutos": 1320,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "X702",
+      "descripcion": "08:00 A 07:59",
+      "minutos": 1439,
+      "ciclo_dias": 2
+    },
+    {
+      "codigo": "X707",
+      "descripcion": "06:00 A 22:00 DOM",
+      "minutos": 960,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "X730",
+      "descripcion": "12:00 A 23:40",
+      "minutos": 700,
+      "ciclo_dias": 1
+    },
+    {
+      "codigo": "X739",
+      "descripcion": "20:00 A 07:50 MIE",
+      "minutos": 710,
+      "ciclo_dias": 2
+    }
+  ],
+  "unidad": "Hospital General de Zona/Medicina Familiar No.1",
+  "bloqueo_presupuesto": {
+    "tipo_plaza": "14",
+    "descripcion": "CUBRE VACACIONES BASE",
+    "referencia": "CAPTURA!A1, H33; Módulo16.COBER; Hoja2!B6:C6"
+  },
+  "referencias": {
+    "cobertura": "SOLIC DE COBERTURA!A13:K16",
+    "sustitucion": "CONTRATO!A124:U145 · 7110-009-003",
+    "extra": "TIEMPO EXTRA!AN95:BG118 · 1A12-009-003",
+    "horas": "TIEMPO EXTRA!AW107, AY107 y BA107",
+    "descansos": "CAPTURA!B19; BASE DE DATOS!C:C (sin valores en el archivo recibido)"
+  }
+}

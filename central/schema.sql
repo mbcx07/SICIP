@@ -15,3 +15,7 @@ CREATE TABLE IF NOT EXISTS curriculum_files(id TEXT PRIMARY KEY,owner TEXT NOT N
 CREATE TABLE IF NOT EXISTS curriculum_chunks(file TEXT NOT NULL REFERENCES curriculum_files(id),numero INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(file,numero));
 CREATE INDEX IF NOT EXISTS curriculum_owner ON curriculum_files(owner,recipient);
 CREATE TABLE IF NOT EXISTS pase_folios(id INTEGER PRIMARY KEY AUTOINCREMENT,request_id TEXT UNIQUE NOT NULL,owner TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS contrataciones(id INTEGER PRIMARY KEY AUTOINCREMENT,uuid TEXT NOT NULL UNIQUE,request_key TEXT NOT NULL UNIQUE,creator TEXT NOT NULL,corte TEXT NOT NULL REFERENCES cortes(id),quincena TEXT NOT NULL,estado TEXT NOT NULL DEFAULT 'BORRADOR',version INTEGER NOT NULL DEFAULT 1,created_at TEXT NOT NULL,updated_at TEXT NOT NULL,payload TEXT NOT NULL CHECK(json_valid(payload)),snapshot TEXT NOT NULL CHECK(json_valid(snapshot)),plan TEXT NOT NULL CHECK(json_valid(plan)));
+CREATE INDEX IF NOT EXISTS contrataciones_owner ON contrataciones(creator,id);
+CREATE INDEX IF NOT EXISTS contrataciones_estado ON contrataciones(estado,id);
+CREATE TABLE IF NOT EXISTS contratacion_events(id TEXT PRIMARY KEY,solicitud TEXT NOT NULL REFERENCES contrataciones(uuid),actor TEXT NOT NULL,accion TEXT NOT NULL,fecha TEXT NOT NULL,detalle TEXT NOT NULL);

@@ -14,6 +14,7 @@
   if(lastActive&&!lastActive.isConnected)lastActive=null;
   if(lastPath!==location.pathname){lastPath=location.pathname;lastActive=null;}
   var custom=document.querySelector('#sicip-pases-view,#sicip-herramientas-view,[data-sicip-module-panel]:not([data-central-embedded]),[data-sicip-cr-panel],[data-sicip-recepciones-panel]');
+  if(custom){var hostSelected=buttons.find(function(b){return b.getAttribute('data-sicip-active')==='1';});if(hostSelected)lastActive=hostSelected;}
   if(!custom){var label=routes[location.pathname]||(location.pathname.startsWith('/cuadro/')?'mi cuadro de reemplazo':null);if(location.pathname==='/nuevo-tramite'&&new URLSearchParams(location.search).get('tipo'))lastActive=nav.querySelector('[data-jefe-form="'+CSS.escape(new URLSearchParams(location.search).get('tipo'))+'"]')||lastActive;else if(label)lastActive=buttons.find(function(b){return norm(b.textContent)===label;})||lastActive;}
   if(lastActive)buttons.forEach(function(b){var on=b===lastActive;if(on){if(b.getAttribute('data-sicip-active')!=='1')b.setAttribute('data-sicip-active','1');if(b.getAttribute('aria-current')!=='page')b.setAttribute('aria-current','page');}else{if(b.hasAttribute('data-sicip-active'))b.removeAttribute('data-sicip-active');if(b.hasAttribute('aria-current'))b.removeAttribute('aria-current');}if(b.dataset.active!==(on?'1':''))b.dataset.active=on?'1':'';});
 

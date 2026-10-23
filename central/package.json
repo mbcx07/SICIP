@@ -1,16 +1,24 @@
 {
   "name": "sicip-central",
-  "version": "5.23.2",
+  "version": "5.24.0",
   "private": true,
   "type": "module",
-  "engines": {"node": ">=24"},
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
-    "test": "node --test tests/api.test.mjs",
+    "test": "node --test tests/api.test.mjs tests/contratacion.test.mjs",
     "test:workbook": "node --test tests/workbook.test.mjs",
     "test:browser": "python3 tests/browser.py",
     "test:ux": "python3 tests/ux-browser.py",
     "test:pases": "python3 tests/pases-browser.py",
-    "build:exam-css": "tailwindcss -c tailwind.config.cjs -i public/examenes/tailwind.input.css -o public/examenes/tailwind.css --minify"
+    "build:exam-css": "tailwindcss -c tailwind.config.cjs -i public/examenes/tailwind.input.css -o public/examenes/tailwind.css --minify",
+    "test:contratacion": "python3 tests/contratacion-browser.py"
   },
-  "devDependencies": {"acorn":"8.15.0","esbuild":"0.28.2","tailwindcss":"3.4.17","wrangler":"4.152.0"}
+  "devDependencies": {
+    "acorn": "8.15.0",
+    "esbuild": "0.28.2",
+    "tailwindcss": "3.4.17",
+    "wrangler": "4.152.0"
+  }
 }
