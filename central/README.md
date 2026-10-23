@@ -1,4 +1,4 @@
-# SICIP 5.24.0 · Base central por quincena
+# SICIP 5.25.0 · Base central por quincena
 
 La base de personas y plazas se guarda en Cloudflare D1 (`sicip-central`, binding `DB`). Los módulos leen un corte completo e inmutable mediante la misma sesión. Las cargas se guardan como borrador, se validan y después se activan; activar otro corte no borra usuarios, pases, trámites ni resultados anteriores.
 
