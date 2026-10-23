@@ -13,3 +13,9 @@ Reglas versionadas: circulares 273/274 de 1 de septiembre de 2026, instructivo y
 Administrador/Personal/Fuerza de Trabajo certifican y autorizan. Jefes capturan para trabajadores y ven sus propios expedientes creados; el trabajador consulta los vinculados a su matrícula en Mis Trámites, aunque otro usuario los haya capturado. Adjuntos sólo para los participantes autorizados y Personal, sin indexar información médica en Normativas.
 
 Validación: pruebas de API con base SQLite real, derechos, calendarios, controles de saldo/versiones, adjuntos y permisos; navegador con cuentas independientes, impresión carta y cédula de tres páginas, consulta de fuentes y diseño móvil. Los registros de prueba no se insertan en producción.
+
+## Impresión VAC-06
+
+La opción «Imprimir VAC-06 con QR» reproduce la distribución de Solicitud de vacaciones fuera de calendario, clave 1A74-009-064 (anexo 2, páginas 48–52 del procedimiento 1A74-003-025), en una hoja carta horizontal. No es el resumen anterior. La sección «Datos del formato VAC-06» en la captura guarda los datos adicionales con el expediente central y permite corregirlos mientras es borrador/devuelto. Se conserva el orden oficial apellido paterno, materno y nombres dentro del formato, aunque la plataforma muestre primero los nombres. Si el padrón no permite separar apellidos, Personal debe capturarlos explícitamente.
+
+Seleccionar el ordinal del periodo (1/2 normal, 1/2/3 cuatrimestral); no se deduce de un número de periodo acumulado como 70. La quincena de proceso es un dato independiente del corte del padrón. Los campos no confirmados se imprimen en blanco, sin calcular importes o cifras de control de nómina. Los nombres de firmantes se conservan y las firmas se realizan en el papel. El QR de 12 mm identifica el folio en el margen de control y no reemplaza firmas. Para PECV y Estatuto se conserva el resumen identificado como tal, pues sus formatos normativos son distintos (1A74-009-021 y 1A74-009-066).
