@@ -1,13 +1,13 @@
 {
   "name": "sicip-central",
-  "version": "5.25.0",
+  "version": "5.26.0",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
-    "test": "node --test tests/api.test.mjs tests/contratacion.test.mjs",
+    "test": "node --test tests/api.test.mjs tests/contratacion.test.mjs tests/seguimiento.test.mjs",
     "test:workbook": "node --test tests/workbook.test.mjs",
     "test:browser": "python3 tests/browser.py",
     "test:ux": "python3 tests/ux-browser.py",

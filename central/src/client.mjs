@@ -1,4 +1,4 @@
-import {TC,tcKey,searchKey,legacyPerson,legacyPlaza} from './domain.mjs';
+import {TC,tcKey,searchKey,legacyPerson,legacyPlaza,displayName} from './domain.mjs';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const STAFF=new Set(['ADMIN','ADMINISTRADOR','AREA_PERSONAL','FUERZA_TRABAJO','JEFE_SERVICIO']);
 const ADMIN=new Set(['ADMIN','ADMINISTRADOR']);
@@ -8,6 +8,8 @@ const fsVal=v=>v?.stringValue??(v?.integerValue!=null?Number(v.integerValue):v?.
 function sdkDoc(row,id){return {id:String(id),exists:()=>true,data:()=>row,get:field=>row[pathOf(field)],metadata:{fromCache:false,hasPendingWrites:false}};}
 function compare(a,b){return a===b?0:a==null?-1:b==null?1:a<b?-1:1;}
 export async function init(nativeFetch){
+ window.SICIPNombre=displayName;
+ window.SICIPNombrePersona=(mat,value)=>{const raw=snapshot?.byMat.get(String(mat))?.nombre_origen;return displayName(raw&&searchKey(raw)===searchKey(value)?raw:value);};
  let user=null,cut=null,pending=null,snapshot=null,navigationTimer,activePanel=null;const datasets=new Map();
  async function api(path,options={}){const response=await nativeFetch(path,{credentials:'same-origin',signal:AbortSignal.timeout(30000),...options,headers:{...(options.body?{'Content-Type':'application/json'}:{}),...options.headers}});const data=await response.json();if(!response.ok){const e=new Error(data.error||'No se pudo completar la operación.');e.status=response.status;throw e;}return data;}
  async function dataset(name){
@@ -30,7 +32,7 @@ export async function init(nativeFetch){
   if(window.parent!==window){try{const parent=window.parent.SICIPCentral;if(parent&&parent!==central&&parent.user?.matricula===user.matricula){snapshot=await parent.load();cut=parent.current;window.__SICIP_DATA__=window.__SICIP_DATA__||{};Object.assign(window.__SICIP_DATA__,{trabajadores:snapshot.people,plazas:snapshot.legacyPlazas,'plazas-full':snapshot.legacyPlazas,vacantes:snapshot.legacyPlazas.filter(z=>z['Empleado ocupante']==='0')});return snapshot;}}catch{}}
   cut=await api('/api/base/current');
   const [personas,plazas,antiguedad,catalogos]=await Promise.all(['personas','plazas','antiguedad','catalogos'].map(dataset));
-  const byMat=new Map(personas.map(p=>[p.matricula,p])),byPlaza=new Map(plazas.map(p=>[p.plaza_id,p])),occupation=new Map();for(const z of plazas)if(z.ocupante_matricula&&!occupation.has(z.ocupante_matricula))occupation.set(z.ocupante_matricula,z);
+  const byMat=new Map(personas.map(p=>[p.matricula,{...p,nombre_origen:p.nombre,nombre:displayName(p.nombre)}])),byPlaza=new Map(plazas.map(p=>[p.plaza_id,p])),occupation=new Map();for(const z of plazas)if(z.ocupante_matricula&&!occupation.has(z.ocupante_matricula))occupation.set(z.ocupante_matricula,z);
   // Avoid quadratic joins while retaining the compatibility projection contract.
   const people=personas.map(p=>legacyPerson(p,occupation.has(p.matricula)?[occupation.get(p.matricula)]:[],cut.quincena));
   const legacyPlazas=plazas.map(z=>legacyPlaza(z,[byMat.get(z.ocupante_matricula),byMat.get(z.titular_matricula)].filter(Boolean),cut.quincena));
@@ -61,7 +63,7 @@ export async function init(nativeFetch){
  }
  async function sdkGetDoc(ref,fallback){const parts=pathOf(ref?._key?.path||ref?._path).split('/');if(parts.length!==2||!DOMAINS.has(parts[0]))return fallback();const rows=await collection(parts[0]),row=rows.find(r=>String(r.id||r.matricula||r['Clave de la Plaza']||r.clave)===parts[1]);return row?sdkDoc(row,parts[1]):{id:parts[1],exists:()=>false,data:()=>undefined};}
  async function sdkWrite(ref,fallback){const parts=pathOf(ref?._key?.path||ref?._path).split('/');if(DOMAINS.has(parts[0]))throw Error('La plantilla se actualiza desde Base central → Cargar quincena, para conservar el historial.');return fallback();}
- const central=window.SICIPCentral={api,mountConfig:async node=>{if(node.dataset.coverageMounted)return;node.dataset.coverageMounted='1';const mod=await import('/sicip-central/contratacion-client.mjs?v=20261023-login1');window.SICIPContratacionAdmin.mount(node);},get user(){return user;},get current(){return cut;},load,collection,legacyFetch,sdkGetDocs,sdkGetDoc,sdkWrite,sdkCreate:async(args,fallback)=>{const name=pathOf(args[0]?._path);if(DOMAINS.has(name))throw Error('Actualiza la base desde Cargar quincena.');if(['tramites','recepcionesDocumentos','ft_calculos_nivelacion'].includes(name)){await load();args[1]={...args[1],quincenaOrigen:cut.quincena,corteOrigen:cut.id};}return fallback();},sdkCount:async(q,fallback)=>{if(!DOMAINS.has(pathOf(q?._query?.path||q?._path)))return fallback();const rows=await sdkGetDocs(q,fallback);return {data:()=>({count:rows.size})};},
+ const central=window.SICIPCentral={api,mountTracking:async node=>{if(node.dataset.trackingMounted)return;node.dataset.trackingMounted="1";await import("/sicip-central/contratacion-client.mjs?v=20261023-tracking1");window.SICIPSeguimiento.mount(node);},mountConfig:async node=>{if(node.dataset.coverageMounted)return;node.dataset.coverageMounted='1';const mod=await import('/sicip-central/contratacion-client.mjs?v=20261023-tracking1');window.SICIPContratacionAdmin.mount(node);},get user(){return user;},get current(){return cut;},load,collection,legacyFetch,sdkGetDocs,sdkGetDoc,sdkWrite,sdkCreate:async(args,fallback)=>{const name=pathOf(args[0]?._path);if(DOMAINS.has(name))throw Error('Actualiza la base desde Cargar quincena.');if(['tramites','recepcionesDocumentos','ft_calculos_nivelacion'].includes(name)){await load();args[1]={...args[1],quincenaOrigen:cut.quincena,corteOrigen:cut.id};}return fallback();},sdkCount:async(q,fallback)=>{if(!DOMAINS.has(pathOf(q?._query?.path||q?._path)))return fallback();const rows=await sdkGetDocs(q,fallback);return {data:()=>({count:rows.size})};},
   async login(matricula,password){const data=await api('/api/login',{method:'POST',body:JSON.stringify({matricula:String(matricula).trim(),password})});user=data.usuario;cut=null;datasets.clear();pending=null;snapshot=null;return user;},
   async logout(){window.SICIPCurriculum={};user=null;cut=null;snapshot=null;pending=null;datasets.clear();await api('/api/logout',{method:'POST',body:'{}'});},
   async changePassword(password){await api('/api/password',{method:'POST',body:JSON.stringify({password})});},

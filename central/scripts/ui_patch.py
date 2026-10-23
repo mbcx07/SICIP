@@ -18,7 +18,7 @@ change('sicip-recepciones-module.js',"{ inversionAttempts: 'dontInvert' }","{ in
 change('sicip-pases-module.js',"if(host())host().mount(v,btn);else main().appendChild(v)","if(host())host().mount(v,btn);else main().appendChild(v);var frame=v.querySelector('iframe');frame.onload=function(){try{var doc=frame.contentDocument;doc.documentElement.style.overflowY='hidden';var resize=function(){frame.style.height=Math.max(600,doc.body.scrollHeight,doc.documentElement.scrollHeight)+'px';};new ResizeObserver(resize).observe(doc.body);resize();}catch(e){frame.style.height='1200px';}}")
 change('sicip-panels-v5.js',"{ id: 'JEFE_SERVICIO', nombre: 'Jefe de Servicio', modulos: ['solicitudes','cuadros','recepciones','reportes'] }","{ id: 'JEFE_SERVICIO', nombre: 'Jefe de Servicio', modulos: ['solicitudes','contrato','cuadros','recepciones','reportes'] }")
 # Add style after legacy style injectors, whose !important input padding overlapped search icons.
-p=out/'index.html';s=p.read_text().replace('</body>','<link rel="stylesheet" href="/sicip-central/contratacion.css?v=20261023-login1"><link rel="stylesheet" href="/sicip-central/layout.css?v=20261023-login1"><script src="/sicip-central/layout.js?v=20261023-login1"></script></body>');p.write_text(s)
+p=out/'index.html';s=p.read_text().replace('</body>','<script src="/sicip-central/pases-sync.js?v=20261023-tracking1"></script><script src="/sicip-central/names-display.js?v=20261023-tracking1"></script><link rel="stylesheet" href="/sicip-central/contratacion.css?v=20261023-tracking1"><link rel="stylesheet" href="/sicip-central/layout.css?v=20261023-tracking1"><script src="/sicip-central/layout.js?v=20261023-tracking1"></script></body>');p.write_text(s)
 
 change('sicip-cuadros-v2.js',"return /^https?:\\/\\//i.test(value) ? value : '';", "return /^https?:\\/\\//i.test(value)||/^\\/api\\/curriculums\\/[a-f0-9-]{36}$/.test(value) ? value : '';")
 change('sicip-cuadros-v2.js','buildPostulacionesHTML(matricula)+','buildPostulacionesHTML(s.matricula)+')
@@ -48,3 +48,6 @@ s=s.replace("    if (window.SICIPModuleHost && button) window.SICIPModuleHost.ac
 p.write_text(s)
 # Embedded Administration content belongs to React and survives temporary custom modules.
 change('sicip-module-host.js',"    document.querySelectorAll(CUSTOM_SELECTOR).forEach(function (node) {\n      node.remove();\n    });", "    document.querySelectorAll(CUSTOM_SELECTOR).forEach(function (node) {\n      if(!node.hasAttribute('data-central-embedded'))node.remove();\n    });")
+
+# Reports navigation was retired; keep the legacy route without adding a second statistics menu.
+p=out/'sicip-workflows-v524.js';s=p.read_text();a=s.index('  function injectReportesNav(){');b=s.index('  function hideStandaloneNotifications()',a);s=s[:a]+'  function injectReportesNav(){}\n'+s[b:];s=s.replace("esc(u.nombre||'Usuario SICIP')","esc(window.SICIPNombre(u.nombre||'Usuario SICIP'))");p.write_text(s)

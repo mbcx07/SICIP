@@ -29,3 +29,4 @@ body:has(main [data-sicip-module-panel]) #sicip-photo-prompt,body:has(#sicip-pas
 
 /* Login brand and card share a normal-flow column, including short viewports. */
 .sicip-login>div{flex-shrink:0}.sicip-login>div:first-child{line-height:1.5;overflow-wrap:anywhere}@media(max-width:480px){.sicip-login>div:last-child{padding:1.5rem!important}}
+nav.sidebar>div:first-child{display:flex;flex-direction:column}nav.sidebar [data-personal-heading]{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#b5cfc0;padding:10px 14px 5px;order:5}nav.sidebar [data-hide-report]{display:none!important}

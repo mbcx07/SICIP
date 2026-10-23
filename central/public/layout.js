@@ -10,6 +10,14 @@
   var head=document.querySelector('#root>div>header'),shell=nav.parentElement;
   if(head&&shell){var h=window.innerHeight-head.getBoundingClientRect().height;shell.style.height=Math.max(0,h)+'px';}
   document.querySelectorAll('main input[placeholder]').forEach(function(e){if(e.previousElementSibling?.tagName.toLowerCase()==='svg')e.setAttribute('data-search-icon','');});
+  var menu=nav.firstElementChild;
+  if(menu){if(!menu.querySelector('[data-personal-heading]')){var heading=document.createElement('div');heading.dataset.personalHeading='1';heading.textContent='Trámites personales';menu.appendChild(heading);}
+   Array.from(menu.children).forEach(function(node){if(node.hasAttribute('data-personal-heading'))return;var button=node.matches('button,a')?node:node.querySelector('button,a'),label=norm(button?.textContent),order=45;
+    if(label==='inicio')order=0;else if(label==='mis tramites')order=10;else if(node.hasAttribute('data-sicip-solicitudes-root')||label==='solicitudes')order=11;else if(label.includes('cuadros de reemplazo')||label.includes('cuadro de reemplazo'))order=8;else if(label.includes('herramientas'))order=40;else if(node.hasAttribute('data-sicip-jefe-servicio-root')||label==='jefe de servicio')order=60;else if(node.hasAttribute('data-sicip-depto-personal-root')||label==='departamento de personal')order=70;else if(label==='administracion')order=100;
+    if(label==='reportes'||label==='reportes y estadisticas'||node.hasAttribute('data-sicip-worker-stats-root')){if(!node.hasAttribute('data-hide-report'))node.setAttribute('data-hide-report','1');}
+    if(node.style.order!==String(order))node.style.order=String(order);
+   });}
+  document.querySelectorAll('[data-sicip-worker-stats-root]').forEach(function(n){if(!n.hasAttribute('data-hide-report'))n.setAttribute('data-hide-report','1');});
   var buttons=Array.from(nav.querySelectorAll('button,a'));
   if(lastActive&&!lastActive.isConnected)lastActive=null;
   if(lastPath!==location.pathname){lastPath=location.pathname;lastActive=null;}

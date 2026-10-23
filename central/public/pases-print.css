@@ -23,3 +23,6 @@
 .pass-Folio{float:none;width:110px;margin:0;grid-column:3;grid-row:1;align-self:start}
 .pass-Date{grid-template-columns:auto minmax(115px,1fr) auto 28px auto 95px auto 45px}
 .pass-IndIcon svg{width:18px;height:18px;stroke:#005235;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* Compact QR and short folio retain the pass form proportions. */
+.pass-Checks{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 21mm}.pass-Folio{width:21mm;font-size:7pt;gap:2px}.pass-Folio img{width:17mm;height:17mm}.pass-Folio span{white-space:nowrap;word-break:normal}

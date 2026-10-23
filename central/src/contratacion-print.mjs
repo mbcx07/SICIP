@@ -1,7 +1,8 @@
+import {displayName} from './domain.mjs';
 import {TYPES,DAYS,catalog} from './contratacion-domain.mjs';
 import formats from './contratacion-formatos.json' with {type:'json'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const name=v=>String(v||'').replace(/\//g,' ').replace(/\s+/g,' ').trim();
+const name=displayName;
 export function printCoverage(r){
  const d=r.payload,s=r.snapshot,p=r.plan,extra=['TIEMPO_EXTRA','GUARDIA_FESTIVA'].includes(d.tipo),f=formats[extra?'TIEMPO EXTRA':'CONTRATO'];
  const qr=globalThis.qrcode(0,'M');qr.addData(r.folio);qr.make();const image=qr.createDataURL(5,20),date=v=>v?String(v).slice(0,10).split('-').reverse().join('/'):'';

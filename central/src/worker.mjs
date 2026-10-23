@@ -1,5 +1,6 @@
+import {seguimientoAPI} from './seguimiento-api.mjs';
 import {coverageAPI} from './contratacion-api.mjs';
-import {validateRows, searchKey} from './domain.mjs';
+import {validateRows, searchKey,displayName} from './domain.mjs';
 const STAFF=new Set(['ADMIN','ADMINISTRADOR','AREA_PERSONAL','FUERZA_TRABAJO','JEFE_SERVICIO']);
 const ADMIN=new Set(['ADMIN','ADMINISTRADOR']);
 const FIRESTORE='https://firestore.googleapis.com/v1/projects/sicip-bcs/databases/(default)/documents/usuarios/';
@@ -11,12 +12,13 @@ const run=(env,sql,...params)=>env.DB.prepare(sql).bind(...params);
 const now=()=>Math.floor(Date.now()/1000);
 function value(f){if(!f)return null;if('stringValue'in f)return f.stringValue;if('booleanValue'in f)return f.booleanValue;if('integerValue'in f)return Number(f.integerValue);if('doubleValue'in f)return f.doubleValue;if('arrayValue'in f)return(f.arrayValue.values||[]).map(value);if('mapValue'in f)return Object.fromEntries(Object.entries(f.mapValue.fields||{}).map(([k,v])=>[k,value(v)]));return null;}
 async function account(matricula){const r=await fetch(FIRESTORE+encodeURIComponent(matricula),{signal:AbortSignal.timeout(15000),headers:{Accept:'application/json'}});if(r.status===404)return null;assert(r.ok,503,'No se pudo validar la cuenta. Intenta de nuevo.');const d=await r.json();return Object.fromEntries(Object.entries(d.fields||{}).map(([k,v])=>[k,value(v)]));}
-function cleanUser(raw,matricula){const u={matricula,uid:matricula,nombre:String(raw.nombre||matricula),rol:String(raw.rol||'TRABAJADOR').toUpperCase(),activo:raw.activo===true,primerAcceso:raw.primerAcceso!==false};for(const k of ['departamento','departamentoNombre','unidadClave','unidadNombre','puesto','descripcion','tipoContrato'])if(raw[k]!=null)u[k]=raw[k];if(u.rol==='ADMINISTRADOR')u.rol='ADMIN';u.permisos=ADMIN.has(u.rol)?['solicitudes','contrato','cuadros','pases','licencias','recepciones','reportes','plantilla','admin','plazas','vacantes','usuarios','roles','herramientas','bandeja']:Array.isArray(raw.permisos)?raw.permisos:[];return u;}
+function cleanUser(raw,matricula){const u={matricula,uid:matricula,nombre:displayName(raw.nombre||matricula),rol:String(raw.rol||'TRABAJADOR').toUpperCase(),activo:raw.activo===true,primerAcceso:raw.primerAcceso!==false};for(const k of ['departamento','departamentoNombre','unidadClave','unidadNombre','puesto','descripcion','tipoContrato'])if(raw[k]!=null)u[k]=raw[k];if(u.rol==='ADMINISTRADOR')u.rol='ADMIN';u.permisos=ADMIN.has(u.rol)?['solicitudes','contrato','cuadros','pases','licencias','recepciones','reportes','plantilla','admin','plazas','vacantes','usuarios','roles','herramientas','bandeja']:Array.isArray(raw.permisos)?raw.permisos:[];return u;}
 async function session(request,env,admin=false){
  const token=(request.headers.get('Cookie')||'').match(/(?:^|;\s*)__Host-SICIP_SESSION=([a-f0-9]{64})(?:;|$)/)?.[1];assert(token,401,'Vuelve a iniciar sesión para consultar la base central.');
  const record=await run(env,'SELECT usuario FROM sessions WHERE token_hash=? AND expires>?',await hash(token),now()).first();assert(record,401,'La sesión expiró. Vuelve a iniciar sesión.');const saved=JSON.parse(record.usuario);let user=cleanUser(saved,saved.matricula);
  if(admin){const raw=await account(user.matricula);assert(raw?.activo===true,403,'Cuenta inactiva.');user=cleanUser(raw,user.matricula);assert(ADMIN.has(user.rol),403,'Esta acción requiere un administrador.');}return user;
 }
+async function namedUser(env,user){const p=await run(env,"SELECT json FROM personas WHERE corte=(SELECT value FROM settings WHERE key='active') AND matricula=?",user.matricula).first();if(p)user.nombre=displayName(JSON.parse(p.json).nombre);return user;}
 async function body(request,max=1024*1024){const declared=Number(request.headers.get('content-length')||0);assert(declared<=max,413,'La solicitud es demasiado grande.');const text=await request.text();assert(new TextEncoder().encode(text).length<=max,413,'La solicitud es demasiado grande.');try{return JSON.parse(text);}catch{throw new Fault(400,'JSON inválido.');}}
 function protectOrigin(request){const origin=request.headers.get('Origin');assert(origin&&origin===new URL(request.url).origin,403,'Origen de solicitud no permitido.');}
 async function current(env,requested){const id=requested||(await run(env,"SELECT value FROM settings WHERE key='active'").first())?.value;assert(id,503,'Aún no hay una quincena activa.');const c=await run(env,'SELECT * FROM cortes WHERE id=? AND status=?',id,'VALIDADO').first();assert(c,404,'No se encontró un corte validado.');return {...c,expected:JSON.parse(c.expected),validation:c.validation?JSON.parse(c.validation):null};}
@@ -35,6 +37,7 @@ async function validateCut(env,id){
 async function api(request,env){
  const url=new URL(request.url),path=url.pathname,method=request.method;
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
+ if(path==='/api/mis-tramites'||path.startsWith('/api/pases/registros')||path==='/api/seguimiento/recepcion')return seguimientoAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/contratacion'))return coverageAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path==='/api/login'&&method==='POST'){
   const d=await body(request,2048);assert(typeof d.matricula==='string'&&/^[A-Za-z0-9._-]{1,80}$/.test(d.matricula)&&typeof d.password==='string'&&d.password.length>0&&d.password.length<=256,400,'Matrícula o contraseña inválida.');
@@ -42,11 +45,11 @@ async function api(request,env){
   for(const k of [key,ipkey]){const limit=await run(env,'SELECT intentos FROM auth_limits WHERE key=? AND expires>?',k,now()).first();assert(!limit||limit.intentos<(k===key?8:60),429,'Demasiados intentos. Espera 15 minutos.');}
   const raw=await account(d.matricula),expected=String(raw?.password||d.matricula);const equal=(await hash(d.password))===(await hash(expected));
   if(!raw||raw.activo!==true||!equal){for(const k of [key,ipkey])await run(env,'INSERT INTO auth_limits(key,intentos,expires) VALUES(?,1,?) ON CONFLICT(key) DO UPDATE SET intentos=CASE WHEN expires<? THEN 1 ELSE intentos+1 END,expires=excluded.expires',k,now()+900,now()).run();throw new Fault(401,'No se pudo iniciar sesión. Revisa tus datos o consulta al administrador.');}
-  const user=cleanUser(raw,d.matricula),token=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(x=>x.toString(16).padStart(2,'0')).join('');
+  const user=await namedUser(env,cleanUser(raw,d.matricula)),token=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(x=>x.toString(16).padStart(2,'0')).join('');
   await env.DB.batch([run(env,'INSERT INTO sessions(token_hash,usuario,expires) VALUES(?,?,?)',await hash(token),JSON.stringify(user),now()+43200),run(env,'DELETE FROM auth_limits WHERE key=?',key),run(env,'DELETE FROM sessions WHERE expires<?',now())]);
   return json({usuario:user},200,{'Set-Cookie':`__Host-SICIP_SESSION=${token}; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=43200`});
  }
- if(path==='/api/session'&&method==='GET')return json({usuario:await session(request,env)});
+ if(path==='/api/session'&&method==='GET')return json({usuario:await namedUser(env,await session(request,env))});
  if(path==='/api/logout'&&method==='POST'){const token=(request.headers.get('Cookie')||'').match(/__Host-SICIP_SESSION=([a-f0-9]{64})/)?.[1];if(token)await run(env,'DELETE FROM sessions WHERE token_hash=?',await hash(token)).run();return json({ok:true},200,{'Set-Cookie':'__Host-SICIP_SESSION=; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=0'});}
  if(path==='/api/password'&&method==='POST'){
   const user=await session(request,env),d=await body(request,2048);assert(typeof d.password==='string'&&d.password.length>=8&&d.password.length<=256,400,'Usa una contraseña de 8 a 256 caracteres.');
