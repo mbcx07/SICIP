@@ -1,4 +1,4 @@
-# Contratación y coberturas · 5.24.0
+# Contratación y coberturas · 5.24.1
 
 El archivo original `PROGRAMA DE CONTRATACION HGZ+MF No1.xlsm` se analizó como ZIP/XML y se extrajo su VBA de manera estática, sin ejecutar macros. El catálogo público conserva el SHA-256 de la fuente, 263 horarios y 17 motivos; no contiene sus trabajadores, salarios ni registros históricos.
 
@@ -15,3 +15,5 @@ Los borradores se guardan en D1. Cada solicitud conserva el corte y una copia m�
 Una solicitud de un corte anterior se consulta sin alterar su contexto y puede copiarse al corte actual para revisarla. Los registros existentes de pases y otros trámites no se migran ni eliminan. CSV exporta los registros cargados y la impresión incluye estado, folio corto, calendario y firmas.
 
 Validación: `npm test --prefix central`; `python3 central/tests/contratacion-browser.py` contra el servidor local de pruebas. El extractor reproducible es `central/scripts/extract-contratacion.py`; el archivo fuente y los análisis con información personal se mantienen fuera del repositorio.
+
+La zona superior derecha del folio incluye un QR local de 23 mm y el mismo folio corto debajo. El QR codifica únicamente el folio (sin datos personales) y conserva margen blanco para lectura. No acredita por sí solo una autorización: el estado se consulta en la solicitud.
