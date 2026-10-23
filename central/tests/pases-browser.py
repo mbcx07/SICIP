@@ -1,0 +1,32 @@
+"""Local regression for integrated Administration, blank pass choices and actual PDF output."""
+import asyncio,json
+from pathlib import Path
+import fitz
+from playwright.async_api import async_playwright
+async def main():
+ async with async_playwright() as p:
+  browser=await p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
+  context=await browser.new_context(viewport={'width':1440,'height':1000});await context.route('https://**/*',lambda r:r.abort());page=await context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('dialog',lambda d:d.accept())
+  await page.goto('http://127.0.0.1:8010/');await page.locator('input[type=text]').first.fill('TESTADMIN');await page.locator('input[type=password]').fill('PruebaSegura123!');await page.get_by_role('button',name='Iniciar Sesión',exact=True).click();await page.locator('nav.sidebar').wait_for()
+  await page.locator('nav.sidebar').get_by_role('button',name='Administración',exact=True).click();await page.get_by_role('heading',name='Administración',exact=True).wait_for();assert await page.locator('[data-admin-root],[data-central-nav]').count()==0
+  await page.locator('main').get_by_role('button',name='Personal y plazas',exact=True).click();await page.get_by_text('13,037',exact=True).wait_for(timeout=45000);await page.locator('main').get_by_role('button',name='Cargar quincena',exact=True).click();await page.locator('[data-file]').wait_for();assert await page.get_by_role('heading',name='Administración',exact=True).is_visible();await page.locator('main').get_by_role('button',name='Historial de cortes',exact=True).click();await page.get_by_text('2026009',exact=True).wait_for();assert await page.locator('main').get_by_role('button',name='Usuarios',exact=True).is_visible();print('Administración integrada: usuarios, roles, consulta, carga e historial conservan la misma vista.',flush=True)
+  # Presentation must not alter the legal account name stored on the server.
+  await page.evaluate("sessionStorage.setItem('sicip_usuario',JSON.stringify({...window.SICIPCentral.user,nombre:'NOMBRE/MUY/LARGO/DE/PRUEBA/APELLIDO/COMPUESTO'}));dispatchEvent(new Event('sicip:session-update'))")
+  name=page.locator('#root>div>header').get_by_text('NOMBRE MUY LARGO DE PRUEBA APELLIDO COMPUESTO',exact=True);await name.wait_for();assert await name.evaluate('(e)=>e.scrollWidth<=e.clientWidth+1&&getComputedStyle(e).textOverflow!=="ellipsis"');print('Nombre completo con espacios y sin truncar.',flush=True)
+  passes=await context.new_page();passes.on('pageerror',lambda e:errors.append(str(e)));passes.on('dialog',lambda d:d.accept());await passes.add_init_script('window.print=()=>{window.__printed=true;}');await passes.goto('http://127.0.0.1:8010/pases/index.html?scope=personal');await passes.wait_for_function('window.SICIPCentral?.current?.quincena==="2026015"')
+  assert await passes.locator('#tipoAsunto').input_value()=='' and await passes.locator('#tipoHorario').input_value()==''
+  await passes.get_by_text('Los pases no pueden solicitarse con fecha retroactiva.',exact=True).wait_for();assert not await passes.locator('#passForm').evaluate('(f)=>f.checkValidity()')
+  await passes.locator('#matricula').fill('10410767');await passes.locator('#matricula').blur();await passes.locator('#tipoAsunto').select_option('MÉDICO');await passes.locator('#tipoHorario').select_option('SALIDA');await passes.locator('#hora').fill('12:00');await passes.locator('#destino').fill('CONSULTA MÉDICA DE PRUEBA');await passes.locator('#motivo').fill('Motivo de prueba local');await passes.locator('#passForm button[type=submit]').click();await passes.wait_for_function('window.__printed===true',timeout=30000)
+  result=await passes.evaluate("({rows:window.SICIPPasesStorage.read(),blank:document.querySelector('#tipoHorario').value})");assert len(result['rows'])==1 and result['rows'][0]['folio']=='P-000001' and result['blank']=='',result
+  print('Pase emitido con folio corto único, opciones obligatorias y reinicio en blanco.',flush=True)
+  # Decode generated QR pixels, then render and inspect a real letter-size PDF.
+  await passes.add_script_tag(url='/sicip-central/vendor/jsQR.js');decoded=await passes.evaluate('''()=>{const image=document.querySelector('#printArea img[alt=QR]'),canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0);const data=ctx.getImageData(0,0,canvas.width,canvas.height);return JSON.parse(window.jsQR(data.data,data.width,data.height).data);}''');assert decoded['folio']=='P-000001'
+  await passes.emulate_media(media='print');await passes.pdf(path='/workspace/sicip-env/pase-corregido.pdf',format='Letter',print_background=True,prefer_css_page_size=True)
+  pdf=fitz.open('/workspace/sicip-env/pase-corregido.pdf');assert len(pdf)==1,len(pdf);text='\n'.join(page.get_text() for page in pdf)
+  for label in ['CONSTANCIA','P-000001','PASES MÉDICOS','ACUMULADOS','ESTADÍSTICA DEL MES','ESTADÍSTICA DEL AÑO'] :assert label in text,label
+  await passes.screenshot(path='/workspace/sicip-env/pase-corregido.png',full_page=True)
+  legacy='PASE-20261023-12345678-ABCD-1234-ABCD-123456789ABC'
+  await passes.evaluate('''(folio)=>{const rows=window.SICIPPasesStorage.read();rows.push({...rows[0],folio,nombre:'PERSONA DE PRUEBA CON NOMBRE LARGO Y APELLIDOS COMPUESTOS PARA IMPRESIÓN',categoria:'CATEGORÍA DE PRUEBA CON DESCRIPCIÓN LARGA PARA VERIFICAR AJUSTE',servicio:'SERVICIO DE PRUEBA CON DESCRIPCIÓN COMPLETA Y TEXTOS QUE DEBEN CONSERVARSE LEGIBLES'});window.SICIPPasesStorage.write(rows);window.SICIPPases.print(folio);}''',legacy);await passes.wait_for_timeout(400);await passes.pdf(path='/workspace/sicip-env/pase-historico-corregido.pdf',format='Letter',print_background=True,prefer_css_page_size=True);historical=fitz.open('/workspace/sicip-env/pase-historico-corregido.pdf');assert len(historical)==1,len(historical);assert legacy in await passes.locator('.pass-Folio').inner_text();assert await passes.evaluate('(f)=>window.SICIPPasesStorage.read().some(p=>p.folio===f)',legacy)
+  assert not errors,errors;print('PDF carta: una página, textos completos, estadísticas y QR legible con folio separado.',flush=True)
+  await page.set_viewport_size({'width':390,'height':844});assert await page.evaluate('document.documentElement.scrollWidth<=innerWidth+1');await browser.close()
+asyncio.run(main())

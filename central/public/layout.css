@@ -23,3 +23,6 @@ nav.sidebar button:disabled{opacity:.55}
 #root main #sicip-photo-prompt,#root main #sicip-pwa-install,#root main #sicip-pwa-notif{position:relative!important;inset:auto!important;width:100%!important;max-width:none!important;margin:12px 0!important;z-index:auto!important;box-shadow:none!important}
 body:not([data-sicip-route="/"]) #sicip-photo-prompt,body:not([data-sicip-route="/"]) #sicip-pwa-install,body:not([data-sicip-route="/"]) #sicip-pwa-notif{display:none!important}
 body:has(main [data-sicip-module-panel]) #sicip-photo-prompt,body:has(#sicip-pases-view) #sicip-photo-prompt,body:has(main [data-sicip-module-panel]) #sicip-pwa-install,body:has(#sicip-pases-view) #sicip-pwa-install{display:none!important}
+[data-central-embedded]>.central-header h1,[data-central-embedded]>.central-header p,[data-central-embedded]>.central-tabs{display:none!important}
+[data-central-embedded]{margin:0!important;padding:0!important;border:0!important;box-shadow:none!important}
+[data-central-embedded]>.central-header{padding:0 0 10px!important;min-height:0!important}

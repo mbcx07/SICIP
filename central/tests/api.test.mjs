@@ -42,4 +42,9 @@ test('currículum obligatorio, contenido descargable, acceso por propietario y d
 test('páginas paralelas conservan el corte y no duplican personas',async()=>{
  const id='33333333-3333-4333-8333-333333333333';const pages=await Promise.all([0,1].map(page=>call('/api/base/datasets/personas?version='+id+'&page='+page).then(r=>r.json())));assert.equal(pages[0].length,1000);assert.equal(pages[1].length,101);assert.equal(new Set(pages.flat().map(p=>p.matricula)).size,1101);assert.equal((await call('/api/base/datasets/personas?version='+id+'&page=-1')).status,400);
 });
+test('folios cortos: reintento estable, concurrencia sin duplicados y acceso por propietario',async()=>{
+ const request_id=crypto.randomUUID();const first=await(await call('/api/pases/folio','POST',{request_id})).json();assert.match(first.folio,/^P-\d{6}$/);assert.equal((await(await call('/api/pases/folio','POST',{request_id})).json()).folio,first.folio);
+ const rows=await Promise.all(Array.from({length:12},()=>call('/api/pases/folio','POST',{request_id:crypto.randomUUID()}).then(r=>r.json())));assert.equal(new Set(rows.map(r=>r.folio)).size,12);
+ const login=await call('/api/login','POST',{matricula:'TESTUSER',password:'PruebaSegura123!'},'');const own=login.headers.get('set-cookie').split(';')[0];assert.equal((await call('/api/pases/folio','POST',{request_id},own)).status,403);assert.equal((await call('/api/pases/folio','POST',{request_id},'')).status,401);
+});
 test('logout invalida realmente la sesión',async()=>{assert.equal((await call('/api/logout','POST',{})).status,200);assert.equal((await call('/api/base/current')).status,401);});

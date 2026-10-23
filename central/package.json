@@ -1,6 +1,6 @@
 {
   "name": "sicip-central",
-  "version": "5.23.1",
+  "version": "5.23.2",
   "private": true,
   "type": "module",
   "engines": {"node": ">=24"},
@@ -9,6 +9,7 @@
     "test:workbook": "node --test tests/workbook.test.mjs",
     "test:browser": "python3 tests/browser.py",
     "test:ux": "python3 tests/ux-browser.py",
+    "test:pases": "python3 tests/pases-browser.py",
     "build:exam-css": "tailwindcss -c tailwind.config.cjs -i public/examenes/tailwind.input.css -o public/examenes/tailwind.css --minify"
   },
   "devDependencies": {"acorn":"8.15.0","esbuild":"0.28.2","tailwindcss":"3.4.17","wrangler":"4.152.0"}

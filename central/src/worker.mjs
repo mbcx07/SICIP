@@ -50,6 +50,10 @@ async function api(request,env){
   const user=await session(request,env),d=await body(request,2048);assert(typeof d.password==='string'&&d.password.length>=8&&d.password.length<=256,400,'Usa una contraseña de 8 a 256 caracteres.');
   const r=await fetch(FIRESTORE+encodeURIComponent(user.matricula)+'?updateMask.fieldPaths=password&updateMask.fieldPaths=primerAcceso',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{password:{stringValue:d.password},primerAcceso:{booleanValue:false}}})});assert(r.ok,503,'No se pudo cambiar la contraseña.');return json({ok:true});
  }
+ if(path==='/api/pases/folio'&&method==='POST'){
+  const user=await session(request,env);assert((await account(user.matricula))?.activo===true,403,'Cuenta inactiva.');const d=await body(request,2048);assert(typeof d.request_id==='string'&&/^[a-f0-9-]{36}$/.test(d.request_id),400,'Identificador inválido.');
+  await run(env,'INSERT INTO pase_folios(request_id,owner,created_at) VALUES(?,?,?) ON CONFLICT(request_id) DO NOTHING',d.request_id,user.matricula,new Date().toISOString()).run();const row=await run(env,'SELECT id,owner FROM pase_folios WHERE request_id=?',d.request_id).first();assert(row.owner===user.matricula,403,'Solicitud de folio no permitida.');return json({folio:'P-'+String(row.id).padStart(6,'0')});
+ }
  if(path==='/api/curriculums'&&method==='POST'){
   const user=await session(request,env),d=await body(request,1500000);assert((await account(user.matricula))?.activo===true,403,'Cuenta inactiva.');
   assert(typeof d.jefe==='string'&&/^[A-Za-z0-9._-]{1,80}$/.test(d.jefe),400,'Selecciona el puesto de confianza.');

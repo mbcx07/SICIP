@@ -1,7 +1,7 @@
 (function(){
   'use strict';
   const nativeFetch=window.fetch.bind(window);
-  window.SICIPCentralBoot=import('/sicip-central/client.mjs?v=20261023-ux2').then(m=>m.init(nativeFetch));
+  window.SICIPCentralBoot=import('/sicip-central/client.mjs?v=20261023-pases3').then(m=>m.init(nativeFetch));
   const files=/^\/data-(?:trabajadores|plazas(?:-full)?(?:-\d{7})?|vacantes|jefesServicio|ft-(?:trabajadores|nomina-\d{7}|antiguedad|clasificacion))\.json$/;
   window.fetch=function(input,options){
     const url=new URL(typeof input==='string'||input instanceof URL?input:input.url,location.href);

@@ -1,11 +1,11 @@
-# SICIP 5.23.1 · Base central por quincena
+# SICIP 5.23.2 · Base central por quincena
 
 La base de personas y plazas se guarda en Cloudflare D1 (`sicip-central`, binding `DB`). Los módulos leen un corte completo e inmutable mediante la misma sesión. Las cargas se guardan como borrador, se validan y después se activan; activar otro corte no borra usuarios, pases, trámites ni resultados anteriores.
 
 ## Uso en la aplicación
 
 1. Iniciar sesión con la matrícula y contraseña existentes. La primera vez tras actualizar se requiere volver a iniciar sesión; no borrar los datos del navegador.
-2. Abrir **Administración → Control de personal y plazas** en el menú.
+2. Abrir **Administración** y elegir la pestaña **Personal y plazas**.
 3. Usar **Consulta** para buscar por matrícula, nombre o plaza. Se distinguen personas sin plaza, ocupante y titular; no se interpreta «sin plaza» como baja o jubilación.
 4. Un administrador puede abrir **Cargar quincena**, elegir el Excel completo y revisar la vista previa y observaciones.
 5. **Guardar y validar corte** sube lotes recuperables. No cambia el corte activo.
@@ -80,7 +80,7 @@ Para volver al corte anterior usar Historial. Para una falla del código, Cloudf
 
 El encabezado queda por encima del menú. Menú y contenido tienen desplazamientos independientes, con una sola opción activa y sin colores fluorescentes fijos. Los avisos de instalación y foto se muestran dentro de Inicio. Se respeta el espacio de las lupas de búsqueda. Pases ajusta la altura del iframe al documento completo y Recepciones deja de remontarse encima de otro módulo.
 
-Cuadros conserva los cambios pendientes y la búsqueda tanto en asignación administrativa como en Mi Cuadro. Solicitudes y Jefe de Servicio vuelven a enlazar contratación y los demás formularios. El administrador recibe todos los permisos efectivos sin cambiar el perfil de otras cuentas. Plantilla en Administración dirige a la misma base central y se retira la carga Seed BD de esa pantalla.
+Cuadros conserva los cambios pendientes y la búsqueda tanto en asignación administrativa como en Mi Cuadro. Los enlaces añadidos al formulario de contratación antiguo se retiraron: no corresponden al módulo de cobertura descrito por el usuario. El administrador recibe todos los permisos efectivos sin cambiar el perfil de otras cuentas. Personal y plazas, Cargar quincena e Historial de cortes se integran como pestañas de la misma Administración, junto a Usuarios, Roles y Unidades. Se retira la carga Seed BD de esa pantalla.
 
 La postulación de confianza exige un PDF de hasta 1 MB. Se conserva el archivo real, por lotes, en D1; la descarga requiere sesión y permiso de propietario, jefe destinatario, administrador o Personal. La solicitud y su aviso se guardan en Firestore. Un fallo devuelve un mensaje y habilita reintentar; el identificador del envío es estable para el mismo adjunto y destino. Las solicitudes recibidas se consultan al abrir el cuadro, sin depender del JSON estático anterior. No se migran automáticamente las referencias antiguas que nunca contenían un archivo.
 
@@ -89,3 +89,13 @@ Para recepción QR, `_headers` permite cámara sólo al propio sitio. El lector 
 Las lecturas de un corte inmutable usan páginas de 1,000 y solicitudes en paralelo; se verifican conteos y claves. Se eliminan las esperas artificiales de seis segundos y la consulta serial por cada jefe. La primera carga y los movimientos remotos siguen dependiendo de la red.
 
 La regresión de interfaz se ejecuta con `npm run test:ux` contra el harness local; requiere Chromium, Playwright para Python y ffmpeg. Incluye un QR sintético en `tests/fixtures/`, genera una cámara simulada y verifica lectura, selección inmediata en ambos cuadros, currículum obligatorio, recuperación de errores y desplazamientos.
+
+## Pases e integración 5.23.2
+
+Administración mantiene su encabezado y sus pestañas al consultar o cargar datos; el panel central se monta como hijo, sin sustituir la vista de administración. El nombre completo del encabezado usa espacios para las barras del nombre sólo en su presentación.
+
+Las solicitudes de pase comienzan con asunto y horario vacíos y obligatorios. La fecha conserva la validación contra retroactividad y muestra un aviso junto al campo. El servidor reserva folios globales consecutivos `P-000001` con clave de reintento estable: no se generan UUID largos ni consecutivos independientes por navegador. Los pases ya emitidos no cambian de folio y sus respaldos continúan siendo compatibles. La reserva del consecutivo no migra el historial local del pase a D1. La captura manual acepta `123`, `P-123` o `P-000123` para buscar el mismo folio corto.
+
+La impresión usa clases y geometría propias para evitar las reglas de tamaños fijos acumuladas de la plantilla antigua. Conserva constancia, estadísticas y gráficos, con texto adaptable, folio separado y QR generado en el navegador mediante qrcode-generator 1.4.4 (MIT), sin enviar los datos al servicio QR externo. Se verifican PDFs carta de una página, tanto con folios nuevos como históricos largos y nombres extensos.
+
+No se localizó en el historial Git ni en los respaldos revisados el formulario nuevo de contratación con titular, motivo, suplente, periodo y descansos. Recuperarlo requiere el Excel original ofrecido por el usuario; no se inventan sus cálculos ni se sustituye por el formulario genérico.

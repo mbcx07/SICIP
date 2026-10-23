@@ -16,18 +16,12 @@ change('sicip-recepciones-module.js',"        toast('No se pudo acceder a la cam
 change('sicip-recepciones-module.js',"{ inversionAttempts: 'dontInvert' }","{ inversionAttempts: 'attemptBoth' }")
 # Same-origin iframe grows with its document instead of imposing a second, clipped scroll area.
 change('sicip-pases-module.js',"if(host())host().mount(v,btn);else main().appendChild(v)","if(host())host().mount(v,btn);else main().appendChild(v);var frame=v.querySelector('iframe');frame.onload=function(){try{var doc=frame.contentDocument;doc.documentElement.style.overflowY='hidden';var resize=function(){frame.style.height=Math.max(600,doc.body.scrollHeight,doc.documentElement.scrollHeight)+'px';};new ResizeObserver(resize).observe(doc.body);resize();}catch(e){frame.style.height='1200px';}}")
-# Restore the forms previously hidden without links by the Pases menu rewrite.
-change('sicip-pases-module.js',"panel.appendChild(makeSub('pases-personal'","panel.appendChild(makeSub('nueva-solicitud','📝','Nueva solicitud / contratación',function(sub){goReact('/nuevo-tramite',sub)}));panel.appendChild(makeSub('pases-personal'")
 change('sicip-panels-v5.js',"{ id: 'JEFE_SERVICIO', nombre: 'Jefe de Servicio', modulos: ['solicitudes','cuadros','recepciones','reportes'] }","{ id: 'JEFE_SERVICIO', nombre: 'Jefe de Servicio', modulos: ['solicitudes','contrato','cuadros','recepciones','reportes'] }")
 # Add style after legacy style injectors, whose !important input padding overlapped search icons.
-p=out/'index.html';s=p.read_text().replace('</body>','<link rel="stylesheet" href="/sicip-central/layout.css?v=20261023-ux2"><script src="/sicip-central/layout.js?v=20261023-ux2"></script></body>');p.write_text(s)
+p=out/'index.html';s=p.read_text().replace('</body>','<link rel="stylesheet" href="/sicip-central/layout.css?v=20261023-pases3"><script src="/sicip-central/layout.js?v=20261023-pases3"></script></body>');p.write_text(s)
 
 change('sicip-cuadros-v2.js',"return /^https?:\\/\\//i.test(value) ? value : '';", "return /^https?:\\/\\//i.test(value)||/^\\/api\\/curriculums\\/[a-f0-9-]{36}$/.test(value) ? value : '';")
 change('sicip-cuadros-v2.js','buildPostulacionesHTML(matricula)+','buildPostulacionesHTML(s.matricula)+')
-p=out/'sicip-workflows-v524.js';s=p.read_text();anchor="    b.onclick=function(e){e.preventDefault();e.stopPropagation();var o=p.style.display!=='none';";assert anchor in s
-extra="""    [['SOLICITUD_CONTRATO','Solicitudes de contratación'],['TIEMPO_EXTRAORDINARIO','Tiempo extraordinario'],['GUARDIA_FESTIVA','Guardias festivas'],['NIVELACION','Nivelación'],['SUSTITUCION','Sustitución']].forEach(function(item){var link=document.createElement('button');link.setAttribute('data-sicip-custom-nav','1');link.setAttribute('data-jefe-form',item[0]);link.dataset.sub='1';link.style.cssText=sub.style.cssText;link.textContent=item[1];link.onclick=function(e){e.stopPropagation();window.SICIPModuleHost?.showReact();history.pushState({},'','/nuevo-tramite?tipo='+item[0]);dispatchEvent(new PopStateEvent('popstate'));setTimeout(function(){window.SICIPModuleHost?.activate(link);},50);};p.appendChild(link);});
-"""
-s=s.replace(anchor,extra+anchor);p.write_text(s)
 # Keep operational caches revalidated when deploying changes to the same URLs.
 p=out/'_headers';p.write_text(p.read_text()+'\n/sicip-central/*\n  Cache-Control: no-cache\n')
 change('sicip-recepciones-module.js',"    return /\\/recepciones/.test(location.pathname) || /\\/recepciones/.test(location.hash);", "    if(document.querySelector('#sicip-pases-view,#sicip-herramientas-view,[data-sicip-cr-panel],[data-sicip-module-panel]:not([data-sicip-recepciones-panel])'))return false;\n    return /\\/recepciones/.test(location.pathname) || /\\/recepciones/.test(location.hash);")
@@ -52,3 +46,5 @@ s=s.replace('  function showMiCuadro(button) {',helper+'  function showMiCuadro(
 s=s.replace('    container.appendChild(asignacionDiv);','    container.appendChild(asignacionDiv);\n    refreshPostulaciones(matricula,asignacionDiv);')
 s=s.replace("    if (window.SICIPModuleHost && button) window.SICIPModuleHost.activate(button);\n  }\n\n  function showResumenPublic", "    if (window.SICIPModuleHost && button) window.SICIPModuleHost.activate(button);\n    refreshPostulaciones(getUsuario().matricula,document.querySelector('[data-sicip-cr-panel]'));\n  }\n\n  function showResumenPublic")
 p.write_text(s)
+# Embedded Administration content belongs to React and survives temporary custom modules.
+change('sicip-module-host.js',"    document.querySelectorAll(CUSTOM_SELECTOR).forEach(function (node) {\n      node.remove();\n    });", "    document.querySelectorAll(CUSTOM_SELECTOR).forEach(function (node) {\n      if(!node.hasAttribute('data-central-embedded'))node.remove();\n    });")
