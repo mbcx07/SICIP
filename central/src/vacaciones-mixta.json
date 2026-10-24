@@ -1,0 +1,7 @@
+{
+  "version": "MIXTA-USUARIO-20261024-v1",
+  "fuente": "Aclaración operativa del administrador, 24/10/2026",
+  "alcance": "Acumulada sábado y domingo más una guardia semanal entre lunes y viernes, diurna o nocturna, con horario confirmado por jornada.",
+  "equivalencias": {"10": {"FIN_SEMANA": 4, "GUARDIA_EXTRA": 2}},
+  "nota": "Dos fines de semana son cuatro jornadas. No se extrapola esta equivalencia a otras cantidades de días."
+}
