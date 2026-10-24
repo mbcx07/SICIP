@@ -13,9 +13,9 @@ if (ROOT/'public/examenes').exists():
 for name in ['client.mjs','domain.mjs','bootstrap.js','normalize-worker.js']:shutil.copy2(ROOT/'src'/name,public/name)
 subprocess.run(['node',str(ROOT/'scripts/patch-bundle.mjs'),str(a.out/'assets/index-C_U711P-.js')],check=True)
 for html in [a.out/'index.html',a.out/'pases/index.html',a.out/'fuerza-trabajo/calculadora-nivelacion.html']:
- s=html.read_text();tag='<script src="/sicip-central/bootstrap.js?v=20261024-avisos1"></script><link rel="stylesheet" href="/sicip-central/central.css?v=20261024-avisos1">'
+ s=html.read_text();tag='<script src="/sicip-central/bootstrap.js?v=20261024-avisos2"></script><link rel="stylesheet" href="/sicip-central/central.css?v=20261024-avisos2">'
  s=s.replace('<head>','<head>'+tag,1) if '<head>' in s else s.replace('<head\n','<head\n'+tag,1)
- s=re.sub(r'\?v=[A-Za-z0-9_-]+','?v=20261024-avisos1',s);html.write_text(s)
+ s=re.sub(r'\?v=[A-Za-z0-9_-]+','?v=20261024-avisos2',s);html.write_text(s)
 # The calculator must not prefer a hardcoded 2026003 payroll over the active cut.
 p=a.out/'fuerza-trabajo/calculadora-nivelacion.html';s=p.read_text();start=s.index('async function cargarNominas(');end=s.index('\n',start)
 replacement="""async function cargarNominas(){const s=await window.SICIPCentral.load();const c=window.SICIPCentral.current;DATA.nominas=[{id:c.id,nombre:'Base central · '+c.quincena,origen:'Corte activo',data:normalizarTrabajadores(s.people),plazas:s.legacyPlazas}];DATA.activeNominaId=c.id;$('nominaSyncStatus').textContent='Base central · quincena '+c.quincena+' · antigüedad del mismo corte';$('quincena').value=c.quincena;renderNominaSelect()}"""
@@ -60,8 +60,8 @@ p.write_text(s)
 p=a.out/'sicip-panels-v5.js';s=p.read_text().replace("'trabajadores', 'plazas', 'plazas-full', 'usuarios', 'usuarios-full'","'trabajadores', 'plazas', 'plazas-full'")
 s=s.replace("function idbSet(key, value) {","function idbSet(key, value) {\n    if (/^data_(trabajadores|plazas|vacantes|jefesServicio|usuarios)/.test(key)) return Promise.resolve();")
 s=s.replace("function idbGet(key) {","function idbGet(key) {\n    if (/^data_(trabajadores|plazas|vacantes|jefesServicio)/.test(key)) return Promise.resolve(null);")
-p.write_text(s.replace('5.22.5','5.31.0'))
-p=a.out/'sicip-audit-fixes.js';p.write_text(p.read_text().replace('5.22.5','5.31.0'))
+p.write_text(s.replace('5.22.5','5.31.1'))
+p=a.out/'sicip-audit-fixes.js';p.write_text(p.read_text().replace('5.22.5','5.31.1'))
 p=a.out/'sicip-rewards-panel.js';s=p.read_text().replace("if(document.getElementById('sicip-pases-view')||document.getElementById('sicip-herramientas-view'))return false;","if(document.querySelector('#sicip-pases-view,#sicip-herramientas-view,[data-sicip-cr-panel],[data-sicip-recepciones-panel],[data-sicip-faltas-panel],[data-sicip-jefe-panel],[data-sicip-module-panel]'))return false;")
 s=s.replace("    panel.innerHTML='<div class=\"sicip-aura-head\"","    var markup='<div class=\"sicip-aura-head\"")
 s=s.replace("    if(!panel.parentNode)m.insertBefore(panel,m.firstChild);","    if(panel.innerHTML!==markup)panel.innerHTML=markup;\n    if(!panel.parentNode)m.insertBefore(panel,m.firstChild);")
@@ -72,7 +72,7 @@ p.write_text(s)
 p=a.out/'sicip-module-host.js';s=p.read_text().replace("button.removeAttribute('data-sicip-active');","button.removeAttribute('data-sicip-active');\n      button.removeAttribute('aria-current');")
 s=s.replace("button.setAttribute('data-sicip-active', '1');","button.setAttribute('data-sicip-active', '1');\n    button.setAttribute('aria-current','page');")
 p.write_text(s)
-p=a.out/'sw.js';s=p.read_text();s=re.sub("const VERSION = '[^']+';","const VERSION = '20261024-avisos1';",s,count=1);start=s.index("self.addEventListener('push',");s=s[:start]+"importScripts('/sicip-central/push-events.js?v=20261024-avisos1');\n";p.write_text(s)
+p=a.out/'sw.js';s=p.read_text();s=re.sub("const VERSION = '[^']+';","const VERSION = '20261024-avisos2';",s,count=1);start=s.index("self.addEventListener('push',");s=s[:start]+"importScripts('/sicip-central/push-events.js?v=20261024-avisos2');\n";p.write_text(s)
 # Personal source spreadsheets now live in D1, not in publicly downloadable JSON assets.
 private=re.compile(r'^data-(?:usuarios(?:-full)?|trabajadores|jefesServicio|plazas(?:-full)?(?:-\d{7})?|vacantes|ft-(?:trabajadores|nomina-(?:calculo-)?\d{7}|antiguedad|clasificacion))\.json$')
 for file in a.out.glob('data-*.json'):
