@@ -1,3 +1,4 @@
+import './pecv-worker-client.mjs';
 import './personal-modules-client.mjs';
 import './seguimiento-client.mjs';
 import {displayName} from './domain.mjs';
