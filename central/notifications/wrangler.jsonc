@@ -1,0 +1,9 @@
+{
+  "name": "sicip-notificaciones",
+  "main": "../src/notificaciones-dispatch.mjs",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "triggers": {"crons": ["* * * * *"]},
+  "d1_databases": [{"binding":"DB","database_name":"sicip-central","database_id":"f357c36f-3a7e-4e53-b575-0dd5ccb76796"}],
+  "vars": {"VAPID_SUBJECT":"https://sicip-bcs.pages.dev"}
+}

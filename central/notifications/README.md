@@ -1,0 +1,27 @@
+# Avisos y recepción · SICIP 5.31
+
+PECV conserva sus dos entradas: Solicitudes personales y Departamento de Personal → Vacaciones. La impresión y el folio V corresponden al mismo expediente. Recepciones resuelve P, C y V desde el servidor, tanto por cámara como captura manual. Sólo Personal confirma la entrega física; guarda actor/fecha, un único evento y una única notificación. Recibir no autoriza, no certifica y no descuenta días. Los documentos capturados manualmente también generan un aviso. Mis trámites y el historial PECV muestran su entrega.
+
+Contacto y avisos permite registrar correo IMSS (@imss.gob.mx), personal o ambos. Al menos uno es obligatorio; hay aviso inicial obligatorio y comprobación del servidor para las solicitudes personales centrales. El registro vive en D1, separado de las cargas quincenales. No sustituye ni modifica nombres del padrón. Cada dirección se verifica mediante código de seis dígitos, de un solo uso y 15 minutos, con límite de intentos y reenvíos. Cambiarla invalida su verificación y los envíos pendientes a la dirección anterior.
+
+## Push con la aplicación cerrada
+
+El permiso de Notification por sí solo no registra un dispositivo. La nueva pantalla solicita permiso, crea una suscripción PushManager y la guarda por matrícula en el servidor. El service worker recibe push independientemente de una página abierta; al pulsar el aviso abre Mis trámites. En iPhone/iPad requiere aplicación agregada a pantalla de inicio e iOS 16.4 o posterior. En Android requiere navegador compatible y permiso. El dispositivo necesita conectividad; el ahorro de batería y las preferencias del sistema pueden retrasar la recepción. La interfaz muestra registro real, desactivación y prueba en cola; no promete entrega por sólo conceder el permiso.
+
+Se reemplazó el sondeo de data-notificaciones.json y la falsa confirmación de avisos locales. Los avisos, sus lecturas, suscripciones y cola viven en D1. Las solicitudes notifican envío/certificación/autorización/devolución/cancelación/pagos y recepción. Contratación avisa a titular y suplente; currículums avisan a trabajador y destinatario. Un importador con cursor conecta los avisos nuevos de módulos anteriores, sin reenviar el histórico. Su estado se muestra a Administración.
+
+Web Push usa RFC 8291 (ECDH, HKDF, aes128gcm) y RFC 8292 (VAPID ES256), mediante WebCrypto, sin servicios públicos intermedios. Sólo se aceptan endpoints HTTPS de los proveedores de push conocidos. Las suscripciones caducadas se eliminan; los trabajos comprueban matrícula actual del dispositivo antes de enviar. Al cerrar sesión se retira la suscripción de ese equipo. No se incluyen datos laborales sensibles en la pantalla bloqueada.
+
+## Despliegue
+
+Aplicar `notifications/schema.sql` una vez a D1 (aditivo e idempotente). Pages y el Worker `sicip-notificaciones` usan el mismo D1 y las mismas claves VAPID. `configure.py --key-file /ruta/privada/keys.json --pages --worker` genera claves sólo si el archivo no existe y conserva las originales. No versionar este archivo ni imprimir sus valores. El Worker se despliega con `wrangler deploy --config central/notifications/wrangler.jsonc`, con cron cada minuto. Cloudflare puede tardar hasta 15 minutos en propagar un cron nuevo. Pages intenta un envío en segundo plano después de guardar; el cron procesa la cola restante y reintenta fallos temporales. El cron no depende de sesiones abiertas. Las notificaciones y sus canales se encolan con deduplicación; los envíos usan leases y retroceso exponencial. Correo incluye Idempotency-Key. Web Push usa tag estable para actualizar el mismo aviso en caso de reintento.
+
+Administración puede consultar `/api/notificaciones/diagnostico`: última ejecución, última ejecución cron, importación de avisos, cantidades por canal/estado, sin claves ni direcciones ajenas. ACEPTADO_PROVEEDOR indica aceptación por el servicio, no prueba de recepción/lectura física. La prueba final en un teléfono requiere activación y consentimiento en ese dispositivo.
+
+## Correo: integración preparada, proveedor pendiente
+
+No se encontraron credenciales de correo en la cuenta. El registro de direcciones funciona; la interfaz informa que el envío está pendiente. No se simula un envío ni se manda a direcciones sin verificar. Para activar el transporte integrado, crear un servicio de correo transaccional en Resend y autorizar un dominio/remitente que la organización controle. Configurar `RESEND_API_KEY` y `MAIL_FROM` como secretos en **ambos** entornos de Pages y en el Worker de notificaciones; volver a desplegar Pages. No usar una dirección @imss.gob.mx como remitente sin autorización de su dominio. El trabajador puede recibir en IMSS, personal o ambos sin importar el dominio remitente. Las claves van en el vault, nunca en el repositorio ni en el chat.
+
+## Verificación
+
+Pruebas de API: privacidad por matrícula, contacto obligatorio, correo válido/confirmado, cuotas de códigos, endpoints push, cambio de propietario, entrega única, estados, reintentos e idempotencia. Cifrado descifrado y VAPID verificado con implementación independiente node:crypto. Service worker probado sin ventanas abiertas y navegación restringida al mismo origen. Navegador: registro de contacto/dispositivo simulado, seguimiento, cámara simulada con QR decodificado usando jsQR real, impresión PECV y móvil. Las pruebas usan cuentas y datos sintéticos, sin mensajes reales. Pases, contratación y vacaciones conservan sus pruebas de regresión.

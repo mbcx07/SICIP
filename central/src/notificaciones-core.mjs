@@ -1,0 +1,8 @@
+const prepare=(env,s,...p)=>env.DB.prepare(s).bind(...p);
+export function avisoSQL(env,{key,matricula,titulo,mensaje,url='/mis-tramites',gate='',params=[]}){return prepare(env,`INSERT INTO notificaciones(id,event_key,matricula,titulo,mensaje,url,fecha) SELECT ?,?,?,?,?,?,?${gate?' WHERE '+gate:''} ON CONFLICT(event_key) DO NOTHING`,crypto.randomUUID(),key,matricula,titulo,mensaje,url,new Date().toISOString(),...params);}
+export const sha=async s=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))).map(b=>b.toString(16).padStart(2,'0')).join('');
+export const b64=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+export const unb64=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
+export function pushEndpoint(s){try{const u=new URL(s);return u.protocol==='https:'&&!u.username&&!u.password&&!u.port&&!u.hash&&s.length<=2048&&(u.hostname==='fcm.googleapis.com'||u.hostname==='updates.push.services.mozilla.com'||u.hostname.endsWith('.push.services.mozilla.com')||u.hostname==='web.push.apple.com'||u.hostname.endsWith('.push.apple.com')||u.hostname.endsWith('.notify.windows.com'));}catch{return false;}}
+export function correo(s,tipo){s=String(s||'').trim().toLowerCase();if(!s)return '';if(s.length>254||! /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+$/.test(s)||tipo==='institucional'&&!s.endsWith('@imss.gob.mx'))throw Error(tipo==='institucional'?'Usa tu correo institucional @imss.gob.mx.':'Revisa el correo personal.');return s;}
+export const emailReady=env=>!!(env.RESEND_API_KEY&&env.MAIL_FROM);

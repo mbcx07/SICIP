@@ -60,3 +60,9 @@ s=s.replace("await fsCreate('recepcionesDocumentos', recepcionData);", "await fs
 p.write_text(s)
 
 p=out/'sicip-pases-storage.js';s=p.read_text().replace('El historial se guarda en este navegador. Descarga un respaldo para conservarlo o llevarlo a otro equipo.', 'Los pases nuevos se sincronizan con el servidor. El respaldo conserva también los registros anteriores de este navegador.');p.write_text(s)
+
+# Central folios use the same authenticated receipt path for manual capture and camera QR.
+p=out/'sicip-recepciones-module.js';s=p.read_text();needle='    var foundData = qrData || { folio: folio };';assert needle in s;s=s.replace(needle,"    if(window.SICIPRecepcion&&await window.SICIPRecepcion.buscar(folio,resultDiv))return;\n"+needle,1);p.write_text(s)
+
+# Acknowledgments for documents entered without a central QR also notify the employee.
+p=out/'sicip-recepciones-module.js';s=p.read_text();s=s.replace("fsCreate('recepcionesDocumentos', dataToSave).then(async function() {", "fsCreate('recepcionesDocumentos', dataToSave).then(async function(savedDocument) {try{await window.SICIPCentral.api('/api/seguimiento/documentos',{method:'POST',body:JSON.stringify({id:savedDocument.id||savedDocument.name?.split('/').pop(),matricula:dataToSave.trabajadorMatricula,tipo:dataToSave.tipo})});}catch(e){toast('La recepción se guardó, pero su aviso está pendiente. '+e.message,'error');}",1);p.write_text(s)
