@@ -1,5 +1,6 @@
+import {limitesProgramacion,motivoRol,validarNumero,primerPeriodo} from './vacaciones-reglas.mjs';
 import {calendarioVacaciones} from './vacaciones-domain.mjs';
-export const VERSION='VAC-2027-C273-C274-20260901-v1';
+export const VERSION='VAC-2027-C273-C274-20260901-v2';
 export const FUENTES=[{clave:'CIRCULAR-274-2027',paginas:[3,5,6,7,8]},{clave:'CIRCULAR-273-2027',paginas:[2,3,4,6,7]},{clave:'LINEAMIENTOS-CV-2027',paginas:[1,2]},{clave:'INSTRUCTIVO-CV-2027',paginas:[6,9,10,11,12,13]}];
 export const ROLES=['01-18','02-02','02-16','03-02','03-17','04-02','04-19','05-03','05-24','06-07','06-21','07-05','07-19','08-02','08-16','08-30','09-13','09-29','10-18','11-01','11-16','11-30','12-14','12-28'].map((v,i)=>({numero:i+1,inicio:'2027-'+v,tipo:i%2?'B':'A'}));
 export const FESTIVOS=['2027-01-01','2027-02-01','2027-03-15','2027-03-25','2027-03-26','2027-03-27','2027-05-01','2027-05-10','2027-06-06','2027-09-15','2027-09-16','2027-11-15','2027-12-25','2028-01-01'];
@@ -27,7 +28,7 @@ export function cuotaDias(d){
  if(marca==='3'){const days=Number(d.dias_certificados);if(!d.referencia||!Number.isInteger(days)||days<10||days>15)throw Error('La marca 3 requiere certificar de 10 a 15 días del segundo periodo, según recibo SIAP.');return days;}return 15+Math.min(years,5);
 }
 export function validarPeriodo(d){
- const total=cuotaDias(d),errors=[];if(Number(d.anio)!==2027)errors.push('Los lineamientos publicados en este módulo corresponden a programación 2027.');
+ validarNumero(d);const total=cuotaDias(d),errors=[];if(Number(d.anio)!==2027)errors.push('Los lineamientos publicados en este módulo corresponden a programación 2027.');
  if(!String(d.numero||'').match(/^[A-Za-z0-9._-]{1,30}$/))errors.push('Indica el número oficial del periodo, sin espacios.');
  if(!d.referencia)errors.push('Captura la referencia de certificación del derecho (recibo o calendario SIAP).');
  if(!d.certificado)errors.push('Personal debe certificar el derecho antes de registrarlo.');
@@ -55,19 +56,18 @@ export function calendarioLaboral(d){
 export function planVacaciones(d,p){
  const days=Number(d.dias),marca=String(p.marca),role=ROLES.find(r=>r.numero===Number(d.rol)),isException=!!d.fuera_calendario;
  if(!Number.isInteger(days)||days<0||days>40)throw Error('Días solicitados inválidos.');
- if(p.modalidad==='EXTRA20'&&['7','8'].includes(marca)){if(days!==0)throw Error('Esta marca no genera ausencia.');fecha(d.inicio);if(d.inicio.slice(0,4)!=='2027')throw Error('El trámite corresponde a programación 2027.');const advance=(fecha(p.vencimiento)-fecha(d.inicio))/86400000;if(advance>(marca==='8'||p.primer_periodo?0:120))throw Error('La marca no puede anticiparse al vencimiento en ese plazo.');return {jornadas:0,disfrute:[],inicio:d.inicio,fin:d.inicio,regreso:null,dias_derecho:0,fuentes:FUENTES,version:VERSION,sin_disfrute:true};}
+ if(p.modalidad==='EXTRA20'&&['7','8'].includes(marca)){if(days!==0)throw Error('Esta marca no genera ausencia.');fecha(d.inicio);if(d.inicio.slice(0,4)!=='2027')throw Error('El trámite corresponde a programación 2027.');const advance=(fecha(p.vencimiento)-fecha(d.inicio))/86400000;const limit=limitesProgramacion(p);if(advance>limit.dias)throw Error(limit.motivo+' Fecha mínima: '+limit.desde+'.');return {jornadas:0,disfrute:[],inicio:d.inicio,fin:d.inicio,regreso:null,dias_derecho:0,fuentes:FUENTES,version:VERSION,sin_disfrute:true};}
  if(days<1)throw Error('Selecciona días de disfrute.');
  if((p.regimen==='ESTATUTO'&&marca==='0'||p.modalidad==='EXTRA20'||p.regimen==='CCT'&&!['1','4','9'].includes(marca))&&days!==p.total)throw Error('Esta opción exige el disfrute continuo de todos los días certificados del periodo.');
  if(p.regimen==='ESTATUTO'&&['2','3'].includes(marca)){
   const halfLow=Math.floor(p.total/2),halfHigh=Math.ceil(p.total/2);if(![halfLow,halfHigh].includes(days))throw Error('Las dos fracciones de Estatuto deben tener un número semejante de días.');
  }
  if(p.regimen==='CCT'&&['1','4','9'].includes(marca)&&p.modalidad==='NORMAL'&&(days<7||days>10))throw Error('La fracción CCT debe ser de 7 a 10 días.');
- if(!isException){if(!role)throw Error('Selecciona un rol 2027 o documenta programación fuera de calendario.');if(role.tipo==='B'&&(days>10||(p.regimen==='ESTATUTO'?!['2','3'].includes(marca):!(['1','4','9'].includes(marca)||p.modalidad==='EXTRA20'&&marca==='0'))))throw Error('El rol B sólo permite las opciones fraccionadas señaladas en la circular de su régimen.');const shift=(fecha(d.inicio)-fecha(role.inicio))/86400000;if(!Number.isInteger(shift)||Math.abs(shift)>2)throw Error('El ajuste de inicio por descansos debe ser de 1 o 2 días respecto al rol; otro cambio requiere autorización fuera de calendario.');}
+ if(!isException){if(!role)throw Error('Selecciona un rol 2027 o documenta programación fuera de calendario.');const incompatible=motivoRol(role,p,marca,days);if(incompatible)throw Error(incompatible);const shift=(fecha(d.inicio)-fecha(role.inicio))/86400000;if(!Number.isInteger(shift)||Math.abs(shift)>2)throw Error('El ajuste de inicio por descansos debe ser de 1 o 2 días respecto al rol; otro cambio requiere autorización fuera de calendario.');}
  else if(!d.autorizacion)throw Error('Indica la referencia de autorización para salir de calendario.');
  const advance=(fecha(p.vencimiento)-fecha(d.inicio))/86400000;
- const max=p.regimen==='ESTATUTO'||p.primer_periodo||p.modalidad==='EXTRA20'&&marca==='8'?0:p.modalidad==='CUATRIMESTRAL'?105:120;
- if(advance>max)throw Error('La fecha anticipa el vencimiento más de lo permitido ('+max+' días).');
- if(p.primer_periodo&&p.regimen==='ESTATUTO'&&fecha(d.inicio)>fecha(p.vencimiento)+184*86400000)throw Error('El primer periodo de Estatuto debe otorgarse dentro de los seis meses siguientes al año de servicio.');
+ const limit=limitesProgramacion(p);if(advance>limit.dias)throw Error(limit.motivo+' Vencimiento: '+p.vencimiento+'. Fecha mínima: '+limit.desde+'.');
+ if(primerPeriodo(p)&&p.regimen==='ESTATUTO'&&fecha(d.inicio)>fecha(p.vencimiento)+184*86400000)throw Error('El primer periodo de Estatuto debe otorgarse dentro de los seis meses siguientes al año de servicio.');
  if(d.inicio.slice(0,4)!=='2027')throw Error('El inicio debe corresponder al calendario 2027.');
  const jornadas=jornadasEquivalentes(days,d.patron,p.regimen),calendar=calendarioLaboral(d),plan=calendarioVacaciones({inicio:d.inicio,jornadas,calendario:calendar});
  return {...plan,dias_derecho:days,version:VERSION,fuentes:FUENTES,rol:role?.numero||null,horario:{inicio:d.hora_inicio,fin:d.hora_fin},ciclo:d.ciclo,ancla:d.ancla};
