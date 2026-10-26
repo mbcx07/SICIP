@@ -1,13 +1,13 @@
 {
   "name": "sicip-central",
-  "version": "5.33.0",
+  "version": "5.34.0",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
-    "test": "node --test tests/api.test.mjs tests/contratacion.test.mjs tests/seguimiento.test.mjs tests/vacaciones.test.mjs tests/personal-normativa.test.mjs tests/normativas.test.mjs tests/vacaciones-api.test.mjs tests/vac06.test.mjs tests/vacaciones-reglas.test.mjs tests/vacaciones-calendarios.test.mjs tests/pecv-print.test.mjs tests/notificaciones.test.mjs",
+    "test": "node --test tests/api.test.mjs tests/contratacion.test.mjs tests/seguimiento.test.mjs tests/vacaciones.test.mjs tests/personal-normativa.test.mjs tests/normativas.test.mjs tests/vacaciones-api.test.mjs tests/vac06.test.mjs tests/vacaciones-reglas.test.mjs tests/vacaciones-calendarios.test.mjs tests/pecv-print.test.mjs tests/notificaciones.test.mjs tests/gmail-smtp.test.mjs",
     "test:workbook": "node --test tests/workbook.test.mjs",
     "test:browser": "python3 tests/browser.py",
     "test:ux": "python3 tests/ux-browser.py",

@@ -1,6 +1,6 @@
 """Configure Web Push without printing private keys. Requires Cloudflare token in environment.
 Usage: python configure.py --key-file /private/path/keys.json [--pages] [--worker]
-Email: set RESEND_API_KEY and MAIL_FROM secrets on Pages and sicip-notificaciones separately.
+Email: set GMAIL_USER and GMAIL_APP_PASSWORD secrets on Pages and sicip-notificaciones separately.
 """
 import argparse,json,os,subprocess,sys
 from pathlib import Path
@@ -14,9 +14,15 @@ if not a.key_file.exists():
 k=json.loads(a.key_file.read_text());values={'VAPID_PUBLIC_KEY':k['public'],'VAPID_PRIVATE_JWK':json.dumps(k['private'],separators=(',',':')),'VAPID_SUBJECT':'https://sicip-bcs.pages.dev'}
 if a.pages:
  project=api('/pages/projects/sicip-bcs');configs={}
+ # Cloudflare omits secret values on GET: do not overwrite redacted secrets.
+ for config in project['deployment_configs'].values():
+  for name,value in config.get('env_vars',{}).items():
+   if value.get('type')=='secret_text' and not value.get('value') and name not in values:
+    if not os.environ.get(name):raise SystemExit('Falta secreto existente en el entorno: '+name+'. No se modificó Pages.')
+    values[name]=os.environ[name]
  for name in ['preview','production']:
   prior=project['deployment_configs'][name];vars=dict(prior.get('env_vars',{}));existing=vars.get('VAPID_PUBLIC_KEY',{}).get('value');assert not existing or existing==k['public'],'Do not rotate keys: use original key file.'
-  for n,v in values.items():vars[n]={'type':'secret_text' if n=='VAPID_PRIVATE_JWK' else 'plain_text','value':v}
+  for n,v in values.items():vars[n]={'type':'secret_text' if n not in ['VAPID_PUBLIC_KEY','VAPID_SUBJECT'] else 'plain_text','value':v}
   configs[name]={'env_vars':vars}
  api('/pages/projects/sicip-bcs','PATCH',{'deployment_configs':configs});print('Claves push configuradas en Pages preview y producción; valores privados omitidos.')
 if a.worker:
