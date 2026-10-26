@@ -1,4 +1,4 @@
-import {avisoSQL} from './notificaciones-core.mjs';
+import {avisoSQL,estadoSolicitud} from './notificaciones-core.mjs';
 import {configAPI,quincenaDe} from './contratacion-config.mjs';
 import {check,sanitize,STAFF,DESK,catalog} from './contratacion-domain.mjs';
 const unpack=row=>({...row,folio:'C-'+String(row.id).padStart(6,'0'),payload:JSON.parse(row.payload),snapshot:JSON.parse(row.snapshot),plan:JSON.parse(row.plan)});
@@ -39,7 +39,7 @@ export async function coverageAPI(request,env,helpers){
   const date=new Date().toISOString(),eventId=crypto.randomUUID(),statements=[run(env,'UPDATE contrataciones SET estado=?,version=version+1,updated_at=? WHERE uuid=? AND version=?',rule.to,date,id,input.version),run(env,'INSERT INTO contratacion_events SELECT ?,?,?,?,?,? WHERE changes()=1',eventId,id,user.matricula,action,date,JSON.stringify({comentario:comment}))];
   if(action==='ENVIAR'){const d=result.data,j=result.snapshot.jornada;if(j)statements.push(run(env,"INSERT INTO cobertura_reservas SELECT ?,?,? WHERE EXISTS(SELECT 1 FROM contratacion_events WHERE id=?)",id,j.id,j.importe_centavos,eventId));statements.push(run(env,"INSERT INTO cobertura_firmantes SELECT ?,?,?,? WHERE EXISTS(SELECT 1 FROM contratacion_events WHERE id=?) ON CONFLICT(owner,trabajador) DO UPDATE SET jefe=excluded.jefe,dependencia=excluded.dependencia",user.matricula,d.suplente,d.firmante_jefe,d.firmante_dependencia,eventId));}
   if(['DEVOLVER','CANCELAR'].includes(action))statements.push(run(env,'DELETE FROM cobertura_reservas WHERE solicitud=? AND EXISTS(SELECT 1 FROM contratacion_events WHERE id=?)',id,eventId));
-  const datos=JSON.parse(row.payload);for(const mat of new Set([datos.suplente,datos.titular].filter(Boolean)))statements.push(avisoSQL(env,{key:'COB:'+eventId+':'+mat,matricula:mat,titulo:'Actualización de contratación',mensaje:'C-'+String(row.id).padStart(6,'0')+': '+rule.to+'. Consulta tu seguimiento en Mis trámites.',gate:'EXISTS(SELECT 1 FROM contratacion_events WHERE id=?)',params:[eventId]}));
+  const datos=JSON.parse(row.payload);for(const mat of new Set([datos.suplente,datos.titular].filter(Boolean)))statements.push(avisoSQL(env,{key:'COB:'+eventId+':'+mat,matricula:mat,...estadoSolicitud({folio:'C-'+String(row.id).padStart(6,'0'),tipo:'Contratación',estado:rule.to}),gate:'EXISTS(SELECT 1 FROM contratacion_events WHERE id=?)',params:[eventId]}));
   let changed;try{changed=await env.DB.batch(statements);}catch(error){if(String(error.message).includes('Presupuesto'))assert(false,409,'Presupuesto insuficiente: otra solicitud pudo comprometer el saldo. Recarga el catálogo.');throw error;}assert(changed[0].meta.changes===1,409,'La solicitud cambió mientras se procesaba.');
  }
  return json(unpack(await run(env,'SELECT * FROM contrataciones WHERE uuid=?',id).first()));

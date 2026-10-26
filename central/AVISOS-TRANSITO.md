@@ -1,0 +1,7 @@
+# Avisos de tránsito y entrega · 5.33.0
+
+Pases, contratación/coberturas y vacaciones (incluido PECV) notifican a la matrícula del trabajador al quedar enviados o pendientes de entrega. El título es «Solicitud en tránsito», el cuerpo identifica el folio y aclara que todavía no existe acuse de recepción. Contratación conserva los destinatarios vinculados: titular y suplente. No se emite este aviso por guardar un borrador de contratación o vacaciones.
+
+Cuando Personal confirma la recepción por QR o folio se genera «Entregado a Personal», con folio y acceso al acuse en Mis trámites. El acuse no se infiere de una autorización. Los eventos de tránsito y recepción son diferentes; reintentos y recepciones repetidas no duplican los avisos. La recepción manual de un documento con folio central utiliza ese mismo aviso al completar su vinculación; no crea un segundo aviso D para el mismo documento.
+
+Todos estos avisos usan el mismo envío central: notificación dentro de SICIP, push en dispositivos registrados y correo a cada dirección verificada. El transporte de correo requiere RESEND_API_KEY y MAIL_FROM configurados tanto en Pages como en el Worker sicip-notificaciones. A fecha de esta revisión no están configurados: la aplicación debe indicarlo y no afirmar que el correo fue enviado. Las pruebas del transporte se realizan con datos y proveedor simulados, sin enviar mensajes reales. Las instrucciones de configuración están en notifications/README.md.
