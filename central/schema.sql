@@ -69,3 +69,4 @@ CREATE TABLE IF NOT EXISTS notificacion_envios(id TEXT PRIMARY KEY,notificacion 
 CREATE INDEX IF NOT EXISTS notificacion_cola ON notificacion_envios(estado,proximo,lease_until);
 CREATE TABLE IF NOT EXISTS correo_verificaciones(matricula TEXT NOT NULL,tipo TEXT NOT NULL,correo TEXT NOT NULL,hash TEXT NOT NULL,expira INTEGER NOT NULL,intentos INTEGER NOT NULL DEFAULT 0,fecha INTEGER NOT NULL,PRIMARY KEY(matricula,tipo));
 CREATE TABLE IF NOT EXISTS documentos_recibidos(folio TEXT PRIMARY KEY,tipo TEXT NOT NULL,registro TEXT NOT NULL,matricula TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS perfiles_personales(matricula TEXT PRIMARY KEY,payload TEXT NOT NULL CHECK(json_valid(payload)),updated_at TEXT NOT NULL);

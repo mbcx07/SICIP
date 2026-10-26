@@ -1,6 +1,6 @@
 {
   "name": "sicip-central",
-  "version": "5.31.2",
+  "version": "5.32.0",
   "private": true,
   "type": "module",
   "engines": {

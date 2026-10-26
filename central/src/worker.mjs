@@ -42,7 +42,7 @@ async function validateCut(env,id){
 async function api(request,env){
  const url=new URL(request.url),path=url.pathname,method=request.method;
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
- if(path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
+ if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
  if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const c=await run(env,'SELECT institucional,personal FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal),428,'Registra al menos un correo electrónico en Contacto y notificaciones antes de solicitar.');}}
  if(path.startsWith('/api/vacaciones'))return vacacionesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/normativas'))return normativasAPI(request,env,{session,run,json,assert});
