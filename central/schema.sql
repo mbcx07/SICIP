@@ -70,3 +70,9 @@ CREATE INDEX IF NOT EXISTS notificacion_cola ON notificacion_envios(estado,proxi
 CREATE TABLE IF NOT EXISTS correo_verificaciones(matricula TEXT NOT NULL,tipo TEXT NOT NULL,correo TEXT NOT NULL,hash TEXT NOT NULL,expira INTEGER NOT NULL,intentos INTEGER NOT NULL DEFAULT 0,fecha INTEGER NOT NULL,PRIMARY KEY(matricula,tipo));
 CREATE TABLE IF NOT EXISTS documentos_recibidos(folio TEXT PRIMARY KEY,tipo TEXT NOT NULL,registro TEXT NOT NULL,matricula TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS perfiles_personales(matricula TEXT PRIMARY KEY,payload TEXT NOT NULL CHECK(json_valid(payload)),updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS pd44_solicitudes(id INTEGER PRIMARY KEY AUTOINCREMENT,uuid TEXT NOT NULL UNIQUE,request_key TEXT NOT NULL UNIQUE,matricula TEXT NOT NULL,corte TEXT NOT NULL,quincena TEXT NOT NULL,payload TEXT NOT NULL CHECK(json_valid(payload)),snapshot TEXT NOT NULL CHECK(json_valid(snapshot)),estado TEXT NOT NULL DEFAULT 'BORRADOR',version INTEGER NOT NULL DEFAULT 1,creator TEXT NOT NULL,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS pd44_matricula ON pd44_solicitudes(matricula,updated_at);
+CREATE TABLE IF NOT EXISTS pd44_eventos(id TEXT PRIMARY KEY,solicitud TEXT NOT NULL REFERENCES pd44_solicitudes(uuid),accion TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL,detalle TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS pd44_historial ON pd44_eventos(solicitud,fecha);
+CREATE TABLE IF NOT EXISTS pd44_adjuntos(id TEXT PRIMARY KEY,solicitud TEXT NOT NULL REFERENCES pd44_solicitudes(uuid),nombre TEXT NOT NULL,bytes INTEGER NOT NULL,sha256 TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS pd44_archivos(adjunto TEXT NOT NULL REFERENCES pd44_adjuntos(id),numero INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(adjunto,numero));

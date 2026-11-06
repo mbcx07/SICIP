@@ -1,3 +1,4 @@
+import {pd44API} from './pd44-api.mjs';
 import {dispatch} from './notificaciones-dispatch.mjs';
 import {avisoSQL} from './notificaciones-core.mjs';
 import {notificacionesAPI} from './notificaciones-api.mjs';
@@ -44,6 +45,7 @@ async function api(request,env){
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
  if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const c=await run(env,'SELECT institucional,personal FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal),428,'Registra al menos un correo electrónico en Contacto y notificaciones antes de solicitar.');}}
+ if(path==='/api/pd44'||path.startsWith('/api/pd44/'))return pd44API(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/vacaciones'))return vacacionesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/normativas'))return normativasAPI(request,env,{session,run,json,assert});
  if(path==='/api/mis-tramites'||path==='/api/seguimiento/documento'||path==='/api/seguimiento/documentos'||path.startsWith('/api/pases/registros')||path==='/api/seguimiento/recepcion')return seguimientoAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
@@ -144,7 +146,7 @@ async function api(request,env){
  throw new Fault(404,'Ruta no encontrada.');
 }
 export default {async fetch(request,env,ctx){try{
- const url=new URL(request.url);if(url.pathname.startsWith('/api/')){const response=await api(request,env);if(response.ok&&request.method!=='GET'&&/^\/api\/(?:seguimiento|vacaciones|contratacion|postulaciones|pases\/registros|notificaciones\/prueba|contacto\/verificar)/.test(url.pathname)&&ctx.waitUntil)ctx.waitUntil(dispatch(env,{limit:1,source:'pages'}).catch(()=>console.error('SICIP notification dispatch deferred')));return response;}
+ const url=new URL(request.url);if(url.pathname.startsWith('/api/')){const response=await api(request,env);if(response.ok&&request.method!=='GET'&&/^\/api\/(?:pd44|seguimiento|vacaciones|contratacion|postulaciones|pases\/registros|notificaciones\/prueba|contacto\/verificar)/.test(url.pathname)&&ctx.waitUntil)ctx.waitUntil(dispatch(env,{limit:1,source:'pages'}).catch(()=>console.error('SICIP notification dispatch deferred')));return response;}
  if(/^\/data-(?:usuarios(?:-full)?|trabajadores|jefesServicio|plazas(?:-full)?(?:-\d{7})?|vacantes|ft-(?:trabajadores|nomina-\d{7}|antiguedad|clasificacion))\.json$/.test(url.pathname))return json({error:'Consulta estos datos mediante la base central y una sesión válida.'},401);
  if (/^\/(pases|fuerza-trabajo|examenes)\/(?:[^.]*|[^/]+\.html)$/.test(url.pathname)) {try{await session(request,env);}catch(e){if(e.status===401)return Response.redirect(new URL('/login',url),303);throw e;}}
  return await env.ASSETS.fetch(request);

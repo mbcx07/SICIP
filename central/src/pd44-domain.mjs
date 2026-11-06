@@ -1,0 +1,16 @@
+// Adapted from PD44-codigo/lib/validation.mjs supplied by the user.
+export const OPERACIONES={PAGO:'Pago',DESCUENTO:'Descuento',REINTEGRO:'Reintegro',EXCLUSION:'Exclusión',AJUSTE:'Ajuste al histórico de acumulados'};
+export const ESTADOS={BORRADOR:'Borrador',ENVIADA:'En tránsito',RECIBIDA_PERSONAL:'Recibida en Personal',EN_REVISION:'En revisión',PROCEDENTE:'Procedente',IMPROCEDENTE:'Improcedente',ACTUALIZADA_SIAP:'Actualizada en SIAP',CONCLUIDA:'Concluida',DEVUELTA:'Devuelta',CANCELADA:'Cancelada'};
+export const conceptosPD44=['08','10','14','172','173','174','177','29','30','32','33','35','37','48','54','63','972'];
+export const REPORTES={fijos:['MATRÍCULA','CONCEPTO','UNIDADES','IMPORTE','QNA. INICIAL','QNA. FINAL','No. CONTROL','DESCRIPCIÓN','CIFRA CONTROL'],historicos:['MATRÍCULA','CONTADOR','MES','UNID. SUMA','UNID. RESTA','IMP. SUMA','IMP. RESTA','DESCRIPCIÓN','DICE','DEBE DECIR'],una_vez:['MATRÍCULA','CONCEPTO','IMPORTE','UNIDADES','DÍA / GRUPO','JOR. / COMP.','FACTOR 6.º Y 7.º','DESCRIPCIÓN','BASE 22','MARCA','FECHA INICIAL','FECHA FINAL','CIFRA CONTROL']};
+export const folioPD44=id=>'R-'+String(id).padStart(6,'0');
+export function fechaPD44(v){return typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v;}
+export const quincenaPD44=v=>/^20\d{2}0(?:0[1-9]|1\d|2[0-4])$/.test(String(v));
+export function quincenaFecha(v){if(!fechaPD44(v))throw Error('Fecha de incidencia inválida.');return v.slice(0,4)+'0'+String((Number(v.slice(5,7))-1)*2+(Number(v.slice(8,10))<=15?1:2)).padStart(2,'0');}
+const text=(v,max=250)=>{if(v==null)return '';if(typeof v!=='string'||v.trim().length>max)throw Error('Revisa la longitud de los campos.');return v.trim();};
+export function validarPD44(b){
+ const d={};for(const [k,max]of [['operacion',30],['concepto',60],['del',10],['al',10],['quincena_proceso',7],['motivo',4000],['fundamento',1500],['soporte',1000],['jefe',80],['ooad',160],['dependencia',200],['motivo_fuente',500],['pago',250],['descuento',250]])d[k]=text(b[k],max);
+ if(!OPERACIONES[d.operacion]||!d.concepto||!fechaPD44(d.del)||!fechaPD44(d.al)||d.al<d.del||!quincenaPD44(d.quincena_proceso)||!d.motivo||!d.fundamento||!d.jefe||!d.ooad||!d.dependencia)throw Error('Completa operación, concepto, fechas, quincena de proceso, motivo, fundamento y firmante.');
+ d.quincena_incidencia=quincenaFecha(d.del);d.anexos=Number(b.anexos||0);if(!Number.isSafeInteger(d.anexos)||d.anexos<0||d.anexos>999)throw Error('Número de anexos inválido.');return d;
+}
+export function validarSeguimientoPD44(b,old){const d={...old};for(const [k,max]of [['resolucion',2000],['conclusion',4000],['referencia_siap',300],['observaciones',2000]])d[k]=text(b[k]??old[k],max);for(const k of ['recepcion','atencion']){d[k]=text(b[k]??old[k],10);if(d[k]&&!fechaPD44(d[k]))throw Error('Fecha de seguimiento inválida.');}if(d.recepcion&&d.atencion&&d.atencion<d.recepcion)throw Error('La atención no puede ser anterior a la recepción.');if(b.reportes!=null){d.reportes={};for(const [group,fields]of Object.entries(REPORTES)){const rows=b.reportes[group]||[];if(!Array.isArray(rows)||rows.length>5)throw Error('Máximo cinco reportes por grupo.');d.reportes[group]=rows.map(row=>Object.fromEntries(fields.map(f=>[f,text(row[f],120)])));}}return d;}
