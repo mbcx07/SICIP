@@ -76,3 +76,5 @@ CREATE TABLE IF NOT EXISTS pd44_eventos(id TEXT PRIMARY KEY,solicitud TEXT NOT N
 CREATE INDEX IF NOT EXISTS pd44_historial ON pd44_eventos(solicitud,fecha);
 CREATE TABLE IF NOT EXISTS pd44_adjuntos(id TEXT PRIMARY KEY,solicitud TEXT NOT NULL REFERENCES pd44_solicitudes(uuid),nombre TEXT NOT NULL,bytes INTEGER NOT NULL,sha256 TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS pd44_archivos(adjunto TEXT NOT NULL REFERENCES pd44_adjuntos(id),numero INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(adjunto,numero));
+CREATE TABLE IF NOT EXISTS pd44_tabuladores(id TEXT PRIMARY KEY,quincena TEXT NOT NULL,nombre TEXT NOT NULL,hash TEXT NOT NULL,datos TEXT NOT NULL CHECK(json_valid(datos)),fuente TEXT NOT NULL,source_hash TEXT NOT NULL,referencia TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL,UNIQUE(quincena,hash));
+CREATE INDEX IF NOT EXISTS pd44_tab_qna ON pd44_tabuladores(quincena,fecha);
