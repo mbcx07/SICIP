@@ -1,4 +1,4 @@
-# Vacaciones: solicitud física, historial y jornada compartida · 5.39.0
+# Vacaciones: solicitud física, historial y jornada compartida · 5.39.1
 
 ## Captura
 
@@ -16,7 +16,7 @@ Se confirma turno, horas y descansos reales. Horarios por día se capturan únic
 
 Terminar la captura genera `PENDIENTE_AUTORIZACION`: se imprime la VAC-06, se recaban las firmas y se entrega físicamente al Departamento de Personal. No ejecuta ENVIAR, CERTIFICAR ni AUTORIZAR. La huella de los dos calendarios se comprueba de nuevo al guardar.
 
-Una VAC-06 puede contener varios roles del mismo trabajador/año/firmantes, sin repetir casillas. Los expedientes individuales siguen vinculados mediante `vac06_raiz`; la impresión usa un solo folio y QR. Los planes pendientes cuentan para la secuencia de captura y el saldo mostrado, pero no se presentan como vacaciones autorizadas o capturadas en SIAP. Un índice parcial impide duplicar simultáneamente la misma fracción pendiente/recibida.
+Una VAC-06 pendiente puede contener varios roles del mismo trabajador/año/firmantes, sin repetir casillas. Una vez recibida, su composición queda cerrada: los roles adicionales requieren otra solicitud. Los formatos anteriores conservan su historial y no se mezclan con solicitudes nuevas. Los expedientes individuales siguen vinculados mediante `vac06_raiz`; la impresión usa un solo folio y QR. Los planes pendientes cuentan para la secuencia de captura y el saldo mostrado, pero no se presentan como vacaciones autorizadas o capturadas en SIAP. Un índice parcial impide duplicar simultáneamente la misma fracción pendiente/recibida.
 
 Recepción confirma el documento físico por QR o folio. Actualiza todos sus roles a `RECIBIDO_PERSONAL`, guarda acuses/eventos individuales y un solo aviso por documento. Repetir el escaneo no incrementa versiones ni duplica avisos. Recibir no equivale a capturar en SIAP: se conservan las validaciones de PECV que requieren programación reflejada en nómina.
 
