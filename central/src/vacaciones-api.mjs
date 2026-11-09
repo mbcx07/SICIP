@@ -1,4 +1,4 @@
-import {compatibilidadRol,fotoPermitida} from './vacaciones-guia-domain.mjs';
+import {compatibilidadRol,fotoPermitida,TURNOS_VACACIONES,turnoDescripcion} from './vacaciones-guia-domain.mjs';
 import {consultaVacaciones} from './vacaciones-consulta-api.mjs';
 import {avisoSQL,estadoSolicitud,avisoVacacionInicialSQL,sha} from './notificaciones-core.mjs';
 import {limitePECV,CAL_KEYS,validarContinuidadPECV} from './pecv-domain.mjs';
@@ -66,9 +66,9 @@ export async function vacacionesAPI(request,env,h){
  }
  async function secuencia(d,p){
   const pp=p.payload,n=validarNumero({...pp,numero:p.numero}),mark=String(d.marca??pp.marca);let prev=null,phase=0;
-  if(p.regimen==='CCT'&&p.modalidad==='NORMAL'&&mark==='3')phase=n-1;
+  if(p.regimen==='CCT'&&p.modalidad==='NORMAL'&&n%2===0)phase=n-1;
   if(p.modalidad==='CUATRIMESTRAL'&&Number(pp.fase)>1)phase=n-1;
-  if(phase){prev=await run(env,`SELECT r.uuid,r.plan,r.payload FROM vacaciones_registros r JOIN vacaciones_periodos p ON p.id=r.periodo WHERE r.matricula=? AND p.regimen=? AND p.modalidad=? AND CAST(p.numero AS INTEGER)=? AND r.tipo IN ('PROGRAMACION','DIFERIMIENTO') AND r.estado IN ('AUTORIZADA','CAPTURADA_SIAP','DISFRUTADA') ORDER BY r.updated_at DESC LIMIT 1`,p.matricula,p.regimen,p.modalidad,phase).first();assert(prev,409,'Primero programa y autoriza el periodo '+phase+' antes del periodo '+n+'.');const old=JSON.parse(prev.payload),expected=p.modalidad==='NORMAL'?'2':String(pp.marca)==='0'?'0':Number(pp.fase)===2?'2':'5';assert(String(old.marca)===expected,409,'El periodo '+phase+' debe tener marca '+expected+' para encadenar esta solicitud.');const oldPlan=JSON.parse(prev.plan);assert(d.inicio>oldPlan.fin,400,'El segundo periodo debe iniciar después del periodo anterior ('+oldPlan.fin+').');d.antecedente_uuid=prev.uuid;}
+  if(phase){prev=await run(env,`SELECT r.uuid,r.plan,r.payload FROM vacaciones_registros r JOIN vacaciones_periodos p ON p.id=r.periodo WHERE r.matricula=? AND p.regimen=? AND p.modalidad=? AND CAST(p.numero AS INTEGER)=? AND r.tipo IN ('PROGRAMACION','DIFERIMIENTO') AND r.estado IN ('AUTORIZADA','CAPTURADA_SIAP','DISFRUTADA') ORDER BY r.updated_at DESC LIMIT 1`,p.matricula,p.regimen,p.modalidad,phase).first();assert(prev,409,'Primero programa y autoriza el periodo '+phase+' antes del periodo '+n+'.');const old=JSON.parse(prev.payload),expected=p.modalidad==='NORMAL'?'2':String(pp.marca)==='0'?'0':Number(pp.fase)===2?'2':'5';if(p.modalidad!=='NORMAL'||mark==='3')assert(String(old.marca)===expected,409,'El periodo '+phase+' debe tener marca '+expected+' para encadenar esta solicitud.');const oldPlan=JSON.parse(prev.plan);assert(d.inicio>oldPlan.fin,400,'El segundo periodo debe iniciar después del periodo anterior ('+oldPlan.fin+').');d.antecedente_uuid=prev.uuid;}
   if(d.tipo==='PROGRAMACION'){
    const fractions=await run(env,`SELECT r.uuid,r.payload,r.plan FROM vacaciones_reservas v JOIN vacaciones_registros r ON r.uuid=v.registro WHERE v.periodo=? ORDER BY r.id`,p.id).all(),rows=fractions.results;
    const fractional=p.regimen==='ESTATUTO'&&String(pp.marca)==='2'||p.regimen==='CCT'&&p.modalidad==='NORMAL'&&['1','4','9'].includes(String(pp.marca));
@@ -77,6 +77,7 @@ export async function vacacionesAPI(request,env,h){
   }
  }
  async function calculate(d,p){
+  if(d.turno_codigo!=null&&d.turno_codigo!==''){d.turno_codigo=String(Number(d.turno_codigo));assert(Object.hasOwn(TURNOS_VACACIONES,d.turno_codigo),400,'Selecciona un turno válido del 1 al 5.');d.turno_descripcion=turnoDescripcion(d.turno_codigo);}
   const docs={ROL:'PROGRAMACION',VAC06:'PROGRAMACION',PECV:'PECV',MEMORANDUM:'PECV',DIFERIMIENTO:'DIFERIMIENTO',REPOSICION:'REPOSICION'};if(d.documento){assert(docs[d.documento]===d.tipo,400,'El documento no corresponde al trámite seleccionado.');if(d.documento==='VAC06')assert(p.regimen==='CCT',400,'El formato VAC-06 corresponde a CCT; Estatuto utiliza su propio formato.');}if(d.continuar_con)assert(d.tipo==='PROGRAMACION'&&['PECV','MEMORANDUM'].includes(d.continuar_con),400,'Continuación de trámite inválida.');
   d.marca??=p.payload.marca;const effective={...p.payload,total:p.total};if(d.marca!=null){const mark=String(d.marca);const allowed=p.regimen==='ESTATUTO'&&['2','3'].includes(String(p.payload.marca))?['2','3']:p.modalidad==='NORMAL'&&['4','9'].includes(String(p.payload.marca))?['4','9']:[String(p.payload.marca)];assert(allowed.includes(mark),400,'La marca no corresponde a la opción certificada del periodo.');effective.marca=mark;}
   if(p.modalidad==='EXTRA20'&&String(p.payload.marca)==='7'&&d.tipo==='PROGRAMACION'){const linked=await get(d.original);const ordinary=await period(linked.periodo);assert(linked.matricula===p.matricula&&ordinary.modalidad!=='EXTRA20'&&['AUTORIZADA','CAPTURADA_SIAP'].includes(linked.estado)&&linked.plan.inicio===d.inicio,400,'La marca 7 debe enlazarse al inicio de un periodo ordinario autorizado de la misma matrícula.');}

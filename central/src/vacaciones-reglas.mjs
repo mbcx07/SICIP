@@ -17,12 +17,13 @@ export function motivoRol(rol,p,marca,dias){
  if(p.regimen==='ESTATUTO')return ['2','3'].includes(String(marca))?'':'Estatuto: los roles pares B requieren marca 2 o 3 fraccionada.';
  return p.modalidad==='NORMAL'&&['1','4','9'].includes(String(marca))||p.modalidad==='EXTRA20'&&String(marca)==='0'?'':'Esta marca corresponde a periodo largo; selecciona un rol non A.';
 }
+export function marcasSemestrales(numero){const n=Number(numero);return n>0&&n%2===0?['1','3','4','9']:['0','1','2','4','9'];}
 export function validarNumero(p){
  const n=numeroPeriodo(p);if(n===null||n<1)throw Error('Captura el número numérico de periodo que aparece en el tarjetón.');
  if(p.regimen==='ESTATUTO'&&n%2===0)throw Error('El ciclo de Estatuto debe certificarse desde su primer periodo non; la segunda fracción par se enlaza a ese mismo derecho anual.');
  if(p.regimen==='CCT'&&p.modalidad==='NORMAL'){
   if(String(p.marca)==='3'&&n%2!==0)throw Error('Marca 3 cierra el segundo periodo: el número del tarjetón debe ser par y estar precedido por marca 2.');
-  if(['0','1','2','4','9'].includes(String(p.marca))&&n%2!==1)throw Error('El ciclo semestral comienza en un periodo non del tarjetón. Para la segunda fracción selecciona el ciclo ya programado; las marcas 4 y 9 van encadenadas.');
+  if(['0','2'].includes(String(p.marca))&&n%2!==1)throw Error('El segundo periodo no admite marcas 0 ni 2. Selecciona 1, 3, 4 o 9; las marcas 4 y 9 conservan su enlace.');
  }
  if(p.modalidad==='CUATRIMESTRAL'){
   if(n<101)throw Error('Los periodos cuatrimestrales se identifican desde 101 en el tarjetón.');

@@ -1,3 +1,5 @@
+export const TURNOS_VACACIONES={'1':'1-Matutino','2':'2-Vespertino','3':'3-Nocturno','4':'4-Móvil','5':'5-Jornada Acumulada'};
+export function turnoDescripcion(codigo){const value=String(codigo??'').trim(),key=/^\d+$/.test(value)?String(Number(value)):value;return TURNOS_VACACIONES[key]||value||'Sin turno registrado';}
 import {limitesProgramacion,motivoRol} from './vacaciones-reglas.mjs';
 import {rolMadre} from './vacaciones-calendarios.mjs';
 export const MARCAS_GUIA={

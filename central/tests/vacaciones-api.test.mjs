@@ -81,4 +81,13 @@ test('PECV del trabajador usa sólo su matrícula, envía con datos heredados y 
  let form=await(await call('/api/vacaciones/registros/'+child.uuid+'/formato-pecv','GET',null,own)).json();assert.equal(form.clave,'1A74-009-021');assert.equal(form.certificado,null);assert.equal(form.trabajador.matricula,'TESTUSER');assert.equal((await call('/api/vacaciones/registros/'+child.uuid+'/formato-pecv','GET',null,jefe)).status,404);assert.equal((await call('/api/vacaciones/registros/'+child.uuid+'/accion','POST',{version:child.version,accion:'CERTIFICAR',cumplimiento:true},own)).status,403);
  const unchanged=await(await call('/api/vacaciones/registros/'+parent.uuid)).json();assert.deepEqual(unchanged.plan,parent.plan);child=await action(child,'CERTIFICAR',{cumplimiento:true});form=await(await call('/api/vacaciones/registros/'+child.uuid+'/formato-pecv','GET',null,own)).json();assert.equal(form.certificado.matricula,'TESTADMIN');assert.ok(form.certificado.nombre);assert.notEqual(form.certificado.nombre,'FALSO');
 });
+test('segundo periodo acepta 1, 4 y 9 con primer periodo autorizado y conserva turno',async()=>{
+ const response=await call('/api/vacaciones/periodos','POST',{...basePeriod,numero:'4',marca:'1',vencimiento:'2027-07-01'});assert.equal(response.status,201);const b=await response.json();
+ for(const marca of ['1','4','9']){
+  DB.db.prepare('UPDATE vacaciones_periodos SET payload=? WHERE id=?').run(JSON.stringify({...b.payload,marca}),b.id);
+  const req={...baseRequest,periodo:b.id,marca,rol:13,inicio:'2027-07-19',dias:8,turno_codigo:'5'};
+  const result=await call('/api/vacaciones/calcular','POST',req);assert.equal(result.status,200,await result.text());
+  assert.equal((await call('/api/vacaciones/calcular','POST',{...req,turno_codigo:'6'})).status,400);
+ }
+});
 test('antigüedad vigente usa la base activa más nueva y conserva periodos históricos',async()=>{const fresh=fixture(),active='44444444-4444-4444-8444-444444444444';fresh.quincena='2026022';fresh.antiguedad=[{matricula:'TESTUSER',concepto:'DP',anios:9,quincenas:1,dias:2,total_dias:3257}];fresh.counts.antiguedad=1;const before=DB.db.prepare('SELECT snapshot FROM vacaciones_periodos LIMIT 1').get().snapshot;await seed(DB,fresh,active,true);const context=await(await call('/api/vacaciones/trabajador?matricula=TESTUSER&corte='+cut)).json();assert.equal(context.antiguedad_vigente.anios,9);assert.equal(context.antiguedad_vigente.quincena,'2026022');const r=await call('/api/vacaciones/periodos','POST',{...basePeriod,numero:'77'});assert.equal(r.status,400);assert.match((await r.json()).error,/base \(9 años\)/);assert.equal(DB.db.prepare('SELECT snapshot FROM vacaciones_periodos LIMIT 1').get().snapshot,before);});
