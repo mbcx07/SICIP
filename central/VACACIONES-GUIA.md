@@ -33,3 +33,13 @@ Excel `.xlsx` incluye identificación, periodo, marca, fuente, antigüedad certi
 - Sin migración de tablas: los campos nuevos se conservan en payloads versionados; los registros anteriores permanecen intactos.
 
 Pruebas con datos sintéticos: consultas previas sin escritura, 120/105 días, roles cortos incompatibles, secuencia, acumulada con festivo, confirmación de fecha/huella, dos calendarios atómicos, privacidad de foto, filtros y paginación, Excel real leído con openpyxl, VAC-06 en una hoja carta horizontal, informe PDF y vista móvil. La guía no presupone que exista fotografía ni que una base sin datos contenga antigüedad o descansos certificados.
+
+## Presentación y VAC-06 con varios roles (5.38.0)
+
+El calendario conserva la disposición de la tabla del oficio: 24 renglones, inicio, términos por días de derecho y observación A/B. La columna de días seleccionada queda resaltada; la tabla tiene desplazamiento horizontal propio en pantalla pequeña. Seleccionar un rol incompatible muestra su motivo y mantiene bloqueado continuar.
+
+Los horarios diferentes por día se capturan sólo en jornada mixta acumulada; al cambiar a otra jornada se eliminan de la solicitud los horarios particulares. El cálculo identifica inhábiles que coinciden con jornadas del trabajador, incluida la salida de una velada, y muestra el aviso debajo del rol real sin descontar esos días como vacaciones.
+
+Al terminar una programación se puede agregar otro rol a la misma VAC-06. Los expedientes conservan sus derechos, validaciones, estados y calendarios individuales, y se vinculan en D1 mediante `payload.vac06_raiz`. La consulta `/api/vacaciones/registros/:uuid/vac06` recupera el conjunto autorizado para esa cuenta, con sus periodos certificados. La impresión usa el folio y QR del expediente raíz. Se validan trabajador, año, CCT, firmantes y casillas únicas (dos semestrales, tres cuatrimestrales y una extra); no se omiten las restricciones normativas de secuencia. Una inserción condicionada impide dos capturas simultáneas en la misma casilla vinculada. La edición conserva el vínculo y vuelve a comprobar el conjunto.
+
+Folio y QR se imprimen junto a la fecha, arriba a la derecha. La casilla inferior «Quincena de inclusión» queda siempre vacía, incluso si un expediente histórico contiene `v06_qna`, para su llenado manual por el operador.

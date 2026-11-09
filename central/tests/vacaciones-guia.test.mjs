@@ -17,3 +17,14 @@ test('fotografía existente se sirve como imagen privada y no como datos de la c
 test('marcas sin disfrute no exportan la fecha de aplicación como ausencia real',async()=>{const source=await(await api('/api/vacaciones/consulta')).json(),r=source.registros[0],row=filasVacaciones([{...r,plan:{sin_disfrute:true,inicio:'2027-01-18',fin:'2027-01-18',dias_derecho:0,jornadas:0}}])[0];assert.equal(row['Inicio real'],'');assert.equal(row['Última salida real'],'');assert.equal(row['Fecha de aplicación sin disfrute'],'2027-01-18');});
 
 test('turnos conservan código y descripción institucional',()=>{assert.deepEqual(Object.values(TURNOS_VACACIONES),['1-Matutino','2-Vespertino','3-Nocturno','4-Móvil','5-Jornada Acumulada']);assert.equal(turnoDescripcion('01'),'1-Matutino');});
+
+test('VAC06 vincula roles en línea, rechaza casillas repetidas y protege la consulta',async()=>{
+ const c={...cert,numero:'104',modalidad:'CUATRIMESTRAL',radiaciones:true,vencido:true,vencimiento:''};const certResponse=await api('/api/vacaciones/periodos','POST',c);assert.equal(certResponse.status,201,await certResponse.clone().text());const pp=await certResponse.json();
+ const req={...sol,origen:'',periodo:pp.id,rol:5,inicio:'2027-03-17',dias:pp.total,patron:'SEMANAL',ciclo:'1111100',vac06_raiz:record.uuid,request_key:crypto.randomUUID()};
+ const response=await api('/api/vacaciones/registros','POST',req);assert.equal(response.status,201,await response.clone().text());const added=await response.json();
+ const group=await(await api('/api/vacaciones/registros/'+added.uuid+'/vac06')).json();assert.equal(group.raiz,record.uuid);assert.equal(group.folio,record.folio);assert.equal(group.registros.length,2);assert.equal(group.registros[1].periodo.numero,'104');
+ assert.equal((await api('/api/vacaciones/registros/'+record.uuid+'/vac06','GET',null,chief)).status,404);
+ assert.equal((await api('/api/vacaciones/registros','POST',{...req,request_key:crypto.randomUUID()})).status,400);
+ assert.equal((await api('/api/vacaciones/registros','POST',{...req,request_key:crypto.randomUUID(),jefe:'TESTUSER'})).status,400);
+ assert.equal((await api('/api/vacaciones/registros','POST',req,user)).status,403);
+});
