@@ -78,3 +78,7 @@ CREATE TABLE IF NOT EXISTS pd44_adjuntos(id TEXT PRIMARY KEY,solicitud TEXT NOT 
 CREATE TABLE IF NOT EXISTS pd44_archivos(adjunto TEXT NOT NULL REFERENCES pd44_adjuntos(id),numero INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(adjunto,numero));
 CREATE TABLE IF NOT EXISTS pd44_tabuladores(id TEXT PRIMARY KEY,quincena TEXT NOT NULL,nombre TEXT NOT NULL,hash TEXT NOT NULL,datos TEXT NOT NULL CHECK(json_valid(datos)),fuente TEXT NOT NULL,source_hash TEXT NOT NULL,referencia TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL,UNIQUE(quincena,hash));
 CREATE INDEX IF NOT EXISTS pd44_tab_qna ON pd44_tabuladores(quincena,fecha);
+CREATE TABLE IF NOT EXISTS personal_jornadas(matricula TEXT PRIMARY KEY,payload TEXT NOT NULL CHECK(json_valid(payload)),version INTEGER NOT NULL DEFAULT 1,actor TEXT NOT NULL,fecha TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS personal_jornada_audit(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL,detalle TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS personal_jornada_guard(id TEXT PRIMARY KEY,value INTEGER NOT NULL CHECK(value=1));
+CREATE UNIQUE INDEX IF NOT EXISTS vacaciones_solicitud_casilla ON vacaciones_registros(periodo,COALESCE(json_extract(payload,'$.fraccion'),1)) WHERE json_extract(payload,'$.flujo')='SOLICITUD_FIRMAS' AND estado IN ('PENDIENTE_AUTORIZACION','RECIBIDO_PERSONAL');

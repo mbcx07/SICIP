@@ -1,3 +1,4 @@
+import {personalJornadasAPI} from './personal-jornadas.mjs';
 import {pd44API} from './pd44-api.mjs';
 import {dispatch} from './notificaciones-dispatch.mjs';
 import {avisoSQL} from './notificaciones-core.mjs';
@@ -46,6 +47,7 @@ async function api(request,env){
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
  if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const c=await run(env,'SELECT institucional,personal FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal),428,'Registra al menos un correo electrónico en Contacto y notificaciones antes de solicitar.');}}
  if(path==='/api/pd44'||path.startsWith('/api/pd44/'))return pd44API(request,env,{session,account,cleanUser,body,current,run,json,assert});
+ if(path==='/api/personal/jornadas')return personalJornadasAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/vacaciones'))return vacacionesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/normativas'))return normativasAPI(request,env,{session,run,json,assert});
  if(path==='/api/mis-tramites'||path==='/api/seguimiento/documento'||path==='/api/seguimiento/documentos'||path.startsWith('/api/pases/registros')||path==='/api/seguimiento/recepcion')return seguimientoAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
