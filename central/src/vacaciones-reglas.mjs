@@ -7,6 +7,7 @@ export function primerPeriodo(p){const n=numeroPeriodo(p);return p.primer_period
 export function limitesProgramacion(p){
  const primer=primerPeriodo(p),max=p.regimen==='ESTATUTO'||primer||p.modalidad==='EXTRA20'&&String(p.marca)==='8'?0:p.modalidad==='CUATRIMESTRAL'?105:120;
  const base=p.regimen==='ESTATUTO'?'Circular 273, página 4: Estatuto no permite anticipación.':primer?'Circular 274, página 3 / anexo 1: el primer periodo debe estar vencido.':p.modalidad==='CUATRIMESTRAL'?'Circular 274, página 3: hasta 105 días naturales antes del vencimiento.':p.modalidad==='EXTRA20'&&String(p.marca)==='8'?'Anexo 1 y numeral 5.2.54: acumulación requiere el periodo vencido.':'Circular 274, página 3: hasta 120 días naturales antes del vencimiento.';
+ if(p.vencido===true&&!p.vencimiento)return {dias:0,desde:Number(p.anio||2027)+'-01-01',hasta:Number(p.anio||2027)+'-12-31',motivo:'Periodo declarado vencido y certificado por Personal; no se aplica anticipación. No se declaró una fecha exacta de vencimiento.'};
  const desde=p.vencimiento?sumarDias(p.vencimiento,-max):null,year=Number(p.anio||2027);
  return {dias:max,desde:desde&&desde<year+'-01-01'?year+'-01-01':desde,hasta:year+'-12-31',motivo:base};
 }

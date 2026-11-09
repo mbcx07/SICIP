@@ -33,7 +33,7 @@ export function validarPeriodo(d){
  if(!String(d.numero||'').match(/^[A-Za-z0-9._-]{1,30}$/))errors.push('Indica el número oficial del periodo, sin espacios.');
  if(!d.referencia)errors.push('Captura la referencia de certificación del derecho (recibo o calendario SIAP).');
  if(!d.certificado)errors.push('Personal debe certificar el derecho antes de registrarlo.');
- if(!d.vencimiento)errors.push('Captura el vencimiento del derecho.');else fecha(d.vencimiento);
+ if(!d.vencimiento&&d.vencido!==true)errors.push('Captura el vencimiento del derecho o certifica que el periodo está vencido.');else if(d.vencimiento)fecha(d.vencimiento);if(d.regimen==='ESTATUTO'&&primerPeriodo(d)&&!d.vencimiento)errors.push('El primer periodo de Estatuto requiere fecha exacta de vencimiento para validar el plazo de seis meses.');
  if(d.regimen==='ESTATUTO'&&d.marca==='3')errors.push('Certifica el derecho anual con marca 2 y selecciona marca 3 en el trámite de la segunda fracción.');
  if(d.regimen==='ESTATUTO'&&d.marca==='0'&&Number(d.periodos_vencidos)<2)errors.push('Estatuto marca 0 requiere dos periodos vencidos (Circular 273, página 4).');
  if(d.modalidad==='EXTRA20'&&Number(d.antiguedad)<20)errors.push('Revisa la antigüedad efectiva.');return {total,errors};
@@ -61,7 +61,7 @@ export function calendarioLaboral(d){
 export function planVacaciones(d,p){
  const days=Number(d.dias),marca=String(p.marca),role=ROLES.find(r=>r.numero===Number(d.rol)),isException=!!d.fuera_calendario;
  if(!Number.isInteger(days)||days<0||days>40)throw Error('Días solicitados inválidos.');
- if(p.modalidad==='EXTRA20'&&['7','8'].includes(marca)){if(days!==0)throw Error('Esta marca no genera ausencia.');fecha(d.inicio);if(d.inicio.slice(0,4)!=='2027')throw Error('El trámite corresponde a programación 2027.');const advance=(fecha(p.vencimiento)-fecha(d.inicio))/86400000;const limit=limitesProgramacion(p);if(advance>limit.dias)throw Error(limit.motivo+' Fecha mínima: '+limit.desde+'.');return {jornadas:0,disfrute:[],inicio:d.inicio,fin:d.inicio,regreso:null,dias_derecho:0,fuentes:FUENTES,version:VERSION,sin_disfrute:true};}
+ if(p.modalidad==='EXTRA20'&&['7','8'].includes(marca)){if(days!==0)throw Error('Esta marca no genera ausencia.');fecha(d.inicio);if(d.inicio.slice(0,4)!=='2027')throw Error('El trámite corresponde a programación 2027.');const advance=p.vencimiento?(fecha(p.vencimiento)-fecha(d.inicio))/86400000:0;const limit=limitesProgramacion(p);if(advance>limit.dias)throw Error(limit.motivo+' Fecha mínima: '+limit.desde+'.');return {jornadas:0,disfrute:[],inicio:d.inicio,fin:d.inicio,regreso:null,dias_derecho:0,fuentes:FUENTES,version:VERSION,sin_disfrute:true};}
  if(days<1)throw Error('Selecciona días de disfrute.');
  if((p.regimen==='ESTATUTO'&&marca==='0'||p.modalidad==='EXTRA20'||p.regimen==='CCT'&&!['1','4','9'].includes(marca))&&days!==p.total)throw Error('Esta opción exige el disfrute continuo de todos los días certificados del periodo.');
  if(p.regimen==='ESTATUTO'&&['2','3'].includes(marca)){
@@ -71,9 +71,9 @@ export function planVacaciones(d,p){
  if(!isException){if(!role)throw Error('Selecciona un rol 2027 o documenta programación fuera de calendario.');const incompatible=motivoRol(role,p,marca,days);if(incompatible)throw Error(incompatible);const shift=(fecha(d.inicio)-fecha(role.inicio))/86400000;if(!Number.isInteger(shift)||Math.abs(shift)>2)throw Error('El ajuste de inicio por descansos debe ser de 1 o 2 días respecto al rol; otro cambio requiere autorización fuera de calendario.');}
  else if(!d.autorizacion)throw Error('Indica la referencia de autorización para salir de calendario.');
  if(isException&&role&&d.inicio===role.inicio){const incompatible=motivoRol(role,p,marca,days);if(incompatible)throw Error(incompatible);}
- const advance=(fecha(p.vencimiento)-fecha(d.inicio))/86400000;
+ const advance=p.vencimiento?(fecha(p.vencimiento)-fecha(d.inicio))/86400000:0;
  const limit=limitesProgramacion(p);if(advance>limit.dias)throw Error(limit.motivo+' Vencimiento: '+p.vencimiento+'. Fecha mínima: '+limit.desde+'.');
- if(primerPeriodo(p)&&p.regimen==='ESTATUTO'&&fecha(d.inicio)>fecha(p.vencimiento)+184*86400000)throw Error('El primer periodo de Estatuto debe otorgarse dentro de los seis meses siguientes al año de servicio.');
+ if(primerPeriodo(p)&&p.regimen==='ESTATUTO'&&p.vencimiento&&fecha(d.inicio)>fecha(p.vencimiento)+184*86400000)throw Error('El primer periodo de Estatuto debe otorgarse dentro de los seis meses siguientes al año de servicio.');
  if(d.inicio.slice(0,4)!=='2027')throw Error('El inicio debe corresponder al calendario 2027.');
  const jornadas=jornadasEquivalentes(days,d.patron,p.regimen),calendar=calendarioLaboral(d),first=calendar.find(r=>r.laborable&&!r.descanso_obligatorio);if(!first)throw Error('No hay jornada laborable disponible en el ciclo confirmado.');
  if(limit.desde&&first.fecha<limit.desde)throw Error('El ajuste real anticipa el vencimiento más de lo permitido. Fecha mínima: '+limit.desde+'.');
