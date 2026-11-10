@@ -4,16 +4,17 @@ export const MODULOS=[
  ['tramites','Mis Trámites',[['tramites.seguimiento','Seguimiento de mis trámites','solicitudes']]],
  ['solicitudes','Solicitudes personales',[['solicitudes.pases','Solicitar y consultar pases','pases'],['solicitudes.pecv','Mi solicitud de PECV','solicitudes']]],
  ['jefe','Jefe de Servicio',[['jefe.historial','Historial de Trabajador','bandeja'],['jefe.cobertura.nueva','Nueva solicitud de cobertura','contrato'],['jefe.cobertura.historial','Mis solicitudes de cobertura','contrato']]],
- ['personal','Departamento de Personal',[['personal.pases','Trámite de Pases','pases'],['personal.cuadros','Resumen CR','cuadros'],['personal.bandeja','Bandeja de Trámites','bandeja'],['personal.recepcion','Recepciones por QR y folio','recepciones'],['personal.faltas','Control de Faltas','licencias'],['personal.vacaciones','Vacaciones: programación e historial','solicitudes'],['personal.normativas','Normativas y búsqueda','plantilla'],['personal.reclamaciones','Reclamaciones: inclusión y exclusión (PD44)','solicitudes']]],
+ ['personal','Departamento de Personal',[['personal.pases','Trámite de Pases','pases'],['personal.cuadros','Resumen CR','cuadros'],['personal.bandeja','Bandeja de Trámites','bandeja'],['personal.recepcion','Recepciones por QR y folio','recepciones'],['personal.faltas','Control de Faltas','licencias'],['personal.vacaciones','Vacaciones: programación e historial','solicitudes'],['personal.herramientas.nivelacion','Herramientas · Calculadora de Nivelación','herramientas'],['personal.herramientas.conceptos','Herramientas · Conceptos por primera vez','herramientas'],['personal.herramientas.reintegro','Herramientas · Reintegro de Faltas','herramientas'],['personal.normativas','Normativas y búsqueda','plantilla'],['personal.reclamaciones','Reclamaciones: inclusión y exclusión (PD44)','solicitudes']]],
  ['herramientas','Herramientas',[['herramientas.nivelacion','Cálculo de nivelación','herramientas'],['herramientas.fuerza','Fuerza de Trabajo','herramientas'],['herramientas.transporte','Pago de transporte','herramientas']]],
  ['examenes','Exámenes',[['examenes','Exámenes y resultados','solicitudes']]],
  ['administracion','Administración',[['administracion.personal','Personal y Plazas: cuentas y permisos','admin'],['administracion.jornadas','Jornadas, descansos y tabuladores','admin'],['administracion.cortes','Historial de cortes','admin']]]
 ].map(([id,nombre,hijos])=>({id,nombre,hijos:hijos.map(([id,nombre,heredado])=>({id,nombre,heredado}))}));
 export const ACCESOS=MODULOS.flatMap(m=>m.hijos.map(h=>h.id));
 export const esAdmin=u=>['ADMIN','ADMINISTRADOR'].includes(u?.rol);
-export function puede(u,...ids){return esAdmin(u)||!u?.accesosDefinidos||ids.some(id=>u.accesos?.includes(id));}
+export function puede(u,...ids){return esAdmin(u)||!u?.accesosDefinidos||ids.some(id=>u.accesos?.includes(id)||id==='personal.herramientas.nivelacion'&&u.accesos?.includes('herramientas.nivelacion'));}
 export function permisosHeredados(ids){return [...new Set(MODULOS.flatMap(m=>m.hijos).filter(x=>ids.includes(x.id)).map(x=>x.heredado))];}
 export function validarRuta(u,path){if(esAdmin(u)||!u?.accesosDefinidos)return true;
+ if(path.startsWith('/api/herramientas/'))return puede(u,'personal.herramientas.nivelacion','personal.herramientas.conceptos','personal.herramientas.reintegro','herramientas.nivelacion');
  if(path.startsWith('/api/admin/'))return false;
  if(path.startsWith('/api/personal/jornadas'))return puede(u,'personal.vacaciones','jefe.cobertura.nueva','jefe.cobertura.historial');
  if(path.startsWith('/api/vacaciones/mi-pecv'))return puede(u,'solicitudes.pecv');
