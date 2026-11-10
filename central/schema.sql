@@ -82,3 +82,4 @@ CREATE TABLE IF NOT EXISTS personal_jornadas(matricula TEXT PRIMARY KEY,payload 
 CREATE TABLE IF NOT EXISTS personal_jornada_audit(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,actor TEXT NOT NULL,fecha TEXT NOT NULL,detalle TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS personal_jornada_guard(id TEXT PRIMARY KEY,value INTEGER NOT NULL CHECK(value=1));
 CREATE UNIQUE INDEX IF NOT EXISTS vacaciones_solicitud_casilla ON vacaciones_registros(periodo,COALESCE(json_extract(payload,'$.fraccion'),1)) WHERE json_extract(payload,'$.flujo')='SOLICITUD_FIRMAS' AND estado IN ('PENDIENTE_AUTORIZACION','RECIBIDO_PERSONAL');
+CREATE TABLE IF NOT EXISTS admin_personal_operaciones(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,actor TEXT NOT NULL,tipo TEXT NOT NULL,fecha TEXT NOT NULL,huella TEXT NOT NULL,resultado TEXT);

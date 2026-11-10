@@ -1,3 +1,5 @@
+import {adminPersonalAPI} from './admin-personal-api.mjs';
+import {ACCESOS,validarRuta} from './accesos.mjs';
 import {personalJornadasAPI} from './personal-jornadas.mjs';
 import {pd44API} from './pd44-api.mjs';
 import {dispatch} from './notificaciones-dispatch.mjs';
@@ -19,11 +21,11 @@ const run=(env,sql,...params)=>env.DB.prepare(sql).bind(...params);
 const now=()=>Math.floor(Date.now()/1000);
 function value(f){if(!f)return null;if('stringValue'in f)return f.stringValue;if('booleanValue'in f)return f.booleanValue;if('integerValue'in f)return Number(f.integerValue);if('doubleValue'in f)return f.doubleValue;if('arrayValue'in f)return(f.arrayValue.values||[]).map(value);if('mapValue'in f)return Object.fromEntries(Object.entries(f.mapValue.fields||{}).map(([k,v])=>[k,value(v)]));return null;}
 async function account(matricula){const r=await fetch(FIRESTORE+encodeURIComponent(matricula),{signal:AbortSignal.timeout(15000),headers:{Accept:'application/json'}});if(r.status===404)return null;assert(r.ok,503,'No se pudo validar la cuenta. Intenta de nuevo.');const d=await r.json();return Object.fromEntries(Object.entries(d.fields||{}).map(([k,v])=>[k,value(v)]));}
-function cleanUser(raw,matricula){const u={matricula,uid:matricula,nombre:displayName(raw.nombre||matricula),rol:String(raw.rol||'TRABAJADOR').toUpperCase(),activo:raw.activo===true,primerAcceso:raw.primerAcceso!==false};for(const k of ['departamento','departamentoNombre','unidadClave','unidadNombre','puesto','descripcion','tipoContrato'])if(raw[k]!=null)u[k]=raw[k];if(u.rol==='ADMINISTRADOR')u.rol='ADMIN';u.permisos=ADMIN.has(u.rol)?['solicitudes','contrato','cuadros','pases','licencias','recepciones','reportes','plantilla','admin','plazas','vacantes','usuarios','roles','herramientas','bandeja']:Array.isArray(raw.permisos)?raw.permisos:[];return u;}
+function cleanUser(raw,matricula){const u={matricula,uid:matricula,nombre:displayName(raw.nombre||matricula),rol:String(raw.rol||'TRABAJADOR').toUpperCase(),activo:raw.activo===true,primerAcceso:raw.primerAcceso!==false};for(const k of ['departamento','departamentoNombre','unidadClave','unidadNombre','puesto','descripcion','tipoContrato'])if(raw[k]!=null)u[k]=raw[k];if(u.rol==='ADMINISTRADOR')u.rol='ADMIN';u.accesosDefinidos=ADMIN.has(u.rol)||raw.accesosDefinidos===true;u.accesos=ADMIN.has(u.rol)?ACCESOS:Array.isArray(raw.accesos)?raw.accesos.filter(x=>ACCESOS.includes(x)):[];u.permisos=ADMIN.has(u.rol)?['solicitudes','contrato','cuadros','pases','licencias','recepciones','reportes','plantilla','admin','plazas','vacantes','usuarios','roles','herramientas','bandeja']:Array.isArray(raw.permisos)?raw.permisos:[];return u;}
 async function session(request,env,admin=false){
  const token=(request.headers.get('Cookie')||'').match(/(?:^|;\s*)__Host-SICIP_SESSION=([a-f0-9]{64})(?:;|$)/)?.[1];assert(token,401,'Vuelve a iniciar sesión para consultar la base central.');
  const record=await run(env,'SELECT usuario FROM sessions WHERE token_hash=? AND expires>?',await hash(token),now()).first();assert(record,401,'La sesión expiró. Vuelve a iniciar sesión.');const saved=JSON.parse(record.usuario);let user=cleanUser(saved,saved.matricula);
- if(admin){const raw=await account(user.matricula);assert(raw?.activo===true,403,'Cuenta inactiva.');user=cleanUser(raw,user.matricula);assert(ADMIN.has(user.rol),403,'Esta acción requiere un administrador.');}return user;
+ if(admin){const raw=await account(user.matricula);assert(raw?.activo===true,403,'Cuenta inactiva.');user=cleanUser(raw,user.matricula);assert(ADMIN.has(user.rol),403,'Esta acción requiere un administrador.');}assert(validarRuta(user,new URL(request.url).pathname),403,'Tu cuenta no tiene acceso a este módulo.');return user;
 }
 async function namedUser(env,user){const p=await run(env,"SELECT json FROM personas WHERE corte=(SELECT value FROM settings WHERE key='active') AND matricula=?",user.matricula).first();if(p)user.nombre=displayName(JSON.parse(p.json).nombre);return user;}
 async function body(request,max=1024*1024){const declared=Number(request.headers.get('content-length')||0);assert(declared<=max,413,'La solicitud es demasiado grande.');const text=await request.text();assert(new TextEncoder().encode(text).length<=max,413,'La solicitud es demasiado grande.');try{return JSON.parse(text);}catch{throw new Fault(400,'JSON inválido.');}}
@@ -47,6 +49,7 @@ async function api(request,env){
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
  if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const c=await run(env,'SELECT institucional,personal FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal),428,'Registra al menos un correo electrónico en Contacto y notificaciones antes de solicitar.');}}
  if(path==='/api/pd44'||path.startsWith('/api/pd44/'))return pd44API(request,env,{session,account,cleanUser,body,current,run,json,assert});
+ if(path.startsWith('/api/admin/personal/'))return adminPersonalAPI(request,env,{session,body,current,run,json,assert});
  if(path==='/api/personal/jornadas')return personalJornadasAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/vacaciones'))return vacacionesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/normativas'))return normativasAPI(request,env,{session,run,json,assert});
@@ -55,7 +58,7 @@ async function api(request,env){
  if(path==='/api/login'&&method==='POST'){
   const d=await body(request,2048);assert(typeof d.matricula==='string'&&/^[A-Za-z0-9._-]{1,80}$/.test(d.matricula)&&typeof d.password==='string'&&d.password.length>0&&d.password.length<=256,400,'Matrícula o contraseña inválida.');
   const key=await hash((request.headers.get('CF-Connecting-IP')||'local')+':'+d.matricula),ipkey=await hash('ip:'+(request.headers.get('CF-Connecting-IP')||'local'));
-  for(const k of [key,ipkey]){const limit=await run(env,'SELECT intentos FROM auth_limits WHERE key=? AND expires>?',k,now()).first();assert(!limit||limit.intentos<(k===key?8:60),429,'Demasiados intentos. Espera 15 minutos.');}
+  const resetLimit=Number((await run(env,'SELECT value FROM settings WHERE key=?','reset-limite:'+d.matricula).first())?.value||0);for(const k of [key,ipkey]){const limit=await run(env,'SELECT intentos FROM auth_limits WHERE key=? AND expires>?',k,now()).first();assert(!limit||k===key&&limit.expires-900<=resetLimit||limit.intentos<(k===key?8:60),429,'Demasiados intentos. Espera 15 minutos.');}
   const raw=await account(d.matricula),expected=String(raw?.password||d.matricula);const equal=(await hash(d.password))===(await hash(expected));
   if(!raw||raw.activo!==true||!equal){for(const k of [key,ipkey])await run(env,'INSERT INTO auth_limits(key,intentos,expires) VALUES(?,1,?) ON CONFLICT(key) DO UPDATE SET intentos=CASE WHEN expires<? THEN 1 ELSE intentos+1 END,expires=excluded.expires',k,now()+900,now()).run();throw new Fault(401,'No se pudo iniciar sesión. Revisa tus datos o consulta al administrador.');}
   const user=await namedUser(env,cleanUser(raw,d.matricula)),token=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(x=>x.toString(16).padStart(2,'0')).join('');
@@ -66,7 +69,7 @@ async function api(request,env){
  if(path==='/api/logout'&&method==='POST'){const token=(request.headers.get('Cookie')||'').match(/__Host-SICIP_SESSION=([a-f0-9]{64})/)?.[1];if(token)await run(env,'DELETE FROM sessions WHERE token_hash=?',await hash(token)).run();return json({ok:true},200,{'Set-Cookie':'__Host-SICIP_SESSION=; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=0'});}
  if(path==='/api/password'&&method==='POST'){
   const user=await session(request,env),d=await body(request,2048);assert(typeof d.password==='string'&&d.password.length>=8&&d.password.length<=256,400,'Usa una contraseña de 8 a 256 caracteres.');
-  const r=await fetch(FIRESTORE+encodeURIComponent(user.matricula)+'?updateMask.fieldPaths=password&updateMask.fieldPaths=primerAcceso',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{password:{stringValue:d.password},primerAcceso:{booleanValue:false}}})});assert(r.ok,503,'No se pudo cambiar la contraseña.');return json({ok:true});
+  const r=await fetch(FIRESTORE+encodeURIComponent(user.matricula)+'?updateMask.fieldPaths=password&updateMask.fieldPaths=primerAcceso',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{password:{stringValue:d.password},primerAcceso:{booleanValue:false}}})});assert(r.ok,503,'No se pudo cambiar la contraseña.');await run(env,"UPDATE sessions SET usuario=json_set(usuario,'$.primerAcceso',json('false')) WHERE json_extract(usuario,'$.matricula')=?",user.matricula).run();return json({ok:true});
  }
  if(path==='/api/pases/folio'&&method==='POST'){
   const user=await session(request,env);assert((await account(user.matricula))?.activo===true,403,'Cuenta inactiva.');const d=await body(request,2048);assert(typeof d.request_id==='string'&&/^[a-f0-9-]{36}$/.test(d.request_id),400,'Identificador inválido.');
@@ -148,7 +151,7 @@ async function api(request,env){
  throw new Fault(404,'Ruta no encontrada.');
 }
 export default {async fetch(request,env,ctx){try{
- const url=new URL(request.url);if(url.pathname.startsWith('/api/')){const response=await api(request,env);if(response.ok&&request.method!=='GET'&&/^\/api\/(?:pd44|seguimiento|vacaciones|contratacion|postulaciones|pases\/registros|notificaciones\/prueba|contacto\/verificar)/.test(url.pathname)&&ctx.waitUntil)ctx.waitUntil(dispatch(env,{limit:1,source:'pages'}).catch(()=>console.error('SICIP notification dispatch deferred')));return response;}
+ const url=new URL(request.url);if(url.pathname.startsWith('/api/')){const response=await api(request,env);if(response.ok&&request.method!=='GET'&&/^\/api\/(?:admin\/personal|pd44|seguimiento|vacaciones|contratacion|postulaciones|pases\/registros|notificaciones\/prueba|contacto\/verificar)/.test(url.pathname)&&ctx.waitUntil)ctx.waitUntil(dispatch(env,{limit:1,source:'pages'}).catch(()=>console.error('SICIP notification dispatch deferred')));return response;}
  if(/^\/data-(?:usuarios(?:-full)?|trabajadores|jefesServicio|plazas(?:-full)?(?:-\d{7})?|vacantes|ft-(?:trabajadores|nomina-\d{7}|antiguedad|clasificacion))\.json$/.test(url.pathname))return json({error:'Consulta estos datos mediante la base central y una sesión válida.'},401);
  if (/^\/(pases|fuerza-trabajo|examenes)\/(?:[^.]*|[^/]+\.html)$/.test(url.pathname)) {try{await session(request,env);}catch(e){if(e.status===401)return Response.redirect(new URL('/login',url),303);throw e;}}
  return await env.ASSETS.fetch(request);
