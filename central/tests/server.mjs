@@ -4,6 +4,7 @@ import http from 'node:http';import fs from 'node:fs/promises';import path from 
 import worker from '../src/worker.mjs';import{database,seed,fixture,firestoreMock}from './d1-adapter.mjs';
 const root=path.resolve(process.argv[2]||'/workspace/sicip-env/central-release'),DB=database();DB.db.exec(readFileSync(new URL('../schema.sql',import.meta.url),'utf8'));
 let snapshot=fixture();if(process.argv[3]){snapshot=JSON.parse(await fs.readFile(process.argv[3],'utf8'));const names=new Map(snapshot.personas.map((p,i)=>[p.matricula,'PERSONA DE PRUEBA '+String(i+1).padStart(5,'0')]));for(const p of snapshot.personas){p.nombre=names.get(p.matricula);delete p.privado;}for(const p of snapshot.plazas)p.nombre_titular_origen=names.get(p.titular_matricula)||'Sin dato';}
+const {seedCatalogo}=await import('../src/recepcion-catalogo-seed.mjs');await seedCatalogo(DB);
 await seed(DB,snapshot,'11111111-1111-4111-8111-111111111111',true);
 if(process.env.SICIP_TEST_LIBRARY){
  const lib=process.env.SICIP_TEST_LIBRARY,manifest=JSON.parse(await fs.readFile(path.join(lib,'manifest.json'),'utf8'));

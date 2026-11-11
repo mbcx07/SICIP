@@ -1,3 +1,5 @@
+import {recepcionCatalogoAPI} from './recepcion-catalogo-api.mjs';
+import {supervisionCalculosAPI} from './supervision-calculos-api.mjs';
 import {inicioAPI} from './inicio-api.mjs';
 import {incidenciasAPI} from './incidencias.mjs';
 import {unidadesAPI} from './unidades.mjs';
@@ -52,6 +54,8 @@ async function api(request,env){
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
  if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const c=await run(env,'SELECT institucional,personal FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal),428,'Registra al menos un correo electrónico en Contacto y notificaciones antes de solicitar.');}}
+ if(path==='/api/recepcion/catalogo'||path==='/api/admin/recepcion-catalogo')return recepcionCatalogoAPI(request,env,{session,run,json,assert,body});
+ if(path==='/api/admin/herramientas/calculos')return supervisionCalculosAPI(request,env,{session,run,json,assert});
  if(path==='/api/inicio'||path.startsWith('/api/inicio/'))return inicioAPI(request,env,{session,run,json,body,assert});
  if(path==='/api/personal/incidencias')return incidenciasAPI(request,env,{session,account,cleanUser,run,current,body,json,assert});
  if(path.startsWith('/api/unidades/')||path.startsWith('/api/admin/unidades'))return unidadesAPI(request,env,{session,body,current,run,json,assert});

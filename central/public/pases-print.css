@@ -13,7 +13,7 @@
  @page{size:letter portrait;margin:.4in}
  html,body{width:auto!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:visible!important;background:white!important}
  .wrap{width:auto!important;max-width:none!important;padding:0!important;margin:0!important}
- #printArea{display:block!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:visible!important;text-align:left!important}
+ body #printArea{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;width:100%!important;height:auto!important;min-height:10.15in!important;margin:0!important;padding:0!important;overflow:visible!important;text-align:left!important}
  #printArea .pass-document{width:7.5in!important;max-width:100%!important;height:auto!important;margin:0 auto!important;overflow:visible!important;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
  #printArea .pass-document *{overflow:visible!important;text-overflow:clip!important}
  .pass-Stats,.pass-StatsGrid,.pass-Charts,.pass-Sign{break-inside:avoid}
@@ -28,3 +28,5 @@
 .pass-Checks{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 16mm}.pass-Folio{width:16mm;font-size:7pt;gap:2px}.pass-Folio img{width:12mm;height:12mm}.pass-Folio span{white-space:nowrap;word-break:normal}
 /* Compact folio beside QR; keep values on the same baseline as their rules. */
 .pass-Checks{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 33mm;align-items:center;min-height:15mm;padding:4px 0}.pass-Block{align-self:center}.pass-Sub{margin-bottom:3px}.pass-Opts{align-items:center}.pass-Folio{width:33mm;display:grid;grid-template-columns:12mm minmax(0,1fr);gap:2mm;align-items:center;align-self:center;font-size:7pt}.pass-Folio img{width:12mm;height:12mm}.pass-Folio span{white-space:normal;text-align:left;overflow-wrap:anywhere}.pass-HeadLine{align-items:end}.pass-Under{display:flex;align-items:flex-end;min-height:17px;line-height:1.15;padding-bottom:0}.pass-Date{align-items:start}.pass-Date .pass-Line{text-align:center}.pass-Date>span{line-height:17px;align-self:start}.pass-Row.two .pass-Line:last-child,.pass-Row.three .pass-Line:nth-child(2){text-align:center}.pass-Accum .pass-Line{text-align:center!important;vertical-align:baseline;padding-inline:0}
+
+.pass-Row.object{grid-template-columns:max-content minmax(0,1fr) max-content;align-items:end}.pass-Row.object .pass-Accum{clear:none;display:flex;align-items:end;gap:4px;margin:0;font-size:7pt}

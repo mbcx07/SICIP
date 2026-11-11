@@ -94,3 +94,6 @@ CREATE TABLE IF NOT EXISTS aura_participantes(matricula TEXT PRIMARY KEY,desde T
 CREATE TABLE IF NOT EXISTS aura_quincenas(matricula TEXT NOT NULL,quincena TEXT NOT NULL,puntos INTEGER NOT NULL,payload TEXT NOT NULL,actualizado TEXT NOT NULL,PRIMARY KEY(matricula,quincena));
 CREATE TABLE IF NOT EXISTS aura_estado(matricula TEXT NOT NULL,anio TEXT NOT NULL,max_nivel_notificado INTEGER NOT NULL DEFAULT 1,PRIMARY KEY(matricula,anio));
 CREATE TABLE IF NOT EXISTS aura_popups_vistos(matricula TEXT NOT NULL,notificacion TEXT NOT NULL,fecha TEXT NOT NULL,PRIMARY KEY(matricula,notificacion));
+CREATE TABLE IF NOT EXISTS recepcion_catalogo(id TEXT PRIMARY KEY,clave TEXT NOT NULL UNIQUE,categoria TEXT NOT NULL,nombre TEXT NOT NULL,activo INTEGER NOT NULL DEFAULT 1,orden INTEGER NOT NULL DEFAULT 0,version INTEGER NOT NULL DEFAULT 1,actor TEXT NOT NULL,fecha TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS herramientas_calculos_audit(id INTEGER PRIMARY KEY AUTOINCREMENT,request_key TEXT NOT NULL UNIQUE,actor TEXT NOT NULL,nombre_actor TEXT NOT NULL,tipo TEXT NOT NULL,matricula TEXT NOT NULL,fecha TEXT NOT NULL,entrada TEXT NOT NULL,resultado TEXT NOT NULL,tabulador TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS herramientas_audit_actor_fecha ON herramientas_calculos_audit(actor,fecha,id);
