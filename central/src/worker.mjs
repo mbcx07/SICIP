@@ -1,3 +1,4 @@
+import {unidadesAPI} from './unidades.mjs';
 import {herramientasAPI} from './herramientas-api.mjs';
 import {adminPersonalAPI} from './admin-personal-api.mjs';
 import {ACCESOS,validarRuta} from './accesos.mjs';
@@ -49,13 +50,14 @@ async function api(request,env){
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
  if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const c=await run(env,'SELECT institucional,personal FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal),428,'Registra al menos un correo electrónico en Contacto y notificaciones antes de solicitar.');}}
+ if(path.startsWith('/api/unidades/')||path.startsWith('/api/admin/unidades'))return unidadesAPI(request,env,{session,body,current,run,json,assert});
  if(path.startsWith('/api/herramientas/'))return herramientasAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path==='/api/pd44'||path.startsWith('/api/pd44/'))return pd44API(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/admin/personal/'))return adminPersonalAPI(request,env,{session,body,current,run,json,assert});
  if(path==='/api/personal/jornadas')return personalJornadasAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/vacaciones'))return vacacionesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/normativas'))return normativasAPI(request,env,{session,run,json,assert});
- if(path==='/api/mis-tramites'||path==='/api/seguimiento/documento'||path==='/api/seguimiento/documentos'||path.startsWith('/api/pases/registros')||path==='/api/seguimiento/recepcion')return seguimientoAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
+ if(path==='/api/mis-tramites'||path==='/api/seguimiento/documento'||path==='/api/seguimiento/documentos'||path.startsWith('/api/pases/registros')||path==='/api/pases/estadisticas'||path==='/api/seguimiento/recepcion')return seguimientoAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/contratacion'))return coverageAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path==='/api/login'&&method==='POST'){
   const d=await body(request,2048);assert(typeof d.matricula==='string'&&/^[A-Za-z0-9._-]{1,80}$/.test(d.matricula)&&typeof d.password==='string'&&d.password.length>0&&d.password.length<=256,400,'Matrícula o contraseña inválida.');

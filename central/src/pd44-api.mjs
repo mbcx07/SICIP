@@ -1,3 +1,4 @@
+import {filtroUnidades,unidadExpr} from './unidades.mjs';
 import {tarifasPD44} from './pd44-tabuladores-api.mjs';
 import {displayName,searchKey} from './domain.mjs';
 import {avisoSQL,estadoSolicitud} from './notificaciones-core.mjs';
@@ -20,7 +21,7 @@ export async function pd44API(request,env,h){
   return json({persona:{matricula:mat,nombre:displayName(person.nombre),nombre_original:person.nombre,categoria:person.categoria_padron||z[0]?.categoria||'',adscripcion:person.departamento_nombre_padron||z[0]?.departamento_nombre||''},corte:{id:c.id,quincena:c.quincena,archivo:c.source_name},fuente_distinta:c.quincena!==q});
  }
  if(path==='/api/pd44'&&method==='GET'){
-  const page=Number(url.searchParams.get('page')||0);assert(Number.isSafeInteger(page)&&page>=0,400,'Página inválida.');const rows=(await run(env,'SELECT * FROM pd44_solicitudes WHERE (? OR matricula=?) ORDER BY id DESC LIMIT 100 OFFSET ?',desk?1:0,u.matricula,page*100).all()).results;return json({reclamaciones:rows.map(decode),mas:rows.length===100});
+  const page=Number(url.searchParams.get('page')||0);assert(Number.isSafeInteger(page)&&page>=0,400,'Página inválida.');const scope=await filtroUnidades(env,run,u,unidadExpr('snapshot','pd44_solicitudes.matricula'));const rows=(await run(env,'SELECT * FROM pd44_solicitudes WHERE (? OR matricula=?)'+scope.sql+' ORDER BY id DESC LIMIT 100 OFFSET ?',desk?1:0,u.matricula,...scope.params,page*100).all()).results;return json({reclamaciones:rows.map(decode),mas:rows.length===100});
  }
  if(path==='/api/pd44'&&method==='POST'){
   assert(desk,403,'Sólo Personal puede elaborar reclamaciones.');const b=await body(request,18000);assert(/^[a-f0-9-]{36}$/.test(b.request_key||''),400,'Identificador de solicitud inválido.');const prior=await run(env,'SELECT uuid,creator FROM pd44_solicitudes WHERE request_key=?',b.request_key).first();if(prior){assert(prior.creator===u.matricula,409,'Identificador ya utilizado.');return json(await get(prior.uuid));}

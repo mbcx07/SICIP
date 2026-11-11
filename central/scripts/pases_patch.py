@@ -66,3 +66,22 @@ p=out/'sicip-recepciones-module.js';s=p.read_text();needle='    var foundData = 
 
 # Acknowledgments for documents entered without a central QR also notify the employee.
 p=out/'sicip-recepciones-module.js';s=p.read_text();s=s.replace("fsCreate('recepcionesDocumentos', dataToSave).then(async function() {", "fsCreate('recepcionesDocumentos', dataToSave).then(async function(savedDocument) {try{await window.SICIPCentral.api('/api/seguimiento/documentos',{method:'POST',body:JSON.stringify({id:savedDocument.id||savedDocument.name?.split('/').pop(),matricula:dataToSave.trabajadorMatricula,tipo:dataToSave.tipo,folio:dataToSave.folioReferencia})});}catch(e){toast('La recepción se guardó, pero su aviso está pendiente. '+e.message,'error');}",1);p.write_text(s)
+
+# Keep each worker's official unit independent from their service/department.
+p=out/'pases/index.html';s=p.read_text()
+s=s.replace('HOSPITAL GENERAL DE ZONA + MEDICINA FAMILIAR No. 1</div>', "'+esc(p.unidad_nombre||'')+'</div>")
+s=s.replace('<div class="p515Folio"><b>Folio</b><img', '<div class="p515Folio"><img')
+s=s.replace("<span>'+esc(p.folioCorto||p.folio)+'</span></div></div><div class=\"p515Body\">", "<span>Folio: '+esc(p.folioCorto||p.folio)+'</span></div></div><div class=\"p515Body\">")
+s=s.replace("var st=statsFull(p),s=statsFor(p.matricula),f=fechaLarga(p.fecha)", "var st;try{st=await window.SICIPCentral.api('/api/pases/estadisticas?folio='+encodeURIComponent(p.folio));}catch(error){alert('No se pudo actualizar la estadística del pase: '+error.message);return;}var s=st.month,f=fechaLarga(p.fecha)")
+s=s.replace("var totals=st.months.map(function(x){return x.total})", "var totals=st.months.slice(0,st.mes).map(function(x){return x.total})")
+s=s.replace("Math.round(a.total/12)", "st.promedio.toFixed(1)")
+s=s.replace('Math.min.apply(null,totals.concat([0]))','Math.min.apply(null,totals.length?totals:[0])')
+s=s.replace("<b>+0.0%</b>ACTUAL", "<b>'+(st.tendencia===null?'SIN BASE':(st.tendencia>0?'+':'')+st.tendencia.toFixed(1)+'%')+'</b>MES SOLICITADO")
+s=s.replace('Estadística calculada con base en los pases registrados en SICIP correspondientes al trabajador durante el periodo consultado.', 'Estadística del trabajador: acumulado hasta el mes solicitado. Promedio = particulares / meses transcurridos. Tendencia = variación del total contra el mes anterior; sin base cuando el anterior es cero.')
+p.write_text(s)
+
+p=out/'sicip-recepciones-module.js';s=p.read_text();old="      if (!docs || docs.length === 0) {\n        listaDiv.innerHTML";assert old in s;s=s.replace(old,"      docs=await window.SICIPCentral.filtrarDocumentos(docs||[]);\n"+old,1);p.write_text(s)
+
+p=out/'pases/index.html';s=p.read_text();s=s.replace('function loadPasses(){return window.SICIPPasesStorage.read()}','function loadPasses(){var rows=window.SICIPPasesStorage.read();return window.SICIPPasesVisibles?rows.filter(p=>window.SICIPPasesVisibles.has(p.folio)):rows}');s=s.replace('function savePasses(a){window.SICIPPasesStorage.write(a)}','function savePasses(a){var all=new Map(window.SICIPPasesStorage.read().map(p=>[p.folio,p]));a.forEach(p=>all.set(p.folio,p));window.SICIPPasesStorage.write(Array.from(all.values()))}');p.write_text(s)
+
+p=out/'sicip-recepciones-module.js';s=p.read_text().replace("  // ════════════════ LISTA DE RECEPCIONES RECIENTES", "  window.addEventListener('sicip:unidades-cambiadas',()=>{if(document.querySelector('[data-sicip-recepciones-panel]'))cargarRecepcionesRecientes();});\n  // ════════════════ LISTA DE RECEPCIONES RECIENTES",1);p.write_text(s)
