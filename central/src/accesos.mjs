@@ -10,10 +10,13 @@ export const MODULOS=[
  ['administracion','Administración',[['administracion.personal','Personal y Plazas: cuentas y permisos','admin'],['administracion.jornadas','Jornadas, descansos y tabuladores','admin'],['administracion.cortes','Historial de cortes','admin'],['administracion.unidades','Nombres de las unidades de servicio','admin'],['administracion.recepcion','Catálogo de recepción','admin'],['administracion.calculos','Supervisión de cálculos','admin']]]
 ].map(([id,nombre,hijos])=>({id,nombre,hijos:hijos.map(([id,nombre,heredado])=>({id,nombre,heredado}))}));
 export const ACCESOS=MODULOS.flatMap(m=>m.hijos.map(h=>h.id));
+export const VERSION_ACCESOS_TRABAJADOR='trabajador-5.45';
+export const ACCESOS_TRABAJADOR_INICIALES=['inicio','tramites.seguimiento','solicitudes.pases'];
+export function accesosCuenta(raw={}){const worker=String(raw.rol||'TRABAJADOR').toUpperCase()==='TRABAJADOR';return worker&&raw.accesosVersion!==VERSION_ACCESOS_TRABAJADOR?{accesosDefinidos:true,accesos:[...ACCESOS_TRABAJADOR_INICIALES]}:{accesosDefinidos:raw.accesosDefinidos===true,accesos:Array.isArray(raw.accesos)?raw.accesos.filter(x=>ACCESOS.includes(x)):[]};}
 export const esAdmin=u=>['ADMIN','ADMINISTRADOR'].includes(u?.rol);
-export function puede(u,...ids){return esAdmin(u)||!u?.accesosDefinidos||ids.some(id=>u.accesos?.includes(id)||id==='personal.herramientas.nivelacion'&&u.accesos?.includes('herramientas.nivelacion'));}
+export function puede(u,...ids){const a=accesosCuenta(u);return esAdmin(u)||!a.accesosDefinidos||ids.some(id=>a.accesos.includes(id)||id==='personal.herramientas.nivelacion'&&a.accesos.includes('herramientas.nivelacion'));}
 export function permisosHeredados(ids){return [...new Set(MODULOS.flatMap(m=>m.hijos).filter(x=>ids.includes(x.id)).map(x=>x.heredado))];}
-export function validarRuta(u,path){if(esAdmin(u)||!u?.accesosDefinidos)return true;
+export function validarRuta(u,path){u={...u,...accesosCuenta(u)};if(esAdmin(u)||!u?.accesosDefinidos)return true;
  if(path.startsWith('/api/herramientas/'))return puede(u,'personal.herramientas.nivelacion','personal.herramientas.conceptos','personal.herramientas.reintegro','herramientas.nivelacion');
  if(path==='/api/inicio')return puede(u,'inicio');
  if(path==='/api/personal/incidencias')return puede(u,'inicio','personal.faltas','tramites.seguimiento','jefe.historial');

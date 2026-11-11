@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
 import worker from '../src/worker.mjs';import {database,seed,fixture,firestoreMock} from './d1-adapter.mjs';
-const originalFetch=globalThis.fetch;globalThis.fetch=firestoreMock(originalFetch);
+const originalFetch=globalThis.fetch;globalThis.fetch=firestoreMock(originalFetch,['inicio','tramites.seguimiento','solicitudes.pases','cuadros.postular']);
 const DB=database();DB.db.exec(readFileSync(new URL('../schema.sql',import.meta.url),'utf8'));const a='11111111-1111-4111-8111-111111111111',b='22222222-2222-4222-8222-222222222222';await seed(DB,fixture(),a,true);const second=fixture();second.quincena='2026016';await seed(DB,second,b);
 const env={DB,ASSETS:{fetch:()=>Response.json({asset:true})}};let cookie='';
 async function call(path,method='GET',body,session=cookie,origin='https://sicip.test'){const headers={Origin:origin,...(session?{Cookie:session}:{}),...(body?{'Content-Type':'application/json'}:{})};return worker.fetch(new Request('https://sicip.test'+path,{method,headers,...(body?{body:JSON.stringify(body)}:{})}),env,{});}

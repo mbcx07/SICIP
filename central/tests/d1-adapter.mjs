@@ -1,3 +1,4 @@
+import {VERSION_ACCESOS_TRABAJADOR} from '../src/accesos.mjs';
 import {DatabaseSync} from 'node:sqlite';
 export function database(path=':memory:'){
  const db=new DatabaseSync(path);
@@ -14,7 +15,7 @@ export async function seed(db,snapshot,id,active=false){
  if(active)await db.prepare("INSERT INTO settings VALUES('active',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(id).run();
 }
 export function fixture(){return {quincena:'2026015',source_hash:'a'.repeat(64),personas:[{matricula:'TESTADMIN',nombre:'Administración de prueba',status_codigo:'1',tipo_contratacion_clave:'01',tipo_contratacion_codigo:'1',privado:{curp:'PRIVADO'}},{matricula:'TESTUSER',nombre:'Trabajador de prueba',status_codigo:'2',tipo_contratacion_clave:'08',tipo_contratacion_codigo:'8'}],plazas:[{plaza_id:'101',ocupante_matricula:'TESTADMIN',titular_matricula:'TESTADMIN',puesto:'CAT1',departamento:'DEP1'},{plaza_id:'102',ocupante_matricula:null,titular_matricula:'TESTUSER',puesto:'CAT2',departamento:'DEP1'}],antiguedad:[],catalogos:[],counts:{personas:2,plazas:2,antiguedad:0,catalogos:0,ocupadas:1,sin_ocupante:1}};}
-export function firestoreMock(original=globalThis.fetch){return async function(url,options){if(String(url).startsWith('https://firestore.googleapis.com/v1/projects/sicip-bcs/databases/(default)/documents/usuarios/')){
+export function firestoreMock(original=globalThis.fetch,workerAccesos=null){return async function(url,options){if(String(url).startsWith('https://firestore.googleapis.com/v1/projects/sicip-bcs/databases/(default)/documents/usuarios/')){
  const user=decodeURIComponent(String(url).split('/usuarios/')[1].split('?')[0]);if(!['TESTADMIN','TESTUSER','TESTJEFE'].includes(user))return Response.json({error:{message:'not found'}},{status:404});if(options?.method==='PATCH')return Response.json({name:'test'});
- return Response.json({fields:{nombre:{stringValue:user==='TESTADMIN'?'Administración de prueba':'Trabajador de prueba'},rol:{stringValue:user==='TESTADMIN'?'ADMIN':user==='TESTJEFE'?'JEFE_SERVICIO':'TRABAJADOR'},password:{stringValue:'PruebaSegura123!'},activo:{booleanValue:true},primerAcceso:{booleanValue:false}}});
+ return Response.json({fields:{...(user==='TESTUSER'&&workerAccesos?{accesosVersion:{stringValue:VERSION_ACCESOS_TRABAJADOR},accesosDefinidos:{booleanValue:true},accesos:{arrayValue:{values:workerAccesos.map(x=>({stringValue:x}))}}}:{}),nombre:{stringValue:user==='TESTADMIN'?'Administración de prueba':'Trabajador de prueba'},rol:{stringValue:user==='TESTADMIN'?'ADMIN':user==='TESTJEFE'?'JEFE_SERVICIO':'TRABAJADOR'},password:{stringValue:'PruebaSegura123!'},activo:{booleanValue:true},primerAcceso:{booleanValue:false}}});
  }return original(url,options);};}
