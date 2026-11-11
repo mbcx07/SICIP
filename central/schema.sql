@@ -88,3 +88,9 @@ CREATE INDEX IF NOT EXISTS herramientas_casos_consulta ON herramientas_casos(tip
 CREATE TABLE IF NOT EXISTS unidades_servicio(clave TEXT PRIMARY KEY,nombre TEXT NOT NULL,activo INTEGER NOT NULL DEFAULT 1,version INTEGER NOT NULL DEFAULT 1,actor TEXT NOT NULL,fecha TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS personal_unidades(matricula TEXT PRIMARY KEY,unidad TEXT NOT NULL REFERENCES unidades_servicio(clave),version INTEGER NOT NULL DEFAULT 1,actor TEXT NOT NULL,fecha TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS personal_unidades_filtro(matricula TEXT PRIMARY KEY,claves TEXT NOT NULL,version INTEGER NOT NULL DEFAULT 1,fecha TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS personal_incidencias(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,tipo TEXT NOT NULL,fecha TEXT NOT NULL,estado TEXT NOT NULL DEFAULT 'REGISTRADA',payload TEXT NOT NULL,actor TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS personal_incidencias_mat_fecha ON personal_incidencias(matricula,fecha);
+CREATE TABLE IF NOT EXISTS aura_participantes(matricula TEXT PRIMARY KEY,desde TEXT NOT NULL,proxima_revision INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS aura_quincenas(matricula TEXT NOT NULL,quincena TEXT NOT NULL,puntos INTEGER NOT NULL,payload TEXT NOT NULL,actualizado TEXT NOT NULL,PRIMARY KEY(matricula,quincena));
+CREATE TABLE IF NOT EXISTS aura_estado(matricula TEXT NOT NULL,anio TEXT NOT NULL,max_nivel_notificado INTEGER NOT NULL DEFAULT 1,PRIMARY KEY(matricula,anio));
+CREATE TABLE IF NOT EXISTS aura_popups_vistos(matricula TEXT NOT NULL,notificacion TEXT NOT NULL,fecha TEXT NOT NULL,PRIMARY KEY(matricula,notificacion));

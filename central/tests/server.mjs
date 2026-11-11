@@ -16,6 +16,7 @@ if(process.env.SICIP_TEST_LIBRARY){
  console.log('Biblioteca sintética local cargada:',manifest.length,'documentos');
 }
 const prior=fixture();prior.quincena='2026009';await seed(DB,prior,'22222222-2222-4222-8222-222222222222');
+if(process.env.SICIP_TEST_HOME){const {hoyLocal,anteriorQuincena,rangoQuincena}=await import('../src/inicio-domain.mjs');await DB.prepare('INSERT INTO aura_participantes(matricula,desde) VALUES(?,?)').bind('TESTUSER',rangoQuincena(anteriorQuincena(hoyLocal())).inicio).run();}
 const mockedFetch=process.env.SICIP_TEST_ADMIN_ACCOUNTS?adminFirestoreMock(firestoreMock(globalThis.fetch)).send:firestoreMock(globalThis.fetch);globalThis.fetch=async(url,options)=>String(url).endsWith('/documents:runQuery')?Response.json([]):mockedFetch(url,options);
 const mime={'.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.html':'text/html','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webmanifest':'application/manifest+json'};
 const ASSETS={async fetch(request){let name=decodeURIComponent(new URL(request.url).pathname);if(name.endsWith('/'))name+='index.html';let file=path.resolve(root,'.'+name);if(!file.startsWith(root+path.sep))return new Response('',{status:403});try{const s=await fs.stat(file);if(!s.isFile())throw Error();}catch{if(!path.extname(name))file=path.join(root,'index.html');else return new Response('Missing',{status:404});}return new Response(await fs.readFile(file),{headers:{'Content-Type':(mime[path.extname(file)]||'application/octet-stream')+'; charset=utf-8'}});}};

@@ -1,3 +1,4 @@
+import {revisarAuraProgramada} from './aura.mjs';
 import {gmailSend} from './gmail-smtp.mjs';
 import {importarAvisos} from './notificaciones-legacy.mjs';
 import {b64,unb64,pushEndpoint,emailReady} from './notificaciones-core.mjs';
@@ -18,7 +19,7 @@ export async function dispatch(env,{send=fetch,clock=()=>Date.now(),limit=20,sou
   else {const c=await sql(env,'SELECT * FROM contactos WHERE matricula=?',j.matricula).first();let eligible;
    if(p.tipo==='VERIFICACION'){const v=await sql(env,'SELECT * FROM correo_verificaciones WHERE matricula=? AND tipo=?',j.matricula,p.campo).first();eligible=c?.[p.campo]===j.destino&&v?.hash===p.hash&&v.expira>now;}
    else eligible=['institucional','personal'].some(f=>c?.[f]===j.destino&&c[f+'_verificado']);
-   if(!eligible)state='OMITIDO';else if(env.GMAIL_USER&&env.GMAIL_APP_PASSWORD)response=await gmailSend(env,{to:j.destino,subject:p.titulo,id:j.id,text:p.mensaje+'\n\n'+(p.tipo==='VERIFICACION'?'Si no solicitaste este código, ignora este mensaje.':'Consulta el detalle en https://sicip-bcs.pages.dev/mis-tramites')},{connect:smtpConnect});else response=await send('https://api.resend.com/emails',{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+env.RESEND_API_KEY,'Content-Type':'application/json','Idempotency-Key':'sicip-'+j.id},body:JSON.stringify({from:env.MAIL_FROM,to:[j.destino],subject:p.titulo,text:p.mensaje+'\n\n'+(p.tipo==='VERIFICACION'?'Si no solicitaste este código, ignora este mensaje.':'Consulta el detalle en https://sicip-bcs.pages.dev/mis-tramites')})});
+   if(!eligible)state='OMITIDO';else if(env.GMAIL_USER&&env.GMAIL_APP_PASSWORD)response=await gmailSend(env,{to:j.destino,subject:p.titulo,id:j.id,text:p.mensaje+'\n\n'+(p.tipo==='VERIFICACION'?'Si no solicitaste este código, ignora este mensaje.':'Consulta el detalle en https://sicip-bcs.pages.dev'+(typeof p.url==='string'&&/^\/(?!\/)/.test(p.url)?p.url:'/mis-tramites'))},{connect:smtpConnect});else response=await send('https://api.resend.com/emails',{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+env.RESEND_API_KEY,'Content-Type':'application/json','Idempotency-Key':'sicip-'+j.id},body:JSON.stringify({from:env.MAIL_FROM,to:[j.destino],subject:p.titulo,text:p.mensaje+'\n\n'+(p.tipo==='VERIFICACION'?'Si no solicitaste este código, ignora este mensaje.':'Consulta el detalle en https://sicip-bcs.pages.dev'+(typeof p.url==='string'&&/^\/(?!\/)/.test(p.url)?p.url:'/mis-tramites'))})});
   }
   if(response&&state==='PENDIENTE'){attempts++;if(response.ok){state='ACEPTADO_PROVEEDOR';acceptedAt=stamp;accepted++;}else{error='HTTP_'+response.status;if(response.status>=400&&response.status<500&&![408,429,401,403].includes(response.status))state='FALLIDO';}}
  }catch(e){attempts++;error=/^SMTP_[0-9]{3}$/.test(e.message)?e.message:'ERROR_TRANSPORTE';if(/^SMTP_5/.test(error)&&!['SMTP_534','SMTP_535'].includes(error))state='FALLIDO';}
@@ -28,4 +29,4 @@ export async function dispatch(env,{send=fetch,clock=()=>Date.now(),limit=20,sou
  if(source==='cron')await sql(env,"INSERT INTO settings VALUES('notificaciones_last_cron',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",stamp).run();
  return {expandidos:notes.length,procesados:pending.length,aceptados:accepted};
 }
-export default {async scheduled(event,env,ctx){ctx.waitUntil((async()=>{await importarAvisos(env);await dispatch(env);})());},async fetch(){return new Response('Not found',{status:404});}};
+export default {async scheduled(event,env,ctx){ctx.waitUntil((async()=>{await importarAvisos(env);await revisarAuraProgramada(env);await dispatch(env);})());},async fetch(){return new Response('Not found',{status:404});}};

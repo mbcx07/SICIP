@@ -15,6 +15,8 @@ export function puede(u,...ids){return esAdmin(u)||!u?.accesosDefinidos||ids.som
 export function permisosHeredados(ids){return [...new Set(MODULOS.flatMap(m=>m.hijos).filter(x=>ids.includes(x.id)).map(x=>x.heredado))];}
 export function validarRuta(u,path){if(esAdmin(u)||!u?.accesosDefinidos)return true;
  if(path.startsWith('/api/herramientas/'))return puede(u,'personal.herramientas.nivelacion','personal.herramientas.conceptos','personal.herramientas.reintegro','herramientas.nivelacion');
+ if(path==='/api/inicio')return puede(u,'inicio');
+ if(path==='/api/personal/incidencias')return puede(u,'inicio','personal.faltas','tramites.seguimiento','jefe.historial');
  if(path.startsWith('/api/admin/'))return false;
  if(path.startsWith('/api/personal/jornadas'))return puede(u,'personal.vacaciones','jefe.cobertura.nueva','jefe.cobertura.historial');
  if(path.startsWith('/api/vacaciones/mi-pecv'))return puede(u,'solicitudes.pecv');
