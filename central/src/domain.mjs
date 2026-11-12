@@ -1,3 +1,4 @@
+export function givenNames(value){const p=String(value||'').split('/').map(x=>x.trim());return p.length>=3?p.slice(2).join(' ').replace(/\s+/g,' ').trim():String(value||'').trim().split(/\s+/)[0]||'';}
 export function displayName(value){const parts=String(value||'').split('/').map(s=>s.trim());return ((parts.length===3||parts.length===4)&&parts.every(Boolean)?[parts.slice(2).join(' '),parts[0],parts[1]].join(' '):parts.join(' ')).replace(/\s+/g,' ').trim();}
 export const TC = Object.freeze({'01':'Confianza','02':'Base','03':'Temporal','08':'Suplente'});
 export const text = v => v == null ? '' : String(v).trim();

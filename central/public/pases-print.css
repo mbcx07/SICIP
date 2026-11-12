@@ -1,6 +1,6 @@
 /* A single print geometry. Legacy p515 rules do not apply to these classes. */
-#printArea .pass-document{width:7.5in;max-width:100%;margin:0 auto;background:white;color:#111;font:9pt Arial,sans-serif;line-height:1.25;text-align:left;box-sizing:border-box}
-#printArea .pass-document *{box-sizing:border-box;min-width:0}
+:is(#printArea,#pase-pdf-stage) .pass-document{width:7.5in;max-width:100%;margin:0 auto;background:white;color:#111;font:9pt Arial,sans-serif;line-height:1.25;text-align:left;box-sizing:border-box}
+:is(#printArea,#pase-pdf-stage) .pass-document *{box-sizing:border-box;min-width:0}
 .pass-Top{display:grid;grid-template-columns:48px 1fr 110px;align-items:center;gap:10px;margin-bottom:8px}.pass-Logo img{width:44px;height:44px;object-fit:contain}.pass-Title{font-size:12pt;font-weight:bold;text-align:center;margin-bottom:5px}.pass-HeadLine{display:grid;grid-template-columns:105px 1fr;gap:6px;font-size:8pt;margin-top:3px}.pass-Under{border-bottom:1px solid #555;overflow-wrap:anywhere}.pass-Const{text-align:center;font-size:13pt;font-weight:bold}
 .pass-Checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid #444;border-bottom:1px solid #444;padding:6px 0}.pass-Sub{font-weight:bold;margin-bottom:4px}.pass-Opts{display:flex;gap:12px;flex-wrap:wrap}.pass-Opt{display:inline-flex;align-items:center;gap:4px;font-size:8pt}.pass-Circle{display:inline-block;width:11px;height:11px;border:1px solid #222;border-radius:50%}.pass-Circle.sel{background:#005235;box-shadow:inset 0 0 0 2px #fff}
 .pass-Body{padding-top:6px;position:relative}.pass-Date{display:grid;grid-template-columns:minmax(130px,1fr) auto 25px auto 85px auto 45px;align-items:center;gap:5px;margin:6px 0}.pass-Tiny{font-size:6.5pt;text-align:center}.pass-Line{border-bottom:1px solid #333;min-height:17px;padding:1px 3px;overflow-wrap:anywhere;white-space:normal}.pass-Row{display:grid;grid-template-columns:max-content minmax(0,1fr);align-items:end;gap:5px;margin:6px 0}.pass-Row.two{grid-template-columns:max-content minmax(0,1fr) max-content 90px}.pass-Row.three{grid-template-columns:max-content 65px max-content minmax(0,1fr)}
@@ -14,8 +14,8 @@
  html,body{width:auto!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:visible!important;background:white!important}
  .wrap{width:auto!important;max-width:none!important;padding:0!important;margin:0!important}
  body #printArea{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;width:100%!important;height:auto!important;min-height:10.95in!important;margin:0!important;padding:0!important;overflow:visible!important;text-align:left!important}
- #printArea .pass-document{width:7.5in!important;max-width:100%!important;height:auto!important;margin:0 auto!important;overflow:visible!important;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
- #printArea .pass-document *{overflow:visible!important;text-overflow:clip!important}
+ :is(#printArea,#pase-pdf-stage) .pass-document{width:7.5in!important;max-width:100%!important;height:auto!important;margin:0 auto!important;overflow:visible!important;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ :is(#printArea,#pase-pdf-stage) .pass-document *{overflow:visible!important;text-overflow:clip!important}
  .pass-Stats,.pass-StatsGrid,.pass-Charts,.pass-Sign{break-inside:avoid}
  #sicip-pases-backup-controls{display:none!important}
 }
@@ -30,3 +30,6 @@
 .pass-Checks{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 33mm;align-items:center;min-height:15mm;padding:4px 0}.pass-Block{align-self:center}.pass-Sub{margin-bottom:3px}.pass-Opts{align-items:center}.pass-Folio{width:33mm;display:grid;grid-template-columns:12mm minmax(0,1fr);gap:2mm;align-items:center;align-self:center;font-size:7pt}.pass-Folio img{width:12mm;height:12mm}.pass-Folio span{white-space:normal;text-align:left;overflow-wrap:anywhere}.pass-HeadLine{align-items:end}.pass-Under{display:flex;align-items:flex-end;min-height:17px;line-height:1.15;padding-bottom:0}.pass-Date{align-items:start}.pass-Date .pass-Line{text-align:center}.pass-Date>span{line-height:17px;align-self:start}.pass-Row.two .pass-Line:last-child,.pass-Row.three .pass-Line:nth-child(2){text-align:center}.pass-Accum .pass-Line{text-align:center!important;vertical-align:baseline;padding-inline:0}
 
 .pass-Row.object{grid-template-columns:max-content minmax(0,1fr) max-content;align-items:end}.pass-Row.object .pass-Accum{clear:none;display:flex;align-items:end;gap:4px;margin:0;font-size:7pt}
+
+/* Reserve enough room for CONSTANCIA without clipping its final letter. */
+.pass-Top{grid-template-columns:48px minmax(0,1fr) 120px}
