@@ -1,3 +1,4 @@
+import {complementarMando} from './mando.mjs';
 import {givenNames} from './domain.mjs';
 import {directorioAPI} from './directorio-api.mjs';
 import {cambiosPasesAPI} from './pases-cambios.mjs';
@@ -37,7 +38,7 @@ async function session(request,env,admin=false){
  const record=await run(env,'SELECT usuario FROM sessions WHERE token_hash=? AND expires>?',await hash(token),now()).first();assert(record,401,'La sesión expiró. Vuelve a iniciar sesión.');const saved=JSON.parse(record.usuario);let user=cleanUser(saved,saved.matricula);
  if(admin){const raw=await account(user.matricula);assert(raw?.activo===true,403,'Cuenta inactiva.');user=cleanUser(raw,user.matricula);assert(ADMIN.has(user.rol),403,'Esta acción requiere un administrador.');}assert(validarRuta(user,new URL(request.url).pathname),403,'Tu cuenta no tiene acceso a este módulo.');return user;
 }
-async function namedUser(env,user){const p=await run(env,"SELECT json FROM personas WHERE corte=(SELECT value FROM settings WHERE key='active') AND matricula=?",user.matricula).first();if(p){const raw=JSON.parse(p.json).nombre;user.nombre=displayName(raw);user.nombreSaludo=givenNames(raw);}return user;}
+async function namedUser(env,user){const p=await run(env,"SELECT json FROM personas WHERE corte=(SELECT value FROM settings WHERE key='active') AND matricula=?",user.matricula).first();if(p){const raw=JSON.parse(p.json).nombre;user.nombre=displayName(raw);user.nombreSaludo=givenNames(raw);const person=JSON.parse(p.json);if(person.nomina_origen==='MANDO_FEDERAL'){user.puesto=person.puesto_padron;user.descripcion=person.categoria_padron;user.departamento=person.departamento_padron;user.departamentoNombre=person.departamento_nombre_padron;const unit=await run(env,'SELECT u.clave,u.nombre FROM personal_unidades p JOIN unidades_servicio u ON u.clave=p.unidad WHERE p.matricula=?',user.matricula).first();if(unit){user.unidadClave=unit.clave;user.unidadNombre=unit.nombre;}}}return user;}
 async function body(request,max=1024*1024){const declared=Number(request.headers.get('content-length')||0);assert(declared<=max,413,'La solicitud es demasiado grande.');const text=await request.text();assert(new TextEncoder().encode(text).length<=max,413,'La solicitud es demasiado grande.');try{return JSON.parse(text);}catch{throw new Fault(400,'JSON inválido.');}}
 function protectOrigin(request){const origin=request.headers.get('Origin');assert(origin&&origin===new URL(request.url).origin,403,'Origen de solicitud no permitido.');}
 async function current(env,requested){const id=requested||(await run(env,"SELECT value FROM settings WHERE key='active'").first())?.value;assert(id,503,'Aún no hay una quincena activa.');const c=await run(env,'SELECT * FROM cortes WHERE id=? AND status=?',id,'VALIDADO').first();assert(c,404,'No se encontró un corte validado.');return {...c,expected:JSON.parse(c.expected),validation:c.validation?JSON.parse(c.validation):null};}
@@ -46,6 +47,7 @@ async function validateCut(env,id){
  const cut=await run(env,'SELECT * FROM cortes WHERE id=?',id).first();assert(cut,404,'No existe esta carga.');assert(cut.status==='BORRADOR'||cut.status==='VALIDADO',409,'Carga no disponible.');const expected=JSON.parse(cut.expected),counts={};
  for(const table of ['personas','plazas','antiguedad','catalogos'])counts[table]=(await run(env,`SELECT COUNT(*) n FROM ${table} WHERE corte=?`,id).first()).n;
  for(const table of Object.keys(counts))assert(counts[table]===expected.counts[table],409,`Carga incompleta: ${table}, ${counts[table]} de ${expected.counts[table]}.`);
+ await complementarMando(env,id);counts.personas=(await run(env,'SELECT COUNT(*) n FROM personas WHERE corte=?',id).first()).n;
  const orphan=(await run(env,'SELECT COUNT(*) n FROM plazas z LEFT JOIN personas p ON p.corte=z.corte AND p.matricula=z.ocupante WHERE z.corte=? AND z.ocupante IS NOT NULL AND p.matricula IS NULL',id).first()).n;assert(orphan===0,409,'Hay ocupantes que no existen en el padrón.');
  counts.ocupadas=(await run(env,'SELECT COUNT(*) n FROM plazas WHERE corte=? AND ocupante IS NOT NULL',id).first()).n;counts.sin_ocupante=counts.plazas-counts.ocupadas;
  const antOrphans=(await run(env,'SELECT COUNT(*) n FROM antiguedad a LEFT JOIN personas p ON p.corte=a.corte AND p.matricula=a.matricula WHERE a.corte=? AND p.matricula IS NULL',id).first()).n;

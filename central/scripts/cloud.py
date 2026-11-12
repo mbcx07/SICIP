@@ -26,7 +26,7 @@ def seed(database,snapshot_path,record_path,activate=False):
  expected={'counts':s['counts'],'warnings':s.get('warnings',[])[:300],'normalized_hash':digest}
  prior=query(database,'SELECT status,expected FROM cortes WHERE id=?',[id])[0]['results']
  if prior:
-  assert json.loads(prior[0]['expected'])==expected,'El borrador previo tiene otro contenido.'
+  saved=json.loads(prior[0]['expected']);assert {**saved,'counts':{**saved['counts'],'personas':expected['counts']['personas']}}=={**expected,**({'nomina_mando':saved['nomina_mando']} if 'nomina_mando' in saved else {})},'El borrador previo tiene otro contenido.'
  else:query(database,'INSERT INTO cortes(id,quincena,created_at,created_by,source_hash,source_name,expected) VALUES(?,?,?,?,?,?,?)',[id,s['quincena'],datetime.datetime.now(datetime.timezone.utc).isoformat(),'configuracion-cloud',s['source_hash'],s['source_name'],json.dumps(expected,ensure_ascii=False)])
  if not prior or prior[0]['status']!='VALIDADO':
   statements={
@@ -41,9 +41,13 @@ def seed(database,snapshot_path,record_path,activate=False):
     data=[{**r,'search':''.join(c for c in unicodedata.normalize('NFD',r['nombre']+' '+r['matricula']) if not unicodedata.combining(c)).lower()} for r in data]
    for i in range(0,len(data),300):query(database,statements[table],[id,json.dumps(data[i:i+300],ensure_ascii=False,separators=(',',':'))])
    print(s['quincena'],table,len(data),'guardados',flush=True)
+  from mando import aplicar
+  aplicar(database,id)
+  refreshed=query(database,'SELECT expected FROM cortes WHERE id=?',[id])[0]['results'][0]
+  expected=json.loads(refreshed['expected'])
   counts={}
   for table in statements:
-   n=query(database,'SELECT COUNT(*) n FROM '+table+' WHERE corte=?',[id])[0]['results'][0]['n'];assert n==s['counts'][table],table;counts[table]=n
+   n=query(database,'SELECT COUNT(*) n FROM '+table+' WHERE corte=?',[id])[0]['results'][0]['n'];assert n==expected['counts'][table],table;counts[table]=n
   orphan=query(database,'SELECT COUNT(*) n FROM plazas z LEFT JOIN personas p ON p.corte=z.corte AND p.matricula=z.ocupante WHERE z.corte=? AND z.ocupante IS NOT NULL AND p.matricula IS NULL',[id])[0]['results'][0]['n'];assert orphan==0,'Hay ocupantes sin padrón.'
   counts['ocupadas']=query(database,'SELECT COUNT(*) n FROM plazas WHERE corte=? AND ocupante IS NOT NULL',[id])[0]['results'][0]['n'];counts['sin_ocupante']=counts['plazas']-counts['ocupadas']
   query(database,'UPDATE cortes SET status=?,validation=? WHERE id=?',['VALIDADO',json.dumps({'counts':counts,'warnings':s.get('warnings',[])[:300]},ensure_ascii=False),id])

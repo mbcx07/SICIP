@@ -100,3 +100,6 @@ CREATE INDEX IF NOT EXISTS herramientas_audit_actor_fecha ON herramientas_calcul
 CREATE TABLE IF NOT EXISTS pases_eventos(id TEXT PRIMARY KEY,folio TEXT NOT NULL REFERENCES pases_registros(folio),request_key TEXT UNIQUE NOT NULL,huella TEXT NOT NULL,actor TEXT NOT NULL,accion TEXT NOT NULL,motivo TEXT NOT NULL,antes TEXT NOT NULL,despues TEXT NOT NULL,fecha TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS pases_eventos_folio ON pases_eventos(folio,fecha);
 CREATE TABLE IF NOT EXISTS pases_unidad_preferida(matricula TEXT PRIMARY KEY,unidad TEXT NOT NULL REFERENCES unidades_servicio(clave),fecha TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS nomina_mando_fuentes(id TEXT PRIMARY KEY,quincena TEXT NOT NULL,nombre TEXT NOT NULL,fecha TEXT NOT NULL,conteos TEXT NOT NULL CHECK(json_valid(conteos)));
+CREATE TABLE IF NOT EXISTS nomina_mando(matricula TEXT PRIMARY KEY,fuente TEXT NOT NULL REFERENCES nomina_mando_fuentes(id),json TEXT NOT NULL CHECK(json_valid(json)));
+CREATE TABLE IF NOT EXISTS nomina_mando_historial(fuente TEXT NOT NULL REFERENCES nomina_mando_fuentes(id),matricula TEXT NOT NULL,json TEXT NOT NULL CHECK(json_valid(json)),PRIMARY KEY(fuente,matricula));
