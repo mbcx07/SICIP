@@ -1,0 +1,15 @@
+"""Cold worker devices load the complete basic directory without an administrator session."""
+import asyncio
+from playwright.async_api import async_playwright
+HOST='http://127.0.0.1:8010'
+async def main():
+ async with async_playwright() as pw:
+  b=await pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
+  for device in range(2):
+   c=await b.new_context(viewport={'width':1440 if not device else 390,'height':1000 if not device else 844});await c.route('https://**/*',lambda r:r.abort());p=await c.new_page();errors=[];p.on('pageerror',lambda e:errors.append(str(e)));requests=[];p.on('request',lambda r:requests.append(r.url) if '/api/base/directorio?' in r.url else None)
+   await p.goto(HOST+'/login');await p.locator('input[type=text]').first.fill('TESTUSER');await p.locator('input[type=password]').fill('PruebaSegura123!');await p.get_by_role('button',name='Iniciar Sesión',exact=True).click();await p.wait_for_function("window.SICIPCentral?.user?.matricula==='TESTUSER'");await p.goto(HOST+'/pases/index.html?scope=trabajador');await p.get_by_role('combobox',name='Jefe inmediato · nombre o matrícula',exact=True).wait_for(timeout=60000);await p.wait_for_function('window.SICIPPasesGestionLista',timeout=60000)
+   data=await p.evaluate("async()=>{const s=await window.SICIPCentral.load();return {total:s.people.length,catalogos:s.catalogos.length,restriccion:s.catalogos.some(x=>x.tipo==='restriccion'),own:s.personas.map(p=>p.matricula),first:s.people.find(p=>p.matricula==='TESTADMIN'),last:s.people.find(p=>p.matricula==='X13004')}}");assert data['total']==13007 and data['own']==['TESTUSER'];assert data['catalogos']==1105 and not data['restriccion'];assert len(requests)>=14
+   await p.get_by_role('combobox',name='Jefe inmediato · nombre o matrícula',exact=True).fill('X13004');await p.get_by_role('option').filter(has_text='X13004').click();assert await p.locator('#jefeMatricula').input_value()=='X13004';assert 'Cargo sintético 13004' in await p.locator('.signer-search [data-signer-summary]').first.inner_text();await p.get_by_role('combobox',name='Responsable de Personal · nombre o matrícula',exact=True).fill(data['first']['nombre']);await p.get_by_role('option').filter(has_text='TESTADMIN').click();assert await p.locator('#personalMatricula').input_value()=='TESTADMIN';assert 'Jefe del Departamento de Personal' in await p.locator('.signer-search [data-signer-summary]').nth(1).inner_text()
+   own=await p.evaluate("()=>window.SICIPCentral.api('/api/base/datasets/personas')");assert len(own)==1 and own[0]['matricula']=='TESTUSER';assert await p.locator('#matricula').input_value()=='TESTUSER';assert await p.locator('#matricula').get_attribute('readonly') is not None;assert await p.locator('[data-unit-filter]').count()==0;assert await p.evaluate('document.documentElement.scrollWidth<=innerWidth+1');assert not errors,errors;await c.close();print('Dispositivo limpio '+str(device+1)+': 13,007 registros básicos cargados automáticamente; búsqueda de jefe de última página y responsable por nombre; datos personales sólo del usuario.',flush=True)
+  await b.close()
+asyncio.run(main())

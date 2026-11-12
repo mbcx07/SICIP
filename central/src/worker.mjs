@@ -1,3 +1,4 @@
+import {directorioAPI} from './directorio-api.mjs';
 import {cambiosPasesAPI} from './pases-cambios.mjs';
 import {accesosCuenta,permisosHeredados} from './accesos.mjs';
 import {recepcionCatalogoAPI} from './recepcion-catalogo-api.mjs';
@@ -129,6 +130,7 @@ async function api(request,env){
   await avisos();
   return json({id,...data,...(warning?{warning}:{})},201);
  }
+ if(path==='/api/base/directorio')return directorioAPI(request,env,{session,current,run,json,assert});
  if(path==='/api/base/current'&&method==='GET'){await session(request,env);return json(publicCut(await current(env)));}
  const datasetMatch=path.match(/^\/api\/base\/datasets\/(personas|plazas|antiguedad|catalogos)$/);
  if(datasetMatch&&method==='GET'){
