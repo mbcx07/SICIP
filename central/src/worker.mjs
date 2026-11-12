@@ -1,3 +1,4 @@
+import {cambiosPasesAPI} from './pases-cambios.mjs';
 import {accesosCuenta,permisosHeredados} from './accesos.mjs';
 import {recepcionCatalogoAPI} from './recepcion-catalogo-api.mjs';
 import {supervisionCalculosAPI} from './supervision-calculos-api.mjs';
@@ -66,6 +67,7 @@ async function api(request,env){
  if(path==='/api/personal/jornadas')return personalJornadasAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/vacaciones'))return vacacionesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/normativas'))return normativasAPI(request,env,{session,run,json,assert});
+ if(path==='/api/pases/unidad-preferida'||/^\/api\/pases\/registros\/[^/]+\/(editar|cancelar|historial)$/.test(path))return cambiosPasesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path==='/api/mis-tramites'||path==='/api/seguimiento/documento'||path==='/api/seguimiento/documentos'||path.startsWith('/api/pases/registros')||path==='/api/pases/estadisticas'||path==='/api/seguimiento/recepcion')return seguimientoAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/contratacion'))return coverageAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path==='/api/login'&&method==='POST'){

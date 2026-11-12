@@ -97,3 +97,6 @@ CREATE TABLE IF NOT EXISTS aura_popups_vistos(matricula TEXT NOT NULL,notificaci
 CREATE TABLE IF NOT EXISTS recepcion_catalogo(id TEXT PRIMARY KEY,clave TEXT NOT NULL UNIQUE,categoria TEXT NOT NULL,nombre TEXT NOT NULL,activo INTEGER NOT NULL DEFAULT 1,orden INTEGER NOT NULL DEFAULT 0,version INTEGER NOT NULL DEFAULT 1,actor TEXT NOT NULL,fecha TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS herramientas_calculos_audit(id INTEGER PRIMARY KEY AUTOINCREMENT,request_key TEXT NOT NULL UNIQUE,actor TEXT NOT NULL,nombre_actor TEXT NOT NULL,tipo TEXT NOT NULL,matricula TEXT NOT NULL,fecha TEXT NOT NULL,entrada TEXT NOT NULL,resultado TEXT NOT NULL,tabulador TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS herramientas_audit_actor_fecha ON herramientas_calculos_audit(actor,fecha,id);
+CREATE TABLE IF NOT EXISTS pases_eventos(id TEXT PRIMARY KEY,folio TEXT NOT NULL REFERENCES pases_registros(folio),request_key TEXT UNIQUE NOT NULL,huella TEXT NOT NULL,actor TEXT NOT NULL,accion TEXT NOT NULL,motivo TEXT NOT NULL,antes TEXT NOT NULL,despues TEXT NOT NULL,fecha TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS pases_eventos_folio ON pases_eventos(folio,fecha);
+CREATE TABLE IF NOT EXISTS pases_unidad_preferida(matricula TEXT PRIMARY KEY,unidad TEXT NOT NULL REFERENCES unidades_servicio(clave),fecha TEXT NOT NULL);
