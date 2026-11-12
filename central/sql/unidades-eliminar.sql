@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS unidades_eliminadas(clave TEXT PRIMARY KEY REFERENCES unidades_servicio(clave),reemplazo TEXT REFERENCES unidades_servicio(clave),actor TEXT NOT NULL,fecha TEXT NOT NULL);
+CREATE TRIGGER IF NOT EXISTS unidad_eliminada_asignacion_insert BEFORE INSERT ON personal_unidades WHEN EXISTS(SELECT 1 FROM unidades_eliminadas WHERE clave=NEW.unidad) BEGIN SELECT RAISE(ABORT,'La unidad fue eliminada'); END;
+CREATE TRIGGER IF NOT EXISTS unidad_eliminada_asignacion_update BEFORE UPDATE OF unidad ON personal_unidades WHEN EXISTS(SELECT 1 FROM unidades_eliminadas WHERE clave=NEW.unidad) BEGIN SELECT RAISE(ABORT,'La unidad fue eliminada'); END;
+CREATE TRIGGER IF NOT EXISTS unidad_eliminada_preferencia_insert BEFORE INSERT ON pases_unidad_preferida WHEN EXISTS(SELECT 1 FROM unidades_eliminadas WHERE clave=NEW.unidad) BEGIN SELECT RAISE(ABORT,'La unidad fue eliminada'); END;
+CREATE TRIGGER IF NOT EXISTS unidad_eliminada_preferencia_update BEFORE UPDATE OF unidad ON pases_unidad_preferida WHEN EXISTS(SELECT 1 FROM unidades_eliminadas WHERE clave=NEW.unidad) BEGIN SELECT RAISE(ABORT,'La unidad fue eliminada'); END;

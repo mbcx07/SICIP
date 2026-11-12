@@ -13,3 +13,11 @@ El PDF mantiene una página carta: QR de 12 mm, folio a su lado, bloques de asun
 Las notificaciones se muestran dentro de su pantalla con los avisos primero; contacto y configuración del dispositivo quedan en un apartado desplegable. La captura obligatoria del primer correo conserva su diálogo inicial. Se retira el aviso visual Modo reforzado sin desactivar las otras validaciones.
 
 Verificación: pruebas de API con cuentas sintéticas, persistencia entre sesiones, control de acceso, comparación de meses y exclusión de otras matrículas/cancelados; prueba de navegador con catálogo/asignación, filtro, notificaciones integradas y PDF real con alineaciones medidas. No se emiten pases ni se cambian unidades de trabajadores reales durante las pruebas.
+
+## Eliminar unidades · 5.50.0
+
+En Administración → Nombres de las unidades, cada fila tiene Editar y Eliminar. El diálogo indica cuántos trabajadores están asignados y permite cancelar. Si hay asignaciones exige una unidad de reemplazo activa. Retira la unidad del catálogo, traslada asignaciones y preferencias, y ajusta filtros en una transacción con auditoría y control de versión. Sólo puede hacerlo Administración.
+
+Se conserva el registro interno para documentos históricos; nunca se reescriben sus nombres o unidades. Los filtros de la unidad de reemplazo incluyen sus antecedentes, incluso después de varias eliminaciones sucesivas. Un filtro que queda vacío no se amplía a todas las unidades. Las claves eliminadas no pueden reutilizarse o recibir asignaciones, incluidas solicitudes simultáneas. Las futuras importaciones de mando respetan los reemplazos.
+
+Aplicar `sql/unidades-eliminar.sql` antes del despliegue. No elimina unidades reales al instalarse. Validación: 220 pruebas Node y `tests/unidades-eliminar-browser.py`, con cancelación, reemplazo obligatorio, asignación central, persistencia tras recarga y diálogo móvil.
