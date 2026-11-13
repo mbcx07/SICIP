@@ -7,3 +7,7 @@ S verde/dorada con circuitos elegida por el usuario el 13/11/2026. Se prepararon
 `brand_patch.py` aplica estos recursos a login, encabezado, módulos independientes, favicon, Apple touch y notificaciones. Los emblemas oficiales IMSS de formatos y documentos permanecen en su lugar. El nuevo logo no altera áreas de firmas, QR ni geometría de impresión. El hash de versión incluye recursos gráficos y manifiesto, además del código.
 
 Validación visual: `tests/branding-browser.py` comprueba login en escritorio y móvil, encabezado sin desbordamiento horizontal, módulos independientes, favicon e iconos del manifiesto. No cambia reglas de negocio ni datos centrales.
+
+## Login · 5.52.0
+
+Se incorpora la propuesta completa sobre blanco (`source-login.png`, exportación `sicip-login-552.png`): S, palabra SICIP y emblema inferior. Exclusiva del login. Reemplaza el símbolo aislado y elimina el título visual duplicado; conserva H1 accesible. Tamaño adaptable 280px en escritorio y 240px en móvil. Verificado con `branding-browser.py` y capturas de escritorio/móvil.
