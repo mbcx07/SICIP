@@ -12,10 +12,12 @@ manifest=json.loads((out/'manifest.webmanifest').read_text());manifest['icons']=
 for p in out.rglob('*.html'):
  s=p.read_text();s=re.sub(r'<link\b[^>]*\brel=[\"\'](?:icon|shortcut icon|apple-touch-icon)[\"\'][^>]*>','',s,flags=re.I)
  tags=f'<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v={stamp}"><link rel="icon" type="image/x-icon" href="/favicon.ico?v={stamp}"><link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-551.png">'
- s=s.replace('</head>',tags+'</head>',1)
- if p==out/'pases/index.html':s=s.replace('<section class="hero">','<section class="hero"><img src="/icons/sicip-symbol.png?v='+stamp+'" alt="Logo SICIP" width="52" height="52" style="float:left;object-fit:contain;margin-right:12px">',1)
- if p==out/'fuerza-trabajo/calculadora-nivelacion.html':s=s.replace('🧰 SICIP','<img src="/icons/sicip-symbol.png?v='+stamp+'" alt="Logo SICIP" width="36" height="36" style="vertical-align:middle;object-fit:contain;margin-right:8px"> SICIP')
- if p==out/'examenes/index.html':s=s.replace('<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl font-black text-imss-verde">IMSS</div>','<img src="/icons/sicip-symbol.png?v='+stamp+'" alt="Logo SICIP" width="56" height="56" style="object-fit:contain;flex-shrink:0">')
+ s=s.replace('</head>',tags+'<link rel="stylesheet" href="/sicip-central/module-headings.css?v=20261113-navegacion"><script defer src="/sicip-central/module-headings.js?v=20261113-navegacion"></script></head>',1)
+ if p==out/'examenes/index.html':
+  s=s.replace('<header class="bg-imss text-white shadow-lg">','<header class="sicip-page-heading">').replace('<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl font-black text-imss-verde">IMSS</div>','')
+ if p==out/'pases/index.html':
+  init='<script>document.documentElement.dataset.pasesScope=new URLSearchParams(location.search).get("scope")||"trabajador";</script><style>html:not([data-pases-ready="1"]) .wrap{display:none}html:not([data-pases-ready="1"]) body:before{content:"Preparando pases…";display:block;padding:28px;font:14px system-ui;color:#164532}html[data-pases-scope="personal"]:not([data-pases-ready="1"]) body:before{content:"Preparando Trámite de Pases de Personal…"}</style>'
+  s=s.replace('<head>','<head>'+init,1)
  p.write_text(s)
 for p in [out/'sw.js',out/'sicip-central/push-events.js']:
  s=p.read_text();s=re.sub(r'/icons/sicip-192\.png(?:\?v=[A-Za-z0-9_-]+)?','/icons/sicip-551-192.png',s);s=re.sub(r"(badge\s*:\s*['\"])/icons/sicip-551-192.png",r'\1/icons/sicip-badge-551.png',s);p.write_text(s)

@@ -7,8 +7,8 @@
   var nav=document.querySelector('nav.sidebar');if(!nav)return;
   if(document.body.dataset.sicipRoute!==location.pathname)document.body.dataset.sicipRoute=location.pathname;
   var home=document.querySelector('#sicip-home-enhancements');if(home&&location.pathname==='/')document.querySelectorAll('#sicip-photo-prompt,#sicip-pwa-install,#sicip-pwa-notif').forEach(function(prompt){if(prompt.parentElement!==home)home.appendChild(prompt);});
-  var head=document.querySelector('#root>div>header'),shell=nav.parentElement;
-  if(head&&shell){var h=window.innerHeight-head.getBoundingClientRect().height;shell.style.height=Math.max(0,h)+'px';}
+  var head=document.querySelector('.sicip-app-header'),shell=nav.parentElement;
+  if(head&&shell){document.documentElement.style.setProperty('--sicip-header-height',head.getBoundingClientRect().height+'px');}
   document.querySelectorAll('main input[placeholder]').forEach(function(e){if(e.previousElementSibling?.tagName.toLowerCase()==='svg')e.setAttribute('data-search-icon','');});
   var menu=nav.firstElementChild;
   if(menu){if(!menu.querySelector('[data-personal-heading]')){var heading=document.createElement('div');heading.dataset.personalHeading='1';heading.textContent='Trámites personales';menu.appendChild(heading);}
@@ -27,7 +27,7 @@
   if(lastActive)buttons.forEach(function(b){var on=b===lastActive;if(on){if(b.getAttribute('data-sicip-active')!=='1')b.setAttribute('data-sicip-active','1');if(b.getAttribute('aria-current')!=='page')b.setAttribute('aria-current','page');}else{if(b.hasAttribute('data-sicip-active'))b.removeAttribute('data-sicip-active');if(b.hasAttribute('aria-current'))b.removeAttribute('aria-current');}if(b.dataset.active!==(on?'1':''))b.dataset.active=on?'1':'';});
 
  }
- document.addEventListener('click',function(e){var b=e.target.closest('nav.sidebar button,nav.sidebar a');if(!b)return;var p=b.parentElement;var expandable=b.hasAttribute('aria-expanded')||p?.matches('[data-sicip-mod-v2],[data-sicip-depto-personal-root],[data-sicip-solicitudes-root],[data-sicip-herramientas-root],[data-sicip-jefe-servicio-root]')&&b===p.firstElementChild;if(!expandable){lastActive=b;lastPath=location.pathname;setTimeout(function(){lastPath=location.pathname;sync();},60);}},true);
+ document.addEventListener('click',function(e){var b=e.target.closest('nav.sidebar button,nav.sidebar a');if(!b)return;var p=b.parentElement;var expandable=b.hasAttribute('aria-expanded')||b===p?.firstElementChild&&b.nextElementSibling?.tagName==='DIV'&&!!b.nextElementSibling.querySelector('button,a')||p?.matches('[data-sicip-mod-v2],[data-sicip-depto-personal-root],[data-sicip-solicitudes-root],[data-sicip-herramientas-root],[data-sicip-jefe-servicio-root]')&&b===p.firstElementChild;if(!expandable){if(window.innerWidth<768)setTimeout(function(){window.dispatchEvent(new Event('sicip:close-menu'));},0);lastActive=b;lastPath=location.pathname;setTimeout(function(){lastPath=location.pathname;sync();},60);}},true);
  window.addEventListener('resize',sync);window.addEventListener('popstate',function(){lastActive=null;setTimeout(sync,80);});
  new MutationObserver(function(){clearTimeout(timer);timer=setTimeout(sync,120);}).observe(document.documentElement,{childList:true,subtree:true});
  setInterval(sync,800);sync();
