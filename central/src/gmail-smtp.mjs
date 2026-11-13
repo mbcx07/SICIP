@@ -2,12 +2,13 @@
 const utf8=new TextEncoder();
 const encoded=s=>btoa(String.fromCharCode(...utf8.encode(s)));
 const address=s=>typeof s==='string'&&s.length<=254&&/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(s);
-export function gmailMessage({from,to,subject,text,id,date=new Date()}){
+export function gmailMessage({from,to,subject,text,html,id,date=new Date()}){
  if(!address(from)||!address(to)||!/^[-a-zA-Z0-9]+$/.test(id))throw Error('MAIL_INVALIDO');
  const title=String(subject).replace(/[\r\n]/g,' ').slice(0,150),body=encoded(String(text).replace(/\r?\n/g,'\r\n')).match(/.{1,76}/g)?.join('\r\n')||'';
  // Fold encoded words at safe Unicode character boundaries.
  const words=[];let chunk='';for(const c of title){if(utf8.encode(chunk+c).length>36){words.push('=?UTF-8?B?'+encoded(chunk)+'?=');chunk='';}chunk+=c;}if(chunk)words.push('=?UTF-8?B?'+encoded(chunk)+'?=');
- return ['From: SICIP <'+from+'>','To: <'+to+'>','Date: '+date.toUTCString(),'Message-ID: <sicip-'+id+'@'+from.split('@')[1]+'>','Subject: '+words.join('\r\n '),'MIME-Version: 1.0','Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: base64','',body,''].join('\r\n');
+ const boundary='sicip-'+id;const content=html?['Content-Type: multipart/alternative; boundary="'+boundary+'"','', '--'+boundary,'Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: base64','',body,'--'+boundary,'Content-Type: text/html; charset=UTF-8','Content-Transfer-Encoding: base64','',encoded(String(html)).match(/.{1,76}/g)?.join('\r\n')||'','--'+boundary+'--','']:['Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: base64','',body,''];
+ return ['From: SICIP <'+from+'>','To: <'+to+'>','Date: '+date.toUTCString(),'Message-ID: <sicip-'+id+'@'+from.split('@')[1]+'>','Subject: '+words.join('\r\n '),'MIME-Version: 1.0',...content].join('\r\n');
 }
 export async function gmailSend(env,message,{connect,timeout=20000,authenticateOnly=false}={}){
  const from=env.GMAIL_USER,password=String(env.GMAIL_APP_PASSWORD||'').replace(/\s/g,'');

@@ -1,0 +1,17 @@
+"""Full history flow on desktop/mobile, live autocomplete, filtered totals and Excel/PDF."""
+import asyncio
+from playwright.async_api import async_playwright
+H='http://127.0.0.1:8010'
+async def main():
+ async with async_playwright() as pw:
+  b=await pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);errors=[]
+  for width in [1280,390]:
+   c=await b.new_context(viewport={'width':width,'height':844});await c.route('https://**/*',lambda r:r.abort());p=await c.new_page();p.on('pageerror',lambda e:errors.append(str(e)));await p.goto(H+'/login');await p.locator('input[type=text]').first.fill('TESTADMIN');await p.locator('input[type=password]').fill('PruebaSegura123!');await p.get_by_role('button',name='Iniciar Sesión',exact=True).click();await p.wait_for_function('window.SICIPCentral?.user&&window.SICIPModuleHost');await p.locator('nav.sidebar [data-access-id=\"jefe.historial\"]').wait_for(state='attached');
+   if width==390:await p.locator('[aria-controls=\"sicip-sidebar\"]').click()
+   await p.locator('nav.sidebar').get_by_role('button',name='Jefe de Servicio',exact=False).first.click();await p.locator('[data-access-id=\"jefe.historial\"]').click();panel=p.locator('[data-sicip-module-panel=historial-trabajador]');search=panel.locator('[data-worker-search]');assert await search.input_value()=='';await search.fill('Juan');option=panel.get_by_role('option',name='JUAN CARLOS PEREZ PRUEBA · TESTUSER',exact=False);await option.wait_for();await option.click();await panel.get_by_role('heading',name='JUAN CARLOS PEREZ PRUEBA',exact=True).wait_for();await panel.locator('[data-details]').get_by_text('4 registros',exact=False).wait_for();assert '3.5' in await panel.locator('[data-kpis]').inner_text();assert '$200.00' in await panel.locator('[data-kpis]').inner_text();assert '$400.00' in await panel.locator('[data-kpis]').inner_text();await panel.locator('[data-code]').select_option('10');assert '1 registros' in await panel.locator('[data-details]').inner_text();await panel.locator('[data-code]').select_option('');await panel.locator('[data-month]').select_option('07');assert '2 registros' in await panel.locator('[data-details]').inner_text();await panel.locator('[data-month]').select_option('');
+   async with p.expect_download() as dl:await panel.locator('[data-excel]').click()
+   download=await dl.value;assert download.suggested_filename=='Historial-TESTUSER-2026.xlsx';await download.save_as('/tmp/historial-test-'+str(width)+'.xlsx')
+   async with p.expect_popup() as popup:await panel.locator('[data-pdf]').click()
+   view=await popup.value;await view.wait_for_load_state();assert 'Historial de Trabajador' in await view.title();assert 'concepto 10' in await view.locator('body').inner_text();await view.pdf(path='/tmp/historial-test-'+str(width)+'.pdf');await view.close();assert await p.evaluate('document.documentElement.scrollWidth<=innerWidth+1');await p.screenshot(path='/tmp/historial-'+str(width)+'.png',full_page=True);await search.fill('noexiste');await panel.get_by_text('Sin coincidencias',exact=False).wait_for();assert await panel.locator('[data-history-body]').inner_text()=='';await c.close();print('Historial '+str(width)+': búsqueda, plazas, indicadores, filtros, Excel y PDF correctos.',flush=True)
+  assert not errors,errors;await b.close()
+asyncio.run(main())

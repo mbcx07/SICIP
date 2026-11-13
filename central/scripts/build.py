@@ -13,9 +13,9 @@ if (ROOT/'public/examenes').exists():
 for name in ['client.mjs','domain.mjs','bootstrap.js','normalize-worker.js','admin-personal-client.mjs','accesos.mjs','accesos-client.mjs','unidades-client.mjs','inicio-client.mjs','admin-catalogos-client.mjs','firmantes-client.mjs']:shutil.copy2(ROOT/'src'/name,public/name)
 subprocess.run(['node',str(ROOT/'scripts/patch-bundle.mjs'),str(a.out/'assets/index-C_U711P-.js')],check=True)
 for html in [a.out/'index.html',a.out/'pases/index.html',a.out/'fuerza-trabajo/calculadora-nivelacion.html']:
- s=html.read_text();tag='<script src="/sicip-central/bootstrap.js?v=20261113-correos"></script><link rel="stylesheet" href="/sicip-central/central.css?v=20261113-correos">'
+ s=html.read_text();tag='<script src="/sicip-central/bootstrap.js?v=20261113-historial"></script><link rel="stylesheet" href="/sicip-central/central.css?v=20261113-historial">'
  s=s.replace('<head>','<head>'+tag,1) if '<head>' in s else s.replace('<head\n','<head\n'+tag,1)
- s=re.sub(r'\?v=[A-Za-z0-9_-]+','?v=20261113-correos',s);html.write_text(s)
+ s=re.sub(r'\?v=[A-Za-z0-9_-]+','?v=20261113-historial',s);html.write_text(s)
 # The calculator must not prefer a hardcoded 2026003 payroll over the active cut.
 p=a.out/'fuerza-trabajo/calculadora-nivelacion.html';s=p.read_text();start=s.index('async function cargarNominas(');end=s.index('\n',start)
 replacement="""async function cargarNominas(){const s=await window.SICIPCentral.load();const c=window.SICIPCentral.current;DATA.nominas=[{id:c.id,nombre:'Base central · '+c.quincena,origen:'Corte activo',data:normalizarTrabajadores(s.people),plazas:s.legacyPlazas}];DATA.activeNominaId=c.id;$('nominaSyncStatus').textContent='Base central · quincena '+c.quincena+' · antigüedad del mismo corte';$('quincena').value=c.quincena;renderNominaSelect()}"""
@@ -34,6 +34,7 @@ p=a.out/'pases/index.html';s=p.read_text()
 s=s.replace("fetch('../data-ft-nomina-2026009.json').then(function(r){return r.json()})","window.SICIPCentralBoot.then(function(){return window.SICIPCentral.collection('trabajadores')})")
 s=s.replace("Base activa cargada: nómina quincenal 09 (","Base central · quincena '+window.SICIPCentral.current.quincena+' (")
 p.write_text(s)
+p=a.out/'sicip-workflows-v524.js';s=p.read_text();start=s.index('  async function showHistorial(btn){');end=s.index('  function injectJefeNav()',start);s=s[:start]+"  async function showHistorial(btn){try{const module=await import('/sicip-central/historial-client.mjs?v=20261113-historial');await module.mountHistorial(btn);}catch(e){toast(e.message);}}\n\n"+s[end:];p.write_text(s)
 p=a.out/'sicip-workflows-v524.js';s=p.read_text();start=s.index('  async function nomina(){');end=s.index('\n  }',start)+4
 s=s[:start]+"  async function nomina(){return window.SICIPCentral.collection('trabajadores');}"+s[end:];p.write_text(s)
 p=a.out/'fuerza-trabajo/calculadora-nivelacion.html';s=p.read_text().replace('(function init(){','window.SICIPCentralBoot.then(function init(){').replace('})})();','})});');p.write_text(s)
@@ -60,8 +61,8 @@ p.write_text(s)
 p=a.out/'sicip-panels-v5.js';s=p.read_text().replace("'trabajadores', 'plazas', 'plazas-full', 'usuarios', 'usuarios-full'","'trabajadores', 'plazas', 'plazas-full'")
 s=s.replace("function idbSet(key, value) {","function idbSet(key, value) {\n    if (/^data_(trabajadores|plazas|vacantes|jefesServicio|usuarios)/.test(key)) return Promise.resolve();")
 s=s.replace("function idbGet(key) {","function idbGet(key) {\n    if (/^data_(trabajadores|plazas|vacantes|jefesServicio)/.test(key)) return Promise.resolve(null);")
-p.write_text(s.replace('5.22.5','5.54.0'))
-p=a.out/'sicip-audit-fixes.js';s=p.read_text().replace('5.22.5','5.54.0');s=s.replace(' hardenStorage(); addSecurityBanner();',' hardenStorage();');p.write_text(s)
+p.write_text(s.replace('5.22.5','5.55.0'))
+p=a.out/'sicip-audit-fixes.js';s=p.read_text().replace('5.22.5','5.55.0');s=s.replace(' hardenStorage(); addSecurityBanner();',' hardenStorage();');p.write_text(s)
 p=a.out/'sicip-rewards-panel.js';s=p.read_text().replace("if(document.getElementById('sicip-pases-view')||document.getElementById('sicip-herramientas-view'))return false;","if(document.querySelector('#sicip-pases-view,#sicip-herramientas-view,[data-sicip-cr-panel],[data-sicip-recepciones-panel],[data-sicip-faltas-panel],[data-sicip-jefe-panel],[data-sicip-module-panel]'))return false;")
 s=s.replace("    panel.innerHTML='<div class=\"sicip-aura-head\"","    var markup='<div class=\"sicip-aura-head\"")
 s=s.replace("    if(!panel.parentNode)m.insertBefore(panel,m.firstChild);","    if(panel.innerHTML!==markup)panel.innerHTML=markup;\n    if(!panel.parentNode)m.insertBefore(panel,m.firstChild);")
@@ -72,7 +73,7 @@ p.write_text(s)
 p=a.out/'sicip-module-host.js';s=p.read_text().replace("button.removeAttribute('data-sicip-active');","button.removeAttribute('data-sicip-active');\n      button.removeAttribute('aria-current');")
 s=s.replace("button.setAttribute('data-sicip-active', '1');","button.setAttribute('data-sicip-active', '1');\n    button.setAttribute('aria-current','page');")
 p.write_text(s)
-p=a.out/'sw.js';s=p.read_text();s=re.sub("const VERSION = '[^']+';","const VERSION = '20261113-correos';",s,count=1);s=s.replace('  self.skipWaiting();','  // Updates activate at startup or after the user presses Actualizar.',1);start=s.index("self.addEventListener('push',");s=s[:start]+"importScripts('/sicip-central/push-events.js?v=20261113-correos');\n";p.write_text(s)
+p=a.out/'sw.js';s=p.read_text();s=re.sub("const VERSION = '[^']+';","const VERSION = '20261113-historial';",s,count=1);s=s.replace('  self.skipWaiting();','  // Updates activate at startup or after the user presses Actualizar.',1);start=s.index("self.addEventListener('push',");s=s[:start]+"importScripts('/sicip-central/push-events.js?v=20261113-historial');\n";p.write_text(s)
 for html in a.out.rglob('*.html'):
  text=html.read_text();text=re.sub(r"if\s*\(reg\.waiting\)\s*reg\.waiting\.postMessage\(\{\s*type:\s*'SICIP_SKIP_WAITING'\s*\}\);",'',text);html.write_text(text)
 # Personal source spreadsheets now live in D1, not in publicly downloadable JSON assets.
@@ -86,6 +87,7 @@ subprocess.run(['python3',str(ROOT/'scripts/recepcion_patch.py'),str(a.out)],che
 subprocess.run(['python3',str(ROOT/'scripts/ux545_patch.py'),str(a.out)],check=True)
 subprocess.run(['python3',str(ROOT/'scripts/pases546_patch.py'),str(a.out)],check=True)
 subprocess.run(['python3',str(ROOT/'scripts/pases548_patch.py'),str(a.out)],check=True)
+subprocess.run([str(ROOT/'node_modules/.bin/esbuild'),str(ROOT/'src/historial-client.mjs'),'--bundle','--format=esm','--platform=browser','--target=es2022','--outfile='+str(public/'historial-client.mjs')],check=True)
 subprocess.run([str(ROOT/'node_modules/.bin/esbuild'),str(ROOT/'src/pases-pdf-client.mjs'),'--bundle','--format=esm','--platform=browser','--target=es2022','--outfile='+str(public/'pases-pdf-client.mjs')],check=True)
 
 subprocess.run([str(ROOT/'node_modules/.bin/esbuild'),str(ROOT/'src/contratacion-client.mjs'),'--bundle','--format=esm','--platform=browser','--target=es2022','--outfile='+str(public/'contratacion-client.mjs')],check=True)
@@ -124,4 +126,4 @@ import hashlib,json
 files=sorted(f for f in a.out.rglob('*') if f.is_file() and f.suffix in ['.js','.mjs','.css','.html','.png','.svg','.ico','.webmanifest'])
 build_id=hashlib.sha256(b''.join(f.relative_to(a.out).as_posix().encode()+hashlib.sha256(f.read_bytes()).digest() for f in files)).hexdigest()
 p=a.out/'sicip-pwa.js';p.write_text(p.read_text().replace('__SICIP_BUILD_ID__',build_id))
-(a.out/'sicip-version.json').write_text(json.dumps({'version':'5.54.0','build':build_id}))
+(a.out/'sicip-version.json').write_text(json.dumps({'version':'5.55.0','build':build_id}))

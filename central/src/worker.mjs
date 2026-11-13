@@ -1,3 +1,5 @@
+import {historialAPI} from './historial-api.mjs';
+import {camposPendientes} from './perfil-domain.mjs';
 import {complementarMando} from './mando.mjs';
 import {givenNames} from './domain.mjs';
 import {directorioAPI} from './directorio-api.mjs';
@@ -59,10 +61,11 @@ async function api(request,env){
  const url=new URL(request.url),path=url.pathname,method=request.method;
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
- if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const c=await run(env,'SELECT institucional,personal,institucional_verificado,personal_verificado FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal)&&['institucional','personal'].every(k=>!c[k]||!!c[k+'_verificado']),428,'Vincula tus correos con el código de verificación en Mi perfil antes de solicitar. Guardar la dirección sin verificar no activa los avisos.');}}
+ if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const personal=await run(env,'SELECT payload FROM perfiles_personales WHERE matricula=?',u.matricula).first();assert(personal&&!camposPendientes(JSON.parse(personal.payload)).length,428,'Completa los datos obligatorios en Mi perfil antes de solicitar.');const c=await run(env,'SELECT institucional,personal,institucional_verificado,personal_verificado FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal)&&['institucional','personal'].every(k=>!c[k]||!!c[k+'_verificado']),428,'Vincula tus correos con el código de verificación en Mi perfil antes de solicitar. Guardar la dirección sin verificar no activa los avisos.');}}
  if(path==='/api/recepcion/catalogo'||path==='/api/admin/recepcion-catalogo')return recepcionCatalogoAPI(request,env,{session,run,json,assert,body});
  if(path==='/api/admin/herramientas/calculos')return supervisionCalculosAPI(request,env,{session,run,json,assert});
  if(path==='/api/inicio'||path.startsWith('/api/inicio/'))return inicioAPI(request,env,{session,run,json,body,assert});
+ if(path.startsWith('/api/personal/historial'))return historialAPI(request,env,{session,current,run,json,assert});
  if(path==='/api/personal/incidencias')return incidenciasAPI(request,env,{session,account,cleanUser,run,current,body,json,assert});
  if(path.startsWith('/api/unidades/')||path.startsWith('/api/admin/unidades'))return unidadesAPI(request,env,{session,body,current,run,json,assert});
  if(path.startsWith('/api/herramientas/'))return herramientasAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});

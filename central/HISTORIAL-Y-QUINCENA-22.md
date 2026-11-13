@@ -1,0 +1,23 @@
+# Historial y corte 22/2026 · versión 5.55.0
+
+Se reemplaza el historial local de Jefe de Servicio por una consulta autenticada de la base central. La búsqueda devuelve hasta 20 sugerencias por nombre o matrícula, acepta palabras en distinto orden, descarta respuestas tardías y exige seleccionar al trabajador. No selecciona por defecto al usuario autenticado. Muestra plazas ocupadas o de titularidad, categoría, adscripción, unidad asignada, antigüedad con su quincena de origen y jornada compartida. Las fotografías existentes se consultan con los permisos del historial; no se fabrican imágenes ni se publican datos personales de contacto.
+
+Las entregas separadas de plazas y matrículas de la quincena 2026022 contienen 5,473 plazas (5,288 ocupadas y 185 sin ocupante) y 13,536 matrículas. `normalize-split.py` usa exclusivamente TODAS LAS PLAZAS y TODAS LAS MATRICULAS; no suma el subconjunto de vacantes ni recorre su rango de un millón de filas formateadas. AÑOS/QNAS/DIAS aporta 5,169 registros de antigüedad; 22 referencias anteriores se conservan con origen explícito. Los catálogos auxiliares anteriores se conservan. La integración persistente de nómina de mando produce 13,546 matrículas finales y conserva cuentas, contraseñas, permisos y asignaciones de unidad; 23 registros de mando tienen precedencia frente a la nómina ordinaria. El corte anterior continúa consultable.
+
+## Hechos de nómina
+
+`normalize-historial.py` lee datos, sin evaluar fórmulas ni macros, de BD, BD2 y Consulta. Convierte fechas de Excel numéricas, fechas nativas y texto; normaliza 8/08, conserva variantes alfanuméricas y elimina sólo coincidencias canónicas de transacción entre las extracciones. Una fila vacía de BD se excluye. Cada hecho conserva archivo, hoja, fila, referencia, plaza, fechas, cantidad, importe, jornada y sustitución. La carga tiene 81,339 transacciones y 50,462 incidencias (131,801 hechos), correspondientes a 5,955 trabajadores y 5,957 combinaciones trabajador/año; se preservan las programaciones con fecha en 2027.
+
+BD2 corresponde al 16–31 de julio de 2026. Consulta contiene fechas de inicio del 1 de enero de 2026 al 1 de enero de 2027: el nombre del archivo no se toma como garantía de cobertura anual. La pantalla muestra los rangos de cada fuente y advierte que ausencia de datos no significa ausencia de incidencias. El resumen reproduce la separación del Excel: horas reales de 37/37A desde BD2, eventos de 72 desde BD2 y duración original de las transacciones para licencias, vacaciones y permisos. Los importes 10 y 35/35B/35C se identifican como programados, sin afirmar pago acreditado. No se suman horas reales con duración programada, ni se calcula una tasa de ausentismo sin denominador confirmado. Conceptos no identificados permanecen consultables como pendientes de clasificación; reposiciones permanecen separadas.
+
+La carga de hechos se versiona aparte del padrón. El JSON por trabajador/año se comprime para almacenamiento; el servidor verifica y descomprime sólo el historial solicitado. La importación es idempotente y la publicación requiere validar conteos. El cliente permite año, mes, fuente y concepto; exporta Excel con identidad, resumen, mensual y detalle completo, o una vista imprimible en PDF. El seguimiento de trámites utiliza las fuentes centrales existentes en una consulta independiente; muestra advertencias si alguna fuente falla.
+
+## Perfil, correo y Normativas
+
+Se exige teléfono, fecha de nacimiento, domicilio, contacto y teléfono de emergencia, además de al menos un correo vinculado. No se recapturan datos laborales. El formulario inicial permanece integrado y bloquea la navegación ordinaria hasta completar el registro. Las solicitudes personales mantienen también validación en servidor. Cada dirección registrada exige su propio código; guardar una dirección no la verifica. Los datos incompletos se rechazan sin sobrescribir el perfil anterior.
+
+Normativas filtra exclusivamente MIME application/pdf en listado, búsqueda y descarga, también para administración; no elimina los archivos de cálculo usados como fuentes de otras herramientas.
+
+Los recordatorios conservan el calendario de último día hábil y la entrega idempotente. La redacción se divide en fecha/quincena, cantidad pendiente, lista de folios e instrucción breve para evitar posibles descuentos. El correo usa formato institucional HTML y alternativa de texto plano, con contenido escapado y enlaces internos. No se reenvían recordatorios que el proveedor ya aceptó.
+
+Validación: 227 pruebas Node, flujo de historial en escritorio/celular con exportación Excel/PDF, registro y vinculación por código, navegación, logo y encabezados. Las importaciones y registros reales se guardan fuera del repositorio.

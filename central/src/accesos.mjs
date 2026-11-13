@@ -19,10 +19,12 @@ export function permisosHeredados(ids){return [...new Set(MODULOS.flatMap(m=>m.h
 export function validarRuta(u,path){u={...u,...accesosCuenta(u)};if(esAdmin(u)||!u?.accesosDefinidos)return true;
  if(path.startsWith('/api/herramientas/'))return puede(u,'personal.herramientas.nivelacion','personal.herramientas.conceptos','personal.herramientas.reintegro','herramientas.nivelacion');
  if(path==='/api/inicio')return puede(u,'inicio');
+ if(path.startsWith('/api/personal/historial'))return puede(u,'jefe.historial');
  if(path==='/api/personal/incidencias')return puede(u,'inicio','personal.faltas','tramites.seguimiento','jefe.historial');
  if(path.startsWith('/api/admin/'))return false;
  if(path.startsWith('/api/personal/jornadas'))return puede(u,'personal.vacaciones','jefe.cobertura.nueva','jefe.cobertura.historial');
  if(path.startsWith('/api/vacaciones/mi-pecv'))return puede(u,'solicitudes.pecv');
+ if(path==='/api/vacaciones/foto')return puede(u,'jefe.historial','personal.vacaciones','solicitudes.pecv','tramites.seguimiento','personal.recepcion');
  if(path.startsWith('/api/vacaciones/'))return puede(u,'personal.vacaciones','solicitudes.pecv','tramites.seguimiento','personal.recepcion');
  if(path.startsWith('/api/pd44'))return puede(u,'personal.reclamaciones','tramites.seguimiento','personal.recepcion');
  if(path.startsWith('/api/normativas'))return puede(u,'personal.normativas');
