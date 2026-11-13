@@ -6,7 +6,7 @@ export function database(path=':memory:'){
 }
 export async function seed(db,snapshot,id,active=false){
  // Existing synthetic users already completed contact registration. Dedicated notification tests exercise onboarding separately.
- for(const mat of ['TESTADMIN','TESTUSER','TESTJEFE'])await db.prepare("INSERT INTO contactos(matricula,personal,updated_at) VALUES(?,?,?) ON CONFLICT(matricula) DO NOTHING").bind(mat,mat.toLowerCase()+'@example.org',new Date().toISOString()).run();
+ for(const mat of ['TESTADMIN','TESTUSER','TESTJEFE'])await db.prepare("INSERT INTO contactos(matricula,personal,personal_verificado,updated_at) VALUES(?,?,?,?) ON CONFLICT(matricula) DO NOTHING").bind(mat,mat.toLowerCase()+'@example.org',new Date().toISOString(),new Date().toISOString()).run();
  await db.prepare('INSERT INTO cortes(id,quincena,created_at,created_by,source_hash,source_name,expected,status,validation) VALUES(?,?,?,?,?,?,?,?,?)').bind(id,snapshot.quincena,new Date().toISOString(),'TESTADMIN',snapshot.source_hash||'a'.repeat(64),snapshot.source_name||'test.xlsx',JSON.stringify({counts:snapshot.counts,warnings:[]}), 'VALIDADO',JSON.stringify({counts:snapshot.counts,warnings:[]})).run();
  for(const p of snapshot.personas)await db.prepare('INSERT INTO personas VALUES(?,?,?,?,?,?)').bind(id,p.matricula,(p.nombre+' '+p.matricula).toLowerCase(),p.tipo_contratacion_clave||'',p.status_codigo||'',JSON.stringify(p)).run();
  for(const p of snapshot.plazas)await db.prepare('INSERT INTO plazas VALUES(?,?,?,?,?,?,?)').bind(id,p.plaza_id,p.ocupante_matricula||null,p.titular_matricula||null,p.puesto||'',p.departamento||'',JSON.stringify(p)).run();
