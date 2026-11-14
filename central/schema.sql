@@ -113,3 +113,7 @@ CREATE TRIGGER IF NOT EXISTS unidad_eliminada_preferencia_update BEFORE UPDATE O
 CREATE TABLE IF NOT EXISTS historial_cargas(id TEXT PRIMARY KEY,fecha TEXT NOT NULL,fuentes TEXT NOT NULL CHECK(json_valid(fuentes)),cobertura TEXT NOT NULL CHECK(json_valid(cobertura)),conteos TEXT NOT NULL CHECK(json_valid(conteos)),estado TEXT NOT NULL DEFAULT 'BORRADOR');
 CREATE TABLE IF NOT EXISTS historial_nomina(carga TEXT NOT NULL REFERENCES historial_cargas(id),matricula TEXT NOT NULL,anio INTEGER NOT NULL,payload TEXT NOT NULL CHECK(json_valid(payload)),PRIMARY KEY(carga,matricula,anio));
 CREATE INDEX IF NOT EXISTS historial_nomina_trabajador ON historial_nomina(matricula,anio,carga);
+CREATE TABLE IF NOT EXISTS historial_faltas(carga TEXT NOT NULL REFERENCES historial_cargas(id),matricula TEXT NOT NULL,fecha TEXT NOT NULL,concepto TEXT NOT NULL,PRIMARY KEY(carga,matricula,fecha));
+CREATE INDEX IF NOT EXISTS historial_faltas_fecha ON historial_faltas(carga,fecha,matricula);
+CREATE TABLE IF NOT EXISTS faltas_anteriores(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,fecha TEXT NOT NULL,estado TEXT NOT NULL,payload TEXT NOT NULL CHECK(json_valid(payload)));
+CREATE INDEX IF NOT EXISTS faltas_anteriores_matricula ON faltas_anteriores(matricula,fecha);

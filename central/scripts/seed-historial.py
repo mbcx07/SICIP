@@ -1,5 +1,5 @@
 """Carga versionada e idempotente; activa sólo después de validar todas las matrículas/años."""
-import argparse,base64,datetime,gzip,hashlib,json
+import argparse,base64,datetime,gzip,hashlib,json,subprocess,sys
 from pathlib import Path
 from cloud import query
 p=argparse.ArgumentParser();p.add_argument('archivo',type=Path);p.add_argument('--database',required=True);p.add_argument('--activar',action='store_true');a=p.parse_args();s=json.loads(a.archivo.read_text());load='hist-'+hashlib.sha256(json.dumps(s['fuentes'],sort_keys=True).encode()).hexdigest()[:24]
@@ -18,6 +18,7 @@ for h in s['historiales']:
  if size+n>170000:send()
  chunk.append(row);size+=n
 send();r=query(a.database,"SELECT count(*) total,SUM(json_extract(payload,'$.registros')) hechos FROM historial_nomina WHERE carga=?",[load])[0]['results'][0];assert r['total']==len(s['historiales']) and r['hechos']==s['conteos']['TRANSACCION']+s['conteos']['INCIDENCIA'],r
+subprocess.run([sys.executable,str(Path(__file__).with_name('indexar-faltas.py')),str(a.archivo),'--database',a.database,'--carga',load],check=True)
 query(a.database,"UPDATE historial_cargas SET estado='VALIDADO' WHERE id=?",[load])
 if a.activar:query(a.database,"INSERT INTO settings VALUES('historial_nomina_activa',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",[load])
 print(json.dumps({'carga':load,'validado':True,'activado':a.activar,**r}),flush=True)

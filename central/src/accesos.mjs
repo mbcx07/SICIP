@@ -20,6 +20,7 @@ export function validarRuta(u,path){u={...u,...accesosCuenta(u)};if(esAdmin(u)||
  if(path.startsWith('/api/herramientas/'))return puede(u,'personal.herramientas.nivelacion','personal.herramientas.conceptos','personal.herramientas.reintegro','herramientas.nivelacion');
  if(path==='/api/inicio')return puede(u,'inicio');
  if(path.startsWith('/api/personal/historial'))return puede(u,'jefe.historial');
+ if(path.startsWith('/api/personal/faltas/ranking'))return puede(u,'personal.faltas');
  if(path==='/api/personal/incidencias')return puede(u,'inicio','personal.faltas','tramites.seguimiento','jefe.historial');
  if(path.startsWith('/api/admin/'))return false;
  if(path.startsWith('/api/personal/jornadas'))return puede(u,'personal.vacaciones','jefe.cobertura.nueva','jefe.cobertura.historial');

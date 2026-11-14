@@ -1,3 +1,4 @@
+import {rankingFaltasAPI} from './faltas-ranking.mjs';
 import {historialAPI} from './historial-api.mjs';
 import {camposPendientes} from './perfil-domain.mjs';
 import {complementarMando} from './mando.mjs';
@@ -66,6 +67,7 @@ async function api(request,env){
  if(path==='/api/admin/herramientas/calculos')return supervisionCalculosAPI(request,env,{session,run,json,assert});
  if(path==='/api/inicio'||path.startsWith('/api/inicio/'))return inicioAPI(request,env,{session,run,json,body,assert});
  if(path.startsWith('/api/personal/historial'))return historialAPI(request,env,{session,current,run,json,assert});
+ if(path.startsWith('/api/personal/faltas/ranking'))return rankingFaltasAPI(request,env,{session,current,run,json,assert});
  if(path==='/api/personal/incidencias')return incidenciasAPI(request,env,{session,account,cleanUser,run,current,body,json,assert});
  if(path.startsWith('/api/unidades/')||path.startsWith('/api/admin/unidades'))return unidadesAPI(request,env,{session,body,current,run,json,assert});
  if(path.startsWith('/api/herramientas/'))return herramientasAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
