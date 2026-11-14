@@ -1,0 +1,11 @@
+# Resumen quincenal y Control de Faltas · 5.56.0
+
+El historial muestra estadísticas quincenales, no filas individuales de nómina. Los conceptos 37/37A suman horas laboradas de INCIDENCIA (BD2), excluyendo las transacciones programadas para no convertir duraciones en horas ni duplicar trabajo. El concepto 35 suma días programados de TRANSACCION; se agrupa por quincena de inicio y no se prorratean periodos sin información diaria confirmada. No se muestran ni exportan importes de 37/37A/35; los importes de otros conceptos, como 10, conservan su significado de programación. Excel incluye trabajador, resumen, quincenal y mensual; PDF usa el resumen quincenal, sin tabla individual.
+
+Control de Faltas consulta la carga central activa para 72/E72 de incidencias diarias vigentes. Combina estos hechos con capturas D1 y el registro anterior en línea, deduplicando matrícula/tipo/fecha, conservando ambas procedencias si coinciden. Excluye incidencias de nómina canceladas y registros manuales anulados. Presenta faltas por quincena y sus conteos disponibles; no usa localStorage ni vuelve a importar faltas como capturas manuales. La misma consulta autenticada sirve a Inicio y al cálculo de Aura, con los filtros temporales existentes.
+
+Una regla antigua tomaba la primera etiqueta del contenedor y forzaba inputmode numeric incluso en búsquedas por nombre. Se sustituye por etiquetas asociadas al propio input y placeholder/aria-label. Campos que incluyen nombre usan teclado de texto; se retiran patrones sólo numéricos y límites cortos incompatibles con búsquedas combinadas. Los campos exclusivos de matrícula conservan numeric, al igual que importes numéricos y códigos de verificación. Los buscadores de firmante declaran explícitamente teclado de texto.
+
+El adjunto Inc. diarias.zip no se pudo descargar: supera el límite de transferencia de 32 MiB de la herramienta. Esta versión utiliza la carga central ya validada, sin afirmar que se importaron las nuevas incidencias. La incorporación del ZIP queda pendiente de archivos descargables en partes inferiores al límite. El padrón y la quincena 22/2026 no se modifican en esta publicación.
+
+Validación: 230 pruebas Node; historial y Control de Faltas en 1280/390 px, resumen quincenal, ausencia de importes 37/35, deduplicación manual/nómina, Excel/PDF y comprobación de teclados de búsqueda en móvil.
