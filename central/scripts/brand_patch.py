@@ -13,7 +13,7 @@ for p in out.rglob('*.html'):
  s=p.read_text();s=re.sub(r'<link\b[^>]*\brel=[\"\'](?:icon|shortcut icon|apple-touch-icon)[\"\'][^>]*>','',s,flags=re.I)
  tags=f'<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v={stamp}"><link rel="icon" type="image/x-icon" href="/favicon.ico?v={stamp}"><link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-551.png">'
  s=s.replace('</head>',tags+'<link rel="stylesheet" href="/sicip-central/module-headings.css?v=20261113-navegacion"><script defer src="/sicip-central/module-headings.js?v=20261113-navegacion"></script></head>',1)
- if p==out/'index.html':s=s.replace('</body>','<script src="/sicip-central/menu-icons.js?v=20261114-fotos"></script></body>')
+ if p==out/'index.html':s=s.replace('</body>','<script src="/sicip-central/menu-icons.js?v=20261114-inicio"></script></body>')
  if p==out/'examenes/index.html':
   s=s.replace('<header class="bg-imss text-white shadow-lg">','<header class="sicip-page-heading">').replace('<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl font-black text-imss-verde">IMSS</div>','')
  if p==out/'pases/index.html':
