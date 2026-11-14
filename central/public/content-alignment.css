@@ -1,0 +1,32 @@
+/* Shared screen typography. Paper documents, data cells and editing controls keep their layout. */
+@media screen{
+:where(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas,.max-w-6xl) :is(h1,h2,h3):not(:where(table *,dialog *,[role=dialog] *,#printArea *,#pase-pdf-stage *)){text-align:center!important;overflow-wrap:break-word}
+:where(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas,.max-w-6xl) p:not(:where(table *,dialog *,[role=dialog] *,#printArea *,#pase-pdf-stage *,.home-eyebrow,.pm-eyebrow,.central-eyebrow,.aura-next,[role=status],.coverage-status)){text-align:justify;hyphens:auto;line-height:1.6}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.sicip-page-heading,.coverage-head,.central-header,.sicip-flow-hero,.hero):not(:where(dialog *,#printArea *)){justify-content:center!important;text-align:center!important;gap:14px!important}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.sicip-page-heading,.coverage-head,.central-header,.sicip-flow-hero,.hero)>div:not(.coverage-actions){flex:1 1 100%;min-width:0}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.sicip-page-heading,.coverage-head,.central-header,.sicip-flow-hero,.hero) p{text-align:center!important;margin-left:auto!important;margin-right:auto!important}
+:is(.sicip-app-main,.sicip-central,.sicip-coberturas,.wrap) :is(.central-counts>div,.coverage-summary>div,.absence-cards article,.sicip-flow-stat){text-align:center;align-items:center;justify-content:center;min-width:0}
+:is(.sicip-app-main,.sicip-central,.sicip-coberturas,.wrap) :is(.central-counts,.coverage-summary,.coverage-actions,.central-tabs,.pm-tabs,.vac-steps){justify-content:center}
+:is(.sicip-app-main,.sicip-central,.sicip-coberturas,.wrap) :is(.central-counts,.coverage-summary,.absence-cards) :is(p,small,strong,b){text-align:center}
+:is(.sicip-app-main,.sicip-central,.sicip-coberturas,.wrap) :is(button,a) {overflow-wrap:break-word}
+:is(.sicip-app-main,.wrap,.max-w-6xl) :is(.coverage-actions,.central-tabs,.pm-tabs) button{display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:6px}
+/* Search matches and editable information stay easy to scan. */
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(input,select,textarea,label,dt,dd,[role=option],.coverage-results button,.central-table-wrap td,.coverage-table td){text-align:start}
+@media(max-width:600px){
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.coverage-head,.central-header,.sicip-flow-hero,.hero){flex-direction:column;align-items:stretch!important}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.coverage-head,.central-header,.sicip-flow-hero,.hero)>div:not(.coverage-actions){flex:initial;width:100%}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.coverage-actions,.central-tabs,.pm-tabs){width:100%;gap:8px}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.coverage-actions,.central-tabs,.pm-tabs) button{min-height:44px;white-space:normal;max-width:100%}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) .coverage-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.coverage-card,.pm-library article){padding:16px}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) .history-worker{display:flex;flex-direction:column;align-items:center;gap:14px}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) .history-worker>div{min-width:0;max-width:100%}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) .pm-library article{text-align:center}
+}
+}
+@media screen{
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(h1,h2,h3):not(:where(table *,dialog *,#printArea *,#pase-pdf-stage *)){justify-content:center}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) .coverage-summary>:not(button):not(label){text-align:center}
+:is(.sicip-app-main,.wrap,.sicip-central,.sicip-coberturas) :is(.central-counts,.coverage-summary,.absence-cards) svg{display:block;margin-inline:auto}
+main.main :is(h1,h2,h3){text-align:center}main.main p{text-align:justify;hyphens:auto}
+}
