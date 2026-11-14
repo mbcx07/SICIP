@@ -1,7 +1,8 @@
+import {leerFoto} from './foto-perfil.mjs';
 import {unidadTrabajador} from './unidades.mjs';
 import {jornadaPersonal,normalizarJornada,guardarJornadaSQL} from './personal-jornadas.mjs';
 import {validarConjuntoVac06,casillaVac06} from './vacaciones-formato-domain.mjs';
-import {compatibilidadRol,fotoPermitida,TURNOS_VACACIONES,turnoDescripcion} from './vacaciones-guia-domain.mjs';
+import {compatibilidadRol,TURNOS_VACACIONES,turnoDescripcion} from './vacaciones-guia-domain.mjs';
 import {consultaVacaciones} from './vacaciones-consulta-api.mjs';
 import {avisoSQL,estadoSolicitud,avisoVacacionInicialSQL,sha} from './notificaciones-core.mjs';
 import {limitePECV,CAL_KEYS,validarContinuidadPECV} from './pecv-domain.mjs';
@@ -51,7 +52,7 @@ export async function vacacionesAPI(request,env,h){
  if(path==='/api/vacaciones/config'&&method==='GET')return json({version:VERSION,anio:2027,roles:ROLES,festivos:FESTIVOS,fuentes:FUENTES,limite_captura:'2026-11-30',publicacion_siap:'2026024',reglas_estatuto:'Desde el sexto año, marcas 2 y 3 en dos fracciones semejantes. Marca 0 sólo años 1 a 5 y dos periodos vencidos.',actualizacion:'La lista consulta el servidor cada 5 segundos; la captura se confirma únicamente al guardar en línea.'});
 
  if(path==='/api/vacaciones/foto'&&method==='GET'){
-  const mat=url.searchParams.get('matricula')||'';assert(mat&&(staff||mat===u.matricula),403,'No puedes consultar esa fotografía.');const c=await current(env,url.searchParams.get('corte')||undefined),p=await run(env,'SELECT json FROM personas WHERE corte=? AND matricula=?',c.id,mat).first();assert(p,404,'Trabajador no encontrado.');const person=JSON.parse(p.json);let source=[person.foto,person.fotoUrl,person.photoURL].map(fotoPermitida).find(Boolean);if(!source){let raw={};try{raw=await account(mat)||{};}catch{}source=[raw.foto,raw.fotoUrl,raw.fotoURL,raw.photoURL,raw.photoUrl,raw.fotoPerfil,raw.fotografia].map(fotoPermitida).find(Boolean);}assert(source,404,'Sin fotografía registrada.');if(source.startsWith('https:'))return new Response(null,{status:302,headers:{Location:source,'Cache-Control':'private, no-store','Referrer-Policy':'no-referrer'}});const [header,data]=source.split(',');return new Response(Uint8Array.from(atob(data),c=>c.charCodeAt(0)),{headers:{'Content-Type':header.slice(5).split(';')[0],'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}});
+  const mat=url.searchParams.get('matricula')||'';assert(mat&&(staff||mat===u.matricula),403,'No puedes consultar esa fotografía.');const c=await current(env,url.searchParams.get('corte')||undefined),p=await run(env,'SELECT json FROM personas WHERE corte=? AND matricula=?',c.id,mat).first();assert(p,404,'Trabajador no encontrado.');return leerFoto(env,run,account,mat,JSON.parse(p.json));
  }
  if(path==='/api/vacaciones/trabajador'&&method==='GET'){
   const mat=url.searchParams.get('matricula')||'';assert(mat&&(staff||mat===u.matricula),403,'Consulta de trabajador no autorizada.');const c=await current(env,url.searchParams.get('corte')||undefined);

@@ -117,3 +117,4 @@ CREATE TABLE IF NOT EXISTS historial_faltas(carga TEXT NOT NULL REFERENCES histo
 CREATE INDEX IF NOT EXISTS historial_faltas_fecha ON historial_faltas(carga,fecha,matricula);
 CREATE TABLE IF NOT EXISTS faltas_anteriores(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,fecha TEXT NOT NULL,estado TEXT NOT NULL,payload TEXT NOT NULL CHECK(json_valid(payload)));
 CREATE INDEX IF NOT EXISTS faltas_anteriores_matricula ON faltas_anteriores(matricula,fecha);
+CREATE TABLE IF NOT EXISTS fotos_perfil(matricula TEXT PRIMARY KEY,mime TEXT NOT NULL,data TEXT NOT NULL,updated_at TEXT NOT NULL);
