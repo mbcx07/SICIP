@@ -6,9 +6,9 @@ export function documentoAdaptable(html){
  const doc=new DOMParser().parseFromString(html,'text/html');doc.head.insertAdjacentHTML('beforeend',extra);const paper=doc.createElement('div');paper.id='sicip-paper';paper.append(...doc.body.childNodes);doc.body.append(paper);doc.body.insertAdjacentHTML('beforeend',script);return '<!doctype html>'+doc.documentElement.outerHTML;
 }
 export function mostrarDocumento(html,{titulo='Vista de impresión'}={}){
- const d=document.createElement('dialog');d.className='coverage-print-dialog sicip-document-viewer';
+ const host=window.top?.document||document;const d=host.createElement('dialog');d.className='coverage-print-dialog sicip-document-viewer';
  d.innerHTML='<header><h2></h2><div class="coverage-actions"><button type="button" data-print>Imprimir / guardar PDF</button><button type="button" data-close>Cerrar</button></div></header><p data-help>Revisa el documento y selecciona imprimir para guardarlo como PDF o enviarlo a tu impresora.</p><iframe></iframe><p role="status" data-status></p>';
  d.querySelector('h2').textContent=titulo;const f=d.querySelector('iframe');f.title=titulo;f.srcdoc=documentoAdaptable(html);let ready=false;const print=d.querySelector('[data-print]');print.disabled=true;f.onload=()=>{ready=true;print.disabled=false;};
  print.onclick=()=>{if(!ready)return;try{f.contentWindow.focus();f.contentWindow.print();}catch{d.querySelector('[data-status]').textContent='No se pudo abrir la impresión. Intenta desde el navegador del dispositivo.';}};
- d.querySelector('[data-close]').onclick=()=>d.close();d.onclose=()=>d.remove();document.body.append(d);d.showModal();return d;
+ d.querySelector('[data-close]').onclick=()=>d.close();d.onclose=()=>d.remove();host.body.append(d);d.showModal();return d;
 }
