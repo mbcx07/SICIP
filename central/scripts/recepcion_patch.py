@@ -4,6 +4,9 @@ out=Path(sys.argv[1]);p=out/'sicip-recepciones-module.js';s=p.read_text()
 back=[line for line in s.splitlines(keepends=True) if '__SICIP_RECEP_VOLVER__()' in line and 'Volver al inicio</button>' in line]
 assert len(back)==1,'Cambió el encabezado de recepción'
 s=s.replace(back[0],'').replace('📋 Recepciones de Documentos','📋 Recepción de Documentos')
+backs=[line for line in s.splitlines(keepends=True) if '__SICIP_RECEP_BACK_SELECTOR__()' in line and 'Volver</button>' in line]
+assert len(backs)==3,'Cambió la navegación secundaria de recepción'
+for line in backs:s=s.replace(line,'')
 start=s.index('  var TIPOS_CATEGORIAS = [');end=s.index('];',start)+2
 s=s[:start]+'''  var TIPOS_CATEGORIAS = [];
   async function cargarCatalogoRecepcion(){
