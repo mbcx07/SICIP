@@ -12,6 +12,12 @@ assert "d.setDate(d.getDate() + parseInt(days, 10));" in s
 s=s.replace("d.setDate(d.getDate() + parseInt(days, 10));","d.setDate(d.getDate() + parseInt(days, 10) - 1);")
 s=s.replace("  async function fsCreate(coll, obj) {", "  async function fsCreate(coll, obj) {\n    if(coll==='recepcionesDocumentos')return window.SICIPDocumentos.guardarManual(obj);")
 s=s.replace("  async function cargarRecepcionesRecientes() {", "  async function cargarRecepcionesRecientes() {\n    if(window.SICIPDocumentos){await window.SICIPDocumentos.mount(document.querySelector('[data-sicip-recepciones-panel]'));return;}")
+# Make the existing capture value visible; keep the folio printed on the document.
+assert '              // Descripción' in s
+s=s.replace('              // Descripción',"""              '<div style="margin-bottom:0.75rem"><label for="sicip-recep-folio" style="display:block;font-size:0.78rem;font-weight:600;color:#374151;margin-bottom:0.3rem">Folio del documento</label><input type="text" inputmode="text" id="sicip-recep-folio" class="sicip-recep-input" maxlength="80" placeholder="Escribe el folio que aparece en el documento" aria-describedby="sicip-recep-folio-ayuda" /><small id="sicip-recep-folio-ayuda">Si no tiene folio, déjalo vacío. SICIP asignará uno corto, por ejemplo RM-000001.</small></div>' +
+              // Descripción""",1)
+s=s.replace(".then(function() {\n      log('✅ Recepción guardada", ".then(function(saved) {\n      log('✅ Recepción guardada",1)
+s=s.replace("toast('✅ Documento recibido y guardado exitosamente', 'success');", "toast('✅ Documento recibido. Folio: '+(saved.folio||dataToSave.folioReferencia), 'success');",1)
 start=s.index('  var TIPOS_CATEGORIAS = [');end=s.index('];',start)+2
 s=s[:start]+'''  var TIPOS_CATEGORIAS = [];
   async function cargarCatalogoRecepcion(){
