@@ -118,3 +118,12 @@ CREATE INDEX IF NOT EXISTS historial_faltas_fecha ON historial_faltas(carga,fech
 CREATE TABLE IF NOT EXISTS faltas_anteriores(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,fecha TEXT NOT NULL,estado TEXT NOT NULL,payload TEXT NOT NULL CHECK(json_valid(payload)));
 CREATE INDEX IF NOT EXISTS faltas_anteriores_matricula ON faltas_anteriores(matricula,fecha);
 CREATE TABLE IF NOT EXISTS fotos_perfil(matricula TEXT PRIMARY KEY,mime TEXT NOT NULL,data TEXT NOT NULL,updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS recepcion_documentos(id TEXT PRIMARY KEY,request_key TEXT UNIQUE,folio TEXT UNIQUE,matricula TEXT NOT NULL,nombre TEXT NOT NULL,tipo TEXT NOT NULL,categoria TEXT NOT NULL,inicio TEXT NOT NULL,fin TEXT NOT NULL,dias INTEGER NOT NULL,descripcion TEXT NOT NULL DEFAULT '',recibido_por TEXT NOT NULL,recibido_nombre TEXT NOT NULL,fecha TEXT NOT NULL,unidad TEXT,custodio TEXT NOT NULL,estado TEXT NOT NULL DEFAULT 'RECIBIDO',envio TEXT,version INTEGER NOT NULL DEFAULT 1,origen TEXT NOT NULL DEFAULT 'CENTRAL',busqueda TEXT NOT NULL DEFAULT '');
+CREATE INDEX IF NOT EXISTS recepcion_doc_fecha ON recepcion_documentos(fecha,id);
+CREATE INDEX IF NOT EXISTS recepcion_doc_mat ON recepcion_documentos(matricula,fecha);
+CREATE INDEX IF NOT EXISTS recepcion_doc_custodio ON recepcion_documentos(custodio,estado);
+CREATE TABLE IF NOT EXISTS recepcion_envios(id INTEGER PRIMARY KEY AUTOINCREMENT,uuid TEXT NOT NULL UNIQUE,request_key TEXT NOT NULL UNIQUE,fingerprint TEXT NOT NULL,emisor TEXT NOT NULL,emisor_nombre TEXT NOT NULL,emisor_cargo TEXT NOT NULL,destino TEXT NOT NULL,destino_nombre TEXT NOT NULL,destino_cargo TEXT NOT NULL,unidad TEXT,fecha TEXT NOT NULL,observaciones TEXT NOT NULL DEFAULT '');
+CREATE TABLE IF NOT EXISTS recepcion_envio_items(envio TEXT NOT NULL,documento TEXT NOT NULL,snapshot TEXT NOT NULL,estado TEXT NOT NULL DEFAULT 'ASIGNADO',receptor TEXT,version INTEGER NOT NULL DEFAULT 1,actualizado TEXT NOT NULL,observacion TEXT NOT NULL DEFAULT '',PRIMARY KEY(envio,documento));
+CREATE INDEX IF NOT EXISTS recepcion_envio_destino ON recepcion_envios(destino,fecha);
+CREATE TABLE IF NOT EXISTS recepcion_eventos(id TEXT PRIMARY KEY,documento TEXT NOT NULL,envio TEXT,actor TEXT NOT NULL,accion TEXT NOT NULL,fecha TEXT NOT NULL,detalle TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS recepcion_guardas(id TEXT PRIMARY KEY,ok INTEGER NOT NULL CHECK(ok=1));

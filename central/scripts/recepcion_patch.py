@@ -7,6 +7,11 @@ s=s.replace(back[0],'').replace('📋 Recepciones de Documentos','📋 Recepció
 backs=[line for line in s.splitlines(keepends=True) if '__SICIP_RECEP_BACK_SELECTOR__()' in line and 'Volver</button>' in line]
 assert len(backs)==3,'Cambió la navegación secundaria de recepción'
 for line in backs:s=s.replace(line,'')
+# Inclusive natural-day periods: the first day is day one.
+assert "d.setDate(d.getDate() + parseInt(days, 10));" in s
+s=s.replace("d.setDate(d.getDate() + parseInt(days, 10));","d.setDate(d.getDate() + parseInt(days, 10) - 1);")
+s=s.replace("  async function fsCreate(coll, obj) {", "  async function fsCreate(coll, obj) {\n    if(coll==='recepcionesDocumentos')return window.SICIPDocumentos.guardarManual(obj);")
+s=s.replace("  async function cargarRecepcionesRecientes() {", "  async function cargarRecepcionesRecientes() {\n    if(window.SICIPDocumentos){await window.SICIPDocumentos.mount(document.querySelector('[data-sicip-recepciones-panel]'));return;}")
 start=s.index('  var TIPOS_CATEGORIAS = [');end=s.index('];',start)+2
 s=s[:start]+'''  var TIPOS_CATEGORIAS = [];
   async function cargarCatalogoRecepcion(){

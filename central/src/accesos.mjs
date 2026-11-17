@@ -19,6 +19,7 @@ export function permisosHeredados(ids){return [...new Set(MODULOS.flatMap(m=>m.h
 export function validarRuta(u,path){u={...u,...accesosCuenta(u)};if(esAdmin(u)||!u?.accesosDefinidos)return true;
  if(path.startsWith('/api/herramientas/'))return puede(u,'personal.herramientas.nivelacion','personal.herramientas.conceptos','personal.herramientas.reintegro','herramientas.nivelacion');
  if(path==='/api/inicio')return puede(u,'inicio');
+ if(path==='/api/personal/bandeja')return puede(u,'personal.bandeja');
  if(path.startsWith('/api/personal/historial'))return puede(u,'jefe.historial');
  if(path.startsWith('/api/personal/faltas/ranking'))return puede(u,'personal.faltas');
  if(path==='/api/personal/incidencias')return puede(u,'inicio','personal.faltas','tramites.seguimiento','jefe.historial');

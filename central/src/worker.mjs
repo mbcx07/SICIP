@@ -1,3 +1,4 @@
+import {recepcionAPI} from './recepcion-api.mjs';
 import {menuOrdenAPI} from './menu-orden.mjs';
 import {fotoAPI} from './foto-perfil.mjs';
 import {rankingFaltasAPI} from './faltas-ranking.mjs';
@@ -67,6 +68,7 @@ async function api(request,env){
  if(path==='/api/perfil/foto')return fotoAPI(request,env,{session,run,account,body,json,assert});
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
  if(method==='POST'&&['/api/vacaciones/mi-pecv','/api/vacaciones/registros','/api/pases/registros','/api/postulaciones'].includes(path)){const u=await session(request,env);if(u.rol==='TRABAJADOR'){const personal=await run(env,'SELECT payload FROM perfiles_personales WHERE matricula=?',u.matricula).first();assert(personal&&!camposPendientes(JSON.parse(personal.payload)).length,428,'Completa los datos obligatorios en Mi perfil antes de solicitar.');const c=await run(env,'SELECT institucional,personal,institucional_verificado,personal_verificado FROM contactos WHERE matricula=?',u.matricula).first();assert(c&&(c.institucional||c.personal)&&['institucional','personal'].every(k=>!c[k]||!!c[k+'_verificado']),428,'Vincula tus correos con el código de verificación en Mi perfil antes de solicitar. Guardar la dirección sin verificar no activa los avisos.');}}
+ if((path.startsWith('/api/recepcion/')&&path!=='/api/recepcion/catalogo')||path==='/api/personal/bandeja')return recepcionAPI(request,env,{session,run,json,assert,body,current,account,cleanUser});
  if(path==='/api/recepcion/catalogo'||path==='/api/admin/recepcion-catalogo')return recepcionCatalogoAPI(request,env,{session,run,json,assert,body});
  if(path==='/api/admin/herramientas/calculos')return supervisionCalculosAPI(request,env,{session,run,json,assert});
  if(path==='/api/inicio'||path.startsWith('/api/inicio/'))return inicioAPI(request,env,{session,run,json,body,assert});
