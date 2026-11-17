@@ -1,6 +1,9 @@
 from pathlib import Path
 import sys,re
 out=Path(sys.argv[1]);p=out/'sicip-recepciones-module.js';s=p.read_text()
+back=[line for line in s.splitlines(keepends=True) if '__SICIP_RECEP_VOLVER__()' in line and 'Volver al inicio</button>' in line]
+assert len(back)==1,'Cambió el encabezado de recepción'
+s=s.replace(back[0],'').replace('📋 Recepciones de Documentos','📋 Recepción de Documentos')
 start=s.index('  var TIPOS_CATEGORIAS = [');end=s.index('];',start)+2
 s=s[:start]+'''  var TIPOS_CATEGORIAS = [];
   async function cargarCatalogoRecepcion(){
