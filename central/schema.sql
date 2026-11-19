@@ -127,3 +127,5 @@ CREATE TABLE IF NOT EXISTS recepcion_envio_items(envio TEXT NOT NULL,documento T
 CREATE INDEX IF NOT EXISTS recepcion_envio_destino ON recepcion_envios(destino,fecha);
 CREATE TABLE IF NOT EXISTS recepcion_eventos(id TEXT PRIMARY KEY,documento TEXT NOT NULL,envio TEXT,actor TEXT NOT NULL,accion TEXT NOT NULL,fecha TEXT NOT NULL,detalle TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS recepcion_guardas(id TEXT PRIMARY KEY,ok INTEGER NOT NULL CHECK(ok=1));
+CREATE TABLE IF NOT EXISTS examenes_resultados(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,nombre TEXT NOT NULL,fecha INTEGER NOT NULL,payload TEXT NOT NULL,guardado TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS examenes_resultados_persona ON examenes_resultados(matricula,fecha,id);

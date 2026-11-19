@@ -103,3 +103,11 @@ El módulo Contratación y coberturas se recuperó del programa Excel original. 
 ## Seguimiento personal 5.26.0
 
 [Menú, nombres, folios y conexión de Mis trámites](SEGUIMIENTO.md).
+
+## Prueba piloto: conservación y persistencia (noviembre de 2026)
+
+Las reglas operativas vigentes están en [AGENTS.md](../AGENTS.md). El build y la publicación cambian código, no cargan ni sustituyen las bases operativas. Las migraciones se ejecutan aparte y deben conservar los registros anteriores. Los respaldos y las fuentes originales se guardan fuera de Git; nunca se publican como assets.
+
+Pases, recepción/derivaciones, coberturas, vacaciones, PECV, PD44, cálculos, perfiles, notificaciones y padrón usan D1. Las cuentas, cuadros y trámites heredados mantienen su almacenamiento en Firestore. Pases conserva una copia de compatibilidad en el navegador después del guardado central; no es la fuente de verdad ni un motivo para limpiar el navegador.
+
+Desde 5.68.2, Exámenes registra y consulta resultados en `examenes_resultados` de D1. El administrador puede consultar todos desde el historial de Exámenes. Los resultados locales anteriores de la misma matrícula se importan cuando esa persona abre Exámenes en el navegador original; se conserva la copia y los reintentos no duplican resultados. Los registros locales de otra matrícula no se atribuyen a la sesión actual. No existe una operación de borrado del historial en la nueva API. Un resultado cuyo envío falla muestra el estado pendiente y un botón de reintento: no se anuncia como guardado.

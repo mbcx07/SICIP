@@ -18,6 +18,7 @@ export function puede(u,...ids){const a=accesosCuenta(u);return esAdmin(u)||!a.a
 export function permisosHeredados(ids){return [...new Set(MODULOS.flatMap(m=>m.hijos).filter(x=>ids.includes(x.id)).map(x=>x.heredado))];}
 export function validarRuta(u,path){u={...u,...accesosCuenta(u)};if(esAdmin(u)||!u?.accesosDefinidos)return true;
  if(path.startsWith('/api/herramientas/'))return puede(u,'personal.herramientas.nivelacion','personal.herramientas.conceptos','personal.herramientas.reintegro','herramientas.nivelacion');
+ if(path.startsWith('/api/examenes/'))return puede(u,'examenes');
  if(path==='/api/inicio')return puede(u,'inicio');
  if(path==='/api/personal/bandeja')return puede(u,'personal.bandeja');
  if(path.startsWith('/api/personal/historial'))return puede(u,'jefe.historial');

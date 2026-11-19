@@ -1,3 +1,4 @@
+import {examenesAPI} from './examenes-api.mjs';
 import {recepcionAPI} from './recepcion-api.mjs';
 import {menuOrdenAPI} from './menu-orden.mjs';
 import {fotoAPI} from './foto-perfil.mjs';
@@ -64,6 +65,7 @@ async function validateCut(env,id){
 async function api(request,env){
  const url=new URL(request.url),path=url.pathname,method=request.method;
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
+ if(path==='/api/examenes/resultados')return examenesAPI(request,env,{session,run,json,body,assert});
  if(path==='/api/menu/orden'||path==='/api/admin/menu/orden')return menuOrdenAPI(request,env,{session,run,json,body,assert});
  if(path==='/api/perfil/foto')return fotoAPI(request,env,{session,run,account,body,json,assert});
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});

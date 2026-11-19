@@ -95,14 +95,18 @@ let state={
   tiempoInicio:0,
   tiempoRestante:0,
   timer:null,
-  resultados:[]       // historial en localStorage
+  resultados:[]       // historial confirmado en la nube
 };
 
 // ============ PERSISTENCIA ============
-function cargarHistorial(){
-  try{state.resultados=JSON.parse(localStorage.getItem(STORAGE_KEY))||[]}catch(e){state.resultados=[]}
-}
-function guardarHistorial(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state.resultados))}
+let historialPendiente=[],historialError='',historialTodos=false;
+function escHistorial(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function cargarHistorial(){} // Rendering reads only the current cloud response.
+async function actualizarHistorial(){let next='',rows=[];do{const r=await window.SICIPCentral.api('/api/examenes/resultados?'+new URLSearchParams({...(historialTodos?{scope:'todos'}:{}),...(next?{antes:next}:{})}));rows.push(...r.resultados);next=r.siguiente;}while(next);state.resultados=rows;}
+async function guardarHistorial(){for(const r of [...historialPendiente]){await window.SICIPCentral.api('/api/examenes/resultados',{method:'POST',body:JSON.stringify(r)});historialPendiente=historialPendiente.filter(x=>x!==r);}await actualizarHistorial();}
+function avisoHistorial(){let el=document.getElementById('aviso-historial-central');if(!el){el=document.createElement('p');el.id='aviso-historial-central';el.setAttribute('role','status');el.style='margin:12px;padding:14px;background:#fff8df;color:#654500';document.getElementById('app').before(el);}el.replaceChildren(document.createTextNode(historialError||'Resultados guardados y consultados en la nube.'));if(historialError){const b=document.createElement('button');b.textContent='Reintentar guardado y consulta';b.className='btn-primary';b.style='margin-left:12px;padding:8px';b.onclick=async()=>{b.disabled=true;try{await iniciarHistorialCentral();historialError='';}catch(e){historialError=e.message;}avisoHistorial();render();};el.append(b);}}
+async function iniciarHistorialCentral(){await window.SICIPCentralBoot;const u=window.SICIPCentral.user;if(!u)throw Error('Inicia sesión para guardar tus resultados.');let old=[];try{old=JSON.parse(localStorage.getItem(STORAGE_KEY))||[];}catch{}for(const r of old.filter(r=>String(r.matricula)===String(u.matricula))){await window.SICIPCentral.api('/api/examenes/resultados',{method:'POST',body:JSON.stringify(r)});}await guardarHistorial();}
+window.addEventListener('beforeunload',e=>{if(historialPendiente.length){e.preventDefault();e.returnValue='Hay un resultado pendiente de guardar en la nube.';}});
 
 // ============ HELPERS ============
 function $(id){return document.getElementById(id)}
@@ -330,14 +334,14 @@ function viewRanking(){
   <div class="fade-in">
     <button id="btn-volver" class="text-imss-verde font-semibold mb-4 hover:underline">← Volver</button>
     <div class="card p-6">
-      <h2 class="text-2xl font-black text-gray-800 mb-4">📊 Mi Historial de Exámenes</h2>
+      <h2 class="text-2xl font-black text-gray-800 mb-4">📊 ${historialTodos?'Todos los resultados':'Mi Historial de Exámenes'}</h2>${['ADMIN','ADMINISTRADOR'].includes(window.SICIPCentral?.user?.rol)?'<button id="btn-alcance" class="btn-primary px-4 py-2 mb-4">'+(historialTodos?'Ver mis resultados':'Ver resultados de todos los trabajadores')+'</button>':''}
       ${ordenados.length===0?'<p class="text-gray-500 text-center py-8">Aún no has realizado exámenes. ¡Comienza ahora!</p>':
         `<div class="space-y-2">${ordenados.map((r,i)=>`<div class="card p-4 flex items-center justify-between">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full ${r.calificacion>=80?'bg-green-500':'bg-red-500'} text-white flex items-center justify-center font-black">${i+1}</div>
             <div>
-              <div class="font-bold text-gray-800">${r.usuario||'Anónimo'}</div>
-              <div class="text-xs text-gray-500">${r.tema} · ${new Date(r.fecha).toLocaleString('es-MX')}</div>
+              <div class="font-bold text-gray-800">${escHistorial(r.usuario||'Anónimo')}</div>
+              <div class="text-xs text-gray-500">${escHistorial(r.tema)} · ${new Date(r.fecha).toLocaleString('es-MX')}</div>
             </div>
           </div>
           <div class="text-right">
@@ -345,7 +349,7 @@ function viewRanking(){
             <div class="text-xs text-gray-500">${r.correctas}/${r.total}</div>
           </div>
         </div>`).join('')}</div>
-        <button id="btn-limpiar" class="mt-4 text-sm text-red-600 hover:underline">🗑️ Limpiar historial</button>`
+        `
       }
     </div>
   </div>`;
@@ -356,6 +360,7 @@ function bind(){
   if(window.SICIPCentral?.user){const u=window.SICIPCentralParticipant||window.SICIPCentral.user;state.usuario=u.nombre;state.matricula=u.matricula;}
   const $=id=>document.getElementById(id);
 
+  if($('btn-alcance'))$('btn-alcance').onclick=async()=>{historialTodos=!historialTodos;try{await actualizarHistorial();historialError='';}catch(e){historialError=e.message;}avisoHistorial();render();};
   // Inicio
   if($('btn-temas'))$('btn-temas').onclick=()=>{state.pantalla='temas';render()};
   if($('btn-ranking'))$('btn-ranking').onclick=()=>{state.pantalla='ranking';render()};
@@ -425,7 +430,7 @@ function bind(){
   if($('btn-inicio'))$('btn-inicio').onclick=()=>{detenerTimer();state.pantalla='inicio';render()};
 
   // Ranking
-  if($('btn-limpiar'))$('btn-limpiar').onclick=()=>{if(confirm('¿Borrar todo el historial?')){state.resultados=[];guardarHistorial();render()}};
+
 }
 
 function iniciarTimer(){
@@ -444,7 +449,8 @@ function iniciarTimer(){
 }
 function detenerTimer(){if(state.timer){clearInterval(state.timer);state.timer=null}}
 
-function finalizar(){
+async function finalizar(){
+  if(state.guardandoResultado)return;state.guardandoResultado=true;
   detenerTimer();
   const total=state.preguntas.length;
   let correctas=0;
@@ -462,8 +468,8 @@ function finalizar(){
     tiempoMin:state.tiempoMin
   };
   cargarHistorial();
-  state.resultados.push(resultado);
-  guardarHistorial();
+  historialPendiente.push(resultado);
+  try{await guardarHistorial();historialError='';}catch(e){historialError='Resultado pendiente de guardar en la nube. No cierres esta pantalla; reintenta. '+e.message;}finally{state.guardandoResultado=false;}avisoHistorial();
   state.pantalla='resultado';
   state.revisar=false;
   render();
@@ -477,7 +483,7 @@ render();
 window.SICIPCentralBoot.then(async function(){
  const user=window.SICIPCentral.user;if(!user)return;
  const people=await window.SICIPCentral.collection('trabajadores');const person=people.find(p=>p.matricula===user.matricula);
- window.SICIPCentralParticipant=person||user;state.usuario=person?.nombre||user.nombre;state.matricula=user.matricula;render();
+ window.SICIPCentralParticipant=person||user;state.usuario=person?.nombre||user.nombre;state.matricula=user.matricula;try{await iniciarHistorialCentral();}catch(e){historialError='No se pudo confirmar el historial en la nube. '+e.message;}avisoHistorial();render();
  const observer=new MutationObserver(function(){for(const [id,value]of [['cfg-usuario',state.usuario],['cfg-matricula',state.matricula]]){const input=document.getElementById(id);if(input){input.value=value;input.readOnly=true;}}});
  observer.observe(document.getElementById('app'),{childList:true,subtree:true});
 }).catch(function(){location.replace('/login');});
