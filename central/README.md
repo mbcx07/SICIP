@@ -119,3 +119,7 @@ El perfil ordena datos personales, contacto de emergencia, correos y verificaci�
 Cada código tiene vigencia de 15 minutos; una segunda solicitud durante ese plazo no cambia el código ni duplica el correo. El estado de verificación devuelve sólo vencimiento, intentos restantes y estado de envío de la matrícula autenticada, nunca el código ni su hash. El contador se recupera al reabrir el perfil. Cinco intentos incorrectos bloquean la validación hasta solicitar otro al vencimiento. La aceptación del proveedor de correo se distingue de la entrega efectiva.
 
 Una respuesta 401 en una operación autenticada lleva al login y explica el vencimiento. Se eliminan sólo las referencias de sesión del navegador; no se borran datos ni históricos locales. No se conservan borradores personales en almacenamiento local: la pantalla advierte que las modificaciones sin guardar tendrán que recapturarse. Un error de contraseña en el login no dispara otra redirección.
+
+## Orden del primer acceso (5.69.1)
+
+El cambio inicial de contraseña se completa antes de abrir el perfil obligatorio. Las sesiones que aún tienen `primerAcceso` regresan a esa pantalla; la comprobación periódica de contacto no puede taparla. El formulario exige los mismos ocho caracteres mínimos que el servidor y sólo avanza tras confirmación del guardado. La contraseña no se copia al objeto de usuario de `sessionStorage`. Completar datos personales o vincular un correo no cambia la contraseña de acceso.
