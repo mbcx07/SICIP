@@ -111,3 +111,11 @@ Las reglas operativas vigentes están en [AGENTS.md](../AGENTS.md). El build y l
 Pases, recepción/derivaciones, coberturas, vacaciones, PECV, PD44, cálculos, perfiles, notificaciones y padrón usan D1. Las cuentas, cuadros y trámites heredados mantienen su almacenamiento en Firestore. Pases conserva una copia de compatibilidad en el navegador después del guardado central; no es la fuente de verdad ni un motivo para limpiar el navegador.
 
 Desde 5.68.2, Exámenes registra y consulta resultados en `examenes_resultados` de D1. El administrador puede consultar todos desde el historial de Exámenes. Los resultados locales anteriores de la misma matrícula se importan cuando esa persona abre Exámenes en el navegador original; se conserva la copia y los reintentos no duplican resultados. Los registros locales de otra matrícula no se atribuyen a la sesión actual. No existe una operación de borrado del historial en la nueva API. Un resultado cuyo envío falla muestra el estado pendiente y un botón de reintento: no se anuncia como guardado.
+
+## Perfil, sesión y vinculación de correos (5.69)
+
+El perfil ordena datos personales, contacto de emergencia, correos y verificación. Guardar cambios sólo persiste datos: cada correo tiene su propio envío y confirmación. El botón de guardar se activa al modificar el formulario y vuelve a desactivarse únicamente tras la confirmación del servidor. Un fallo al consultar avisos push no bloquea el formulario.
+
+Cada código tiene vigencia de 15 minutos; una segunda solicitud durante ese plazo no cambia el código ni duplica el correo. El estado de verificación devuelve sólo vencimiento, intentos restantes y estado de envío de la matrícula autenticada, nunca el código ni su hash. El contador se recupera al reabrir el perfil. Cinco intentos incorrectos bloquean la validación hasta solicitar otro al vencimiento. La aceptación del proveedor de correo se distingue de la entrega efectiva.
+
+Una respuesta 401 en una operación autenticada lleva al login y explica el vencimiento. Se eliminan sólo las referencias de sesión del navegador; no se borran datos ni históricos locales. No se conservan borradores personales en almacenamiento local: la pantalla advierte que las modificaciones sin guardar tendrán que recapturarse. Un error de contraseña en el login no dispara otra redirección.
