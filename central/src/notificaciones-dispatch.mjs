@@ -1,3 +1,4 @@
+import {felicitarQuincenaSinPases} from './felicitaciones-quincena.mjs';
 import {formatoCorreo} from './correo-formato.mjs';
 import {recordarCierreQuincena,pendientesEntrega} from './recordatorios-quincena.mjs';
 import {revisarAuraProgramada} from './aura.mjs';
@@ -32,4 +33,4 @@ export async function dispatch(env,{send=fetch,clock=()=>Date.now(),limit=20,sou
  if(source==='cron')await sql(env,"INSERT INTO settings VALUES('notificaciones_last_cron',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",stamp).run();
  return {expandidos:notes.length,procesados:pending.length,aceptados:accepted};
 }
-export default {async scheduled(event,env,ctx){ctx.waitUntil((async()=>{await recordarCierreQuincena(env);await importarAvisos(env);await revisarAuraProgramada(env);await dispatch(env);})());},async fetch(){return new Response('Not found',{status:404});}};
+export default {async scheduled(event,env,ctx){ctx.waitUntil((async()=>{await recordarCierreQuincena(env);await importarAvisos(env);await revisarAuraProgramada(env);await felicitarQuincenaSinPases(env);await dispatch(env);})());},async fetch(){return new Response('Not found',{status:404});}};

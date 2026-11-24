@@ -137,3 +137,9 @@ El catálogo `convocatorias` guarda por número de convocatoria y plaza la trans
 Inicio difunde las plazas vacantes y su inscripción **presencial**. Leer o descargar una convocatoria no registra una inscripción y no envía currículums. Esto es independiente del cuadro de reemplazo para ausencias, vacaciones y preparación de relevos por jubilación. No se amplían permisos al publicar avisos.
 
 En el editor del cuadro, Administración puede elegir un perfil de puesto como referencia y revisar la escolaridad y experiencia antes de guardar. Los perfiles no se asignan automáticamente por categoría ni por el ocupante de una vacante. Las alternativas «Y» y «O» se conservan. El guardado central usa una máscara de sólo requisitos y fecha de actualización, con control de versión: no reemplaza candidatos, prioridades ni solicitudes. La creación de un cuadro usa `exists=false` y nunca reemplaza uno existente.
+
+### Felicitación quincenal por pases personales
+
+El Worker `sicip-notificaciones` revisa el día 1 y el 16, desde las 09:00 de `America/Mazatlan`, la quincena inmediatamente anterior. Recorre por lotes a los trabajadores inscritos en Inicio antes del cierre y presentes en el padrón vigente. Consulta los pases centrales y heredados; no cuentan médicos, oficiales ni cancelados. Las licencias e incidencias no forman parte de esta felicitación y no alteran la puntuación de Aura. Una fuente fallida o incompleta impide asumir cero pases y se reintenta durante esa jornada, sin bloquear las demás matrículas.
+
+Cada reconocimiento usa una clave única por matrícula/quincena. Queda en las notificaciones del trabajador y el despachador existente lo envía a sus correos verificados y dispositivos suscritos. No requiere sesión abierta. No se crean trámites ni se modifican pases. Probar únicamente con datos y transportes sintéticos; no disparar el cron manualmente en producción para verificarlo.
