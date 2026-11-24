@@ -59,3 +59,4 @@ button:disabled{cursor:not-allowed!important;filter:none!important;box-shadow:no
 
 .conv-panel [hidden]{display:none!important}
 .conv-profile-source label{display:block;margin:12px 0;line-height:1.5}.conv-profile-source textarea{display:block;width:100%;box-sizing:border-box;padding:10px;border:1px solid #b7c9bf;border-radius:8px;font:inherit;color:#17382b;margin-top:6px}.conv-profile-source button{padding:9px 13px;border-radius:8px;border:1px solid #b7c9bf;color:#fff;background:#005235;font:inherit;cursor:pointer}.conv-profile-source button:disabled{opacity:.55;cursor:default}.conv-profile-source [data-close-edit]{background:#fff;color:#005235}
+.home-convocatorias[hidden],.home-convocatorias [hidden]{display:none!important}
