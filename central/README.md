@@ -123,3 +123,9 @@ Una respuesta 401 en una operación autenticada lleva al login y explica el venc
 ## Orden del primer acceso (5.69.1)
 
 El cambio inicial de contraseña se completa antes de abrir el perfil obligatorio. Las sesiones que aún tienen `primerAcceso` regresan a esa pantalla; la comprobación periódica de contacto no puede taparla. El formulario exige los mismos ocho caracteres mínimos que el servidor y sólo avanza tras confirmación del guardado. La contraseña no se copia al objeto de usuario de `sessionStorage`. Completar datos personales o vincular un correo no cambia la contraseña de acceso.
+
+## Emisión y cancelación de pases (5.69.2)
+
+La generación del PDF valida en el servidor que el pase siga vigente y registra una emisión para impresión/descarga en `pases_eventos`. No se entrega un PDF nuevo de un pase cancelado. Desde esa emisión, la cancelación corresponde a Personal con justificación; el trabajador sólo puede cancelar antes de emitir y entregar. La impresión se registra al generar el PDF, pues el navegador no confirma si finalmente salió una hoja física. No se inventan eventos de impresión de documentos históricos: las emisiones anteriores a este control no tienen esa evidencia. Las copias ya descargadas fuera del sistema no pueden revocarse; la recepción valida el estado vigente del folio.
+
+El aviso de sesión caducada se elimina al autenticar correctamente, se cancela su redirección pendiente y una respuesta atrasada de una sesión anterior no vuelve a vencer la nueva.

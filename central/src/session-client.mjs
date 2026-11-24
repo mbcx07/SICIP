@@ -1,7 +1,7 @@
 // One redirect for all failed authenticated API calls, including child modules.
-export function crearControlSesion({root=window,onExpire=()=>{}}={}){let expired=false;
- return {get expired(){return expired;},expire(){if(expired)return;expired=true;onExpire();try{if(root.top!==root&&root.top.SICIPCentral?.expireSession){root.top.SICIPCentral.expireSession();return;}}catch{}
+export function crearControlSesion({root=window,onExpire=()=>{}}={}){let expired=false,generation=0,redirectTimer;
+ return {get expired(){return expired;},get generation(){return generation;},resume(){expired=false;generation++;const host=root;if(redirectTimer!=null)host.clearTimeout?.(redirectTimer);redirectTimer=null;host.document.querySelectorAll?.('[data-session-expired],[data-login-expired]').forEach(el=>el.remove());if(host.location.pathname==='/login'){const url=new URL(host.location.href);if(url.searchParams.get('sesion')==='vencida'){url.searchParams.delete('sesion');host.history.replaceState(host.history.state,'',url.pathname+url.search+url.hash);}}},expire(){if(expired)return;expired=true;onExpire();try{if(root.top!==root&&root.top.SICIPCentral?.expireSession){root.top.SICIPCentral.expireSession();return;}}catch{}
   const host=root.top||root;try{host.sessionStorage.removeItem('sicip_usuario');host.sessionStorage.removeItem('sicip_matricula');}catch{}
   const el=host.document.createElement('p');el.setAttribute('role','alert');el.dataset.sessionExpired='';el.style='position:fixed;inset:0 0 auto;z-index:2147483647;margin:0;padding:18px;background:#fff4df;color:#513800;font:16px system-ui;text-align:center';el.textContent='Tu sesión venció. Te llevamos a iniciar sesión de nuevo. Los cambios ya guardados se conservan; los que no guardaste deberán capturarse otra vez.';host.document.body?.append(el);host.dispatchEvent(new host.Event('sicip:sesion-vencida'));
-  host.setTimeout(()=>host.location.replace('/login?sesion=vencida'),700);
+  redirectTimer=host.setTimeout(()=>{if(expired)host.location.replace('/login?sesion=vencida');},700);
  }};}
