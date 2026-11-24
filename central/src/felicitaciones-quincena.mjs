@@ -26,7 +26,7 @@ export function sinPasesPersonales(datos,range){
 }
 export function mensajeFelicitacion({inicio,fin}){
  const fecha=d=>d.split('-').reverse().join('/');
- return {titulo:'¡Gracias por tu compromiso esta quincena!',mensaje:'Del '+fecha(inicio)+' al '+fecha(fin)+' no registraste pases personales en SICIP.\n\nTu constancia y la organización de tu tiempo contribuyen al trabajo de tu equipo y a la atención de quienes nos necesitan. ¡Gracias por tu esfuerzo!\n\nSigue construyendo este buen hábito, una quincena a la vez. Cada día cuenta y tu aportación hace la diferencia.',url:'/'};
+ return {titulo:'¡Gracias por tu compromiso esta quincena!',mensaje:'¡Felicidades! Te reconocemos porque durante la quincena del '+fecha(inicio)+' al '+fecha(fin)+' no tuviste ausencias por pases personales, de acuerdo con los registros de SICIP.\n\nTu constancia y la organización de tu tiempo contribuyen al trabajo de tu equipo y a la atención de quienes nos necesitan. ¡Gracias por tu esfuerzo!\n\nSigue construyendo este buen hábito, una quincena a la vez. Cada día cuenta y tu aportación hace la diferencia.',url:'/'};
 }
 export async function felicitarQuincenaSinPases(env,{clock=()=>Date.now(),send=fetch,limit=2}={}){
  const cierre=cierreFelicitacion(clock());if(!cierre)return {generados:0,revisados:0};
