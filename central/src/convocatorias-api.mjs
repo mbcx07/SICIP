@@ -1,0 +1,3 @@
+import {hoyLocal} from './inicio-domain.mjs';
+export const estadoConvocatoria=(c,hoy=hoyLocal())=>hoy<c.inicio?'PROXIMAMENTE':hoy>c.fin?'CERRADA':'INSCRIPCION_ABIERTA';
+export async function convocatoriasAPI(request,env,{session,run,json,assert}){await session(request,env);assert(request.method==='GET',405,'Consulta de sólo lectura.');const url=new URL(request.url),plaza=url.searchParams.get('plaza')||'',hoy=hoyLocal();assert(!plaza||/^\d{1,15}$/.test(plaza),400,'Número de plaza inválido.');const rows=(await run(env,"SELECT * FROM convocatorias WHERE (?='' OR plaza=?) ORDER BY inicio DESC,id",plaza,plaza).all()).results;return json({hoy,convocatorias:rows.map(r=>{const c=JSON.parse(r.payload);return {...c,estado:estadoConvocatoria(c,hoy)};})});}

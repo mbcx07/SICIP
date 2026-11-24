@@ -1,3 +1,5 @@
+import {cuadrosRequisitosAPI} from './cuadros-requisitos-api.mjs';
+import {convocatoriasAPI} from './convocatorias-api.mjs';
 import {examenesAPI} from './examenes-api.mjs';
 import {recepcionAPI} from './recepcion-api.mjs';
 import {menuOrdenAPI} from './menu-orden.mjs';
@@ -66,6 +68,8 @@ async function api(request,env){
  const url=new URL(request.url),path=url.pathname,method=request.method;
  if(!['GET','HEAD'].includes(method))protectOrigin(request);
  if(path==='/api/examenes/resultados')return examenesAPI(request,env,{session,run,json,body,assert});
+ if(path.startsWith('/api/cuadros/'))return cuadrosRequisitosAPI(request,env,{session,account,cleanUser,run,json,body,assert});
+ if(path==='/api/convocatorias')return convocatoriasAPI(request,env,{session,run,json,assert});
  if(path==='/api/menu/orden'||path==='/api/admin/menu/orden')return menuOrdenAPI(request,env,{session,run,json,body,assert});
  if(path==='/api/perfil/foto')return fotoAPI(request,env,{session,run,account,body,json,assert});
  if(path==='/api/perfil'||path.startsWith('/api/contacto')||path.startsWith('/api/notificaciones'))return notificacionesAPI(request,env,{session,account,cleanUser,body,run,json,assert});
@@ -185,6 +189,7 @@ async function api(request,env){
 }
 export default {async fetch(request,env,ctx){try{
  const url=new URL(request.url);if(url.pathname.startsWith('/api/')){const response=await api(request,env);if(response.ok&&request.method!=='GET'&&/^\/api\/(?:admin\/personal|pd44|seguimiento|vacaciones|contratacion|postulaciones|pases\/registros|notificaciones\/prueba|contacto\/verificar)/.test(url.pathname)&&ctx.waitUntil)ctx.waitUntil(dispatch(env,{limit:1,source:'pages'}).catch(()=>console.error('SICIP notification dispatch deferred')));return response;}
+ if(/^\/convocatorias\/[A-Za-z0-9._-]{1,80}\.pdf$/.test(url.pathname)){await session(request,env);return env.ASSETS.fetch(request);}
  if(/^\/data-(?:usuarios(?:-full)?|trabajadores|jefesServicio|plazas(?:-full)?(?:-\d{7})?|vacantes|ft-(?:trabajadores|nomina-\d{7}|antiguedad|clasificacion))\.json$/.test(url.pathname))return json({error:'Consulta estos datos mediante la base central y una sesión válida.'},401);
  if (/^\/(pases|fuerza-trabajo|examenes)\/(?:[^.]*|[^/]+\.html)$/.test(url.pathname)) {try{await session(request,env);}catch(e){if(e.status===401)return Response.redirect(new URL('/login',url),303);throw e;}}
  return await env.ASSETS.fetch(request);

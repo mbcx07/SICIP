@@ -129,3 +129,11 @@ El cambio inicial de contraseña se completa antes de abrir el perfil obligatori
 La generación del PDF valida en el servidor que el pase siga vigente y registra una emisión para impresión/descarga en `pases_eventos`. No se entrega un PDF nuevo de un pase cancelado. Desde esa emisión, la cancelación corresponde a Personal con justificación; el trabajador sólo puede cancelar antes de emitir y entregar. La impresión se registra al generar el PDF, pues el navegador no confirma si finalmente salió una hoja física. No se inventan eventos de impresión de documentos históricos: las emisiones anteriores a este control no tienen esa evidencia. Las copias ya descargadas fuera del sistema no pueden revocarse; la recepción valida el estado vigente del folio.
 
 El aviso de sesión caducada se elimina al autenticar correctamente, se cancela su redirección pendiente y una respuesta atrasada de una sesión anterior no vuelve a vencer la nueva.
+
+## Convocatorias y perfiles para reemplazo (5.70)
+
+El catálogo `convocatorias` guarda por número de convocatoria y plaza la transcripción cotejada de escolaridad, experiencia, alternativas, fechas y lugar de inscripción. Los seis originales 2026.03.194–199 se conservan íntegros, con SHA-256, en `public/convocatorias/`; el build los copia a `/convocatorias/` y el Worker exige sesión para descargarlos. `scripts/seed-convocatorias.py` agrega números nuevos sin reemplazar registros existentes. El estado informativo se calcula con la fecha local; el cierre conserva el histórico.
+
+Inicio difunde las plazas vacantes y su inscripción **presencial**. Leer o descargar una convocatoria no registra una inscripción y no envía currículums. Esto es independiente del cuadro de reemplazo para ausencias, vacaciones y preparación de relevos por jubilación. No se amplían permisos al publicar avisos.
+
+En el editor del cuadro, Administración puede elegir un perfil de puesto como referencia y revisar la escolaridad y experiencia antes de guardar. Los perfiles no se asignan automáticamente por categoría ni por el ocupante de una vacante. Las alternativas «Y» y «O» se conservan. El guardado central usa una máscara de sólo requisitos y fecha de actualización, con control de versión: no reemplaza candidatos, prioridades ni solicitudes. La creación de un cuadro usa `exists=false` y nunca reemplaza uno existente.

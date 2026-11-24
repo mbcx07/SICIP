@@ -129,3 +129,5 @@ CREATE TABLE IF NOT EXISTS recepcion_eventos(id TEXT PRIMARY KEY,documento TEXT 
 CREATE TABLE IF NOT EXISTS recepcion_guardas(id TEXT PRIMARY KEY,ok INTEGER NOT NULL CHECK(ok=1));
 CREATE TABLE IF NOT EXISTS examenes_resultados(id TEXT PRIMARY KEY,matricula TEXT NOT NULL,nombre TEXT NOT NULL,fecha INTEGER NOT NULL,payload TEXT NOT NULL,guardado TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS examenes_resultados_persona ON examenes_resultados(matricula,fecha,id);
+CREATE TABLE IF NOT EXISTS convocatorias(id TEXT PRIMARY KEY,plaza TEXT NOT NULL,inicio TEXT NOT NULL,fin TEXT NOT NULL,fecha_emision TEXT NOT NULL,payload TEXT NOT NULL,hash TEXT NOT NULL,updated_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS convocatorias_plaza ON convocatorias(plaza,inicio);

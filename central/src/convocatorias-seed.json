@@ -1,0 +1,285 @@
+[
+  {
+    "id": "2026.03.194",
+    "plaza": "6603",
+    "categoria": "N52 SUBD MED UM C 80",
+    "clave_puesto": "DO.PM.CPAS.2.1.1",
+    "puesto": "Subdirector Médico en Unidad Médica Hospitalaria (turno matutino)",
+    "unidad": "HGSZMF 5",
+    "turno": "Matutino",
+    "emision": "SUBSECUENTE",
+    "fecha_emision": "2026-11-09",
+    "inicio": "2026-12-01",
+    "fin": "2026-12-14",
+    "horario": "08:00 a 16:00 horas",
+    "resultados_desde": "2026-12-28",
+    "formacion": [
+      [
+        "Título y cédula profesional de Médico Cirujano."
+      ],
+      [
+        "Título y cédula de especialidad médica, quirúrgica, clínica o anestesia."
+      ],
+      [
+        "Título y cédula de maestría en Administración, Calidad, Gerencia, Sistemas de Salud o afines relacionadas a la Administración en Salud.",
+        "Constancia de curso o diploma en Administración, Calidad, Gerencia, Sistemas de Salud o afines relacionadas a la Administración en Salud."
+      ]
+    ],
+    "experiencia": [
+      "Un año en puestos de igual o mayor jerarquía en unidades médicas de segundo o tercer nivel de atención.",
+      "Un año como Jefe de División, Coordinador Clínico UMH o Coordinador Clínico de Turno en unidades médicas hospitalarias.",
+      "Tres años como Jefe de Departamento Clínico o Jefe de Servicio en unidades médicas hospitalarias."
+    ],
+    "escolaridad_texto": "Título y cédula profesional de Médico Cirujano.\nY\nTítulo y cédula de especialidad médica, quirúrgica, clínica o anestesia.\nY\nTítulo y cédula de maestría en Administración, Calidad, Gerencia, Sistemas de Salud o afines relacionadas a la Administración en Salud.\nO\nConstancia de curso o diploma en Administración, Calidad, Gerencia, Sistemas de Salud o afines relacionadas a la Administración en Salud.",
+    "experiencia_texto": "Un año en puestos de igual o mayor jerarquía en unidades médicas de segundo o tercer nivel de atención.\nO\nUn año como Jefe de División, Coordinador Clínico UMH o Coordinador Clínico de Turno en unidades médicas hospitalarias.\nO\nTres años como Jefe de Departamento Clínico o Jefe de Servicio en unidades médicas hospitalarias.",
+    "requisito_general": "Personal con contratación de Base o Confianza B, laborando actualmente en el IMSS y con antigüedad mínima efectiva de tres años a la fecha de emisión de la convocatoria.",
+    "registro": "Sección de Selección de Confianza B",
+    "direccion_registro": "Francisco I. Madero 315, Esterito, C.P. 23020, La Paz, B.C.S.",
+    "documentos": [
+      "Solicitud de registro para ocupar puestos de Confianza B.",
+      "Currículum vitae.",
+      "Original y copia de gafete y/o credencial de elector.",
+      "Original y copia de comprobantes de estudios realizados.",
+      "Original y copia de comprobantes de puestos desempeñados en el IMSS.",
+      "Original y copia del último comprobante de pago."
+    ],
+    "pdf": "/convocatorias/2026.03.194.pdf",
+    "sha256": "37e252be243e6c614426e783ae44878b8ff9d97547ba5fbb7d38ae1fe502794d",
+    "paginas": 1
+  },
+  {
+    "id": "2026.03.195",
+    "plaza": "18340",
+    "categoria": "N40 SUBJ ENF UM D 80",
+    "clave_puesto": "DO.PM.CPAS.5.5.1",
+    "puesto": "Subjefe de Enfermeras en Unidad Médica Hospitalaria",
+    "unidad": "HGSZMF 2",
+    "turno": "Nocturno",
+    "emision": "SUBSECUENTE",
+    "fecha_emision": "2026-11-09",
+    "inicio": "2026-12-01",
+    "fin": "2026-12-14",
+    "horario": "08:00 a 16:00 horas",
+    "resultados_desde": "2026-12-28",
+    "formacion": [
+      [
+        "Título y cédula profesional de Licenciatura en Enfermería en cualquiera de sus ámbitos académicos."
+      ],
+      [
+        "Documento de grado de especialidad y cédula profesional.",
+        "Diploma o constancia de un curso posbásico médico o quirúrgico."
+      ],
+      [
+        "Maestría en Enfermería o en Administración, Calidad, Gerencia, Sistemas de Salud o afines a la Administración en Salud.",
+        "Diploma o constancia de curso de especialidad o postécnico en Administración, Calidad, Gerencia, Sistemas de Salud o afines a la Administración en Salud."
+      ]
+    ],
+    "experiencia": [
+      "Un año en puestos de igual o mayor jerarquía.",
+      "Un año como Subjefe de Enfermeras en unidades hospitalarias.",
+      "Dos años como Enfermera Jefe de Piso en unidades hospitalarias."
+    ],
+    "escolaridad_texto": "Título y cédula profesional de Licenciatura en Enfermería en cualquiera de sus ámbitos académicos.\nY\nDocumento de grado de especialidad y cédula profesional.\nO\nDiploma o constancia de un curso posbásico médico o quirúrgico.\nY\nMaestría en Enfermería o en Administración, Calidad, Gerencia, Sistemas de Salud o afines a la Administración en Salud.\nO\nDiploma o constancia de curso de especialidad o postécnico en Administración, Calidad, Gerencia, Sistemas de Salud o afines a la Administración en Salud.",
+    "experiencia_texto": "Un año en puestos de igual o mayor jerarquía.\nO\nUn año como Subjefe de Enfermeras en unidades hospitalarias.\nO\nDos años como Enfermera Jefe de Piso en unidades hospitalarias.",
+    "requisito_general": "Personal con contratación de Base o Confianza B, laborando actualmente en el IMSS y con antigüedad mínima efectiva de tres años a la fecha de emisión de la convocatoria.",
+    "registro": "Sección de Selección de Confianza B",
+    "direccion_registro": "Francisco I. Madero 315, Esterito, C.P. 23020, La Paz, B.C.S.",
+    "documentos": [
+      "Solicitud de registro para ocupar puestos de Confianza B.",
+      "Currículum vitae.",
+      "Original y copia de gafete y/o credencial de elector.",
+      "Original y copia de comprobantes de estudios realizados.",
+      "Original y copia de comprobantes de puestos desempeñados en el IMSS.",
+      "Original y copia del último comprobante de pago."
+    ],
+    "pdf": "/convocatorias/2026.03.195.pdf",
+    "sha256": "bf5424c682ebf6251bfeb6bafd9d991f31aff56ba55cb69063b1a13b3fe36d80",
+    "paginas": 1
+  },
+  {
+    "id": "2026.03.196",
+    "plaza": "18416",
+    "categoria": "N40 SUBJ ENF UM D 80",
+    "clave_puesto": "DO.PM.CPAS.5.5.1",
+    "puesto": "Subjefe de Enfermeras en Unidad Médica Hospitalaria",
+    "unidad": "HGSZMF 2",
+    "turno": "Vespertino",
+    "emision": "SUBSECUENTE",
+    "fecha_emision": "2026-11-09",
+    "inicio": "2026-12-01",
+    "fin": "2026-12-14",
+    "horario": "08:00 a 16:00 horas",
+    "resultados_desde": "2026-12-28",
+    "formacion": [
+      [
+        "Título y cédula profesional de Licenciatura en Enfermería en cualquiera de sus ámbitos académicos."
+      ],
+      [
+        "Documento de grado de especialidad y cédula profesional.",
+        "Diploma o constancia de un curso posbásico médico o quirúrgico."
+      ],
+      [
+        "Maestría en Enfermería o en Administración, Calidad, Gerencia, Sistemas de Salud o afines a la Administración en Salud.",
+        "Diploma o constancia de curso de especialidad o postécnico en Administración, Calidad, Gerencia, Sistemas de Salud o afines a la Administración en Salud."
+      ]
+    ],
+    "experiencia": [
+      "Un año en puestos de igual o mayor jerarquía.",
+      "Un año como Subjefe de Enfermeras en unidades hospitalarias.",
+      "Dos años como Enfermera Jefe de Piso en unidades hospitalarias."
+    ],
+    "escolaridad_texto": "Título y cédula profesional de Licenciatura en Enfermería en cualquiera de sus ámbitos académicos.\nY\nDocumento de grado de especialidad y cédula profesional.\nO\nDiploma o constancia de un curso posbásico médico o quirúrgico.\nY\nMaestría en Enfermería o en Administración, Calidad, Gerencia, Sistemas de Salud o afines a la Administración en Salud.\nO\nDiploma o constancia de curso de especialidad o postécnico en Administración, Calidad, Gerencia, Sistemas de Salud o afines a la Administración en Salud.",
+    "experiencia_texto": "Un año en puestos de igual o mayor jerarquía.\nO\nUn año como Subjefe de Enfermeras en unidades hospitalarias.\nO\nDos años como Enfermera Jefe de Piso en unidades hospitalarias.",
+    "requisito_general": "Personal con contratación de Base o Confianza B, laborando actualmente en el IMSS y con antigüedad mínima efectiva de tres años a la fecha de emisión de la convocatoria.",
+    "registro": "Sección de Selección de Confianza B",
+    "direccion_registro": "Francisco I. Madero 315, Esterito, C.P. 23020, La Paz, B.C.S.",
+    "documentos": [
+      "Solicitud de registro para ocupar puestos de Confianza B.",
+      "Currículum vitae.",
+      "Original y copia de gafete y/o credencial de elector.",
+      "Original y copia de comprobantes de estudios realizados.",
+      "Original y copia de comprobantes de puestos desempeñados en el IMSS.",
+      "Original y copia del último comprobante de pago."
+    ],
+    "pdf": "/convocatorias/2026.03.196.pdf",
+    "sha256": "f7c981f6630c4c0cb8a82d1b5d4603737a6d722fcff30808986a29146828118f",
+    "paginas": 1
+  },
+  {
+    "id": "2026.03.197",
+    "plaza": "194",
+    "categoria": "N44 ANALISTA COORD A 80",
+    "clave_puesto": "DD.PM.CPAS.SUP.2.1.1.16",
+    "puesto": "Supervisor Auxiliar de Soporte Médico",
+    "unidad": "Coordinación de Prevención y Atención a la Salud",
+    "turno": "Matutino",
+    "emision": "SUBSECUENTE",
+    "fecha_emision": "2026-11-09",
+    "inicio": "2026-12-01",
+    "fin": "2026-12-14",
+    "horario": "08:00 a 16:00 horas",
+    "resultados_desde": "2026-12-28",
+    "formacion": [
+      [
+        "Título y cédula profesional de alguna de las siguientes licenciaturas: Administración o Economía o Contaduría o afines al área económico-administrativa."
+      ],
+      [
+        "Título y cédula de maestría en Administración, Calidad, Gerencia, Sistemas de Salud o afines relacionadas a la Administración en Salud.",
+        "Constancia de curso o diploma en Administración, Calidad, Gerencia, Sistemas de Salud o afines relacionadas a la Administración en Salud."
+      ]
+    ],
+    "experiencia": [
+      "Un año en puestos de igual o mayor jerarquía en el área de planeación médica o financiera.",
+      "Dos años como Administrador en unidades médicas.",
+      "Tres años como Jefe de Departamento u Oficina de Finanzas, Personal o Abasto."
+    ],
+    "escolaridad_texto": "Título y cédula profesional de alguna de las siguientes licenciaturas: Administración o Economía o Contaduría o afines al área económico-administrativa.\nY\nTítulo y cédula de maestría en Administración, Calidad, Gerencia, Sistemas de Salud o afines relacionadas a la Administración en Salud.\nO\nConstancia de curso o diploma en Administración, Calidad, Gerencia, Sistemas de Salud o afines relacionadas a la Administración en Salud.",
+    "experiencia_texto": "Un año en puestos de igual o mayor jerarquía en el área de planeación médica o financiera.\nO\nDos años como Administrador en unidades médicas.\nO\nTres años como Jefe de Departamento u Oficina de Finanzas, Personal o Abasto.",
+    "requisito_general": "Personal con contratación de Base o Confianza B, laborando actualmente en el IMSS y con antigüedad mínima efectiva de tres años a la fecha de emisión de la convocatoria.",
+    "registro": "Sección de Selección de Confianza B",
+    "direccion_registro": "Francisco I. Madero 315, Esterito, C.P. 23020, La Paz, B.C.S.",
+    "documentos": [
+      "Solicitud de registro para ocupar puestos de Confianza B.",
+      "Currículum vitae.",
+      "Original y copia de gafete y/o credencial de elector.",
+      "Original y copia de comprobantes de estudios realizados.",
+      "Original y copia de comprobantes de puestos desempeñados en el IMSS.",
+      "Original y copia del último comprobante de pago."
+    ],
+    "pdf": "/convocatorias/2026.03.197.pdf",
+    "sha256": "487f478a1acd6e1f717fec3edf972d27d57ff78b51859465b494f54231071a7e",
+    "paginas": 1
+  },
+  {
+    "id": "2026.03.198",
+    "plaza": "878",
+    "categoria": "N51 JEFE SERVICIO UMH 80",
+    "clave_puesto": "DO.PM.CPAS.JSMH.4.6",
+    "puesto": "Jefe de Servicio de Cirugía",
+    "unidad": "HGZ MF 1",
+    "turno": "Matutino",
+    "emision": "SUBSECUENTE",
+    "fecha_emision": "2026-11-09",
+    "inicio": "2026-12-01",
+    "fin": "2026-12-14",
+    "horario": "08:00 a 16:00 horas",
+    "resultados_desde": "2026-12-28",
+    "formacion": [
+      [
+        "Título y cédula profesional de Médico Cirujano."
+      ],
+      [
+        "Título y cédula profesional de especialidad quirúrgica: Anestesiología, Angiología, Cirugía Cardiovascular Torácica, Cirugía General, Cirugía Pediátrica, Ginecología y Obstetricia, Oftalmología, Otorrinolaringología, Otorrinolaringología Pediátrica, Colo-Proctología, Proctología, Traumatología y Ortopedia, Urología, Neurocirugía, Neurocirugía Pediátrica, Cirugía Plástica y Reconstructiva u Oncología Quirúrgica."
+      ],
+      [
+        "Título y cédula de maestría en Administración, Calidad, Gerencia, Alta Dirección, Sistemas de Salud o afines relacionadas con la Administración o Administración en Salud.",
+        "Constancia de curso o diploma en Administración, Calidad, Gerencia, Alta Dirección, Sistemas de Salud o afines relacionadas con la Administración o Administración en Salud, impartido por plataformas o centros de capacitación del IMSS, instituciones educativas o plataformas de aprendizaje con validez oficial."
+      ]
+    ],
+    "experiencia": [
+      "Un año en puestos de igual o mayor jerarquía en servicios relacionados con cirugía.",
+      "Dos años como Médico No Familiar en servicios de cirugía."
+    ],
+    "escolaridad_texto": "Título y cédula profesional de Médico Cirujano.\nY\nTítulo y cédula profesional de especialidad quirúrgica: Anestesiología, Angiología, Cirugía Cardiovascular Torácica, Cirugía General, Cirugía Pediátrica, Ginecología y Obstetricia, Oftalmología, Otorrinolaringología, Otorrinolaringología Pediátrica, Colo-Proctología, Proctología, Traumatología y Ortopedia, Urología, Neurocirugía, Neurocirugía Pediátrica, Cirugía Plástica y Reconstructiva u Oncología Quirúrgica.\nY\nTítulo y cédula de maestría en Administración, Calidad, Gerencia, Alta Dirección, Sistemas de Salud o afines relacionadas con la Administración o Administración en Salud.\nO\nConstancia de curso o diploma en Administración, Calidad, Gerencia, Alta Dirección, Sistemas de Salud o afines relacionadas con la Administración o Administración en Salud, impartido por plataformas o centros de capacitación del IMSS, instituciones educativas o plataformas de aprendizaje con validez oficial.",
+    "experiencia_texto": "Un año en puestos de igual o mayor jerarquía en servicios relacionados con cirugía.\nO\nDos años como Médico No Familiar en servicios de cirugía.",
+    "requisito_general": "Personal con contratación de Base o Confianza B, laborando actualmente en el IMSS y con antigüedad mínima efectiva de tres años a la fecha de emisión de la convocatoria.",
+    "registro": "Sección de Selección de Confianza B",
+    "direccion_registro": "Francisco I. Madero entre Héroes del 47 y Colegio Militar, colonia Esterito, La Paz, B.C.S.",
+    "documentos": [
+      "Solicitud de registro para ocupar puestos de Confianza B.",
+      "Currículum vitae.",
+      "Original y copia de gafete y/o credencial de elector.",
+      "Original y copia de comprobantes de estudios realizados.",
+      "Original y copia de comprobantes de puestos desempeñados en el IMSS.",
+      "Original y copia del último comprobante de pago."
+    ],
+    "pdf": "/convocatorias/2026.03.198.pdf",
+    "sha256": "1830ae3f2985a93c24703d5b514c8c0447b114d50e571c7d5a99774a318e53f4",
+    "paginas": 1
+  },
+  {
+    "id": "2026.03.199",
+    "plaza": "1294",
+    "categoria": "N53 DIRECTOR UMH D 80",
+    "clave_puesto": "DO.PM.CPAS.1.1.1",
+    "puesto": "Director de Unidad Médica Hospitalaria",
+    "unidad": "HGSZMF 5",
+    "turno": "Matutino",
+    "emision": "SUBSECUENTE",
+    "fecha_emision": "2026-11-09",
+    "inicio": "2026-12-01",
+    "fin": "2026-12-14",
+    "horario": "08:00 a 16:00 horas",
+    "resultados_desde": "2026-12-28",
+    "formacion": [
+      [
+        "Título y cédula profesional de Médico Cirujano."
+      ],
+      [
+        "Diploma o certificado de especialidad médica o quirúrgica, excepto Medicina Familiar."
+      ]
+    ],
+    "experiencia": [
+      "Un año en puestos de igual o mayor jerarquía.",
+      "Un año como Subdirector Médico o Coordinador Clínico de Turno en unidades médicas hospitalarias.",
+      "Dos años como Coordinador Clínico en unidades médicas hospitalarias.",
+      "Dos años como Jefe de Servicio en unidades médicas hospitalarias. Esta alternativa se incluye en lugar de Subdirector Médico en aquellas unidades en donde éste no exista en su estructura."
+    ],
+    "escolaridad_texto": "Título y cédula profesional de Médico Cirujano.\nY\nDiploma o certificado de especialidad médica o quirúrgica, excepto Medicina Familiar.",
+    "experiencia_texto": "Un año en puestos de igual o mayor jerarquía.\nO\nUn año como Subdirector Médico o Coordinador Clínico de Turno en unidades médicas hospitalarias.\nO\nDos años como Coordinador Clínico en unidades médicas hospitalarias.\nO\nDos años como Jefe de Servicio en unidades médicas hospitalarias. Esta alternativa se incluye en lugar de Subdirector Médico en aquellas unidades en donde éste no exista en su estructura.",
+    "requisito_general": "Personal con contratación de Base o Confianza B, laborando actualmente en el IMSS y con antigüedad mínima efectiva de tres años a la fecha de emisión de la convocatoria.",
+    "registro": "Sección de Selección de Confianza B",
+    "direccion_registro": "Francisco I. Madero entre Héroes del 47 y Colegio Militar, colonia Esterito, La Paz, B.C.S.",
+    "documentos": [
+      "Solicitud de registro para ocupar puestos de Confianza B.",
+      "Currículum vitae.",
+      "Original y copia de gafete y/o credencial de elector.",
+      "Original y copia de comprobantes de estudios realizados.",
+      "Original y copia de comprobantes de puestos desempeñados en el IMSS.",
+      "Original y copia del último comprobante de pago."
+    ],
+    "pdf": "/convocatorias/2026.03.199.pdf",
+    "sha256": "a8b20a82a3502c82d14e0abe665f1ed83e15c80da2c90a6655d54f2c2df28ea5",
+    "paginas": 1
+  }
+]
