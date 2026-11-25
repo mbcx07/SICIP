@@ -33,3 +33,17 @@
 
 /* Reserve enough room for CONSTANCIA without clipping its final letter. */
 .pass-Top{grid-template-columns:48px minmax(0,1fr) 120px}
+
+/* Fixed paper flow: labels must never become narrow wrapping grid tracks. */
+:is(#printArea,#pase-pdf-stage) .pass-document{padding:8px;overflow-wrap:normal;word-break:normal;hyphens:none}
+:is(#printArea,#pase-pdf-stage) .pass-Top{grid-template-columns:48px minmax(0,1fr) 132px}
+:is(#printArea,#pase-pdf-stage) .pass-Const{font-size:12pt;line-height:1.25;white-space:normal;text-align:center}
+:is(#printArea,#pase-pdf-stage) .pass-Row{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;column-gap:5px;margin:7px 0}
+:is(#printArea,#pase-pdf-stage) .pass-Row>span{flex:0 0 auto;white-space:nowrap;line-height:1.25;word-break:normal;overflow-wrap:normal}
+:is(#printArea,#pase-pdf-stage) .pass-Row>.pass-Line{flex:1 1 0;min-width:0;min-height:18px;padding:1px 3px;line-height:1.25;white-space:normal;overflow-wrap:break-word}
+:is(#printArea,#pase-pdf-stage) .pass-Row.two>.pass-Line:last-child{flex:0 0 90px;text-align:center}
+:is(#printArea,#pase-pdf-stage) .pass-Row.three>.pass-Line:nth-child(2){flex:0 0 65px;text-align:center}
+:is(#printArea,#pase-pdf-stage) .pass-Row.object>.pass-Accum{flex:0 0 auto;display:flex;align-items:baseline;gap:4px;white-space:nowrap;line-height:1.25}
+:is(#printArea,#pase-pdf-stage) .pass-Accum>.pass-Line{flex:0 0 32px;width:32px!important;min-height:18px;line-height:1.25;text-align:center!important;white-space:nowrap}
+:is(#printArea,#pase-pdf-stage) .pass-Date>span{white-space:nowrap;word-break:normal;overflow-wrap:normal}
+:is(#printArea,#pase-pdf-stage) .pass-Accum>.pass-Line{font-size:9pt;padding:1px 0}
