@@ -1,11 +1,12 @@
 from pathlib import Path
-import sys
+import sys,hashlib
 out=Path(sys.argv[1]);p=out/'pases/index.html';s=p.read_text()
 def change(old,new):
  global s
  assert old in s,old[:100]
  s=s.replace(old,new,1)
-change('</head>','<link rel="stylesheet" href="/sicip-central/pases-print.css?v=20261023-pases3"><script src="/sicip-central/vendor/qrcode.js"></script></head>')
+print_version=hashlib.sha256((out/'sicip-central/pases-print.css').read_bytes()).hexdigest()[:12]
+change('</head>',f'<link rel="stylesheet" href="/sicip-central/pases-print.css?v={print_version}"><script src="/sicip-central/vendor/qrcode.js"></script></head>')
 for field in ['tipoAsunto','tipoHorario','manualTipoAsunto','manualTipoHorario']:
  import re
  pattern=r'(<select id="'+field+r'"[^>]*)(>)(<option[^>]*>)'
