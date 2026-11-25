@@ -15,7 +15,7 @@ export function estadisticasHistorial(rows,pases,{matricula,anio,hasta}={}){
  const integrated=integrarPasesNomina(pases,{matricula,fecha:String(anio)+'-12-31'},rows).rows.filter(p=>valid(p.fecha)&&(!hasta||p.fecha<=hasta));
  for(const p of integrated){const id=passId(p.tipoAsunto);if(!id||id==='pases_undefined')continue;const y=Number(p.fecha.slice(0,4)),m=Number(p.fecha.slice(5,7));if(!years.has(y))years.set(y,{anio:y,valores:Object.fromEntries(stats.indicadores.map(i=>[i.id,0]))});years.get(y).valores[id]++;if(y===Number(anio)){stats.anual[id]++;stats.mensual[m-1].valores[id]++;}}
  stats.por_anio=[...years.values()].sort((a,b)=>a.anio-b.anio);
- const source=new Map(),available=new Set();for(const r of rows)if(r.inicio?.slice(0,4)===String(anio)&&(!hasta||r.inicio<=hasta)){available.add(r.concepto+'|'+r.clase);if(!source.has(r.concepto)||r.clase==='TRANSACCION')source.set(r.concepto,r.clase);}
+ const source=new Map(),available=new Set();for(const r of rows)if(valid(r.inicio)&&r.inicio<=String(anio)+'-12-31'&&(valid(r.fin)?r.fin:r.inicio)>=String(anio)+'-01-01'&&(!hasta||r.inicio<=hasta)){available.add(r.concepto+'|'+r.clase);if(!source.has(r.concepto)||r.clase==='TRANSACCION')source.set(r.concepto,r.clase);}
  for(const i of INDICADORES_AUSENTISMO)for(const code of i.codigos)if(available.has(code+'|'+i.fuente))source.set(code,i.fuente);
  const groups=new Map(),seen=new Set(),absenceDays=new Set();let records=0,from=null,to=null;
  const noteDay=day=>{if(day.slice(0,4)!==String(anio)||hasta&&day>hasta)return false;from=!from||day<from?day:from;to=!to||day>to?day:to;return true;};
