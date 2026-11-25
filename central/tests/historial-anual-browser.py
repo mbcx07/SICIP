@@ -27,7 +27,7 @@ async def main():
    assert await panel.locator('[data-indicador]').count()==13
    assert re.search(r'1\s*pase',(await panel.locator('[data-indicador=pases_personales]').inner_text())),repr(await panel.locator('[data-indicador=pases_personales]').inner_text())
    assert re.search(r'1\s*pase',(await panel.locator('[data-indicador=pases_medicos]').inner_text())),repr(await panel.locator('[data-indicador=pases_medicos]').inner_text())
-   assert 'vida laboral' not in (await panel.inner_text()).lower()
+   assert 'vida laboral' not in (await panel.inner_text()).lower();assert re.search(r'2\s*días',await panel.locator('[data-indicador=vacaciones]').inner_text());assert 'Presencia en lugar de trabajo' not in await panel.inner_text()
    assert 'acumulado disponible' not in (await panel.inner_text()).lower()
    await panel.locator('[data-view=mensual]').click()
    assert await panel.locator('[data-summary] tbody tr').count()==13
@@ -54,7 +54,7 @@ async def main():
    assert w.sheetnames==['Trabajador','Resumen anual','Mensual','Conceptos']
    values=[str(v or '') for sheet in w for row in sheet.iter_rows(values_only=True) for v in row]
    assert not any('vida laboral' in v.lower() or 'acumulado disponible' in v.lower() for v in values)
-   assert 'PAV' in values and '69C' in values
+   assert 'PAV' in values and '69C' in values;assert 'PR' not in values and 'EPR' not in values and '32' not in values and '33' not in values
    assert '2025' not in values
    assert not re.search(r'MXN|\$\d|\b(?:200|400|777)\b',' '.join(values))
    w.close()
