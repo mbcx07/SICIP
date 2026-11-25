@@ -1,4 +1,4 @@
-const islands=['data-home-photo','data-home-install','data-device-notifications','data-home-convocatorias'];
+const islands=['data-home-campana25n','data-home-photo','data-home-install','data-device-notifications','data-home-convocatorias'];
 const island=n=>n.nodeType===1&&islands.find(a=>n.hasAttribute(a));
 const key=n=>n.nodeType!==1?'#'+n.nodeType:island(n)||n.getAttribute('data-home-route')||n.tagName+':'+(n.classList[0]||'');
 function sync(old,next){if(old.nodeType!==1){if(old.nodeValue!==next.nodeValue)old.nodeValue=next.nodeValue;return;}if(island(old))return;for(const a of [...old.attributes])if(!next.hasAttribute(a.name)&&!(old.tagName==='DETAILS'&&a.name==='open'))old.removeAttribute(a.name);for(const a of [...next.attributes])if(old.getAttribute(a.name)!==a.value)old.setAttribute(a.name,a.value);children(old,next);}

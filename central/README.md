@@ -147,3 +147,9 @@ Cada reconocimiento usa una clave única por matrícula/quincena. Queda en las n
 ### Resumen semanal para jefes de servicio
 
 Cada lunes desde las 09:00 de Baja California Sur, el Worker recorre las cuentas activas de rol JEFE_SERVICIO con paginación y envía un resumen único por jefe/semana anterior (lunes a domingo, según fecha del pase). Consulta D1 y los pases heredados, sin duplicar folios, y atribuye por jefeMatricula, nunca por creador ni por nombre. Excluye médicos, oficiales y cancelados. Distingue recibidos por Personal de pendientes: seleccionar firmante no acredita firma ni autorización electrónica. La cuenta recibe incluso el resumen en cero; los fallos de fuente se reintentan el mismo lunes y no se interpretan como cero. El aviso permanece en plataforma, usa los correos verificados y suscripciones push existentes y no contiene datos individuales de trabajadores. No requiere cambios de roles ni permisos.
+
+### Campaña 25N, vigencia única en 2026
+
+Inicio muestra la tarjeta naranja sólo el 25 de noviembre de 2026, desde las 00:00 hasta antes de las 00:00 del 26, en UTC−7 (Baja California Sur). Usa hora del servidor y un temporizador para ocultarse incluso con Inicio abierto. El enlace al protocolo corresponde a la intranet institucional indicada en el cartel.
+
+El cron recorre con cursor transaccional las cuentas activas, crea un aviso por matrícula y distribuye mediante los canales ya vinculados. La clave CAMPANA_25N2026 impide duplicados al reintentar. Los correos no enviados al cierre se omiten para evitar envíos fuera de la fecha; el aviso queda en el historial de notificaciones. Esta difusión fue solicitada expresamente por Administración; no usar correos de trabajadores para pruebas.
