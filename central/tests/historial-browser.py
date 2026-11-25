@@ -1,17 +1,4 @@
-"""Absence-only history: monthly/annual/lifetime quantities; no financial data in UI or exports."""
-import asyncio,re
-from playwright.async_api import async_playwright
-H='http://127.0.0.1:8010'
-async def main():
- async with async_playwright() as pw:
-  b=await pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);errors=[]
-  for width in [1280,390]:
-   c=await b.new_context(viewport={'width':width,'height':844});await c.route('https://**/*',lambda r:r.abort());p=await c.new_page();p.on('pageerror',lambda e:errors.append(str(e)));await p.goto(H+'/login');await p.locator('input[type=text]').first.fill('TESTADMIN');await p.locator('input[type=password]').fill('PruebaSegura123!');await p.get_by_role('button',name='Iniciar Sesión',exact=True).click();await p.wait_for_function('window.SICIPCentral?.user&&window.SICIPModuleHost');await p.locator('nav.sidebar [data-access-id="jefe.historial"]').wait_for(state='attached')
-   if width==390:await p.locator('[aria-controls="sicip-sidebar"]').click()
-   await p.locator('nav.sidebar').get_by_role('button',name='Jefe de Servicio',exact=False).first.click();await p.locator('[data-access-id="jefe.historial"]').click();panel=p.locator('[data-sicip-module-panel=historial-trabajador]');search=panel.locator('[data-worker-search]');await p.wait_for_function("document.querySelector('[data-worker-search]')?.inputMode==='text'");await search.fill('Juan');await panel.get_by_role('option',name='JUAN CARLOS PEREZ PRUEBA · TESTUSER',exact=False).click();await panel.locator('[data-indicador=nivelaciones]').wait_for();assert await panel.locator('[data-indicador]').count()==10;assert '3 días' in await panel.locator('[data-indicador=nivelaciones]').inner_text();assert '3.5 horas' in await panel.locator('[data-indicador=tiempo_extra]').inner_text();assert not re.search(r'importe|MXN|\$\d',await panel.inner_text(),re.I)
-   await panel.locator('[data-view=mensual]').click();await panel.get_by_role('heading',name='Mes a mes · 2026').wait_for();assert await panel.locator('[data-summary] tbody tr').count()==10;assert 'ene' in (await panel.locator('[data-summary]').inner_text()).lower();await panel.locator('[data-view=vida]').click();assert re.search(r'2\s+días',await panel.locator('[data-indicador=faltas] strong').inner_text());assert re.search(r'3\s+días',await panel.locator('[data-indicador=licencias_sin_sueldo] strong').inner_text());await panel.locator('[data-year]').select_option('2025');await panel.locator('[data-year]').wait_for();await p.wait_for_function("document.querySelector('[data-summary]')?.textContent.includes('Total 2025')&&document.querySelector('[data-indicador=licencias_sin_sueldo] strong')?.textContent.includes('3')");await panel.locator('[data-year]').select_option('2026');await p.wait_for_function("document.querySelector('[data-summary]')?.textContent.includes('Total 2026')&&document.querySelector('[data-indicador=nivelaciones] strong')?.textContent.includes('3')")
-   async with p.expect_download() as dl:await panel.locator('[data-excel]').click()
-   download=await dl.value;await download.save_as('/tmp/historial-ausentismo-'+str(width)+'.xlsx')
-   await panel.locator('[data-pdf]').click();frame=p.frame_locator('.sicip-document-viewer iframe');await frame.locator('#sicip-paper').wait_for();text=await frame.locator('body').inner_text();assert 'Mes a mes' in text and 'Por año' in text;assert not re.search(r'importe|MXN|\$\d',text,re.I);view=await c.new_page();await view.set_content(await p.locator('.sicip-document-viewer iframe').evaluate('(f)=>f.srcdoc'));await view.pdf(path='/tmp/historial-ausentismo-'+str(width)+'.pdf',prefer_css_page_size=True);await view.close();await p.locator('.sicip-document-viewer [data-close]').click();assert await p.evaluate('document.documentElement.scrollWidth<=innerWidth+1');await p.screenshot(path='/tmp/ausentismo-'+str(width)+'.png',full_page=True);await c.close();print('Historial '+str(width)+': 10 indicadores, meses/años/vida disponible, sólo días/horas y exportaciones sin datos monetarios.',flush=True)
-  assert not errors,errors;await b.close()
-asyncio.run(main())
+"""Compatibility entry point for the annual-history browser regression."""
+from pathlib import Path
+import runpy
+runpy.run_path(str(Path(__file__).with_name('historial-anual-browser.py')),run_name='__main__')
