@@ -1,7 +1,15 @@
 // APS incidence catalogue, 1A74-003-034, annex 1A74-008-144 (pp. 145–147).
 export const CODIGOS_PASE={PARTICULAR:['PIP','EIP','PEP','PSP','EP2','EP3','IP2','LP2','SP','SP2','EPP'],OFICIAL:['PIO','EIO','PEO','PSO','EO2','EP4','IO2','SO2','EPO'],MEDICO:['PIM','EIM','PEM','PSM','EM2','EP5','IM2','LM2','SM2','EPM']};
 export const tipoPaseNomina=code=>Object.entries(CODIGOS_PASE).find(([,codes])=>codes.includes(String(code).toUpperCase()))?.[0]||null;
-const hora=v=>{let s=String(v??'').trim();const time=s.match(/^(\d{1,2}):(\d{2})/);if(time&&+time[1]<24&&+time[2]<60)return time[1].padStart(2,'0')+':'+time[2];if(/^\d{3,4}$/.test(s)){s=s.padStart(4,'0');if(+s.slice(0,2)<24&&+s.slice(2)<60)return s.slice(0,2)+':'+s.slice(2);}if(/^(?:0?\.\d+)$/.test(s)&&Number(s)>0&&Number(s)<1){const n=Math.round(Number(s)*1440);return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}return '';};
+export function horaPase(v){
+ const s=String(v??'').trim().replace(/\s+/g,' ');
+ const time=s.match(/^(?:(?:\d{1,2}|\d{4}-\d{2}-\d{2}|\d{1,2}\/\d{1,2}\/\d{2,4})[ T])?(\d{1,2}):(\d{2})(?::\d{2}(?:\.\d+)?)?$/);
+ if(time&&+time[1]<24&&+time[2]<60)return time[1].padStart(2,'0')+':'+time[2];
+ if(/^\d{3,4}$/.test(s)){const n=s.padStart(4,'0');if(+n.slice(0,2)<24&&+n.slice(2)<60)return n.slice(0,2)+':'+n.slice(2);}
+ if(/^\d*[.,]\d+$/.test(s)){const value=Number(s.replace(',','.')),fraction=value%1;if(value>=0&&value<73050&&fraction>0){const n=Math.round(fraction*1440)%1440;return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}}
+ return '';
+}
+const hora=horaPase;
 export function integrarPasesNomina(online,p,historial=[]){
  const historical=[],seen=new Set(),timed=new Set();let pendientes_mes=0,pendientes_anio=0;
  for(const r of historial){const tipo=tipoPaseNomina(r.concepto);if(r.clase!=='INCIDENCIA'||!tipo)continue;const fecha=String(r.inicio||'').slice(0,10);if(!/^\d{4}-\d{2}-\d{2}$/.test(fecha))continue;
