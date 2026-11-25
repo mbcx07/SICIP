@@ -6,7 +6,7 @@ p=argparse.ArgumentParser();p.add_argument('historial',type=Path);p.add_argument
 s=json.loads(a.historial.read_text());events={}
 for h in s['historiales']:
  for r in h['registros']:
-  if r['clase']=='INCIDENCIA' and r['concepto'] in ['72','E71','E72','E73'] and (not r.get('estado_origen') or r['estado_origen']=='V'):events[(h['matricula'],r['inicio'])]=r['concepto']
+  if r['clase']=='INCIDENCIA' and r['concepto'] in ['72', '721', '722', '723', 'E71', 'E72', 'E73', 'E74', 'E75', 'F2', 'F21', 'F22', 'F23', 'F3']:events[(h['matricula'],r['inicio'])]=r['concepto']
 rows=[{'matricula':m,'fecha':d,'concepto':c} for (m,d),c in sorted(events.items())]
 for i in range(0,len(rows),500):query(a.database,"INSERT INTO historial_faltas SELECT ?,json_extract(value,'$.matricula'),json_extract(value,'$.fecha'),json_extract(value,'$.concepto') FROM json_each(?) WHERE 1 ON CONFLICT(carga,matricula,fecha) DO NOTHING",[a.carga,json.dumps(rows[i:i+500])])
 r=query(a.database,'SELECT COUNT(*) total FROM historial_faltas WHERE carga=?',[a.carga])[0]['results'][0];assert r['total']==len(events),r

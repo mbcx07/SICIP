@@ -23,7 +23,11 @@ def date(v):
  if re.match(r'^\d{4}-\d{2}-\d{2}T',s):return datetime.date.fromisoformat(s[:10]).isoformat()
  return mod.fecha(v)
 def key(mid,r):
- if r['clase']!='INCIDENCIA':return 't:'+r['id']
+ if r['clase']!='INCIDENCIA':
+  ref=numeric_id(r.get('referencia'))
+  if not ref or ref=='0':return 't:'+r['id']
+  fields=[mid,ref,r['concepto'],r['inicio'],numeric_id(r.get('plaza')),numeric_id(r.get('puesto')),numeric_id(r.get('plaza_sustituida'))]
+  return 't:'+hashlib.sha256(json.dumps(fields,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
  ref=numeric_id(r.get('referencia'))
  identity=[mid,r['inicio'],r['concepto'],ref,numeric_id(r.get('plaza')),numeric_id(r.get('puesto'))]
  if not ref or ref=='0':identity += [r.get('duracion'),r.get('horario'),r.get('turno')]
@@ -66,7 +70,15 @@ def daily_fact(r):
  dur=mod.text(get('Duracion'))
  try:duration=float(dur.replace(',',''))
  except ValueError:duration=None
- item={'clase':'INCIDENCIA','concepto':code,'inicio':start,'fin':start,'duracion':duration,'importe':0,'plaza':numeric_id(get('Plaza')),'departamento':mod.text(get('Departamento')),'puesto':numeric_id(get('Puesto')),'jornada':mod.text(get('Jornada')),'horario':mod.text(get('Horario')),'turno':numeric_id(get('inc_cvetur')),'sustituye':numeric_id(get('inc_empsus')),'plaza_sustituida':numeric_id(get('Plaza Sustuituida')),'puesto_sustituido':numeric_id(get('Puesto sustituido')),'referencia':numeric_id(get('Serial')),'estado_origen':mod.text(get('Status')).upper() or 'PENDIENTE_VALIDAR','quincena_origen':numeric_id(get('Quincena')),'fecha_registro':date(get('Fecha de Registro'))}
+ item={'clase':'INCIDENCIA','concepto':code,'inicio':start,'fin':start,'duracion':duration,'importe':0,'plaza':numeric_id(get('Plaza')),'departamento':mod.text(get('Departamento')),'puesto':numeric_id(get('Puesto')),'jornada':mod.text(get('Jornada')),'horario':mod.text(get('Horario')),'turno':numeric_id(get('inc_cvetur')),'sustituye':numeric_id(get('inc_empsus')),'plaza_sustituida':numeric_id(get('Plaza Sustuituida')),'puesto_sustituido':numeric_id(get('Puesto sustituido')),'referencia':numeric_id(get('Serial')),'estado_origen':mod.text(get('Status')).upper() or 'PENDIENTE_VALIDAR','quincena_origen':numeric_id(get('Quincena')),'fecha_registro':date(get('Fecha de Registro')),'hora_inicial':mod.text(get('Hora Inicial')),'hora_final':mod.text(get('Hora Final'))}
+ item['id']=key(mid,item)[2:];return mid,item,None
+
+def transaction_fact(r):
+ get=lambda k:r.get(norm(k));mid=numeric_id(get('Matricula'));start=date(get('Fecha inicial'));end=date(get('Fecha Final')) or start;code=mod.codigo(get('Concepto'))
+ if not mid.isdigit() or mid=='0':return None,None,'matricula'
+ if not start:return None,None,'fecha'
+ if not code:return None,None,'concepto'
+ item={'clase':'TRANSACCION','concepto':code,'inicio':start,'fin':end,'duracion':mod.num(get('Duracion')),'importe':mod.num(get('Importe')),'plaza':numeric_id(get('Plaza')),'departamento':mod.text(get('Departamento')),'puesto':numeric_id(get('Puesto')),'jornada':mod.text(get('Jornada')),'horario':mod.text(get('Horario actual')) or mod.text(get('Horario')),'turno':numeric_id(get('Clave de turno')),'sustituye':numeric_id(get('Empleado sustituto')),'plaza_sustituida':numeric_id(get('Plaza que sustituye')),'puesto_sustituido':numeric_id(get('Puesto Sustituye')),'referencia':numeric_id(get('Transaccion')),'estado_origen':mod.text(get('Status')),'fecha_registro':date(get('Fecha actualizacion')),'hora_inicial':mod.text(get('Hora inicial')),'hora_final':mod.text(get('Hora final'))}
  item['id']=key(mid,item)[2:];return mid,item,None
 
 def merge(base,files,out,audit):
@@ -74,30 +86,32 @@ def merge(base,files,out,audit):
  for h in old['historiales']:
   for r in h['registros']:
    k=key(h['matricula'],r)
-   if k in facts:counts['duplicados_base']+=1;continue
-   facts[k]=(h['matricula'],r);owners[k]=0;buckets[group_key(h['matricula'],r)][(0,0)][k]=True if r['clase']=='INCIDENCIA' else False
+   if k in facts:
+    counts['duplicados_base']+=1
+    if r['clase']=='TRANSACCION' and r.get('hoja')=='Consulta' and facts[k][1].get('hoja')!='Consulta':facts[k]=(h['matricula'],r)
+    continue
+   facts[k]=(h['matricula'],r);owners[k]=0;buckets[group_key(h['matricula'],r)][(0,r.get('archivo','')+' / '+r.get('hoja',''))][k]=True if r['clase']=='INCIDENCIA' else False
  for order,path in enumerate(files,1):
-  sha=hashlib.sha256(path.read_bytes()).hexdigest();source={'archivo':path.name,'sha256':sha,'tipo':'INCIDENCIAS_DIARIAS','version_importador':'diarias-v1','hojas':[]};summary={'archivo':path.name,'hojas':[]}
+  sha=hashlib.sha256(path.read_bytes()).hexdigest();source={'archivo':path.name,'sha256':sha,'tipo':'EXTRACTO_NOMINA','version_importador':'diarias-transacciones-v3-conceptos','hojas':[]};summary={'archivo':path.name,'hojas':[]}
   for sheet_order,(sheet,rows) in enumerate(sources(path),1):
-   heads=None;stats=collections.Counter();dates=[];workers=set();units=set();statuses=collections.Counter();invalid=collections.Counter()
+   heads=None;parser=daily_fact;stats=collections.Counter();dates=[];workers=set();units=set();statuses=collections.Counter();invalid=collections.Counter()
    for rownum,values in rows:
     if heads is None:
      labels={i:norm(v) for i,v in values.items()}
      if {'matricula','incidencia','fecha','duracion'}.issubset(labels.values()):heads=labels;continue
+     if {'matricula','concepto','fecha inicial','duracion','transaccion'}.issubset(labels.values()):heads=labels;parser=transaction_fact;continue
      if rownum>30:break
      continue
     r={heads[i]:v for i,v in values.items() if i in heads}
     if not any(mod.text(v) for v in r.values()):continue
-    mid,item,error=daily_fact(r)
+    mid,item,error=parser(r)
     if error:invalid[error]+=1;continue
     stats['filas_validas']+=1
     if item['duracion'] is None:stats['duracion_sin_dato']+=1;occurrences[item['concepto']]+=1
     dates.append(item['inicio']);workers.add(mid);units.add(item['departamento']);statuses[item['estado_origen']]+=1
-    k=key(mid,item);buckets[group_key(mid,item)][(order,sheet_order)][k]=True;item.update({'archivo':path.name,'hoja':sheet,'fila':rownum});prior=facts.get(k)
+    k=key(mid,item);buckets[group_key(mid,item)][(order,sheet_order)][k]=item['clase']=='INCIDENCIA';item.update({'archivo':path.name,'hoja':sheet,'fila':rownum});prior=facts.get(k)
     if prior:
      previous_order=owners[k]
-     if item['estado_origen']=='PENDIENTE_VALIDAR' and prior[1].get('estado_origen') not in ('','PENDIENTE_VALIDAR',None):
-      stats['pendientes_no_sustituyen_confirmados']+=1;continue
      if core(prior[1])==core(item):
       stats['duplicados_identicos']+=1;counts['duplicados_identicos']+=1
       if not previous_order:stats['coinciden_base']+=1
@@ -121,12 +135,9 @@ def merge(base,files,out,audit):
  keep={k for k,(mid,r) in facts.items() if r['clase']=='TRANSACCION'}
  for g,origins in buckets.items():
   eligible={source:{k for k,valid in keys.items() if valid and k in facts and facts[k][1]['clase']=='INCIDENCIA'} for source,keys in origins.items()}
-  confirmed={source:{k for k in keys if facts[k][1].get('estado_origen')=='V'} for source,keys in eligible.items()}
-  if any(confirmed.values()):eligible=confirmed
   eligible={source:keys for source,keys in eligible.items() if keys}
   if eligible:keep.update(max(eligible.items(),key=lambda pair:(len(pair[1]),pair[0]))[1])
- # Preserve unconfirmed origin states as evidence, outside V-based statistics.
- keep.update(k for k,(mid,r) in facts.items() if r['clase']=='INCIDENCIA' and r.get('estado_origen') in ('E','I','PENDIENTE_VALIDAR'))
+ # Payroll processing phases do not create additional events.
  counts['repetidos_entre_extracciones']=sum(r['clase']=='INCIDENCIA' for mid,r in facts.values())-sum(facts[k][1]['clase']=='INCIDENCIA' for k in keep)
  facts={k:value for k,value in facts.items() if k in keep}
  groups=collections.defaultdict(list)

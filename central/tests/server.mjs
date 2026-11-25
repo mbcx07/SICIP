@@ -7,6 +7,10 @@ let snapshot=fixture();if(process.argv[3]){snapshot=JSON.parse(await fs.readFile
 const {seedCatalogo}=await import('../src/recepcion-catalogo-seed.mjs');await seedCatalogo(DB);
 if(process.env.SICIP_TEST_CONVOCATORIAS){snapshot.plazas[0].tipo_plaza_codigo='1';snapshot.personas[0].categoria_padron='Jefatura sintética';}
 await seed(DB,snapshot,'11111111-1111-4111-8111-111111111111',true);
+if(process.env.SICIP_TEST_PASES_HISTORIAL){
+ const {gzipSync}=await import('node:zlib');const rows=[{id:'old-part',clase:'INCIDENCIA',concepto:'PIP',inicio:'2026-01-10',estado_origen:'V'},{id:'old-ofic',clase:'INCIDENCIA',concepto:'PIO',inicio:'2026-10-10',estado_origen:'V'},{id:'old-med',clase:'INCIDENCIA',concepto:'PIM',inicio:'2026-11-10',estado_origen:'V'},{id:'pending',clase:'INCIDENCIA',concepto:'PIP',inicio:'2026-11-15',estado_origen:'E'}];
+ await DB.prepare("INSERT INTO historial_cargas VALUES('print-test','today','[]','{}','{}','VALIDADO')").run();await DB.prepare("INSERT INTO historial_nomina VALUES('print-test','TESTUSER',2026,?)").bind(JSON.stringify({encoding:'gzip-base64',data:gzipSync(JSON.stringify(rows)).toString('base64'),registros:rows.length})).run();await DB.prepare("INSERT INTO settings VALUES('historial_nomina_activa','print-test')").run();
+}
 if(process.env.SICIP_TEST_CONVOCATORIAS){for(const c of JSON.parse(readFileSync(new URL('../src/convocatorias-seed.json',import.meta.url),'utf8')))await DB.prepare('INSERT INTO convocatorias VALUES(?,?,?,?,?,?,?,?)').bind(c.id,c.plaza,c.inicio,c.fin,c.fecha_emision,JSON.stringify(c),c.sha256,new Date().toISOString()).run();}
 if(process.env.SICIP_TEST_LIBRARY){
  const lib=process.env.SICIP_TEST_LIBRARY,manifest=JSON.parse(await fs.readFile(path.join(lib,'manifest.json'),'utf8'));

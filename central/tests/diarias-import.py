@@ -28,4 +28,11 @@ class DiariasTests(unittest.TestCase):
   _,r,error=m.daily_fact({m.norm(k):v for k,v in row.items()});self.assertIsNone(error);self.assertEqual(r['estado_origen'],'PENDIENTE_VALIDAR')
  def test_identifiers_and_dates(self):
   self.assertEqual(m.numeric_id('1.234E+8'),'123400000');self.assertEqual(m.date('46230'),'2026-07-27');self.assertEqual(m.date('16/10/2026'),'2026-10-16');self.assertEqual(m.norm('Matrícula'),'matricula')
+ def test_transactions_stable_reference_dedup_and_correction(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   d=Path(tmp);raw={'Matricula':'123','Concepto':'35','Fecha inicial':'01/11/2026','Fecha Final':'02/11/2026','Duracion':2,'Importe':100,'Transaccion':'500','Plaza':101,'Puesto':'CAT1'}
+   mat,r,error=m.transaction_fact({m.norm(k):v for k,v in raw.items()});self.assertIsNone(error);r.update(archivo='old.xlsx',hoja='Consulta',fila=2)
+   base={'fuentes':[],'cobertura':{},'historiales':[{'matricula':mat,'anio':2026,'registros':[r]}]};(d/'base.json').write_text(json.dumps(base));w=openpyxl.Workbook();sheet=w.active;sheet.title='Consulta';sheet.append(list(raw));sheet.append(list(raw.values()));changed={**raw,'Duracion':3,'Fecha Final':'03/11/2026','Importe':150};sheet.append(list(changed.values()));w.save(d/'new.xlsx')
+   with contextlib.redirect_stdout(io.StringIO()):out=m.merge(d/'base.json',[d/'new.xlsx'],d/'out.json',d/'audit.json')
+   rows=out['historiales'][0]['registros'];self.assertEqual(len(rows),1);self.assertEqual(rows[0]['duracion'],3);self.assertEqual(out['conteos']['duplicados_identicos'],1);self.assertEqual(out['conteos']['referencias_actualizadas'],1)
 if __name__=='__main__':unittest.main()

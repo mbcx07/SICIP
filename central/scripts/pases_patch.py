@@ -77,7 +77,7 @@ s=s.replace("var totals=st.months.map(function(x){return x.total})", "var totals
 s=s.replace("Math.round(a.total/12)", "st.promedio.toFixed(1)")
 s=s.replace('Math.min.apply(null,totals.concat([0]))','Math.min.apply(null,totals.length?totals:[0])')
 s=s.replace("<b>+0.0%</b>ACTUAL", "<b>'+(st.tendencia===null?'SIN BASE':(st.tendencia>0?'+':'')+st.tendencia.toFixed(1)+'%')+'</b>MES SOLICITADO")
-s=s.replace('Estadística calculada con base en los pases registrados en SICIP correspondientes al trabajador durante el periodo consultado.', 'Estadística del trabajador: acumulado hasta el mes solicitado. Promedio = particulares / meses transcurridos. Tendencia = variación del total contra el mes anterior; sin base cuando el anterior es cero.')
+s=s.replace('Estadística calculada con base en los pases registrados en SICIP correspondientes al trabajador durante el periodo consultado.','Estadística integrada de SICIP e incidencias APS del trabajador, hasta el mes solicitado. Promedio = particulares / meses transcurridos; tendencia = variación del total frente al mes anterior.')
 p.write_text(s)
 
 p=out/'sicip-recepciones-module.js';s=p.read_text();old="      if (!docs || docs.length === 0) {\n        listaDiv.innerHTML";assert old in s;s=s.replace(old,"      docs=await window.SICIPCentral.filtrarDocumentos(docs||[]);\n"+old,1);p.write_text(s)
