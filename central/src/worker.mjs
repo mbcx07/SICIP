@@ -1,3 +1,4 @@
+import {disposicionesAPI} from './disposiciones-api.mjs';
 import {cuadrosRequisitosAPI} from './cuadros-requisitos-api.mjs';
 import {convocatoriasAPI} from './convocatorias-api.mjs';
 import {examenesAPI} from './examenes-api.mjs';
@@ -82,6 +83,7 @@ async function api(request,env){
  if(path.startsWith('/api/personal/faltas/ranking'))return rankingFaltasAPI(request,env,{session,current,run,json,assert});
  if(path==='/api/personal/incidencias')return incidenciasAPI(request,env,{session,account,cleanUser,run,current,body,json,assert});
  if(path.startsWith('/api/unidades/')||path.startsWith('/api/admin/unidades'))return unidadesAPI(request,env,{session,body,current,run,json,assert});
+ if(path.startsWith('/api/disposiciones/'))return disposicionesAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/herramientas/'))return herramientasAPI(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path==='/api/pd44'||path.startsWith('/api/pd44/'))return pd44API(request,env,{session,account,cleanUser,body,current,run,json,assert});
  if(path.startsWith('/api/admin/personal/'))return adminPersonalAPI(request,env,{session,body,current,run,json,assert});
