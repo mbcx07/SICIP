@@ -6,7 +6,7 @@ const labels={PARTICULAR:'Pases personales',OFICIAL:'Pases oficiales','MÉDICO':
 const passId=t=>'pases_'+({PARTICULAR:'personales',OFICIAL:'oficiales','MÉDICO':'medicos',MEDICO:'medicos'}[t]);
 const valid=d=>/^\d{4}-\d{2}-\d{2}$/.test(d||'')&&Number.isFinite(Date.parse(d+'T12:00:00Z'));
 export function estadisticasHistorial(rows,pases,{matricula,anio,hasta}={}){
- rows=rows.filter(r=>!['PR','EPR','32','33'].includes(String(r.concepto).trim().toUpperCase()));
+ rows=rows.filter(r=>!['PR','EPR','32','33','AD'].includes(String(r.concepto).trim().toUpperCase()));
  const {vida_laboral,...stats}=estadisticasAusentismo(rows,{anio,hasta});
  const years=new Map(stats.por_anio.map(y=>[y.anio,{anio:y.anio,valores:{...y.valores}}]));
  const passTypes=['PARTICULAR','OFICIAL','MÉDICO'];for(const t of passTypes)stats.indicadores.push({id:passId(t),nombre:labels[t],unidad:'pases'});

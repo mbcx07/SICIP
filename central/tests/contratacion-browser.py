@@ -12,11 +12,11 @@ async def main():
   await page.locator('[data-sicip-jefe-servicio-root]>button').click();await page.locator('[data-coverage-new]').click();form=page.locator('[data-coverage-form]');await form.wait_for(timeout=45000)
   await form.locator('select[name=tipo]').select_option('CONTRATO');await form.locator('select[name=motivo]').select_option('VACACIONES')
   for role,mat in [('titular',REF['titular']),('suplente',REF['suplente'])]:
-   picker=form.locator('[data-picker='+role+']');await picker.locator('input').fill(mat);await picker.locator('[data-person="'+mat+'"]').click()
+   picker=form.locator('[data-picker='+role+']');await picker.locator('input').fill(mat);await picker.get_by_role('option').filter(has_text=mat).click()
   await form.locator('select[name=plaza]').select_option(REF['plaza']);await form.locator('select[name=horario_codigo]').select_option('104');await form.locator('[name=inicio]').fill('2026-08-01');await form.locator('[name=fin]').fill('2026-08-15')
   for day in ['0','6']:await form.locator('[data-rest=titular][value="'+day+'"]').check()
   for role,mat in [('jefe',REF['titular']),('dependencia',REF['suplente'])]:
-   root=form.locator('[data-signer='+role+']');await root.locator('input').fill(mat);await root.locator('[data-sign="'+mat+'"]').click()
+   root=form.locator('[data-signer='+role+']');await root.locator('input').fill(mat);await root.get_by_role('option').filter(has_text=mat).click()
   await form.locator('[data-summary]').get_by_text('120',exact=True).wait_for();assert await form.locator('[data-calendar]').count()==0
   await form.get_by_role('button',name='Guardar borrador',exact=True).click();await page.get_by_text('Borrador C-000001 guardado.',exact=False).wait_for();await page.reload();await page.locator('[data-coverage-new]').wait_for(state='attached');await page.evaluate("window.SICIPContratacion.open(null,'list')");await page.get_by_role('button',name='Abrir',exact=True).first.click();await form.wait_for();assert await form.locator('[name=inicio]').input_value()=='2026-08-01';assert await form.locator('[data-rest]:checked').count()==2
   await page.set_viewport_size({'width':390,'height':844});assert await page.evaluate('document.documentElement.scrollWidth<=innerWidth+1');await page.set_viewport_size({'width':1440,'height':1000});print('Captura recuperada: titular, plaza, suplente, tipo, motivo, periodo y descansos; borrador persistente.',flush=True)

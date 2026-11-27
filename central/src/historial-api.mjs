@@ -1,3 +1,4 @@
+import {buscarDirectorio} from './trabajadores-busqueda.mjs';
 import {estadisticasAusentismo} from './ausentismo-domain.mjs';
 import {estadisticasHistorial} from './historial-estadisticas.mjs';
 import {hoyLocal} from './inicio-domain.mjs';
@@ -7,7 +8,7 @@ import {leerHistorial} from './historial-domain.mjs';
 import {recogerTramites} from './tramites-datos.mjs';
 const STAFF=new Set(['ADMIN','ADMINISTRADOR','AREA_PERSONAL','FUERZA_TRABAJO','JEFE_SERVICIO']);
 export async function historialAPI(request,env,h){const {session,current,run,json,assert}=h,u=await session(request,env),url=new URL(request.url);assert(STAFF.has(u.rol),403,'Este historial requiere acceso de Jefe de Servicio o Personal.');assert(request.method==='GET',405,'Consulta de sólo lectura.');const c=await current(env);
- if(url.pathname==='/api/personal/historial/buscar'){const q=searchKey(url.searchParams.get('q'));assert(q.length>=2&&q.length<=100,400,'Escribe al menos dos caracteres del nombre o matrícula.');const terms=q.split(' ').slice(0,6);const rows=(await run(env,"SELECT matricula,json_extract(json,'$.nombre') nombre,json_extract(json,'$.categoria_padron') categoria FROM personas WHERE corte=? AND "+terms.map(()=>"nombre_search LIKE ? ESCAPE '\\'").join(' AND ')+' ORDER BY matricula LIMIT 20',c.id,...terms.map(t=>'%'+t.replace(/[\\%_]/g,'\\$&')+'%')).all()).results;return json({quincena:c.quincena,personas:rows.map(r=>({...r,nombre:displayName(r.nombre)}))});}
+ if(url.pathname==='/api/personal/historial/buscar'){const q=searchKey(url.searchParams.get('q'));assert(q.length>=1&&q.length<=100,400,'Escribe nombre, matrícula o plaza.');return json({quincena:c.quincena,personas:await buscarDirectorio(env,run,c,q)});}
  const mat=url.searchParams.get('matricula')||'',anio=Number(url.searchParams.get('anio')||new Date().getUTCFullYear());assert(/^[A-Za-z0-9._-]{1,80}$/.test(mat)&&Number.isInteger(anio)&&anio>=2000&&anio<=2100,400,'Indica una matrícula y año válidos.');
  if(url.pathname==='/api/personal/historial/tramites')return json(await recogerTramites(env,{...u,matricula:mat},run));
  const row=await run(env,'SELECT json FROM personas WHERE corte=? AND matricula=?',c.id,mat).first();assert(row,404,'La matrícula no existe en la base vigente.');const p=JSON.parse(row.json);

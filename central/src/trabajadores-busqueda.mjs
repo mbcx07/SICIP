@@ -1,0 +1,10 @@
+import {searchKey,displayName} from './domain.mjs';
+export async function buscarDirectorio(env,run,c,value){
+ const terms=[...new Set(searchKey(value).split(' ').filter(Boolean))].slice(0,6),like=v=>'%'+v.replace(/[!%_]/g,'!$&')+'%',params=[c.id];
+ const where=terms.map(term=>{params.push(like(term),like(term),c.id,like(term),c.id,like(term));return `(p.nombre_search LIKE ? ESCAPE '!' OR p.matricula LIKE ? ESCAPE '!' OR p.matricula IN (SELECT ocupante FROM plazas WHERE corte=? AND plaza LIKE ? ESCAPE '!' UNION SELECT titular FROM plazas WHERE corte=? AND plaza LIKE ? ESCAPE '!'))`;}).join(' AND ');
+ params.push(String(value).trim(),c.id,String(value).trim(),c.id,String(value).trim());
+ const rows=(await run(env,`SELECT p.matricula,p.json FROM personas p WHERE p.corte=? AND ${where||'0'} ORDER BY CASE WHEN p.matricula=? THEN 0 WHEN p.matricula IN (SELECT ocupante FROM plazas WHERE corte=? AND plaza=? UNION SELECT titular FROM plazas WHERE corte=? AND plaza=?) THEN 1 ELSE 2 END,p.matricula LIMIT 25`,...params).all()).results;
+ if(!rows.length)return [];
+ const occupations=(await run(env,`SELECT plaza,ocupante,titular,puesto,departamento,json_extract(json,'$.categoria') categoria,json_extract(json,'$.departamento_nombre') departamento_nombre FROM plazas WHERE corte=? AND (ocupante IN (SELECT value FROM json_each(?)) OR titular IN (SELECT value FROM json_each(?))) ORDER BY plaza`,c.id,JSON.stringify(rows.map(p=>p.matricula)),JSON.stringify(rows.map(p=>p.matricula))).all()).results;
+ return rows.map(row=>{const p=JSON.parse(row.json),zs=occupations.filter(z=>z.ocupante===p.matricula||z.titular===p.matricula),z=p.nomina_origen==='MANDO_FEDERAL'?null:zs.find(z=>z.ocupante===p.matricula),categoria=z?.categoria||p.categoria_padron||'',departamento=z?.departamento_nombre||p.departamento_nombre_padron||'';return {matricula:p.matricula,nombre:displayName(p.nombre),categoria,cargo:categoria,puesto:z?.puesto||p.puesto_padron||'',departamento,plazas:zs.map(z=>String(z.plaza))};});
+}

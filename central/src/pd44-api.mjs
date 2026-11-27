@@ -1,3 +1,4 @@
+import {buscarDirectorio} from './trabajadores-busqueda.mjs';
 import {filtroUnidades,unidadExpr} from './unidades.mjs';
 import {tarifasPD44} from './pd44-tabuladores-api.mjs';
 import {displayName,searchKey} from './domain.mjs';
@@ -12,7 +13,7 @@ export async function pd44API(request,env,h){
  const get=async id=>{const r=await run(env,'SELECT * FROM pd44_solicitudes WHERE uuid=?',id).first();assert(r&&(desk||r.matricula===u.matricula),404,'Reclamación no encontrada.');return decode(r);};
  const rates=await tarifasPD44(request,env,h,{u,admin,desk,can,get});if(rates)return rates;
  if(path==='/api/pd44/config'&&method==='GET')return json({estados:ESTADOS,operaciones:OPERACIONES,conceptos:conceptosPD44,permisos:{capturar:desk,analista:can('analista'),autorizar:can('autorizar'),siap:can('siap')},tabulador_disponible:!!(await run(env,'SELECT id FROM pd44_tabuladores LIMIT 1').first())});
- if(path==='/api/pd44/personas'&&method==='GET'){assert(desk,403,'Consulta reservada a Personal.');const c=await current(env,url.searchParams.get('corte')||undefined),q=searchKey(url.searchParams.get('q')||'');assert(q.length>=2&&q.length<=100,400,'Escribe al menos dos caracteres.');const rows=(await run(env,"SELECT json FROM personas WHERE corte=? AND (nombre_search LIKE ? ESCAPE '!' OR matricula LIKE ? ESCAPE '!') ORDER BY matricula LIMIT 25",c.id,'%'+q.replace(/[!%_]/g,'!$&')+'%','%'+q.replace(/[!%_]/g,'!$&')+'%').all()).results;return json(rows.map(r=>{const p=JSON.parse(r.json);return {matricula:p.matricula,nombre:displayName(p.nombre)};}));}
+ if(path==='/api/pd44/personas'&&method==='GET'){assert(desk,403,'Consulta reservada a Personal.');const c=await current(env,url.searchParams.get('corte')||undefined),q=searchKey(url.searchParams.get('q')||'');assert(q.length>=1&&q.length<=100,400,'Escribe nombre, matrícula o plaza.');return json((await buscarDirectorio(env,run,c,q)).map(p=>({matricula:p.matricula,nombre:p.nombre}))); }
  if(path==='/api/pd44/trabajador'&&method==='GET'){
   assert(desk,403,'Consulta reservada a Personal.');const mat=url.searchParams.get('matricula')||'',q=url.searchParams.get('quincena')||'',requested=url.searchParams.get('corte');
   let c=requested?await current(env,requested):await run(env,"SELECT * FROM cortes WHERE quincena=? AND status='VALIDADO' ORDER BY created_at DESC LIMIT 1",q).first();
