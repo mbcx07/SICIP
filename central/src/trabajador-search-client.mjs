@@ -18,7 +18,7 @@ export function vincularBusquedaTrabajador(input,{corte,onSelect,onClear,list,di
 // Legacy and dynamically mounted forms use the same control, including iframe modules.
 let installed=false;
 export function iniciarBusquedasTrabajador(){if(installed)return;installed=true;let queued=false;const scan=()=>{queued=false;for(const input of document.querySelectorAll('input')){
- if(input.dataset.workerSearchBound||input.readOnly||input.disabled||input.closest('.worker-search-results,.signer-search')||['hidden','password','email','date','time','checkbox','radio','file','tel','number'].includes(input.type))continue;
+ if(input.dataset.workerSearchBound||input.readOnly||input.disabled||input.closest('.worker-search-results,.signer-search')||['hidden','password','email','date','time','checkbox','radio','file','tel'].includes(input.type))continue;
  const label=(input.labels?.[0]?.textContent||input.closest('label')?.textContent||'')+' '+(input.placeholder||''),identity=/^(matricula|manualMatricula|buscar|manualBuscar|sicip-buscar-input(?:-mi)?)$/.test(input.id)||/^(matricula|worker|trabajador)$/.test(input.name)||/matr[ií]cula|buscar.*(?:trabajador|usuario|jefe|suplente|titular)/i.test(label);
  if(!identity||input.closest('[data-picker],[data-signer]')||input.form?.querySelector('input[type=password]'))continue;
  const form=input.form,version=()=>form?.elements.namedItem('corte')?.value||undefined;
